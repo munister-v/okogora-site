@@ -79,6 +79,14 @@ function hashKey(input) {
   return crypto.createHash('sha1').update(input).digest('hex').slice(0, 12);
 }
 
+function normalizeTitleKey(title) {
+  return (title || '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .replace(/[^\p{L}\p{N}\s]/gu, '')
+    .trim();
+}
+
 function isProbablyUkrainian(text) {
   if (!text) return false;
   const t = text.toLowerCase();
@@ -206,6 +214,14 @@ async function loadConfig() {
 async function main() {
   const cfg = await loadConfig();
   const all = [];
+  let previousItems = [];
+
+  try {
+    const prev = JSON.parse(await fs.readFile(OUTPUT_PATH, 'utf8'));
+    previousItems = Array.isArray(prev.items) ? prev.items : [];
+  } catch {
+    previousItems = [];
+  }
 
   for (const author of cfg.authors) {
     const normalizedAuthor =
@@ -251,14 +267,33 @@ async function main() {
 
   let finalItems = translated;
 
+  // Protect against RSS source outages: do not collapse feed to a handful of items.
+  const minHealthy = Math.max(8, Math.floor(cfg.maxItems * 0.2));
+  if (finalItems.length < minHealthy && previousItems.length > 0) {
+    const existingUrls = new Set(finalItems.map((i) => (i.url || '').trim()).filter(Boolean));
+    const existingTitles = new Set(finalItems.map((i) => normalizeTitleKey(i.title || i.titleUk || '')));
+
+    const reusable = previousItems
+      .filter((item) => item?.url && item?.title)
+      .filter((item) => withinDays(item.publishedAt, Math.max(cfg.windowDays + 1, 5)))
+      .filter((item) => matchesFilters(`${item.title || ''} ${item.summary || ''} ${item.titleUk || ''} ${item.summaryUk || ''}`, cfg.keywords, cfg.excludeKeywords))
+      .filter((item) => {
+        const u = String(item.url || '').trim();
+        const t = normalizeTitleKey(item.title || item.titleUk || '');
+        if (!u || existingUrls.has(u) || (t && existingTitles.has(t))) return false;
+        existingUrls.add(u);
+        if (t) existingTitles.add(t);
+        return true;
+      });
+
+    finalItems = [...finalItems, ...reusable]
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+      .slice(0, cfg.maxItems);
+  }
+
   if (finalItems.length === 0) {
-    try {
-      const prev = JSON.parse(await fs.readFile(OUTPUT_PATH, 'utf8'));
-      finalItems = Array.isArray(prev.items) ? prev.items : [];
-      console.log(`No fresh items, keeping previous snapshot (${finalItems.length})`);
-    } catch {
-      // noop
-    }
+    finalItems = previousItems;
+    console.log(`No fresh items, keeping previous snapshot (${finalItems.length})`);
   }
 
   const payload = {
