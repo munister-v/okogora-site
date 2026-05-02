@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, lazy, Suspense, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Rocket, Rss, Target } from 'lucide-react';
+import { ArrowUpRight, Activity, Database, Shield, Terminal, Rss, Target } from 'lucide-react';
 import { Post, InvestigationArticle } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
@@ -41,17 +41,6 @@ type RssItem = {
   handle: string;
   tags?: string[];
 };
-
-const STRIKE_KEYWORDS = ['знищено', 'уражено', 'ураження', 'влучання', 'strike', 'destroyed', 'hit', 'explosion', 'уражен', 'підбито', 'горить', 'вибух'];
-
-function countStrikesFromRss(items: RssItem[]): number {
-  const base = 482;
-  const matched = items.filter(item => {
-    const text = ((item.titleUk || item.title || '') + ' ' + (item.summaryUk || item.summary || '')).toLowerCase();
-    return STRIKE_KEYWORDS.some(kw => text.includes(kw));
-  }).length;
-  return base + matched;
-}
 
 export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -161,6 +150,8 @@ export default function App() {
       oblast: string;
       headline: string;
       ts: number;
+      url: string;
+      sourceLabel: string;
     };
 
     const oblastAliases: Array<{ oblast: string; aliases: string[] }> = [
@@ -205,7 +196,7 @@ export default function App() {
       if (!STRIKE_RE.test(text)) continue;
       const hitOblasts = extractOblasts(text);
       for (const oblast of hitOblasts) {
-        events.push({ day, source: 'X', oblast, headline, ts });
+        events.push({ day, source: 'X', oblast, headline, ts, url: item.url, sourceLabel: `@${item.handle || item.author || 'x-source'}` });
       }
     }
     for (const item of fbItems) {
@@ -218,7 +209,7 @@ export default function App() {
       if (!STRIKE_RE.test(text)) continue;
       const hitOblasts = extractOblasts(text);
       for (const oblast of hitOblasts) {
-        events.push({ day, source: 'Facebook', oblast, headline, ts });
+        events.push({ day, source: 'Facebook', oblast, headline, ts, url: item.url, sourceLabel: item.author || 'Facebook source' });
       }
     }
     for (const post of posts) {
@@ -231,12 +222,21 @@ export default function App() {
       if (!STRIKE_RE.test(text)) continue;
       const hitOblasts = extractOblasts(text);
       for (const oblast of hitOblasts) {
-        events.push({ day, source: 'Telegram', oblast, headline, ts });
+        events.push({ day, source: 'Telegram', oblast, headline, ts, url: postTelegramUrl(post), sourceLabel: '@oko_gora' });
       }
     }
 
+    const uniqueEvents: StrikeEvent[] = [];
+    const seenEventKey = new Set<string>();
+    for (const e of events.sort((a, b) => b.ts - a.ts)) {
+      const key = `${e.day}|${e.oblast}|${e.source}|${e.headline.toLowerCase().trim()}`;
+      if (seenEventKey.has(key)) continue;
+      seenEventKey.add(key);
+      uniqueEvents.push(e);
+    }
+
     const oblastTotals = new Map<string, number>();
-    for (const e of events) {
+    for (const e of uniqueEvents) {
       oblastTotals.set(e.oblast, (oblastTotals.get(e.oblast) || 0) + 1);
     }
     const oblasts = Array.from(oblastTotals.entries())
@@ -249,7 +249,7 @@ export default function App() {
       byDayOblast[d] = {};
       for (const o of oblasts) byDayOblast[d][o] = 0;
     }
-    for (const e of events) {
+    for (const e of uniqueEvents) {
       if (!oblasts.includes(e.oblast)) continue;
       byDayOblast[e.day][e.oblast] += 1;
     }
@@ -265,15 +265,27 @@ export default function App() {
     const maxTrend = Math.max(1, ...trend.map(t => t.total));
 
     const concreteByOblast = oblasts.map((oblast) => {
-      const samples = events
+      const samples = uniqueEvents
         .filter((e) => e.oblast === oblast)
         .sort((a, b) => b.ts - a.ts)
-        .slice(0, 2)
-        .map((e) => `${e.source}: ${e.headline}`);
+        .slice(0, 3)
+        .map((e) => ({
+          headline: e.headline,
+          url: e.url,
+          source: e.source,
+          sourceLabel: e.sourceLabel,
+          day: e.day,
+        }));
       return { oblast, total: oblastTotals.get(oblast) || 0, samples };
     });
 
-    return { days, oblasts, byDayOblast, maxCell, trend, maxTrend, total: events.length, concreteByOblast };
+    const bySource = {
+      x: uniqueEvents.filter(e => e.source === 'X').length,
+      facebook: uniqueEvents.filter(e => e.source === 'Facebook').length,
+      telegram: uniqueEvents.filter(e => e.source === 'Telegram').length,
+    };
+
+    return { days, oblasts, byDayOblast, maxCell, trend, maxTrend, total: uniqueEvents.length, concreteByOblast, bySource };
   }, [rssItems, fbItems, posts]);
 
   return (
@@ -295,6 +307,9 @@ export default function App() {
               <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
             </Link>
             <a href="#map" className="hover:text-white transition-colors">Карта</a>
+            <a href="#analytics" className="hover:text-white transition-colors">Аналітика</a>
+            <a href="#investigations" className="hover:text-white transition-colors">Розслідування</a>
+            <a href="#rss" className="hover:text-white transition-colors">RSS</a>
             <a href="#feed" className="hover:text-white transition-colors">Стрічка</a>
             <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
               className="hover:text-[#c9a227] transition-colors flex items-center gap-1 font-bold text-white">
@@ -320,6 +335,9 @@ export default function App() {
               <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
             </Link>
             <a href="#map" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Карта</a>
+            <a href="#analytics" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Аналітика</a>
+            <a href="#investigations" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Розслідування</a>
+            <a href="#rss" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>RSS</a>
             <a href="#feed" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Стрічка</a>
             <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
               className="text-white font-bold flex items-center gap-1 py-1 hover:text-[#c9a227] transition-colors">
@@ -488,11 +506,11 @@ export default function App() {
               <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-[#2e2d1e] border border-[#c9a227]/20 p-8 hover:border-[#c9a227]/60 hover:bg-[#363525] transition-all duration-500 group relative">
                   <Activity className="w-8 h-8 mb-6 text-[#c9a227]/40 group-hover:text-[#c9a227] transition-colors" />
-                  <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">SIGINT Аналізатор</h4>
-                  <p className="text-sm text-white/50 leading-snug mb-8">Аналіз радіочастотного спектру та перехоплення сигналів зв'язку ворога в реальному часі.</p>
+                  <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">Прозора аналітика ударів</h4>
+                  <p className="text-sm text-white/50 leading-snug mb-8">Рахуємо тільки події з публічним пруфом: дата, область, джерело та пряме посилання на пост.</p>
                   <div className="flex justify-between items-center font-mono text-[10px] tracking-widest pt-4 border-t border-white/10">
-                    <span className="flex items-center gap-2 text-[#c9a227] animate-pulse"><Radio className="w-3 h-3" /> 424.000 MHZ</span>
-                    <span className="text-white/30">ЗАШИФРОВАНО</span>
+                    <span className="flex items-center gap-2 text-[#c9a227]"><Shield className="w-3 h-3" /> ONLY WITH PROOF</span>
+                    <span className="text-white/30">7 ДНІВ / LIVE</span>
                   </div>
                 </div>
 
@@ -524,97 +542,14 @@ export default function App() {
             </div>
           </motion.div>
 
-          {/* Strike Analytics */}
-          <motion.div variants={fadeIn} className="mb-32 md:mb-48">
-            <div className="border-t border-[#c9a227]/30 pt-12 md:pt-24">
-              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 gap-8">
-                <div className="max-w-3xl">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-6 block">/ СТРАТЕГІЧНИЙ МОНІТОРИНГ</span>
-                  <h2 className="text-5xl md:text-8xl font-bold tracking-tighter uppercase leading-[0.85] mb-4 text-white">
-                    Аналітика <br />Ударів
-                  </h2>
-                </div>
-                <div className="w-full lg:w-auto text-left lg:text-right bg-[#1c1c12] border border-[#c9a227]/20 p-8 lg:p-0 lg:bg-transparent lg:border-0">
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/60 mb-3">/ Рахуємо разом</p>
-                  <div className="text-7xl md:text-9xl font-bold tracking-tighter text-[#c9a227]">{countStrikesFromRss(rssItems)}</div>
-                  <div className="font-mono text-[10px] uppercase tracking-widest mt-2 text-white/20">Всього підтверджених влучань</div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
-                <div className="lg:col-span-7 bg-[#1c1c12] aspect-square md:aspect-video relative overflow-hidden group border border-[#c9a227]/10">
-                  <img
-                    src="missile_reach.png"
-                    alt=""
-                    className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c12] via-transparent to-transparent opacity-80" />
-                  <div className="absolute bottom-8 left-8 right-8 flex justify-between items-center pointer-events-none">
-                    <div className="font-mono text-[10px] text-white/50 space-y-1">
-                      <p className="flex items-center gap-2 text-[#c9a227] font-bold uppercase">
-                        <span className="w-2 h-2 bg-[#c9a227] rounded-full animate-ping" />
-                        СТРАТЕГІЧНИЙ_ЗВ'ЯЗОК_АКТИВНИЙ
-                      </p>
-                      <p className="text-white/40">РАДІУС_МОНІТОРИНГУ: 1500 КМ</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-5 flex flex-col justify-between space-y-12">
-                  <div className="space-y-10">
-                    <div className="bg-[#2e2d1e] border border-[#c9a227]/20 p-8 md:p-12 relative overflow-hidden">
-                      <div className="absolute top-0 right-0 p-4 opacity-5">
-                        <Rocket className="w-32 h-32 -rotate-12 text-[#c9a227]" />
-                      </div>
-                      <span className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227] mb-8 block">/ Ракетна програма</span>
-                      <div className="space-y-8">
-                        {[
-                          { name: 'Паляниця (Реактивний дрон)', progress: 85, dist: '750км' },
-                          { name: 'Нептун (Модернізація R-360)', progress: 95, dist: '400км' },
-                          { name: 'Дальні БПЛА (Бобер/Лютий)', progress: 100, dist: '1200км' },
-                        ].map(m => (
-                          <div key={m.name} className="space-y-3">
-                            <div className="flex justify-between font-mono text-[10px] uppercase tracking-tighter">
-                              <span className="font-bold text-white">{m.name}</span>
-                              <span className="text-[#c9a227]">{m.dist}</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-white/5 overflow-hidden">
-                              <motion.div
-                                initial={{ width: 0 }}
-                                animate={{ width: `${m.progress}%` }}
-                                transition={{ duration: 1.5, delay: 0.5 }}
-                                className="h-full bg-[#c9a227]"
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-px bg-[#c9a227]/10">
-                      <div className="bg-[#2e2d1e] p-8 text-center">
-                        <div className="text-4xl md:text-5xl font-bold mb-2 tracking-tighter text-white">124</div>
-                        <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#c9a227]/60">НПЗ / Резервуари</div>
-                      </div>
-                      <div className="bg-[#2e2d1e] p-8 text-center">
-                        <div className="text-4xl md:text-5xl font-bold mb-2 tracking-tighter text-white">42</div>
-                        <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#c9a227]/60">Авіабази / Склади</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
           {/* 7D Dashboard */}
-          <motion.section variants={fadeIn} className="mb-32 md:mb-48">
+          <motion.section id="analytics" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
             <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ OSINT DASHBOARD</span>
                   <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Карта інтенсивності ударів по областях (7 днів)</h2>
-                  <p className="mt-4 text-white/50 max-w-3xl text-sm">Тільки ударні події з X, Facebook і Telegram. Теплова матриця показує щільність згадок по областях день за днем.</p>
+                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Враховані тільки події, де є дата, згадка удару в тексті та публічне джерело. Кожен доказ нижче містить пряме посилання на первинний пост.</p>
                 </div>
                 <div className="bg-[#1c1c12] border border-[#c9a227]/20 px-6 py-5">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Ударних подій (7 днів)</p>
@@ -664,6 +599,12 @@ export default function App() {
                       </div>
                     ))}
                   </div>
+                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mt-8 mb-3">Джерела (7 днів)</h3>
+                  <div className="space-y-2 font-mono text-[10px] uppercase tracking-widest">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-1"><span className="text-white/60">X / Twitter</span><span className="text-[#c9a227]">{dashboard.bySource.x}</span></div>
+                    <div className="flex items-center justify-between border-b border-white/10 pb-1"><span className="text-white/60">Facebook</span><span className="text-[#c9a227]">{dashboard.bySource.facebook}</span></div>
+                    <div className="flex items-center justify-between border-b border-white/10 pb-1"><span className="text-white/60">Telegram</span><span className="text-[#c9a227]">{dashboard.bySource.telegram}</span></div>
+                  </div>
                 </div>
               </div>
 
@@ -680,18 +621,31 @@ export default function App() {
                         {row.samples.length === 0 ? (
                           <p className="text-xs text-white/40">Немає заголовків у вікні 7 днів.</p>
                         ) : row.samples.map((s) => (
-                          <p key={s} className="text-sm text-white/75 leading-snug">• {s}</p>
+                          <a key={`${row.oblast}-${s.day}-${s.url}`} href={s.url} target="_blank" rel="noreferrer" className="block text-sm text-white/80 leading-snug hover:text-[#c9a227] transition-colors">
+                            • [{s.source}] {s.headline}
+                            <span className="ml-1 text-white/40 font-mono text-[10px]">({s.day.slice(5)} · {s.sourceLabel})</span>
+                          </a>
                         ))}
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
+              <div className="mt-6 bg-[#0f1012] border border-[#c9a227]/20 p-6 md:p-8">
+                <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Методологія підрахунку</h3>
+                <ol className="list-decimal pl-5 space-y-2 text-sm text-white/75 leading-relaxed">
+                  <li>Збираємо пости за останні 7 діб із Telegram, X і Facebook.</li>
+                  <li>Враховуємо лише пости з маркерами удару: `удар`, `влуч`, `strike`, `missile`, `бпла` тощо.</li>
+                  <li>Визначаємо область через словник гео-аліасів у тексті.</li>
+                  <li>Видаляємо дублікати подій за ключем: день + область + джерело + заголовок.</li>
+                  <li>Виводимо тільки події з пруфами: кожен пункт має пряме посилання на першоджерело.</li>
+                </ol>
+              </div>
             </div>
           </motion.section>
 
           {/* Interactive Investigations */}
-          <motion.section variants={fadeIn} className="mb-32 md:mb-48">
+          <motion.section id="investigations" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
             <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
                 <div>
@@ -731,7 +685,7 @@ export default function App() {
           </motion.section>
 
           {/* RSS / X feed */}
-          <motion.section variants={fadeIn} className="mb-32 md:mb-48">
+          <motion.section id="rss" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
             <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
                 <div>
@@ -861,7 +815,7 @@ export default function App() {
       </main>
 
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
-      <footer className="border-t border-[#c9a227]/30 px-4 md:px-8 py-20 md:py-40 bg-[#1c1c12] text-white">
+      <footer id="contacts" className="border-t border-[#c9a227]/30 px-4 md:px-8 py-20 md:py-40 bg-[#1c1c12] text-white scroll-mt-28">
         <div className="max-w-[1800px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-32">
             <div className="md:col-span-6">
@@ -877,9 +831,12 @@ export default function App() {
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/50 block mb-8">/ НАВІГАЦІЯ</span>
               <ul className="space-y-4 font-mono text-xs tracking-widest uppercase text-white/40">
                 <li><Link to="/targets" className="hover:text-[#c9a227] transition-colors flex items-center gap-2"><Target className="w-3 h-3" />БАЗА ЦІЛЕЙ</Link></li>
-                <li><a href="#" className="hover:text-[#c9a227] transition-colors">МЕТОДОЛОГІЯ</a></li>
-                <li><a href="#" className="hover:text-[#c9a227] transition-colors">АРХІВ УДАРІВ</a></li>
-                <li><a href="#" className="hover:text-[#c9a227] transition-colors">КОНТАКТИ</a></li>
+                <li><a href="#map" className="hover:text-[#c9a227] transition-colors">КАРТА</a></li>
+                <li><a href="#analytics" className="hover:text-[#c9a227] transition-colors">АНАЛІТИКА УДАРІВ</a></li>
+                <li><a href="#investigations" className="hover:text-[#c9a227] transition-colors">РОЗСЛІДУВАННЯ</a></li>
+                <li><a href="#rss" className="hover:text-[#c9a227] transition-colors">RSS</a></li>
+                <li><a href="#feed" className="hover:text-[#c9a227] transition-colors">СТРІЧКА</a></li>
+                <li><a href="#contacts" className="hover:text-[#c9a227] transition-colors">КОНТАКТИ</a></li>
               </ul>
             </div>
 
