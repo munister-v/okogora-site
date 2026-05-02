@@ -195,63 +195,26 @@ export default function App() {
               Око Гора
             </h1>
 
-            {/* Ukrainian Armed Forces insignia strip */}
-            <div className="flex flex-wrap items-center gap-6 mb-10 relative z-10">
+            {/* Ukrainian Armed Forces insignia strip — official Wikimedia SVGs */}
+            <div className="flex flex-wrap items-center gap-5 mb-10 relative z-10">
               {[
-                { label: 'ЗСУ', title: 'Збройні сили України', svg: (
-                  <svg viewBox="0 0 40 48" className="w-8 h-10 fill-[#c9a227]">
-                    <path d="M20 2 L22 8 L28 8 L23 12 L25 18 L20 14 L15 18 L17 12 L12 8 L18 8 Z"/>
-                    <line x1="20" y1="18" x2="20" y2="32" stroke="#c9a227" strokeWidth="2"/>
-                    <path d="M12 32 Q20 28 28 32" fill="none" stroke="#c9a227" strokeWidth="2"/>
-                    <path d="M8 38 L32 38 L32 46 L8 46 Z" opacity="0.5"/>
-                    <text x="20" y="44" textAnchor="middle" fontSize="6" fontFamily="monospace" fill="#1c1c12" fontWeight="bold">ЗСУ</text>
-                  </svg>
-                )},
-                { label: 'СВ', title: 'Сухопутні війська', svg: (
-                  <svg viewBox="0 0 40 48" className="w-8 h-10 fill-[#c9a227]">
-                    <path d="M20 4 L23 10 L30 10 L24 14 L26 21 L20 17 L14 21 L16 14 L10 10 L17 10 Z"/>
-                    <path d="M14 26 L20 22 L26 26 L26 38 L14 38 Z" opacity="0.7"/>
-                    <line x1="20" y1="38" x2="20" y2="46" stroke="#c9a227" strokeWidth="2"/>
-                    <line x1="14" y1="43" x2="26" y2="43" stroke="#c9a227" strokeWidth="2"/>
-                  </svg>
-                )},
-                { label: 'ПС', title: 'Повітряні сили', svg: (
-                  <svg viewBox="0 0 48 40" className="w-10 h-8 fill-[#c9a227]">
-                    <path d="M24 8 L28 16 L44 12 L40 20 L44 28 L28 24 L24 32 L20 24 L4 28 L8 20 L4 12 L20 16 Z" opacity="0.8"/>
-                    <circle cx="24" cy="20" r="4"/>
-                    <path d="M20 4 L22 10 L26 4 Z"/>
-                  </svg>
-                )},
-                { label: 'ВМС', title: 'Військово-морські сили', svg: (
-                  <svg viewBox="0 0 40 48" className="w-8 h-10 fill-none" stroke="#c9a227" strokeWidth="1.5">
-                    <circle cx="20" cy="12" r="8" fill="#c9a227" fillOpacity="0.15"/>
-                    <path d="M20 4 L22 9 L28 9 L23 13 L25 19 L20 15 L15 19 L17 13 L12 9 L18 9 Z" fill="#c9a227"/>
-                    <line x1="20" y1="20" x2="20" y2="34"/>
-                    <path d="M10 30 Q20 26 30 30"/>
-                    <path d="M8 38 L12 34 L28 34 L32 38 L8 38 Z"/>
-                    <path d="M14 42 L26 42" strokeWidth="3"/>
-                  </svg>
-                )},
-                { label: 'ССО', title: 'Сили спеціальних операцій', svg: (
-                  <svg viewBox="0 0 40 48" className="w-8 h-10 fill-[#c9a227]">
-                    <path d="M20 2 C12 8 6 18 8 28 C10 38 20 46 20 46 C20 46 30 38 32 28 C34 18 28 8 20 2 Z" fillOpacity="0.2" stroke="#c9a227" strokeWidth="1.5" fill="none"/>
-                    <path d="M20 8 L22 13 L27 13 L23 16 L25 21 L20 18 L15 21 L17 16 L13 13 L18 13 Z"/>
-                    <line x1="20" y1="22" x2="20" y2="34"/>
-                    <path d="M14 30 L20 34 L26 30" fill="none" stroke="#c9a227" strokeWidth="1.5"/>
-                  </svg>
-                )},
-                { label: 'ДШВ', title: "Десантно-штурмові війська", svg: (
-                  <svg viewBox="0 0 48 40" className="w-10 h-8 fill-[#c9a227]">
-                    <path d="M24 4 L28 12 L36 8 L32 16 L40 16 L34 22 L38 30 L30 26 L28 34 L24 26 L20 34 L18 26 L10 30 L14 22 L8 16 L16 16 L12 8 L20 12 Z" opacity="0.8"/>
-                    <circle cx="24" cy="20" r="3"/>
-                  </svg>
-                )},
+                { label: 'СВ',  title: 'Сухопутні війська',           url: 'https://upload.wikimedia.org/wikipedia/commons/3/36/%D0%9D%D0%97_%D0%A1%D0%92.svg' },
+                { label: 'ПС',  title: 'Повітряні сили',              url: 'https://upload.wikimedia.org/wikipedia/commons/5/59/%D0%9D%D0%97_%D0%9F%D0%A1.svg' },
+                { label: 'ВМС', title: 'Військово-морські сили',      url: 'https://upload.wikimedia.org/wikipedia/commons/5/51/%D0%9D%D0%97_%D0%92%D0%9C%D0%A1.svg' },
+                { label: 'ССО', title: 'Сили спеціальних операцій',   url: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/%D0%9D%D0%97_%D0%A1%D0%A1%D0%9E.svg' },
+                { label: 'ДШВ', title: 'Десантно-штурмові війська',   url: 'https://upload.wikimedia.org/wikipedia/commons/8/81/%D0%9D%D0%97_%D0%92%D0%94%D0%92.svg' },
               ].map(branch => (
                 <div key={branch.label} className="flex flex-col items-center gap-1.5 group cursor-default" title={branch.title}>
-                  <div className="w-12 h-12 flex items-center justify-center border border-[#c9a227]/20 bg-[#c9a227]/5 group-hover:border-[#c9a227]/60 group-hover:bg-[#c9a227]/10 transition-all duration-300">
-                    {branch.svg}
+                  <div className="w-14 h-14 flex items-center justify-center border border-[#c9a227]/20 bg-[#c9a227]/5 group-hover:border-[#c9a227]/60 group-hover:bg-[#c9a227]/10 transition-all duration-300 p-1">
+                    <img
+                      src={branch.url}
+                      alt={branch.title}
+                      className="w-full h-full object-contain"
+                      loading="lazy"
+                      onError={e => { (e.target as HTMLImageElement).style.opacity = '0.2'; }}
+                    />
                   </div>
-                  <span className="font-mono text-[8px] tracking-widest text-[#c9a227]/50 group-hover:text-[#c9a227] transition-colors">{branch.label}</span>
+                  <span className="font-mono text-[8px] tracking-widest text-[#c9a227]/50 group-hover:text-[#c9a227] transition-colors uppercase">{branch.label}</span>
                 </div>
               ))}
               <div className="ml-auto hidden md:block font-mono text-[9px] text-white/20 uppercase tracking-widest">
