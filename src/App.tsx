@@ -339,7 +339,15 @@ export default function App() {
         >
 
           {/* Hero Typography */}
-          <motion.div variants={fadeIn} className="mb-16 md:mb-32 relative">
+          <motion.div variants={fadeIn} className="mb-16 md:mb-32 relative overflow-hidden">
+            <div className="absolute inset-0 -z-20 pointer-events-none select-none">
+              <img
+                src="assets-zsu-patch.png"
+                alt=""
+                className="w-full h-full object-cover opacity-[0.08] md:opacity-[0.1] grayscale contrast-125"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0c0d10]/30 via-[#0c0d10]/75 to-[#0c0d10]" />
+            </div>
             <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden pointer-events-none select-none">
               <motion.img
                 src="oko_logo.png"
@@ -374,8 +382,6 @@ export default function App() {
                 { label: 'ВМС', title: 'Військово-морські сили',      url: 'https://upload.wikimedia.org/wikipedia/commons/5/51/%D0%9D%D0%97_%D0%92%D0%9C%D0%A1.svg' },
                 { label: 'ССО', title: 'Сили спеціальних операцій',   url: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/%D0%9D%D0%97_%D0%A1%D0%A1%D0%9E.svg' },
                 { label: 'ДШВ', title: 'Десантно-штурмові війська',   url: 'https://upload.wikimedia.org/wikipedia/commons/8/81/%D0%9D%D0%97_%D0%92%D0%94%D0%92.svg' },
-                { label: 'ТРО', title: 'Сили територіальної оборони', url: 'https://upload.wikimedia.org/wikipedia/commons/9/97/%D0%9D%D0%97_%D0%A2%D1%80%D0%9E.svg' },
-                { label: 'СБС', title: 'Сили безпілотних систем',      url: 'https://upload.wikimedia.org/wikipedia/commons/9/95/%D0%9D%D0%97_%D0%A1%D0%91%D0%A1.svg' },
               ].map(branch => (
                 <div key={branch.label} className="flex flex-col items-center gap-1.5 group cursor-default" title={branch.title}>
                   <div className="w-14 h-14 flex items-center justify-center border border-[#c9a227]/20 bg-[#c9a227]/5 group-hover:border-[#c9a227]/60 group-hover:bg-[#c9a227]/10 transition-all duration-300 p-1">
@@ -394,15 +400,15 @@ export default function App() {
                 СЛАВА_УКРАЇНІ // ГЕРОЯМ_СЛАВА
               </div>
             </div>
-            <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border border-[#c9a227]/25 bg-[#1c1c12]/70 p-4 md:p-5">
-              <p className="text-white/80 text-base md:text-lg font-semibold leading-snug">
-                Онлайн-платформа Telegram-пабліка «Око Гора - новини та аналітика»: оперативний моніторинг, OSINT/HUMINT-стрічка та інтерактивна мапа подій.
+            <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-l-2 border-[#c9a227]/80 bg-[#0f1012]/70 p-4 md:p-5">
+              <p className="text-white/90 text-base md:text-lg font-bold leading-snug">
+                Офіційна онлайн-платформа Telegram-каналу «Око Гора - новини та аналітика». Тут зібрані оперативні зведення, аналітика та інтерактивна мапа подій.
               </p>
               <a
                 href="https://t.me/oko_gora"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 self-start md:self-auto border border-[#c9a227]/50 bg-[#c9a227]/10 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f1d679] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors"
+                className="inline-flex items-center gap-2 self-start md:self-auto border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors"
               >
                 Перейти в Telegram <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
