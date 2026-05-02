@@ -1,9 +1,10 @@
 import { motion } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket } from 'lucide-react';
-import MapService from './components/MapService';
 import { Post } from './types';
+
+const MapService = lazy(() => import('./components/MapService'));
 
 function imageUrl(img: string) {
   if (!img) return '';
@@ -113,7 +114,13 @@ export default function App() {
 
           {/* Map Service Block */}
           <motion.div variants={fadeIn} className="mb-32 md:mb-48 w-full">
-             <MapService />
+            <Suspense fallback={
+              <div className="w-full h-[500px] md:h-[800px] bg-[#0a0a0a] border border-[#111111]/20 flex items-center justify-center">
+                <span className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/20 animate-pulse">ЗАВАНТАЖЕННЯ_МАПИ...</span>
+              </div>
+            }>
+              <MapService />
+            </Suspense>
           </motion.div>
 
           {/* System Utilities & Dashboard */}
