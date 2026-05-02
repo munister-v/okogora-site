@@ -27,8 +27,10 @@ const staggerContainer = {
 type RssItem = {
   id: string;
   title: string;
+  titleUk?: string;
   url: string;
   summary: string;
+  summaryUk?: string;
   publishedAt: string;
   author: string;
   handle: string;
@@ -396,8 +398,8 @@ export default function App() {
                         <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#111111]/45">{item.author}</p>
                         <Rss className="w-3.5 h-3.5 text-[#111111]/30" />
                       </div>
-                      <h3 className="text-xl font-bold tracking-tight mb-3 leading-tight">{item.title}</h3>
-                      <p className="text-sm text-[#111111]/65 leading-relaxed mb-4 line-clamp-4">{formatPreview(item.summary || '', 220)}</p>
+                      <h3 className="text-xl font-bold tracking-tight mb-3 leading-tight">{item.titleUk || item.title}</h3>
+                      <p className="text-sm text-[#111111]/65 leading-relaxed mb-4 line-clamp-4">{formatPreview(item.summaryUk || item.summary || '', 220)}</p>
                       <div className="font-mono text-[9px] uppercase tracking-widest text-[#111111]/35 mb-4">
                         @{item.handle} · {formatRssDate(item.publishedAt)}
                       </div>

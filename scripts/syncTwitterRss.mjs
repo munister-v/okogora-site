@@ -35,6 +35,8 @@ const FEED_FACTORIES = [
   (handle) => `https://rsshub.uocat.com/twitter/user/${handle}`,
 ];
 
+const TRANSLATE_ENDPOINT = 'https://translate.googleapis.com/translate_a/single';
+
 function decodeHtml(input) {
   return (input || '')
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
@@ -77,6 +79,12 @@ function hashKey(input) {
   return crypto.createHash('sha1').update(input).digest('hex').slice(0, 12);
 }
 
+function isProbablyUkrainian(text) {
+  if (!text) return false;
+  const t = text.toLowerCase();
+  return /[іїєґ]/.test(t);
+}
+
 async function fetchText(url) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12000);
@@ -94,6 +102,44 @@ async function fetchText(url) {
     const text = await res.text();
     if (!/<rss|<feed/i.test(text)) throw new Error('not_feed');
     return text;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+const translationCache = new Map();
+
+async function translateToUkrainian(text) {
+  const normalized = (text || '').trim();
+  if (!normalized) return '';
+  if (isProbablyUkrainian(normalized)) return normalized;
+  if (translationCache.has(normalized)) return translationCache.get(normalized);
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12000);
+
+  try {
+    const url = `${TRANSLATE_ENDPOINT}?client=gtx&sl=auto&tl=uk&dt=t&q=${encodeURIComponent(normalized)}`;
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; okogora-x-rss/1.0)',
+        Accept: 'application/json,text/plain,*/*',
+      },
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new Error(`translate_http_${res.status}`);
+
+    const data = await res.json();
+    const translated = Array.isArray(data?.[0])
+      ? data[0].map((chunk) => chunk?.[0] || '').join('').trim()
+      : '';
+
+    const out = translated || normalized;
+    translationCache.set(normalized, out);
+    return out;
+  } catch {
+    translationCache.set(normalized, normalized);
+    return normalized;
   } finally {
     clearTimeout(timer);
   }
@@ -192,7 +238,18 @@ async function main() {
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     .slice(0, cfg.maxItems);
 
-  let finalItems = filtered;
+  const translated = [];
+  for (const item of filtered) {
+    const translatedTitle = await translateToUkrainian(item.title || '');
+    const translatedSummary = await translateToUkrainian(item.summary || '');
+    translated.push({
+      ...item,
+      titleUk: translatedTitle,
+      summaryUk: translatedSummary,
+    });
+  }
+
+  let finalItems = translated;
 
   if (finalItems.length === 0) {
     try {
