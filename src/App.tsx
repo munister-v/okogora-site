@@ -1,8 +1,15 @@
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
-import { ArrowUpRight, Radio, Eye, Activity, Database, Shield, Terminal, Layers, UploadCloud, Target, Rocket, Navigation } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket } from 'lucide-react';
 import MapService from './components/MapService';
 import { Post } from './types';
+
+function imageUrl(img: string) {
+  if (!img) return '';
+  if (img.startsWith('http')) return img;
+  return `https://raw.githubusercontent.com/munister-v/okogora/main/images/${img}`;
+}
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -298,13 +305,15 @@ export default function App() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 md:gap-24">
               {posts.map((post) => (
-                <div key={post.id} className="group cursor-pointer">
+                <Link key={post.id} to={`/post/${post.id}`} className="group block">
                   <div className="aspect-[16/9] w-full overflow-hidden bg-zinc-100 mb-6 relative">
-                    <img 
-                      src={post.image} 
-                      alt={post.title}
-                      className="w-full h-full object-cover grayscale contrast-[1.15] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-[0.22,1,0.36,1]"
-                    />
+                    {post.image && (
+                      <img
+                        src={imageUrl(post.image)}
+                        alt={post.title}
+                        className="w-full h-full object-cover grayscale contrast-[1.15] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-[0.22,1,0.36,1]"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-[#111111]/5 group-hover:bg-transparent transition-colors" />
                   </div>
                   <div className="flex gap-4 mb-4 font-mono text-[9px] tracking-[0.2em] uppercase text-[#111111]/40">
@@ -324,7 +333,7 @@ export default function App() {
                       </span>
                     ))}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </motion.div>

@@ -1,0 +1,187 @@
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { motion } from 'motion/react';
+import { ArrowLeft, ArrowUpRight, Calendar, Tag } from 'lucide-react';
+import { Post } from '../types';
+
+function imageUrl(img: string) {
+  if (!img) return '';
+  if (img.startsWith('http')) return img;
+  return `https://raw.githubusercontent.com/munister-v/okogora/main/images/${img}`;
+}
+
+export default function PostPage() {
+  const { id } = useParams<{ id: string }>();
+  const [post, setPost] = useState<Post | null>(null);
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/data/posts.json')
+      .then(r => r.json())
+      .then((data: Post[]) => {
+        setAllPosts(data);
+        setPost(data.find(p => p.id === id) || null);
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  const related = allPosts.filter(p => p.id !== id).slice(0, 2);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#f4f4f4] flex items-center justify-center">
+        <div className="font-mono text-[10px] uppercase tracking-widest text-[#111111]/30 animate-pulse">
+          Завантаження...
+        </div>
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="min-h-screen bg-[#f4f4f4] flex flex-col items-center justify-center gap-6">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-[#111111]/40">
+          Статтю не знайдено
+        </p>
+        <Link to="/" className="font-mono text-xs uppercase tracking-widest underline hover:opacity-60 transition-opacity">
+          На головну
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f4f4f4] text-[#111111] selection:bg-[#111111] selection:text-[#f4f4f4]">
+      {/* Nav */}
+      <nav className="fixed top-0 left-0 right-0 z-[1000] border-b border-[#111111]/20 bg-[#f4f4f4]/90 backdrop-blur-md">
+        <div className="grid grid-cols-2 md:grid-cols-4 px-4 md:px-8 py-3 md:py-4 text-[10px] md:text-xs font-mono uppercase tracking-widest items-center">
+          <div className="col-span-1 flex items-center gap-2">
+            <div className="w-4 h-4 bg-[#111111] rounded-full flex items-center justify-center">
+              <div className="w-1.5 h-1.5 bg-[#f4f4f4] rounded-full animate-pulse" />
+            </div>
+            <Link to="/" className="font-bold tracking-tighter hover:opacity-60 transition-opacity">ОКО ГОРА</Link>
+          </div>
+          <div className="hidden md:block col-span-2 text-center text-[#111111]/40">
+            СТРАТЕГІЧНИЙ_OSINT_МОНІТОР_V3.0_UA
+          </div>
+          <div className="col-span-1 flex justify-end">
+            <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
+              className="hover:opacity-60 transition-opacity flex items-center gap-1 font-bold">
+              ТЕЛЕГРАМ <ArrowUpRight className="w-3 h-3" />
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <main className="pt-24 md:pt-32 pb-24">
+        {/* Back */}
+        <div className="px-4 md:px-8 mb-8 md:mb-12 max-w-[1000px] mx-auto">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-[#111111]/40 hover:text-[#111111] transition-colors"
+          >
+            <ArrowLeft className="w-3 h-3" /> Назад
+          </Link>
+        </div>
+
+        <motion.article
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-[1000px] mx-auto px-4 md:px-8"
+        >
+          {/* Meta */}
+          <div className="flex flex-wrap items-center gap-4 mb-6 font-mono text-[9px] uppercase tracking-[0.2em] text-[#111111]/40">
+            <span className="font-bold text-[#111111]/70">{post.id}</span>
+            <span className="flex items-center gap-1.5">
+              <Calendar className="w-3 h-3" /> {post.date}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter uppercase leading-[0.9] mb-10 md:mb-16">
+            {post.title}
+          </h1>
+
+          {/* Hero image */}
+          {post.image && (
+            <div className="w-full aspect-video overflow-hidden bg-zinc-200 mb-10 md:mb-16 relative">
+              <img
+                src={imageUrl(post.image)}
+                alt={post.title}
+                className="w-full h-full object-cover grayscale contrast-[1.1]"
+              />
+              <div className="absolute inset-0 bg-[#111111]/5" />
+            </div>
+          )}
+
+          {/* Body */}
+          <div className="max-w-2xl">
+            <p className="text-lg md:text-xl leading-relaxed text-[#111111]/80 mb-10">
+              {post.text}
+            </p>
+
+            {/* Tags */}
+            {post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-8 border-t border-[#111111]/10">
+                <Tag className="w-3 h-3 text-[#111111]/30 mt-0.5" />
+                {post.tags.map(tag => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 border border-[#111111]/10 font-mono text-[9px] tracking-widest uppercase text-[#111111]/50"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </motion.article>
+
+        {/* Related posts */}
+        {related.length > 0 && (
+          <div className="max-w-[1000px] mx-auto px-4 md:px-8 mt-24 md:mt-32">
+            <div className="border-t border-[#111111] pt-10 mb-10">
+              <h2 className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#111111]/40">
+                / ТАКОЖ ЧИТАЙТЕ
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+              {related.map(p => (
+                <Link key={p.id} to={`/post/${p.id}`} className="group">
+                  {p.image && (
+                    <div className="aspect-video w-full overflow-hidden bg-zinc-100 mb-5">
+                      <img
+                        src={imageUrl(p.image)}
+                        alt={p.title}
+                        className="w-full h-full object-cover grayscale contrast-[1.15] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                      />
+                    </div>
+                  )}
+                  <div className="font-mono text-[9px] text-[#111111]/40 uppercase tracking-[0.2em] mb-2">
+                    {p.id} · {p.date}
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tight group-hover:underline transition-all">
+                    {p.title}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </main>
+
+      <footer className="border-t border-[#111111] px-4 md:px-8 py-16 bg-[#111111] text-[#f4f4f4]">
+        <div className="max-w-[1000px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <Link to="/" className="text-3xl font-bold tracking-tighter uppercase hover:opacity-60 transition-opacity">
+            Око Гора
+          </Link>
+          <div className="font-mono text-[9px] text-white/20 uppercase tracking-widest">
+            © {new Date().getFullYear()} OKO GORA GROUP
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Post } from '../types';
 import { verifyToken, savePosts } from '../lib/github';
+import ImageUploader from '../components/ImageUploader';
 import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader } from 'lucide-react';
 
 const TOKEN_KEY = 'oko_admin_token';
@@ -261,15 +262,11 @@ export default function AdminPage() {
               />
             </div>
 
-            <div>
-              <label className="block font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/30 mb-2">ЗОБРАЖЕННЯ (ім'я файлу)</label>
-              <input
-                value={editing.image}
-                onChange={e => setEditing({ ...editing, image: e.target.value })}
-                placeholder="photo.png"
-                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/10 text-white font-mono text-sm px-4 py-2.5 outline-none focus:border-[#f4f4f4]/40 transition-colors placeholder:text-[#f4f4f4]/20"
-              />
-            </div>
+            <ImageUploader
+              token={token}
+              value={editing.image}
+              onChange={img => setEditing({ ...editing, image: img })}
+            />
 
             <div>
               <label className="block font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/30 mb-2">ТЕГИ</label>
