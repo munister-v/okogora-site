@@ -4,6 +4,23 @@ import { motion } from 'motion/react';
 import { ArrowLeft, ArrowUpRight, Calendar, Tag } from 'lucide-react';
 import { Post } from '../types';
 import { normalizePosts, postTelegramUrl, resolveImageUrl, splitParagraphs } from '../lib/posts';
+import { setSeo } from '../lib/seo';
+
+function renderInlineLinks(text: string) {
+  const regex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(regex);
+
+  return parts.map((part, idx) => {
+    if (/^https?:\/\//.test(part)) {
+      return (
+        <a key={`l-${idx}`} href={part} target="_blank" rel="noreferrer" className="underline decoration-[#111111]/30 hover:decoration-[#111111] break-all">
+          {part}
+        </a>
+      );
+    }
+    return <span key={`t-${idx}`}>{part}</span>;
+  });
+}
 
 export default function PostPage() {
   const { id } = useParams<{ id: string }>();
@@ -21,6 +38,17 @@ export default function PostPage() {
       })
       .finally(() => setLoading(false));
   }, [id]);
+
+  useEffect(() => {
+    if (!post) return;
+    setSeo({
+      title: post.title,
+      description: post.text.slice(0, 160),
+      path: `/post/${post.id}`,
+      image: resolveImageUrl(post.image) || 'https://okogora.com.ua/oko_logo.png',
+      type: 'article',
+    });
+  }, [post]);
 
   const related = allPosts.filter(p => p.id !== id).slice(0, 2);
 
@@ -122,7 +150,19 @@ export default function PostPage() {
           <div className="max-w-2xl">
             <div className="space-y-5 text-lg md:text-xl leading-relaxed text-[#111111]/82 mb-10">
               {splitParagraphs(post.text).map((paragraph, idx) => (
-                <p key={`${post.id}-p-${idx}`}>{paragraph}</p>
+                /^[\-\u2022]\s/m.test(paragraph) ? (
+                  <ul key={`${post.id}-p-${idx}`} className="space-y-2 pl-5 list-disc marker:text-[#111111]/45">
+                    {paragraph
+                      .split('\n')
+                      .map(line => line.trim())
+                      .filter(Boolean)
+                      .map((line, liIdx) => (
+                        <li key={`${post.id}-p-${idx}-li-${liIdx}`}>{renderInlineLinks(line.replace(/^[\-\u2022]\s*/, ''))}</li>
+                      ))}
+                  </ul>
+                ) : (
+                  <p key={`${post.id}-p-${idx}`}>{renderInlineLinks(paragraph)}</p>
+                )
               ))}
             </div>
 

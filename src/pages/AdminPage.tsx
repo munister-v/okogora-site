@@ -4,6 +4,7 @@ import { verifyToken, savePosts, triggerTelegramSync, fetchWorkflowDashboard, Wo
 import ImageUploader from '../components/ImageUploader';
 import { importFromTelegraph } from '../lib/telegraph';
 import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader, Download, RefreshCw } from 'lucide-react';
+import { setSeo } from '../lib/seo';
 
 const TOKEN_KEY = 'oko_admin_token';
 const USER_KEY = 'oko_admin_user';
@@ -45,6 +46,15 @@ export default function AdminPage() {
   const [deployRun, setDeployRun] = useState<WorkflowRunStatus | null>(null);
 
   const isAuthed = !!token && !!username;
+
+  useEffect(() => {
+    setSeo({
+      title: 'Адмін-панель',
+      description: 'Внутрішня панель керування контентом Око Гора.',
+      path: '/admin',
+      noindex: true,
+    });
+  }, []);
 
   useEffect(() => {
     if (isAuthed) {

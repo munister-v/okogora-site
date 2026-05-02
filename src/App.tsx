@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket, Navigation } from 'lucide-react';
 import { Post } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
+import { setSeo } from './lib/seo';
 
 const MapService = lazy(() => import('./components/MapService'));
 
@@ -27,6 +28,13 @@ export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
+    setSeo({
+      title: 'Стратегічний OSINT Монітор',
+      description: 'Око Гора: OSINT-аналітика, аеророзвідка, інтерактивна мапа та розслідування відкритих джерел.',
+      path: '/',
+      type: 'website',
+    });
+
     fetch('/data/posts.json')
       .then(r => r.json())
       .then((data: Post[]) => setPosts(normalizePosts(data)))
@@ -295,6 +303,47 @@ export default function App() {
               </ul>
             </div>
           </motion.div>
+
+          {/* Interactive Investigations */}
+          <motion.section variants={fadeIn} className="mb-32 md:mb-48">
+            <div className="border-t border-[#111111] pt-12 md:pt-16">
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#111111]/40 mb-4 block">/ НОВИЙ РОЗДІЛ</span>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Інтерактивні розслідування</h2>
+                </div>
+                <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer" className="font-mono text-xs uppercase tracking-widest text-[#111111]/45 hover:text-[#111111] transition-colors">
+                  Публічний фід доказів <ArrowUpRight className="inline w-3 h-3 ml-1" />
+                </a>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {[
+                  {
+                    title: 'Ланцюг подій',
+                    text: 'Покрокова реконструкція інцидентів за часом, географією та джерелами.',
+                    code: 'CASEFLOW',
+                  },
+                  {
+                    title: 'Гео-докази',
+                    text: 'Прив’язка кадрів до координат, об’єктів інфраструктури та супутникових шарів.',
+                    code: 'GEO-TRACE',
+                  },
+                  {
+                    title: 'Порівняння версій',
+                    text: 'Зіставлення заяв, медіа та фактичних змін на місцевості з маркерами довіри.',
+                    code: 'EVIDENCE-DELTA',
+                  },
+                ].map((item) => (
+                  <article key={item.code} className="bg-white border border-[#111111]/10 p-6 md:p-8 hover:border-[#111111]/40 transition-colors">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#111111]/35 mb-4">{item.code}</p>
+                    <h3 className="text-2xl font-bold tracking-tight uppercase mb-4">{item.title}</h3>
+                    <p className="text-[#111111]/65 text-sm leading-relaxed">{item.text}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </motion.section>
 
           {/* Feed Grid */}
           <motion.div variants={fadeIn} className="mb-32">

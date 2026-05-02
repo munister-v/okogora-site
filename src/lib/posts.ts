@@ -4,9 +4,20 @@ function normalizeTextKey(text: string): string {
   return text
     .replace(/\s+/g, ' ')
     .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .replace(/https?:\/\/\S+/g, '')
+    .replace(/[^\p{L}\p{N}\s]/gu, '')
     .trim()
     .toLowerCase()
     .slice(0, 220);
+}
+
+function normalizeTitleKey(text: string): string {
+  return text
+    .replace(/\s+/g, ' ')
+    .replace(/[^\p{L}\p{N}\s]/gu, '')
+    .trim()
+    .toLowerCase()
+    .slice(0, 110);
 }
 
 export function postTelegramUrl(post: Post, channel = 'oko_gora'): string {
@@ -19,6 +30,8 @@ export function postTelegramUrl(post: Post, channel = 'oko_gora'): string {
 export function normalizePosts(posts: Post[]): Post[] {
   const seenIds = new Set<string>();
   const seenTextKeys = new Set<string>();
+  const seenTitleKeys = new Set<string>();
+  const seenTelegramUrls = new Set<string>();
   const result: Post[] = [];
 
   for (const p of posts || []) {
@@ -27,16 +40,26 @@ export function normalizePosts(posts: Post[]): Post[] {
     const id = String(p.id).trim();
     if (seenIds.has(id)) continue;
 
+    const titleKey = normalizeTitleKey(p.title || '');
     const key = normalizeTextKey(`${p.title}\n${p.text || ''}`);
+    const tg = (p.telegramUrl || '').trim();
+
     if (key && seenTextKeys.has(key)) continue;
+    if (titleKey && seenTitleKeys.has(titleKey) && key.length < 80) continue;
+    if (tg && seenTelegramUrls.has(tg)) continue;
 
     seenIds.add(id);
     if (key) seenTextKeys.add(key);
+    if (titleKey) seenTitleKeys.add(titleKey);
+    if (tg) seenTelegramUrls.add(tg);
 
     result.push({
       ...p,
       title: String(p.title).trim(),
-      text: String(p.text || '').trim(),
+      text: String(p.text || '')
+        .replace(/\r/g, '')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim(),
       image: String(p.image || '').trim(),
       telegramUrl: p.telegramUrl || postTelegramUrl(p),
       tags: Array.isArray(p.tags) ? p.tags : [],
