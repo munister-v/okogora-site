@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Post } from '../types';
-import { verifyToken, savePosts, saveRssConfig, triggerTelegramSync, triggerXRssSync, fetchWorkflowDashboard, WorkflowRunStatus, RssSyncConfig } from '../lib/github';
+import { verifyToken, savePosts, saveRssConfig, triggerTelegramSync, triggerXRssSync, triggerFacebookRssSync, fetchWorkflowDashboard, WorkflowRunStatus, RssSyncConfig } from '../lib/github';
 import ImageUploader from '../components/ImageUploader';
 import { importFromTelegraph } from '../lib/telegraph';
-import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader, Download, RefreshCw } from 'lucide-react';
+import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader, Download, RefreshCw, Sparkles, CircleHelp } from 'lucide-react';
 import { setSeo } from '../lib/seo';
 
 const TOKEN_KEY = 'oko_admin_token';
@@ -61,8 +61,10 @@ export default function AdminPage() {
   const [workflowError, setWorkflowError] = useState('');
   const [syncRun, setSyncRun] = useState<WorkflowRunStatus | null>(null);
   const [xRssRun, setXRssRun] = useState<WorkflowRunStatus | null>(null);
+  const [fbRssRun, setFbRssRun] = useState<WorkflowRunStatus | null>(null);
   const [deployRun, setDeployRun] = useState<WorkflowRunStatus | null>(null);
   const [xRssLoading, setXRssLoading] = useState(false);
+  const [fbRssLoading, setFbRssLoading] = useState(false);
 
   const [rssConfig, setRssConfig] = useState<RssSyncConfig>(defaultRssConfig);
   const [rssConfigLoading, setRssConfigLoading] = useState(false);
@@ -97,6 +99,8 @@ export default function AdminPage() {
       syncRun?.status === 'in_progress' ||
       xRssRun?.status === 'queued' ||
       xRssRun?.status === 'in_progress' ||
+      fbRssRun?.status === 'queued' ||
+      fbRssRun?.status === 'in_progress' ||
       deployRun?.status === 'queued' ||
       deployRun?.status === 'in_progress';
     if (!shouldPoll) return;
@@ -106,7 +110,7 @@ export default function AdminPage() {
     }, 7000);
 
     return () => clearInterval(timer);
-  }, [isAuthed, syncRun?.status, xRssRun?.status, deployRun?.status]);
+  }, [isAuthed, syncRun?.status, xRssRun?.status, fbRssRun?.status, deployRun?.status]);
 
   async function fetchPosts() {
     setLoadingPosts(true);
@@ -241,6 +245,23 @@ export default function AdminPage() {
     }
   }
 
+  async function handleFacebookRssSync() {
+    setFbRssLoading(true);
+    setSaveStatus('idle');
+    try {
+      await triggerFacebookRssSync(token);
+      setSaveStatus('ok');
+      setSaveMsg('Facebook RSS sync запущено. Статус нижче в Pipeline Monitor');
+      await refreshWorkflowStatus();
+    } catch (e: any) {
+      setSaveStatus('error');
+      setSaveMsg(e.message || 'Не вдалося запустити Facebook RSS sync');
+    } finally {
+      setFbRssLoading(false);
+      setTimeout(() => setSaveStatus('idle'), 5000);
+    }
+  }
+
   async function fetchRssConfigFromSite() {
     setRssConfigLoading(true);
     try {
@@ -316,6 +337,7 @@ export default function AdminPage() {
       const data = await fetchWorkflowDashboard(token);
       setSyncRun(data.sync);
       setXRssRun(data.xRssSync);
+      setFbRssRun(data.fbRssSync);
       setDeployRun(data.deploy);
     } catch (e: any) {
       setWorkflowError(e.message || 'Не вдалося отримати статус workflow');
@@ -370,12 +392,22 @@ export default function AdminPage() {
     if (editing) setEditing({ ...editing, tags: editing.tags.filter(t => t !== tag) });
   }
 
+  const isAnySyncRunning =
+    syncRun?.status === 'queued' ||
+    syncRun?.status === 'in_progress' ||
+    xRssRun?.status === 'queued' ||
+    xRssRun?.status === 'in_progress' ||
+    fbRssRun?.status === 'queued' ||
+    fbRssRun?.status === 'in_progress' ||
+    deployRun?.status === 'queued' ||
+    deployRun?.status === 'in_progress';
+
   // ── Login screen ──────────────────────────────────────────────────────────
   if (!isAuthed) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[radial-gradient(circle_at_top,#1a1a1a_0%,#0a0a0a_45%,#070707_100%)] flex items-center justify-center p-4 sm:p-6">
         <div className="w-full max-w-md">
-          <div className="border border-[#f4f4f4]/10 bg-[#111111] p-10">
+          <div className="border border-[#f4f4f4]/10 bg-[#111111]/95 backdrop-blur-sm p-6 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_30px_70px_rgba(0,0,0,0.45)]">
             <div className="flex items-center gap-3 mb-10 pb-6 border-b border-[#f4f4f4]/10">
               <Shield className="w-5 h-5 text-[#f4f4f4]/40" />
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#f4f4f4]/80">ОКО ГОРА // АДМІН</span>
@@ -415,17 +447,23 @@ export default function AdminPage() {
               <button
                 onClick={handleLogin}
                 disabled={!tokenInput || authLoading}
-                className="w-full bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest py-3 hover:bg-[#252519] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-white text-[#111111] font-mono font-extrabold text-xs uppercase tracking-widest py-3 hover:bg-[#f4f4f4] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
               >
                 {authLoading ? <Loader className="w-4 h-4 animate-spin" /> : <Shield className="w-4 h-4" />}
                 {authLoading ? 'ПЕРЕВІРКА...' : 'УВІЙТИ'}
               </button>
             </div>
 
-            <p className="mt-8 text-[#f4f4f4]/20 font-mono text-[9px] leading-relaxed">
+            <p className="mt-8 text-[#f4f4f4]/25 font-mono text-[10px] leading-relaxed font-medium">
               Токен зберігається тільки локально у браузері.<br />
               Потрібні права: <span className="text-[#f4f4f4]/50">repo</span> (для запису в репозиторій).
             </p>
+            <div className="mt-5 p-3 border border-[#f4f4f4]/10 bg-[#f4f4f4]/[0.03]">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/55 mb-1">Підказка</p>
+              <p className="text-[#f4f4f4]/45 text-xs font-medium leading-relaxed">
+                Після входу ти зможеш запускати SYNC, редагувати стрічку та дивитись живий статус деплою прямо тут.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -435,7 +473,7 @@ export default function AdminPage() {
   // ── Editor overlay ────────────────────────────────────────────────────────
   if (editing) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-[#f4f4f4] p-4 md:p-8">
+      <div className="min-h-screen bg-[radial-gradient(circle_at_top,#151515_0%,#0a0a0a_50%,#060606_100%)] text-[#f4f4f4] p-3 md:p-8">
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-8 pb-6 border-b border-[#f4f4f4]/10">
@@ -451,8 +489,8 @@ export default function AdminPage() {
           </div>
 
           {/* Form */}
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-6 border border-[#f4f4f4]/10 bg-[#101010]/90 p-4 md:p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/30 mb-2">ID</label>
                 <input
@@ -477,7 +515,7 @@ export default function AdminPage() {
                 value={editing.title}
                 onChange={e => setEditing({ ...editing, title: e.target.value })}
                 placeholder="Заголовок статті..."
-                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/10 text-white text-lg px-4 py-3 outline-none focus:border-[#f4f4f4]/40 transition-colors placeholder:text-[#f4f4f4]/20"
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/10 text-white text-lg md:text-xl font-semibold px-4 py-3 outline-none focus:border-[#f4f4f4]/40 transition-colors placeholder:text-[#f4f4f4]/20"
               />
             </div>
 
@@ -498,7 +536,7 @@ export default function AdminPage() {
                 value={editing.text}
                 onChange={e => setEditing({ ...editing, text: e.target.value })}
                 placeholder="Текст статті..."
-                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/10 text-white text-sm px-4 py-3 outline-none focus:border-[#f4f4f4]/40 transition-colors resize-none leading-relaxed placeholder:text-[#f4f4f4]/20"
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/10 text-white text-sm md:text-base font-medium px-4 py-3 outline-none focus:border-[#f4f4f4]/40 transition-colors resize-none leading-relaxed placeholder:text-[#f4f4f4]/20"
               />
             </div>
 
@@ -536,17 +574,17 @@ export default function AdminPage() {
           </div>
 
           {/* Actions */}
-          <div className="mt-10 flex items-center justify-between pt-6 border-t border-[#f4f4f4]/10">
+          <div className="mt-10 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between pt-6 border-t border-[#f4f4f4]/10">
             <button
               onClick={() => { setEditing(null); setIsNew(false); }}
-              className="font-mono text-xs uppercase tracking-widest text-[#f4f4f4]/30 hover:text-white transition-colors"
+              className="font-mono text-xs uppercase tracking-widest text-[#f4f4f4]/45 hover:text-white transition-colors text-left"
             >
               СКАСУВАТИ
             </button>
             <button
               onClick={handleSave}
               disabled={saving || !editing.title}
-              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-8 py-3 hover:bg-[#252519] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center justify-center gap-2 bg-white text-[#111111] font-mono font-extrabold text-xs uppercase tracking-widest px-8 py-3 hover:bg-[#f4f4f4] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               {saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
               {saving ? 'ЗБЕРЕЖЕННЯ...' : 'ЗБЕРЕГТИ І ДЕПЛОЇТИ'}
@@ -559,15 +597,15 @@ export default function AdminPage() {
 
   // ── Main admin dashboard ──────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#f4f4f4]">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#151515_0%,#0a0a0a_45%,#060606_100%)] text-[#f4f4f4]">
       {/* Top bar */}
-      <div className="border-b border-[#f4f4f4]/10 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <div className="sticky top-0 z-30 border-b border-[#f4f4f4]/10 px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#0c0c0c]/90 backdrop-blur-md">
+        <div className="flex items-center gap-3 min-w-0">
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <span className="font-mono text-xs uppercase tracking-widest text-[#f4f4f4]/80">ОКО ГОРА // АДМІН</span>
-          <span className="font-mono text-[9px] text-[#f4f4f4]/20 ml-4">@{username}</span>
+          <span className="font-mono text-xs uppercase tracking-widest text-[#f4f4f4]/90 font-bold">ОКО ГОРА // АДМІН</span>
+          <span className="font-mono text-[10px] text-[#f4f4f4]/35 ml-2 truncate">@{username}</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 self-end sm:self-auto">
           <a href="/" className="font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/30 hover:text-white transition-colors flex items-center gap-1.5">
             <Eye className="w-3 h-3" /> САЙТ
           </a>
@@ -577,35 +615,55 @@ export default function AdminPage() {
         </div>
       </div>
 
+      {/* Mobile Sticky Actions */}
+      <div className="xl:hidden sticky top-[78px] z-20 border-b border-[#f4f4f4]/10 bg-[#0b0b0b]/95 backdrop-blur-md px-4 py-2">
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => { setEditing(emptyPost()); setIsNew(true); }}
+            className="flex items-center justify-center gap-1.5 bg-white text-[#111111] font-mono font-extrabold text-[10px] uppercase tracking-widest px-3 py-2.5 hover:bg-[#f4f4f4] transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5" /> Нова стаття
+          </button>
+          <button
+            onClick={refreshWorkflowStatus}
+            disabled={workflowLoading}
+            className="flex items-center justify-center gap-1.5 border border-[#f4f4f4]/20 text-[#f4f4f4]/80 font-mono font-bold text-[10px] uppercase tracking-widest px-3 py-2.5 hover:text-white hover:border-[#f4f4f4]/60 transition-colors disabled:opacity-40"
+          >
+            {workflowLoading ? <Loader className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
+            Status
+          </button>
+        </div>
+      </div>
+
       {/* Status toast */}
       {saveStatus !== 'idle' && (
-        <div className={`flex items-center gap-2 px-6 py-3 font-mono text-xs border-b ${saveStatus === 'ok' ? 'bg-green-500/10 border-green-500/20 text-green-400' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
+        <div className={`mx-4 sm:mx-6 mt-4 flex items-center gap-2 px-4 py-3 font-mono text-xs md:text-sm font-semibold border ${saveStatus === 'ok' ? 'bg-green-500/10 border-green-500/20 text-green-300' : 'bg-red-500/10 border-red-500/20 text-red-300'}`}>
           {saveStatus === 'ok' ? <CheckCircle className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
           {saveMsg}
           {saveStatus === 'ok' && <span className="text-[#f4f4f4]/30 ml-2">— GitHub Actions деплой запущено автоматично</span>}
         </div>
       )}
 
-      <div className="max-w-5xl mx-auto px-6 py-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         {/* Header */}
-        <div className="flex items-end justify-between mb-10">
+        <div className="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-6 mb-8">
           <div>
-            <h1 className="text-4xl font-bold uppercase tracking-tighter mb-1">Статті</h1>
-            <p className="font-mono text-[10px] text-[#f4f4f4]/30 uppercase tracking-widest">{posts.length} публікацій</p>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tighter mb-1">Статті</h1>
+            <p className="font-mono text-[11px] text-[#f4f4f4]/45 uppercase tracking-widest font-semibold">{posts.length} публікацій</p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="w-full xl:w-auto flex flex-wrap items-center gap-2 sm:gap-3">
             {/* Telegraph import */}
             {showTgInput ? (
-              <div className="flex items-center gap-2">
-                <div className="flex flex-col gap-1">
-                  <div className="flex gap-2">
+              <div className="w-full xl:w-auto flex items-center gap-2">
+                <div className="flex flex-col gap-1 w-full">
+                  <div className="flex flex-col sm:flex-row gap-2">
                     <input
                       autoFocus
                       value={tgUrl}
                       onChange={e => { setTgUrl(e.target.value); setTgError(''); }}
                       onKeyDown={e => e.key === 'Enter' && handleTelegraphImport()}
                       placeholder="https://telegra.ph/..."
-                      className="w-72 bg-[#1a1a1a] border border-[#f4f4f4]/20 text-white font-mono text-xs px-3 py-2.5 outline-none focus:border-[#f4f4f4]/50 placeholder:text-[#f4f4f4]/20 transition-colors"
+                      className="w-full sm:w-80 bg-[#1a1a1a] border border-[#f4f4f4]/20 text-white font-mono text-xs px-3 py-2.5 outline-none focus:border-[#f4f4f4]/50 placeholder:text-[#f4f4f4]/20 transition-colors"
                     />
                     <button
                       onClick={handleTelegraphImport}
@@ -617,7 +675,7 @@ export default function AdminPage() {
                     </button>
                     <button
                       onClick={() => { setShowTgInput(false); setTgUrl(''); setTgError(''); }}
-                      className="px-3 py-2.5 border border-[#f4f4f4]/10 text-[#f4f4f4]/30 hover:text-white transition-colors"
+                      className="px-3 py-2.5 border border-[#f4f4f4]/10 text-[#f4f4f4]/40 hover:text-white transition-colors"
                     >
                       <X className="w-3 h-3" />
                     </button>
@@ -632,7 +690,7 @@ export default function AdminPage() {
             ) : (
               <button
                 onClick={() => setShowTgInput(true)}
-                className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-5 py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors"
+                className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/65 font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 sm:px-5 sm:py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors"
               >
                 <Download className="w-4 h-4" /> TELEGRAPH
               </button>
@@ -641,7 +699,7 @@ export default function AdminPage() {
             <button
               onClick={handleTelegramSync}
               disabled={syncLoading}
-              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-5 py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/65 font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 sm:px-5 sm:py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               title="Запустити GitHub Action sync-telegram-posts.yml"
             >
               {syncLoading ? <Loader className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
@@ -651,17 +709,26 @@ export default function AdminPage() {
             <button
               onClick={handleXRssSync}
               disabled={xRssLoading}
-              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-5 py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/65 font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 sm:px-5 sm:py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               title="Запустити GitHub Action sync-x-rss.yml"
             >
               {xRssLoading ? <Loader className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
               {xRssLoading ? 'SYNC...' : 'SYNC X RSS'}
             </button>
+            <button
+              onClick={handleFacebookRssSync}
+              disabled={fbRssLoading}
+              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/65 font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 sm:px-5 sm:py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              title="Запустити GitHub Action sync-facebook-rss.yml"
+            >
+              {fbRssLoading ? <Loader className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+              {fbRssLoading ? 'SYNC...' : 'SYNC FB RSS'}
+            </button>
 
             <button
               onClick={refreshWorkflowStatus}
               disabled={workflowLoading}
-              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-4 py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/65 font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 sm:py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               title="Оновити статус pipeline"
             >
               {workflowLoading ? <Loader className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
@@ -670,29 +737,49 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setEditing(emptyPost()); setIsNew(true); }}
-              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-6 py-3 hover:bg-[#252519] transition-colors"
+              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-extrabold text-xs uppercase tracking-widest px-5 py-2.5 sm:px-6 sm:py-3 hover:bg-[#f4f4f4] transition-colors"
             >
               <Plus className="w-4 h-4" /> НОВА СТАТТЯ
             </button>
           </div>
         </div>
 
-        {/* Posts list */}
-        <div className="mb-6 border border-[#f4f4f4]/10 bg-[#101010] p-4">
-          <div className="flex items-center justify-between gap-4 mb-3">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/60">Pipeline Monitor</p>
-            <p className="font-mono text-[9px] text-[#f4f4f4]/30">SYNC TG / SYNC X RSS → Sync Workflows → Deploy to GitHub Pages</p>
+        <div className="mb-6 grid grid-cols-1 lg:grid-cols-3 gap-3">
+          <div className="lg:col-span-2 border border-[#f4f4f4]/10 bg-[#101010] p-4">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/65 mb-2 flex items-center gap-2"><Sparkles className="w-3 h-3" /> Швидкий сценарій роботи</p>
+            <p className="text-sm font-semibold text-[#f4f4f4]/88 leading-relaxed">
+              1) Оновити контент через <span className="text-white">SYNC TG / X / FB</span>, 2) дочекатися <span className="text-white">Deploy = Успішно</span>, 3) перевірити сайт.
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-3">
-            {[{ title: 'Sync Telegram', run: syncRun }, { title: 'Sync X RSS', run: xRssRun }, { title: 'Deploy', run: deployRun }].map(item => (
-              <div key={item.title} className="border border-[#f4f4f4]/10 p-3">
+          <div className="border border-[#f4f4f4]/10 bg-[#101010] p-4">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/65 mb-2 flex items-center gap-2"><CircleHelp className="w-3 h-3" /> Підказка</p>
+            <p className="text-xs font-semibold text-[#f4f4f4]/72 leading-relaxed">
+              {isAnySyncRunning ? 'Йде синхронізація: не запускай повторно ті самі кнопки до завершення.' : 'Синхронізації неактивні — можна запускати оновлення безпечно.'}
+            </p>
+          </div>
+        </div>
+
+        {/* Posts list */}
+        <div className="mb-6 border border-[#f4f4f4]/10 bg-[#101010] p-4 sm:p-5">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-3">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/70 font-bold">Pipeline Monitor</p>
+            <p className="font-mono text-[10px] text-[#f4f4f4]/45">SYNC TG / X RSS / FB RSS → Sync Workflows → Deploy to GitHub Pages</p>
+          </div>
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-3">
+            {[{ title: 'Sync Telegram', run: syncRun }, { title: 'Sync X RSS', run: xRssRun }, { title: 'Sync FB RSS', run: fbRssRun }, { title: 'Deploy', run: deployRun }].map(item => (
+              <div key={item.title} className="border border-[#f4f4f4]/10 p-3 bg-[#f4f4f4]/[0.02] relative overflow-hidden">
+                <div className={`absolute left-0 top-0 h-full w-1 ${
+                  !item.run ? 'bg-white/20' :
+                  item.run.status === 'queued' || item.run.status === 'in_progress' ? 'bg-amber-400' :
+                  item.run.conclusion === 'success' ? 'bg-green-400' : 'bg-red-400'
+                }`} />
                 <div className="flex items-center justify-between gap-3">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/50">{item.title}</span>
-                  <span className={`px-2 py-1 border font-mono text-[9px] uppercase tracking-widest ${statusClass(item.run)}`}>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/70 font-bold">{item.title}</span>
+                  <span className={`px-2 py-1 border font-mono text-[9px] uppercase tracking-widest font-bold ${statusClass(item.run)}`}>
                     {statusLabel(item.run)}
                   </span>
                 </div>
-                <div className="mt-2 font-mono text-[9px] text-[#f4f4f4]/35">
+                <div className="mt-2 font-mono text-[10px] text-[#f4f4f4]/45">
                   {item.run ? `Run #${item.run.id} • ${timeLabel(item.run.createdAt)}` : 'Ще немає запусків'}
                 </div>
                 {item.run?.htmlUrl && (
@@ -700,7 +787,7 @@ export default function AdminPage() {
                     href={item.run.htmlUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex mt-2 font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/50 hover:text-white transition-colors"
+                    className="inline-flex mt-2 font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/62 hover:text-white transition-colors font-bold"
                   >
                     Відкрити в GitHub
                   </a>
@@ -713,7 +800,7 @@ export default function AdminPage() {
               <AlertTriangle className="w-3 h-3" /> {workflowError}
             </div>
           )}
-          {!workflowError && (syncRun?.status === 'queued' || syncRun?.status === 'in_progress' || xRssRun?.status === 'queued' || xRssRun?.status === 'in_progress' || deployRun?.status === 'queued' || deployRun?.status === 'in_progress') && (
+          {!workflowError && (syncRun?.status === 'queued' || syncRun?.status === 'in_progress' || xRssRun?.status === 'queued' || xRssRun?.status === 'in_progress' || fbRssRun?.status === 'queued' || fbRssRun?.status === 'in_progress' || deployRun?.status === 'queued' || deployRun?.status === 'in_progress') && (
             <div className="mt-3 font-mono text-[10px] text-amber-300">Оновлюється автоматично кожні 7 секунд, поки workflow у процесі.</div>
           )}
           {!workflowError && deployRun?.conclusion === 'success' && (
@@ -721,10 +808,16 @@ export default function AdminPage() {
           )}
         </div>
 
-        <div className="mb-10 border border-[#f4f4f4]/10 bg-[#101010] p-4">
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/60">RSS X Configuration</p>
-            <p className="font-mono text-[9px] text-[#f4f4f4]/30">Керування авторами, ключами та фільтрами без редагування коду</p>
+        <div className="mb-10 border border-[#f4f4f4]/10 bg-[#101010] p-4 sm:p-5">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-4">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/70 font-bold">RSS X Configuration</p>
+            <p className="font-mono text-[10px] text-[#f4f4f4]/45">Керування авторами, ключами та фільтрами без редагування коду</p>
+          </div>
+          <div className="mb-4 p-3 border border-[#f4f4f4]/10 bg-[#f4f4f4]/[0.02]">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/55 mb-1">Порада</p>
+            <p className="text-xs font-semibold text-[#f4f4f4]/72 leading-relaxed">
+              Спочатку збережи конфіг, потім натисни <span className="text-white">RUN X RSS SYNC</span>, щоб нові правила одразу потрапили в стрічку.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -759,7 +852,7 @@ export default function AdminPage() {
                 rows={10}
                 value={authorsInput}
                 onChange={(e) => setAuthorsInput(e.target.value)}
-                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-xs px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40 resize-none"
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-xs font-semibold px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40 resize-none"
               />
             </div>
             <div>
@@ -768,7 +861,7 @@ export default function AdminPage() {
                 rows={10}
                 value={keywordsInput}
                 onChange={(e) => setKeywordsInput(e.target.value)}
-                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-xs px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40 resize-none"
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-xs font-semibold px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40 resize-none"
               />
             </div>
             <div>
@@ -777,7 +870,7 @@ export default function AdminPage() {
                 rows={10}
                 value={excludeInput}
                 onChange={(e) => setExcludeInput(e.target.value)}
-                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-xs px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40 resize-none"
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-xs font-semibold px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40 resize-none"
               />
             </div>
           </div>
@@ -802,7 +895,7 @@ export default function AdminPage() {
             <button
               onClick={handleXRssSync}
               disabled={xRssLoading}
-              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 hover:bg-[#252519] disabled:opacity-30 transition-colors"
+              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 hover:bg-[#f4f4f4] disabled:opacity-30 transition-colors"
             >
               {xRssLoading ? <Loader className="w-3 h-3 animate-spin" /> : <RefreshCw className="w-3 h-3" />}
               RUN X RSS SYNC
@@ -816,14 +909,14 @@ export default function AdminPage() {
             <span className="font-mono text-xs uppercase tracking-widest">Завантаження...</span>
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {posts.map((post, idx) => (
               <div
                 key={post.id}
-                className="flex items-center gap-4 bg-[#111111] border border-[#f4f4f4]/5 px-5 py-4 hover:border-[#f4f4f4]/20 transition-colors group"
+                className="flex flex-col md:flex-row md:items-center gap-4 bg-[#111111] border border-[#f4f4f4]/8 px-4 sm:px-5 py-4 hover:border-[#f4f4f4]/25 transition-colors group"
               >
                 {/* Order controls */}
-                <div className="flex flex-col gap-0.5 shrink-0">
+                <div className="flex md:flex-col gap-1 shrink-0">
                   <button onClick={() => movePost(idx, -1)} disabled={idx === 0} className="text-[#f4f4f4]/20 hover:text-white disabled:opacity-10 transition-colors">
                     <ChevronUp className="w-3.5 h-3.5" />
                   </button>
@@ -834,29 +927,29 @@ export default function AdminPage() {
 
                 {/* Post info */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="font-mono text-[9px] text-[#f4f4f4]/30 shrink-0">{post.id}</span>
-                    <span className="font-mono text-[9px] text-[#f4f4f4]/20 shrink-0">{post.date}</span>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1.5">
+                    <span className="font-mono text-[10px] text-[#f4f4f4]/45 shrink-0 font-bold">{post.id}</span>
+                    <span className="font-mono text-[10px] text-[#f4f4f4]/35 shrink-0">{post.date}</span>
                     <div className="flex gap-1 flex-wrap">
                       {post.tags.map(t => (
-                        <span key={t} className="font-mono text-[8px] px-1.5 py-0.5 border border-[#f4f4f4]/10 text-[#f4f4f4]/30 tracking-wide">#{t}</span>
+                        <span key={t} className="font-mono text-[9px] px-1.5 py-0.5 border border-[#f4f4f4]/10 text-[#f4f4f4]/45 tracking-wide font-semibold">#{t}</span>
                       ))}
                     </div>
                   </div>
-                  <p className="text-sm font-medium text-[#f4f4f4]/90 truncate">{post.title}</p>
+                  <p className="text-base font-bold text-[#f4f4f4]/94 truncate">{post.title}</p>
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-2 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center gap-2 shrink-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => { setEditing(post); setIsNew(false); }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 border border-[#f4f4f4]/20 font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/60 hover:text-white hover:border-[#f4f4f4]/60 transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 border border-[#f4f4f4]/20 font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/72 hover:text-white hover:border-[#f4f4f4]/60 transition-colors font-bold"
                   >
                     <Edit2 className="w-3 h-3" /> РЕДАГУВАТИ
                   </button>
                   <button
                     onClick={() => handleDelete(post.id)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 border border-red-500/20 font-mono text-[9px] uppercase tracking-widest text-red-500/60 hover:text-red-400 hover:border-red-500/60 transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 border border-red-500/20 font-mono text-[10px] uppercase tracking-widest text-red-500/70 hover:text-red-400 hover:border-red-500/60 transition-colors font-bold"
                   >
                     <Trash2 className="w-3 h-3" />
                   </button>
@@ -868,7 +961,10 @@ export default function AdminPage() {
 
         {/* Save order button */}
         {posts.length > 0 && (
-          <div className="mt-6 flex justify-end">
+          <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/35">
+              Після зміни порядку натисни «Зберегти порядок», щоб оновлення потрапили на сайт.
+            </p>
             <button
               onClick={async () => {
                 setSaving(true);
@@ -885,7 +981,7 @@ export default function AdminPage() {
                 }
               }}
               disabled={saving}
-              className="flex items-center gap-2 border border-[#f4f4f4]/20 font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/40 hover:text-white hover:border-[#f4f4f4]/60 px-5 py-2.5 transition-colors disabled:opacity-30"
+              className="flex items-center gap-2 border border-[#f4f4f4]/20 font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/65 hover:text-white hover:border-[#f4f4f4]/60 px-5 py-2.5 transition-colors disabled:opacity-30 font-bold self-start sm:self-auto"
             >
               {saving ? <Loader className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
               ЗБЕРЕГТИ ПОРЯДОК

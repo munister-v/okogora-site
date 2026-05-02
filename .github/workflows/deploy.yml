@@ -5,7 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
   workflow_run:
-    workflows: ["Sync Telegram Posts", "Sync X RSS Investigations"]
+    workflows: ["Sync Telegram Posts", "Sync X RSS Investigations", "Sync Facebook RSS Investigations"]
     types: [completed]
 
 permissions:

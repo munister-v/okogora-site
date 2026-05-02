@@ -8,6 +8,8 @@
 
 body {
   @apply bg-zinc-50 text-zinc-900 font-sans antialiased;
+  font-weight: 520;
+  text-rendering: optimizeLegibility;
 }
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -133,8 +135,15 @@ body {
     }
   body {
     @apply bg-background text-foreground;
-    }
+    font-weight: 520;
+  }
   html {
     @apply font-sans;
-    }
+  }
+  p, li, a, button, input, textarea, select, label {
+    font-weight: 500;
+  }
+  h1, h2, h3, h4, h5, h6, strong, b {
+    font-weight: 700;
+  }
 }

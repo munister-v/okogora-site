@@ -1,433 +1,686 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, LayersControl, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { Target, Anchor, Plane, Shield, Filter, Menu, X as CloseIcon, Activity, Clock, Ruler, Crosshair, Radio } from 'lucide-react';
+import { Map as MapIcon, Shield, Target, Anchor, Plane, Filter, Menu, X as CloseIcon, Ruler, Activity, Clock } from 'lucide-react';
+import type { Post } from '../types';
+import { postTelegramUrl } from '../lib/posts';
 
-const createTacticalIcon = (color: string, label: string, shape: 'circle' | 'diamond' | 'square' = 'circle') => {
-  const shapeHtml = shape === 'diamond'
-    ? `<div style="width:13px;height:13px;background-color:${color};border:1.5px solid rgba(255,255,255,0.8);transform:rotate(45deg);box-shadow:0 0 12px ${color}99;position:relative;z-index:10"></div>`
-    : shape === 'square'
-    ? `<div style="width:13px;height:13px;background-color:${color};border:1.5px solid rgba(255,255,255,0.8);box-shadow:0 0 12px ${color}99;position:relative;z-index:10"></div>`
-    : `<div style="width:14px;height:14px;background-color:${color};border:2px solid rgba(255,255,255,0.85);border-radius:50%;box-shadow:0 0 16px ${color}bb;position:relative;z-index:10"></div>`;
+type FilterId = 'strikes' | 'navy' | 'airbases' | 'logistics';
 
-  return new L.DivIcon({
-    className: 'tactical-marker',
-    html: `
-      <div style="position:relative;display:flex;align-items:center;justify-content:center">
-        <div style="position:absolute;inset:-4px;border-radius:50%;background-color:${color}22;animation:ping 1.4s cubic-bezier(0,0,0.2,1) infinite"></div>
-        ${shapeHtml}
-        <div style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(10,10,8,0.97);color:#c9a227;font-size:7px;font-family:monospace;padding:2px 6px;white-space:nowrap;border:1px solid #c9a22740;letter-spacing:0.1em;pointer-events:none;z-index:50;text-transform:uppercase">
-          ${label}
-        </div>
-      </div>
-    `,
-    iconSize: [14, 14],
-    iconAnchor: [7, 7],
-  });
+type RssItem = {
+  id: string;
+  title: string;
+  titleUk?: string;
+  summary: string;
+  summaryUk?: string;
+  publishedAt: string;
+  url: string;
+  author?: string;
 };
+
+type FeedEvent = {
+  id: string;
+  title: string;
+  excerpt: string;
+  dateIso: string;
+  source: 'telegram' | 'rss' | 'facebook';
+  sourceName: string;
+  sourceUrl: string;
+  type: FilterId;
+  location: string;
+  position: [number, number];
+  confidence: number;
+  status: 'ПІДТВЕРДЖЕНО' | 'ЙМОВІРНО' | 'АНАЛІТИКА';
+};
+
+type LocationPoint = {
+  name: string;
+  aliases: string[];
+  position: [number, number];
+  typeHint?: FilterId;
+};
+
+const LOCATION_POINTS: LocationPoint[] = [
+  { name: 'Одеса', aliases: ['одеса', 'odesa', 'odessa'], position: [46.4825, 30.7233], typeHint: 'strikes' },
+  { name: 'Туапсе', aliases: ['туапсе', 'tuapse'], position: [44.1065, 39.0739], typeHint: 'logistics' },
+  { name: 'Шагол', aliases: ['шагол', 'shagol', 'chelyabinsk shagol'], position: [55.2572, 61.2983], typeHint: 'airbases' },
+  { name: 'Челябінськ', aliases: ['челябинск', 'челябінськ', 'chelyabinsk'], position: [55.1644, 61.4368], typeHint: 'airbases' },
+  { name: 'Дружне (Крим)', aliases: ['дружне', 'druzhne', 'druzhnoe'], position: [44.8972, 34.2917], typeHint: 'strikes' },
+  { name: 'Севастополь', aliases: ['севастополь', 'sevastopol'], position: [44.6167, 33.5254], typeHint: 'navy' },
+  { name: 'Крим', aliases: ['крим', 'crimea'], position: [44.9521, 34.1024], typeHint: 'strikes' },
+  { name: 'Запоріжжя', aliases: ['запоріжж', 'zaporizhzh'], position: [47.8388, 35.1396], typeHint: 'strikes' },
+  { name: 'Степногірськ', aliases: ['stepnohirsk', 'степногірськ'], position: [47.5167, 35.7833], typeHint: 'strikes' },
+  { name: 'Суми', aliases: ['суми', 'sumy'], position: [50.9077, 34.7981], typeHint: 'strikes' },
+  { name: 'Харків', aliases: ['харків', 'kharkiv'], position: [49.9935, 36.2304], typeHint: 'strikes' },
+  { name: 'Київ', aliases: ['київ', 'kyiv'], position: [50.4501, 30.5234], typeHint: 'strikes' },
+  { name: 'Дніпро', aliases: ['дніпро', 'dnipro'], position: [48.4647, 35.0462], typeHint: 'logistics' },
+  { name: 'Херсон', aliases: ['херсон', 'kherson'], position: [46.6354, 32.6169], typeHint: 'strikes' },
+  { name: 'Миколаїв', aliases: ['миколаїв', 'mykolaiv', 'nikolaev'], position: [46.975, 31.9946], typeHint: 'logistics' },
+  { name: 'Чорне море', aliases: ['black sea', 'чорне море'], position: [44.9, 33.4], typeHint: 'navy' },
+  { name: 'Смоленськ', aliases: ['смоленск', 'smolensk'], position: [54.7826, 32.0453], typeHint: 'strikes' },
+  { name: 'Перм', aliases: ['перм', 'perm'], position: [58.0105, 56.2502], typeHint: 'logistics' },
+  { name: 'Курськ', aliases: ['курск', 'kursk'], position: [51.7304, 36.1926], typeHint: 'strikes' },
+  { name: 'Бєлгород', aliases: ['белгород', 'бєлгород', 'belgorod'], position: [50.5954, 36.5879], typeHint: 'logistics' },
+  { name: 'Румунія (кордон)', aliases: ['romania', 'румун'], position: [45.2333, 28.7167], typeHint: 'airbases' },
+  { name: 'Чілія', aliases: ['chilia'], position: [45.4167, 29.2833], typeHint: 'airbases' },
+  { name: 'Москва', aliases: ['москва', 'moscow'], position: [55.7558, 37.6173], typeHint: 'logistics' },
+  { name: 'Покровськ', aliases: ['покровськ', 'pokrovsk'], position: [48.282, 37.181], typeHint: 'strikes' },
+  { name: 'Лиман', aliases: ['лиман', 'lyman'], position: [49.0139, 37.8028], typeHint: 'strikes' },
+  { name: 'Купʼянськ', aliases: ['купʼянськ', 'купянськ', 'kupyansk'], position: [49.7106, 37.6156], typeHint: 'strikes' },
+  { name: 'Торецьк', aliases: ['торецьк', 'toretsk'], position: [48.3986, 37.8472], typeHint: 'strikes' },
+  { name: 'Краматорськ', aliases: ['краматорськ', 'kramatorsk'], position: [48.7231, 37.5563], typeHint: 'strikes' },
+  { name: 'Новопавлівка', aliases: ['новопавлів', 'novopavliv'], position: [47.5933, 36.2378], typeHint: 'strikes' },
+  { name: 'Оріхів', aliases: ['оріхів', 'орехов', 'orikhiv'], position: [47.5676, 35.7851], typeHint: 'strikes' },
+  { name: 'Гуляйполе', aliases: ['гуляйпол', 'huliaipole', 'gulyaypole'], position: [47.6642, 36.2572], typeHint: 'strikes' },
+  { name: 'Вовчанськ', aliases: ['вовчанськ', 'volchansk', 'vovchansk'], position: [50.2908, 36.9419], typeHint: 'strikes' },
+  { name: 'Сіверськ', aliases: ['сіверськ', 'seversk', 'siversk'], position: [48.8686, 38.102], typeHint: 'strikes' },
+  { name: 'Часів Яр', aliases: ['часів яр', 'chasiv yar'], position: [48.5864, 37.8326], typeHint: 'strikes' }
+];
+
+const DIRECTION_POINTS: Array<{ pattern: RegExp; point: LocationPoint }> = [
+  { pattern: /харківськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Харківський напрямок', aliases: [], position: [50.04, 36.62], typeHint: 'strikes' } },
+  { pattern: /куп[’'`ʼ]?янськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Купʼянський напрямок', aliases: [], position: [49.72, 37.62], typeHint: 'strikes' } },
+  { pattern: /лиманськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Лиманський напрямок', aliases: [], position: [49.03, 37.86], typeHint: 'strikes' } },
+  { pattern: /сіверськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Сіверський напрямок', aliases: [], position: [48.88, 38.08], typeHint: 'strikes' } },
+  { pattern: /краматорськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Краматорський напрямок', aliases: [], position: [48.72, 37.56], typeHint: 'strikes' } },
+  { pattern: /торецьк(?:ому|ий)?\s+напрям/iu, point: { name: 'Торецький напрямок', aliases: [], position: [48.39, 37.85], typeHint: 'strikes' } },
+  { pattern: /покровськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Покровський напрямок', aliases: [], position: [48.28, 37.18], typeHint: 'strikes' } },
+  { pattern: /новопавлівськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Новопавлівський напрямок', aliases: [], position: [47.59, 36.24], typeHint: 'strikes' } },
+  { pattern: /оріхівськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Оріхівський напрямок', aliases: [], position: [47.57, 35.79], typeHint: 'strikes' } },
+  { pattern: /гул[яй]+йпільськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Гуляйпільський напрямок', aliases: [], position: [47.66, 36.26], typeHint: 'strikes' } },
+  { pattern: /придніпровськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Придніпровський напрямок', aliases: [], position: [46.72, 32.71], typeHint: 'logistics' } },
+  { pattern: /курськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Курський напрямок', aliases: [], position: [51.73, 36.19], typeHint: 'strikes' } },
+];
+
+const KEYWORDS: Record<FilterId, RegExp[]> = {
+  strikes: [
+    /уражен/gi, /знищен/gi, /удар/gi, /strike/gi, /struck/gi, /hit\b/gi, /destroyed/gi, /attack/gi, /drone/gi, /бпла/gi, /влуч/gi
+  ],
+  navy: [
+    /navy/gi, /fleet/gi, /морськ/gi, /sea\b/gi, /black sea/gi, /порт/gi, /harbor/gi, /бухт/gi, /кораб/gi, /vessel/gi
+  ],
+  airbases: [
+    /аеродром/gi, /airbase/gi, /airfield/gi, /f-16/gi, /су-\d+/gi, /air defense/gi, /ппо/gi, /авіабаз/gi, /scrambled/gi
+  ],
+  logistics: [
+    /логіст/gi, /logistics/gi, /нпз/gi, /refinery/gi, /depot/gi, /склад/gi, /rail/gi, /конво/gi, /колон/gi, /supply/gi
+  ]
+};
+
+const CONFIRMED_RE = /(підтвердж|confirmed|destroyed|знищен|уражен|successful hit|occupied)/i;
+const PROBABLE_RE = /(ймовір|likely|assess|reportedly|можливо|claimed)/i;
+const UKR_MONTHS: Record<string, number> = {
+  січ: 0,
+  фев: 1,
+  лют: 1,
+  мар: 2,
+  квіт: 3,
+  апр: 3,
+  трав: 4,
+  май: 4,
+  черв: 5,
+  лип: 6,
+  серп: 7,
+  вер: 8,
+  жовт: 9,
+  ноя: 10,
+  лист: 10,
+  груд: 11,
+  дек: 11,
+};
+
+const createTacticalIcon = (color: string, label: string) => new L.DivIcon({
+  className: 'tactical-marker',
+  html: `
+    <div class="relative group">
+      <div style="position:absolute;inset:0;border-radius:50%;background-color:${color}33;animation:ping 1.2s cubic-bezier(0,0,0.2,1) infinite"></div>
+      <div style="width:14px;height:14px;background-color:${color};border:2px solid #fff;border-radius:50%;box-shadow:0 0 14px ${color};position:relative;z-index:10"></div>
+      <div style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(17,17,17,0.95);color:#fff;font-size:8px;font-family:monospace;padding:2px 6px;white-space:nowrap;border:1px solid rgba(255,255,255,0.1);opacity:0;pointer-events:none;z-index:50">
+        ${label}
+      </div>
+    </div>
+  `,
+  iconSize: [14, 14],
+  iconAnchor: [7, 7],
+});
+
+function clamp(n: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, n));
+}
+
+function cleanText(text: string) {
+  return (text || '')
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function normalizeForKey(text: string) {
+  return cleanText(text)
+    .toLowerCase()
+    .replace(/https?:\/\/\S+/g, ' ')
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function parsePostDate(value: string) {
+  const raw = (value || '').toLowerCase().replace(/\./g, '').trim();
+  const m = raw.match(/(\d{1,2})\s+([\p{L}]+)\s+(\d{4})(?:\s*\/\s*(\d{1,2}):(\d{2}))?/u);
+  if (!m) return new Date().toISOString();
+
+  const day = Number(m[1]);
+  const monthKey = m[2].slice(0, 4);
+  const month = UKR_MONTHS[monthKey] ?? UKR_MONTHS[m[2].slice(0, 3)] ?? new Date().getMonth();
+  const year = Number(m[3]);
+  const hour = Number(m[4] || 0);
+  const minute = Number(m[5] || 0);
+  const d = new Date(Date.UTC(year, month, day, hour, minute));
+  return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+}
+
+function findLocations(text: string) {
+  const low = text.toLowerCase();
+  const matched = LOCATION_POINTS.filter((point) => point.aliases.some((alias) => low.includes(alias.toLowerCase())));
+  const fromDirections = DIRECTION_POINTS
+    .filter((d) => d.pattern.test(text))
+    .map((d) => d.point);
+
+  const uniq = new Map<string, LocationPoint>();
+  [...matched, ...fromDirections].forEach((loc) => {
+    uniq.set(`${loc.name}:${loc.position[0]}:${loc.position[1]}`, loc);
+  });
+  return Array.from(uniq.values());
+}
+
+function countMatches(text: string, patterns: RegExp[]) {
+  return patterns.reduce((acc, pattern) => {
+    const matches = text.match(pattern);
+    return acc + (matches?.length || 0);
+  }, 0);
+}
+
+function classifyType(text: string, locationHints: FilterId[]) {
+  const scores: Record<FilterId, number> = {
+    strikes: countMatches(text, KEYWORDS.strikes),
+    navy: countMatches(text, KEYWORDS.navy),
+    airbases: countMatches(text, KEYWORDS.airbases),
+    logistics: countMatches(text, KEYWORDS.logistics),
+  };
+
+  for (const hint of locationHints) {
+    scores[hint] += 2;
+  }
+
+  let best: FilterId = 'strikes';
+  let bestScore = -1;
+  (Object.keys(scores) as FilterId[]).forEach((k) => {
+    if (scores[k] > bestScore) {
+      best = k;
+      bestScore = scores[k];
+    }
+  });
+
+  return { type: best, score: bestScore };
+}
+
+function statusFromText(text: string): FeedEvent['status'] {
+  if (CONFIRMED_RE.test(text)) return 'ПІДТВЕРДЖЕНО';
+  if (PROBABLE_RE.test(text)) return 'ЙМОВІРНО';
+  return 'АНАЛІТИКА';
+}
+
+function scoreConfidence(keywordScore: number, locationCount: number, source: 'telegram' | 'rss' | 'facebook', status: FeedEvent['status']) {
+  let conf = 0.44 + Math.min(keywordScore, 7) * 0.055 + Math.min(locationCount, 2) * 0.16;
+  if (source === 'telegram') conf += 0.07;
+  if (source === 'facebook') conf += 0.02;
+  if (status === 'ПІДТВЕРДЖЕНО') conf += 0.08;
+  if (status === 'ЙМОВІРНО') conf -= 0.03;
+  return clamp(conf, 0.35, 0.97);
+}
+
+function confidenceLabel(value: number) {
+  if (value >= 0.78) return 'ВИСОКА';
+  if (value >= 0.62) return 'СЕРЕДНЯ';
+  return 'БАЗОВА';
+}
+
+function withinDays(iso: string, days: number) {
+  const ts = new Date(iso).getTime();
+  if (Number.isNaN(ts)) return false;
+  const min = Date.now() - days * 24 * 60 * 60 * 1000;
+  return ts >= min;
+}
+
+function buildEvents(posts: Post[], rss: RssItem[], facebook: RssItem[], windowDays = 7) {
+  const events: FeedEvent[] = [];
+  const dedup = new Set<string>();
+
+  const postItems = (posts || []).map((post) => ({
+    id: post.id,
+    title: post.title || '',
+    excerpt: post.text || '',
+    dateIso: parsePostDate(post.date),
+    source: 'telegram' as const,
+    sourceName: 'Telegram',
+    sourceUrl: postTelegramUrl(post),
+  }));
+
+  const rssItems = (rss || []).map((item) => ({
+    id: item.id,
+    title: item.titleUk || item.title || '',
+    excerpt: item.summaryUk || item.summary || '',
+    dateIso: item.publishedAt || new Date().toISOString(),
+    source: 'rss' as const,
+    sourceName: item.author ? `X / ${item.author}` : 'X RSS',
+    sourceUrl: item.url,
+  }));
+
+  const facebookItems = (facebook || []).map((item) => ({
+    id: item.id,
+    title: item.titleUk || item.title || '',
+    excerpt: item.summaryUk || item.summary || '',
+    dateIso: item.publishedAt || new Date().toISOString(),
+    source: 'facebook' as const,
+    sourceName: item.author ? `Facebook / ${item.author}` : 'Facebook RSS',
+    sourceUrl: item.url,
+  }));
+
+  const feed = [...postItems, ...rssItems, ...facebookItems];
+
+  for (const item of feed) {
+    if (!withinDays(item.dateIso, windowDays)) continue;
+    const raw = `${item.title} ${item.excerpt}`;
+    const clean = cleanText(raw);
+    if (!clean) continue;
+
+    const locations = findLocations(clean);
+    if (locations.length === 0) continue;
+
+    const locationHints = locations
+      .map((loc) => loc.typeHint)
+      .filter(Boolean) as FilterId[];
+
+    const { type, score } = classifyType(clean, locationHints);
+    const status = statusFromText(clean);
+    const confidence = scoreConfidence(score, locations.length, item.source, status);
+
+    for (const location of locations.slice(0, 2)) {
+      const normKey = `${normalizeForKey(item.title).slice(0, 96)}|${location.name}|${type}`;
+      if (dedup.has(normKey)) continue;
+      dedup.add(normKey);
+
+      events.push({
+        id: `${item.id}:${location.name}`,
+        title: cleanText(item.title),
+        excerpt: cleanText(item.excerpt),
+        dateIso: item.dateIso,
+        source: item.source,
+        sourceName: item.sourceName,
+        sourceUrl: item.sourceUrl,
+        type,
+        location: location.name,
+        position: location.position,
+        confidence,
+        status,
+      });
+    }
+  }
+
+  return events
+    .sort((a, b) => {
+      const dt = new Date(b.dateIso).getTime() - new Date(a.dateIso).getTime();
+      if (dt !== 0) return dt;
+      return b.confidence - a.confidence;
+    })
+    .slice(0, 60);
+}
 
 function MapEvents({ onMouseMove, onClick }: { onMouseMove: (lat: number, lng: number) => void; onClick: (lat: number, lng: number) => void }) {
   useMapEvents({
-    mousemove(e) { onMouseMove(e.latlng.lat, e.latlng.lng); },
-    click(e) { onClick(e.latlng.lat, e.latlng.lng); },
+    mousemove(e) {
+      onMouseMove(e.latlng.lat, e.latlng.lng);
+    },
+    click(e) {
+      onClick(e.latlng.lat, e.latlng.lng);
+    },
   });
   return null;
 }
 
-const strikes = [
-  { id: 1, pos: [44.1132, 39.0825] as [number, number], name: 'Туапсе НПЗ', date: '27.04.2026', bda: '61% КРИТИЧНО', intel: 'SENTINEL-2 / OSINT', type: 'strike' as const },
-  { id: 2, pos: [44.6167, 33.5250] as [number, number], name: 'Севастополь ВДК', date: '26.04.2026', bda: 'ВДК ПОВАЛЕНИЙ', intel: 'SAR / DRONE', type: 'navy' as const },
-  { id: 3, pos: [45.3422, 32.5122] as [number, number], name: 'Оленівка С-400', date: '25.04.2026', bda: 'ЗНИЩЕНО', intel: 'THERMAL / RECON', type: 'strike' as const },
-  { id: 4, pos: [46.6034, 32.6169] as [number, number], name: 'Чорнобаївка', date: '14.04.2026', bda: 'СКЛАД +ЗНИЩЕНО', intel: 'OSINT_CONFIRMED', type: 'logistics' as const },
-  { id: 5, pos: [45.0121, 33.6745] as [number, number], name: 'Джанкой (вузол)', date: '20.04.2026', bda: '40% ПОШКОДЖЕНО', intel: 'SIGINT / HUMINT', type: 'logistics' as const },
-  { id: 6, pos: [48.0511, 46.1432] as [number, number], name: 'Аеродром Ахтубінськ', date: '18.04.2026', bda: 'ЗЛІТНА+СМУГА', intel: 'SAT_INTEL', type: 'airbase' as const },
-];
-
-const EVENT_LOG = [
-  { id: 'e1', label: 'UA_DRONE_VOL-12', status: 'УСПІШНО', color: '#22c55e' },
-  { id: 'e2', label: 'STRIKE_SEV_HBR', status: 'BDA_NEEDED', color: '#ef4444' },
-  { id: 'e3', label: 'RECON_KERCH_2', status: 'АКТИВНО', color: '#c9a227' },
-  { id: 'e4', label: 'SIGINT_CH_4', status: 'ЗАВЕРШЕНО', color: '#6b7280' },
-];
-
 export default function MapService() {
-  const [activeFilters, setActiveFilters] = useState(['strikes', 'navy', 'airbases', 'logistics']);
+  const [activeFilters, setActiveFilters] = useState<FilterId[]>(['strikes', 'navy', 'airbases', 'logistics']);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [telemetry, setTelemetry] = useState({ lat: 47.0, lng: 36.5 });
+  const [telemetry, setTelemetry] = useState({ lat: 45.0, lng: 35.0 });
   const [measurePoints, setMeasurePoints] = useState<[number, number][]>([]);
   const [distance, setDistance] = useState<number | null>(null);
-  const [tick, setTick] = useState(0);
-  const [activeTab, setActiveTab] = useState<'filters' | 'events' | 'ruler'>('filters');
-
-  // Animate clock tick for live indicator
-  useEffect(() => {
-    const t = setInterval(() => setTick(n => n + 1), 1000);
-    return () => clearInterval(t);
-  }, []);
+  const [events, setEvents] = useState<FeedEvent[]>([]);
 
   const icons = useMemo(() => ({
-    strike:   createTacticalIcon('#ef4444', 'УРАЖЕННЯ', 'circle'),
-    navy:     createTacticalIcon('#3b82f6', 'МОРСЬКА_ЦІЛЬ', 'diamond'),
-    airbase:  createTacticalIcon('#c9a227', 'АВІАБАЗА_РФ', 'square'),
-    logistics:createTacticalIcon('#22c55e', 'ЛОГІСТИКА', 'square'),
+    strikes: createTacticalIcon('#ff3333', 'ПІДТВЕРДЖЕНЕ_УРАЖЕННЯ'),
+    navy: createTacticalIcon('#3399ff', 'МОРСЬКА_АКТИВНІСТЬ'),
+    airbases: createTacticalIcon('#ffcc00', 'АВІА_АКТИВНІСТЬ'),
+    logistics: createTacticalIcon('#00ff66', 'ЛОГІСТИЧНИЙ_ВУЗОЛ'),
   }), []);
 
-  const toggleFilter = (f: string) =>
-    setActiveFilters(prev => prev.includes(f) ? prev.filter(x => x !== f) : [...prev, f]);
+  useEffect(() => {
+    let mounted = true;
+    Promise.all([
+      fetch('/data/posts.json').then((r) => (r.ok ? r.json() : [])),
+      fetch('/data/rss_twitter.json').then((r) => (r.ok ? r.json() : { items: [] })),
+      fetch('/data/rss_facebook.json').then((r) => (r.ok ? r.json() : { items: [] })),
+    ])
+      .then(([postsData, rssData, fbData]) => {
+        if (!mounted) return;
+        const mapped = buildEvents(
+          Array.isArray(postsData) ? postsData : [],
+          Array.isArray(rssData?.items) ? rssData.items : [],
+          Array.isArray(fbData?.items) ? fbData.items : [],
+          7,
+        );
+        setEvents(mapped);
+      })
+      .catch(() => {
+        if (mounted) setEvents([]);
+      });
 
-  const calcDist = (p1: [number, number], p2: [number, number]) => {
-    const toRad = (d: number) => d * Math.PI / 180;
-    const R = 6371;
-    const dLat = toRad(p2[0] - p1[0]);
-    const dLon = toRad(p2[1] - p1[1]);
-    const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(p1[0])) * Math.cos(toRad(p2[0])) * Math.sin(dLon / 2) ** 2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const filteredEvents = useMemo(
+    () => events.filter((e) => activeFilters.includes(e.type)),
+    [events, activeFilters],
+  );
+
+  const activityByType = useMemo(() => {
+    const acc: Record<FilterId, number> = { strikes: 0, navy: 0, airbases: 0, logistics: 0 };
+    for (const e of events) acc[e.type] += 1;
+    return acc;
+  }, [events]);
+
+  const mapCenter: [number, number] = useMemo(() => {
+    if (filteredEvents.length === 0) return [47.2, 34.6];
+    const sample = filteredEvents.slice(0, 12);
+    const lat = sample.reduce((sum, e) => sum + e.position[0], 0) / sample.length;
+    const lng = sample.reduce((sum, e) => sum + e.position[1], 0) / sample.length;
+    return [lat, lng];
+  }, [filteredEvents]);
+
+  const toggleFilter = (filter: FilterId) => {
+    setActiveFilters((prev) =>
+      prev.includes(filter) ? prev.filter((f) => f !== filter) : [...prev, filter],
+    );
   };
 
-  const handleClick = (lat: number, lng: number) => {
-    if (activeTab !== 'ruler') return;
-    if (measurePoints.length >= 2) {
+  const calculateDistance = (p1: [number, number], p2: [number, number]) => {
+    const lat1 = p1[0], lon1 = p1[1], lat2 = p2[0], lon2 = p2[1];
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
+  const handleMapClick = (lat: number, lng: number) => {
+    if (measurePoints.length === 2) {
       setMeasurePoints([[lat, lng]]);
       setDistance(null);
     } else if (measurePoints.length === 1) {
-      const pts: [number, number][] = [...measurePoints, [lat, lng]];
-      setMeasurePoints(pts);
-      setDistance(calcDist(pts[0], pts[1]));
+      const newPoints: [number, number][] = [...measurePoints, [lat, lng]];
+      setMeasurePoints(newPoints);
+      setDistance(calculateDistance(newPoints[0], newPoints[1]));
     } else {
       setMeasurePoints([[lat, lng]]);
     }
   };
 
-  const now = new Date();
-  const timeStr = `${String(now.getUTCHours()).padStart(2, '0')}:${String(now.getUTCMinutes()).padStart(2, '0')}:${String(now.getUTCSeconds() + (tick % 60)).padStart(2, '0')} UTC`;
-
-  const FILTERS = [
-    { id: 'strikes',   label: 'Удари / BDA',   color: '#ef4444', Icon: Target },
-    { id: 'navy',      label: 'Морські цілі',  color: '#3b82f6', Icon: Anchor },
-    { id: 'airbases',  label: 'Авіабази РФ',   color: '#c9a227', Icon: Plane  },
-    { id: 'logistics', label: 'Логістика',     color: '#22c55e', Icon: Shield },
-  ];
-
   return (
     <div className="w-full flex flex-col font-sans">
-
-      {/* ── Header bar ── */}
-      <div className="flex items-center justify-between mb-3 px-1">
-        <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.18em]">
-          <div className="relative flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-ping absolute" />
-            <span className="w-2 h-2 rounded-full bg-red-500 relative" />
-            <span className="text-red-400 font-bold">LIVE</span>
-          </div>
-          <span className="text-[#c9a227]/70 border-l border-[#c9a227]/20 pl-3">ТАКТИЧНИЙ_МОНІТОР v3.1</span>
-          <span className="hidden md:inline text-white/20">// OKO_GORA_INTEL</span>
-        </div>
+      <div className="flex justify-between items-center mb-4 md:mb-6 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] border-b border-[#111111] pb-3">
         <div className="flex items-center gap-3">
-          <span className="font-mono text-[9px] text-[#c9a227]/40 tracking-widest hidden md:block">{timeStr}</span>
+          <div className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
+          <MapIcon className="w-4 h-4" />
+          <span className="font-bold">ТАКТИЧНИЙ МОНІТОР v3.1 // DATA-LINKED</span>
+        </div>
+        <div className="flex items-center gap-4 md:gap-6 text-[#111111]/55">
           <button
-            onClick={() => setIsSidebarOpen(v => !v)}
-            className="flex items-center gap-1.5 border border-[#c9a227]/25 bg-[#1c1c12] text-[#c9a227]/60 hover:text-[#c9a227] hover:border-[#c9a227]/60 px-3 py-1.5 font-mono text-[9px] uppercase tracking-widest transition-all"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="flex items-center gap-2 bg-[#111111] text-white px-3 py-1 text-[9px] hover:bg-zinc-800 transition-colors font-semibold"
           >
             {isSidebarOpen ? <CloseIcon className="w-3 h-3" /> : <Menu className="w-3 h-3" />}
-            {isSidebarOpen ? 'СХОВАТИ' : 'HUD'}
+            {isSidebarOpen ? 'ПРИХОВАТИ_UI' : 'ПОКАЗАТИ_UI'}
           </button>
+          <div className="flex items-center gap-2 text-red-500 font-bold border-l border-[#111111]/10 pl-4 animate-pulse">
+            <Activity className="w-3 h-3" />
+            <span>LIVE ({events.length})</span>
+          </div>
         </div>
       </div>
 
-      {/* ── Map area ── */}
-      <div className="relative w-full h-[520px] md:h-[780px] bg-[#0a0a08] border border-[#c9a227]/15 overflow-hidden shadow-2xl">
-
-        {/* Corner decorators */}
-        <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-[#c9a227]/50 z-[450] pointer-events-none" />
-        <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-[#c9a227]/50 z-[450] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-[#c9a227]/50 z-[450] pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-[#c9a227]/50 z-[450] pointer-events-none" />
-
-        {/* ── Sidebar HUD ── */}
-        <div className={`absolute top-4 left-4 z-[400] w-60 transition-all duration-500 ease-in-out ${isSidebarOpen ? 'translate-x-0 opacity-100' : '-translate-x-[120%] opacity-0 pointer-events-none'}`}>
-
-          {/* Tab bar */}
-          <div className="flex border border-[#c9a227]/20 bg-[#0d0d0a]/95 mb-0">
-            {([
-              { id: 'filters', Icon: Filter, tip: 'Фільтри' },
-              { id: 'events',  Icon: Clock,  tip: 'Події'   },
-              { id: 'ruler',   Icon: Ruler,  tip: 'Лінійка' },
-            ] as const).map(({ id, Icon, tip }) => (
-              <button
-                key={id}
-                onClick={() => setActiveTab(id)}
-                title={tip}
-                className={`flex-1 flex items-center justify-center py-2 transition-all ${activeTab === id ? 'bg-[#c9a227]/15 text-[#c9a227]' : 'text-white/25 hover:text-white/50'}`}
-              >
-                <Icon className="w-3 h-3" />
-              </button>
-            ))}
-          </div>
-
-          {/* Panel body */}
-          <div className="bg-[#0d0d0a]/97 backdrop-blur-xl border border-t-0 border-[#c9a227]/20 p-4 shadow-2xl">
-
-            {activeTab === 'filters' && (
-              <div className="space-y-1.5">
-                <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#c9a227]/40 mb-3">/ ШАРИ_МАПИ</p>
-                {FILTERS.map(f => (
-                  <button
-                    key={f.id}
-                    onClick={() => toggleFilter(f.id)}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 font-mono text-[9px] uppercase tracking-wider transition-all border ${
-                      activeFilters.includes(f.id)
-                        ? 'border-[#c9a227]/30 bg-[#c9a227]/8 text-white'
-                        : 'border-transparent text-white/25 hover:text-white/40'
-                    }`}
-                  >
-                    <span className="w-2 h-2 rounded-sm flex-shrink-0" style={{ backgroundColor: activeFilters.includes(f.id) ? f.color : '#333' }} />
-                    <span className="flex-1 text-left">{f.label}</span>
-                    <f.Icon className="w-3 h-3 opacity-50" />
-                  </button>
-                ))}
-
-                {/* Active count */}
-                <div className="mt-3 pt-3 border-t border-[#c9a227]/10 flex justify-between font-mono text-[8px] text-white/20 uppercase tracking-widest">
-                  <span>Об'єктів активно</span>
-                  <span className="text-[#c9a227]/60">
-                    {strikes.filter(s =>
-                      (s.type === 'strike' && activeFilters.includes('strikes')) ||
-                      (s.type === 'navy' && activeFilters.includes('navy')) ||
-                      (s.type === 'airbase' && activeFilters.includes('airbases')) ||
-                      (s.type === 'logistics' && activeFilters.includes('logistics'))
-                    ).length} / {strikes.length}
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'events' && (
-              <div className="space-y-2">
-                <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#c9a227]/40 mb-3">/ ОСТАННІ_ПОДІЇ</p>
-                {EVENT_LOG.map(e => (
-                  <div key={e.id} className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-0">
-                    <div className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: e.color }} />
-                      <span className="font-mono text-[8px] text-white/50 tracking-wide">{e.label}</span>
-                    </div>
-                    <span className="font-mono text-[8px] font-bold" style={{ color: e.color }}>{e.status}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {activeTab === 'ruler' && (
-              <div>
-                <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#c9a227]/40 mb-3">/ ДИСТАНЦІЙНА_ЛІНІЙКА</p>
-                <p className="text-[8px] font-mono text-white/30 leading-relaxed mb-3">
-                  Клікніть 2 точки на мапі для вимірювання відстані.
-                </p>
-                {distance ? (
-                  <div className="bg-[#c9a227]/10 border border-[#c9a227]/30 p-3 text-center">
-                    <div className="font-mono text-[10px] text-[#c9a227]/50 uppercase tracking-widest mb-1">ВІДСТАНЬ</div>
-                    <div className="font-mono text-2xl font-bold text-[#c9a227]">{distance.toFixed(1)}</div>
-                    <div className="font-mono text-[9px] text-[#c9a227]/40 uppercase tracking-widest">км</div>
-                  </div>
-                ) : (
-                  <div className="border border-white/5 p-3 text-center font-mono text-[8px] text-white/15 uppercase tracking-widest">
-                    {measurePoints.length === 0 ? 'ТОЧКА 1 → КЛІК' : 'ТОЧКА 2 → КЛІК'}
-                  </div>
-                )}
+      <div className="relative w-full h-[520px] md:h-[800px] bg-[#0a0a0a] border border-[#111111]/20 overflow-hidden group shadow-2xl">
+        <div className={`absolute top-4 md:top-6 left-4 md:left-6 z-[400] w-64 md:w-72 space-y-4 transition-all duration-700 ease-in-out ${isSidebarOpen ? 'translate-x-0 opacity-100' : '-translate-x-[120%] opacity-0 pointer-events-none'}`}>
+          <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
+            <div className="flex items-center gap-2 mb-5 border-b border-[#f4f4f4]/10 pb-3">
+              <Filter className="w-3 h-3 text-blue-400" />
+              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Тактичні Фільтри</span>
+            </div>
+            <p className="mb-3 font-mono text-[8px] uppercase tracking-widest text-white/35">ВІКНО ДАНИХ: ОСТАННІ 7 ДІБ</p>
+            <div className="space-y-2.5">
+              {[
+                { id: 'strikes' as const, label: `Удари / BDA (${activityByType.strikes})`, color: 'bg-[#ff3333]', icon: Target },
+                { id: 'navy' as const, label: `Морські цілі (${activityByType.navy})`, color: 'bg-[#3399ff]', icon: Anchor },
+                { id: 'airbases' as const, label: `Авіабази РФ (${activityByType.airbases})`, color: 'bg-[#ffcc00]', icon: Plane },
+                { id: 'logistics' as const, label: `Логістика (${activityByType.logistics})`, color: 'bg-[#00ff66]', icon: Shield },
+              ].map((f) => (
                 <button
-                  onClick={() => { setMeasurePoints([]); setDistance(null); }}
-                  className="w-full mt-3 font-mono text-[8px] uppercase tracking-widest text-white/20 hover:text-[#c9a227]/60 transition-colors text-center"
+                  key={f.id}
+                  onClick={() => toggleFilter(f.id)}
+                  className={`w-full flex items-center justify-between p-2.5 font-mono text-[9px] uppercase tracking-widest transition-all border ${activeFilters.includes(f.id) ? 'border-[#f4f4f4]/30 bg-[#f4f4f4]/10 text-white shadow-[0_0_10px_rgba(255,255,255,0.05)]' : 'border-transparent text-white/35 hover:text-white/60'}`}
                 >
-                  [ СКИНУТИ ]
+                  <div className="flex items-center gap-3">
+                    <div className={`w-1.5 h-1.5 rounded-full ${activeFilters.includes(f.id) ? f.color : 'bg-zinc-700 opacity-50'}`} />
+                    <span className={activeFilters.includes(f.id) ? 'font-bold' : ''}>{f.label}</span>
+                  </div>
+                  <f.icon className={`w-3.5 h-3.5 transition-opacity ${activeFilters.includes(f.id) ? 'opacity-80' : 'opacity-20'}`} />
                 </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
+            <div className="flex items-center gap-2 mb-3">
+              <Clock className="w-3 h-3 text-green-400" />
+              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Останні Події</span>
+            </div>
+            <div className="space-y-2 text-[9px] font-mono text-[#f4f4f4]/60">
+              {filteredEvents.slice(0, 4).map((event) => (
+                <div key={event.id} className="border-b border-white/5 pb-1.5">
+                  <div className="flex justify-between items-center gap-2">
+                    <span className="truncate text-white/85">{event.location}</span>
+                    <span className={event.status === 'ПІДТВЕРДЖЕНО' ? 'text-green-400' : event.status === 'ЙМОВІРНО' ? 'text-amber-400' : 'text-sky-400'}>{event.status}</span>
+                  </div>
+                  <div className="text-[8px] text-white/35 truncate">{event.title}</div>
+                </div>
+              ))}
+              {filteredEvents.length === 0 && (
+                <div className="text-white/45 leading-relaxed">Немає релевантних гео-подій у поточному наборі даних.</div>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
+            <div className="flex items-center gap-2 mb-3">
+              <Ruler className="w-3 h-3 text-orange-400" />
+              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Дистанційна Лінійка</span>
+            </div>
+            <p className="text-[8px] font-mono text-white/40 leading-relaxed mb-3">Клікніть на мапу, щоб виміряти відстань між об'єктами.</p>
+            {distance && (
+              <div className="bg-orange-500/10 border border-orange-500/20 p-2 text-orange-500 font-mono text-[10px] text-center font-bold">
+                ВІДСТАНЬ: {distance.toFixed(1)} КМ
               </div>
             )}
+            <button
+              onClick={() => { setMeasurePoints([]); setDistance(null); }}
+              className="w-full mt-3 text-[8px] font-mono uppercase text-white/20 hover:text-white/60 transition-colors"
+            >
+              [ ОЧИСТИТИ_ВИМІРИ ]
+            </button>
           </div>
         </div>
 
-        {/* ── Telemetry / crosshair HUD (bottom-left) ── */}
-        <div className="absolute bottom-4 left-4 z-[400] pointer-events-none">
-          <div className="bg-[#0d0d0a]/92 border border-[#c9a227]/20 backdrop-blur-md px-4 py-3 shadow-xl">
-            <div className="flex items-center gap-2 mb-2 border-b border-[#c9a227]/10 pb-2">
-              <Crosshair className="w-3 h-3 text-[#c9a227]/50" />
-              <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#c9a227]/40">ТЕЛЕМЕТРІЯ</span>
+        <div className="absolute bottom-6 left-6 z-[400] bg-[#111111]/90 text-[#f4f4f4] p-5 font-mono border border-[#f4f4f4]/10 backdrop-blur-md pointer-events-none shadow-2xl">
+          <div className="flex items-center gap-3 mb-4 border-b border-[#f4f4f4]/10 pb-3">
+            <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+            <span className="tracking-widest uppercase text-[10px] font-bold opacity-90">ТЕЛЕМЕТРІЯ_ЦІЛЕВКАЗАННЯ</span>
+          </div>
+          <div className="space-y-2.5 text-[10px]">
+            <div className="flex justify-between gap-12 border-b border-white/5 pb-1">
+              <span className="opacity-30">ШИРОТА</span>
+              <span className="font-bold text-white/85 tracking-tighter">{telemetry.lat.toFixed(6)}° N</span>
             </div>
-            <div className="space-y-1 font-mono text-[9px]">
-              <div className="flex gap-6 justify-between">
-                <span className="text-white/20">LAT</span>
-                <span className="text-[#c9a227]/80 font-bold tracking-tighter">{telemetry.lat.toFixed(5)}°N</span>
-              </div>
-              <div className="flex gap-6 justify-between">
-                <span className="text-white/20">LNG</span>
-                <span className="text-[#c9a227]/80 font-bold tracking-tighter">{telemetry.lng.toFixed(5)}°E</span>
-              </div>
+            <div className="flex justify-between gap-12 border-b border-white/5 pb-1">
+              <span className="opacity-30">ДОВГОТА</span>
+              <span className="font-bold text-white/85 tracking-tighter">{telemetry.lng.toFixed(6)}° E</span>
             </div>
-          </div>
-        </div>
-
-        {/* ── Strike count badge (top-right) ── */}
-        <div className="absolute top-4 right-4 z-[400] pointer-events-none">
-          <div className="bg-[#0d0d0a]/92 border border-red-500/25 backdrop-blur-md px-3 py-2 shadow-xl">
-            <div className="font-mono text-[8px] text-red-400/60 uppercase tracking-widest mb-0.5">ПІДТВЕРДЖЕНО</div>
-            <div className="font-mono text-xl font-bold text-red-400 leading-none">{strikes.filter(s => ['strike'].includes(s.type)).length}</div>
-            <div className="font-mono text-[7px] text-red-400/30 uppercase tracking-widest mt-0.5">УДАРІВ / СЕСІЯ</div>
-          </div>
-        </div>
-
-        {/* ── Legend (bottom-right) ── */}
-        <div className="absolute bottom-4 right-4 z-[400] pointer-events-none">
-          <div className="bg-[#0d0d0a]/92 border border-[#c9a227]/20 backdrop-blur-md px-3 py-2.5 shadow-xl">
-            {FILTERS.map(f => (
-              <div key={f.id} className="flex items-center gap-2 py-0.5">
-                <span className="w-2 h-2 rounded-sm flex-shrink-0" style={{ backgroundColor: activeFilters.includes(f.id) ? f.color : '#333' }} />
-                <span className="font-mono text-[7px] uppercase tracking-widest" style={{ color: activeFilters.includes(f.id) ? 'rgba(255,255,255,0.45)' : 'rgba(255,255,255,0.1)' }}>
-                  {f.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Measurement ruler hint ── */}
-        {activeTab === 'ruler' && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[400] pointer-events-none">
-            <div className="font-mono text-[9px] uppercase tracking-widest text-[#c9a227]/30 border border-[#c9a227]/15 px-3 py-1.5 bg-[#0d0d0a]/70 backdrop-blur-sm">
-              {measurePoints.length === 0 ? '⊕ КЛІКНІТЬ ПЕРШУ ТОЧКУ' : measurePoints.length === 1 ? '⊕ КЛІКНІТЬ ДРУГУ ТОЧКУ' : ''}
+            <div className="flex justify-between gap-12 text-[9px] pt-1">
+              <span className="opacity-30 text-blue-400 font-bold">EVENTS</span>
+              <span className="text-blue-400/80">{filteredEvents.length} ACTIVE</span>
             </div>
           </div>
-        )}
+        </div>
 
-        {/* ── Leaflet Map ── */}
         <MapContainer
-          center={[47.5, 36.5]}
+          center={mapCenter}
           zoom={6}
           scrollWheelZoom
           className="w-full h-full z-0 cursor-crosshair"
           zoomControl={false}
         >
-          <LayersControl position="topright">
-            <LayersControl.BaseLayer name="Супутниковий Intel">
-              <TileLayer
-                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-                attribution="&copy; ESRI"
-              />
-            </LayersControl.BaseLayer>
-            <LayersControl.BaseLayer checked name="Тактична Темна">
+          <LayersControl position="bottomright">
+            <LayersControl.BaseLayer name="Тактична Темна">
               <TileLayer
                 url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
                 attribution="&copy; CARTO"
               />
             </LayersControl.BaseLayer>
+            <LayersControl.BaseLayer checked name="Супутниковий Intel">
+              <TileLayer
+                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                attribution="&copy; ESRI"
+              />
+            </LayersControl.BaseLayer>
           </LayersControl>
 
-          <MapEvents onMouseMove={(lat, lng) => setTelemetry({ lat, lng })} onClick={handleClick} />
+          <MapEvents
+            onMouseMove={(lat, lng) => setTelemetry({ lat, lng })}
+            onClick={(lat, lng) => handleMapClick(lat, lng)}
+          />
 
-          {/* Distance line */}
           {measurePoints.length === 2 && (
-            <>
-              <Polyline positions={measurePoints} pathOptions={{ color: '#c9a227', weight: 1.5, dashArray: '8 8', opacity: 0.7 }}>
-                <Tooltip permanent direction="center">
-                  <span className="font-mono text-[10px] font-bold" style={{ color: '#c9a227' }}>{distance?.toFixed(1)} км</span>
-                </Tooltip>
-              </Polyline>
-              {measurePoints.map((p, i) => (
-                <Circle key={i} center={p} radius={150} pathOptions={{ color: '#c9a227', fillColor: '#c9a227', fillOpacity: 0.4, weight: 1 }} />
-              ))}
-            </>
+            <Polyline
+              positions={measurePoints}
+              pathOptions={{ color: '#f97316', weight: 2, dashArray: '10, 10' }}
+            >
+              <Tooltip permanent direction="center" className="measurement-tooltip">
+                <span className="font-mono text-[10px] font-bold text-orange-500">{distance?.toFixed(1)} км</span>
+              </Tooltip>
+            </Polyline>
           )}
 
-          {/* Strike trajectories */}
-          {activeFilters.includes('strikes') && (
-            <>
-              <Polyline positions={[[48.5, 34.0], [44.1132, 39.0825]]} pathOptions={{ color: '#ef4444', weight: 1, dashArray: '4 8', opacity: 0.2 }} />
-              <Polyline positions={[[47.0, 32.0], [44.6167, 33.5250]]} pathOptions={{ color: '#ef4444', weight: 1, dashArray: '4 8', opacity: 0.2 }} />
-              <Polyline positions={[[47.5, 31.5], [45.3422, 32.5122]]} pathOptions={{ color: '#ef4444', weight: 1, dashArray: '4 8', opacity: 0.2 }} />
-            </>
-          )}
+          {measurePoints.map((p, i) => (
+            <Circle key={`measure-${i}`} center={p} radius={100} pathOptions={{ color: '#f97316', fillColor: '#f97316', fillOpacity: 0.5 }} />
+          ))}
 
-          {/* Markers */}
-          {strikes.map(s => {
-            const filterKey = s.type === 'strike' ? 'strikes' : s.type === 'navy' ? 'navy' : s.type === 'airbase' ? 'airbases' : 'logistics';
-            if (!activeFilters.includes(filterKey)) return null;
-            return (
-              <Marker key={s.id} position={s.pos} icon={icons[s.type === 'strike' ? 'strike' : s.type === 'navy' ? 'navy' : s.type === 'airbase' ? 'airbase' : 'logistics']}>
+          {filteredEvents.map((event) => (
+            <React.Fragment key={event.id}>
+              <Circle
+                center={event.position}
+                radius={4500 + Math.round(event.confidence * 4500)}
+                pathOptions={{
+                  color: event.type === 'strikes' ? '#ff3333' : event.type === 'navy' ? '#3399ff' : event.type === 'airbases' ? '#ffcc00' : '#00ff66',
+                  fillColor: event.type === 'strikes' ? '#ff3333' : event.type === 'navy' ? '#3399ff' : event.type === 'airbases' ? '#ffcc00' : '#00ff66',
+                  fillOpacity: 0.06,
+                  weight: 0,
+                }}
+              />
+              <Marker position={event.position} icon={icons[event.type]}>
                 <Popup className="tactical-popup">
-                  <div className="font-mono p-3 bg-[#0d0d0a] text-white border border-[#c9a227]/20 min-w-[200px]">
-                    <div className="flex justify-between items-center mb-2 border-b border-[#c9a227]/15 pb-2">
-                      <h5 className="font-bold text-[#c9a227] uppercase text-[10px] tracking-tight">{s.name}</h5>
-                      <span className="text-[7px] bg-red-500/15 border border-red-500/30 px-1.5 py-0.5 text-red-400 tracking-widest uppercase">УРАЖЕННЯ</span>
+                  <div className="font-mono p-3 bg-[#111111] text-white border border-white/10 min-w-[250px]">
+                    <div className="flex justify-between items-start mb-2 border-b border-white/15 pb-2 gap-2">
+                      <h5 className="font-bold text-white uppercase text-xs tracking-tight leading-tight">{event.location}</h5>
+                      <span className="text-[8px] px-1.5 py-0.5 bg-white/10 text-white/80">{event.status}</span>
                     </div>
-                    <div className="space-y-1.5 text-[9px]">
-                      <div className="flex justify-between gap-8">
-                        <span className="text-white/30 uppercase">Дата</span>
-                        <span className="font-bold text-white/70">{s.date}</span>
+                    <div className="space-y-2 text-[9px]">
+                      <div className="text-white/90 leading-relaxed">{event.title}</div>
+                      {event.excerpt && (
+                        <div className="text-white/55 leading-relaxed border-t border-white/5 pt-2">{event.excerpt.slice(0, 170)}{event.excerpt.length > 170 ? '…' : ''}</div>
+                      )}
+                      <div className="flex justify-between border-t border-white/5 pt-2">
+                        <span className="opacity-45 uppercase">Впевненість:</span>
+                        <span className="text-green-400 font-bold">{confidenceLabel(event.confidence)} · {Math.round(event.confidence * 100)}%</span>
                       </div>
-                      <div className="flex justify-between gap-8">
-                        <span className="text-white/30 uppercase">BDA</span>
-                        <span className="text-green-400 font-bold">{s.bda}</span>
-                      </div>
-                      <div className="pt-2 mt-1 border-t border-white/5 text-[7px] text-white/25 tracking-widest uppercase">
-                        SOURCE: {s.intel}
+                      <div className="flex justify-between">
+                        <span className="opacity-45 uppercase">Джерело:</span>
+                        <a href={event.sourceUrl} target="_blank" rel="noreferrer" className="text-blue-300 hover:text-blue-200">{event.sourceName}</a>
                       </div>
                     </div>
                   </div>
                 </Popup>
               </Marker>
-            );
-          })}
-
-          {/* Navy threat zone */}
-          {activeFilters.includes('navy') && (
-            <Circle center={[44.5, 33.8]} radius={6000} pathOptions={{ color: '#3b82f6', fillOpacity: 0.06, weight: 1, dashArray: '6 6' }}>
-              <Tooltip permanent direction="top" className="tactical-label-navy">АКВАТОРІЯ_ЗАГРОЗИ</Tooltip>
-            </Circle>
-          )}
-
-          {/* General combat activity heat zone */}
-          <Circle center={[47.2, 37.5]} radius={90000} pathOptions={{ color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.04, weight: 0 }} />
+            </React.Fragment>
+          ))}
         </MapContainer>
 
-        {/* CRT scanline overlay */}
-        <div className="absolute inset-0 pointer-events-none z-[450] opacity-[0.025] bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(0,0,0,0.5)_1px,rgba(0,0,0,0.5)_2px)]" />
-        {/* Vignette */}
-        <div className="absolute inset-0 pointer-events-none z-[448] bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(0,0,0,0.55)_100%)]" />
+        <div className="absolute inset-0 pointer-events-none z-[450] opacity-[0.03] overflow-hidden bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]"></div>
       </div>
 
       <style>{`
-        .leaflet-container { background: #0a0a08 !important; }
+        .leaflet-container {
+          background: #0a0a0a !important;
+        }
         .tactical-popup .leaflet-popup-content-wrapper {
-          background: transparent !important; padding: 0 !important;
-          border-radius: 0 !important; box-shadow: none !important;
+          background: transparent !important;
+          color: white !important;
+          padding: 0 !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
         }
-        .tactical-popup .leaflet-popup-content { margin: 0 !important; }
-        .tactical-popup .leaflet-popup-tip { background: #0d0d0a !important; }
+        .tactical-popup .leaflet-popup-content {
+          margin: 0 !important;
+        }
+        .tactical-popup .leaflet-popup-tip {
+          background: #111 !important;
+        }
         .leaflet-control-layers {
-          background: #0d0d0a !important; color: #c9a22799 !important;
-          border: 1px solid rgba(201,162,39,0.2) !important;
-          font-family: monospace !important; font-size: 8px !important;
-          text-transform: uppercase !important; border-radius: 0 !important;
-          letter-spacing: 0.08em !important;
+          background: #111 !important;
+          color: #f4f4f4 !important;
+          border: 1px solid rgba(255,255,255,0.1) !important;
+          font-family: monospace !important;
+          font-size: 8px !important;
+          text-transform: uppercase !important;
+          border-radius: 0 !important;
         }
-        .leaflet-control-layers-toggle { background-color: #0d0d0a !important; }
-        .leaflet-control-layers label { color: #c9a22799 !important; }
-        .leaflet-control-zoom {
-          border: 1px solid rgba(201,162,39,0.2) !important; border-radius: 0 !important;
-        }
-        .leaflet-control-zoom a {
-          background: #0d0d0a !important; color: #c9a22799 !important;
-          border-radius: 0 !important; border-bottom: 1px solid rgba(201,162,39,0.15) !important;
-        }
-        .leaflet-control-zoom a:hover { background: #1c1c12 !important; color: #c9a227 !important; }
-        .tactical-label-navy {
-          background: transparent !important; border: none !important;
-          box-shadow: none !important; color: #3b82f6 !important;
-          font-family: monospace !important; font-size: 7px !important;
-          font-weight: bold !important; text-transform: uppercase !important;
-          letter-spacing: 0.12em !important;
-        }
-        .leaflet-popup-tip-container { display: none !important; }
-        @keyframes ping {
-          75%, 100% { transform: scale(2.2); opacity: 0; }
+        .measurement-tooltip {
+          background: #111 !important;
+          border: 1px solid #f97316 !important;
+          color: #f97316 !important;
+          font-family: monospace !important;
+          box-shadow: 0 0 10px rgba(249,115,22,0.3) !important;
+          border-radius: 0 !important;
         }
       `}</style>
     </div>
