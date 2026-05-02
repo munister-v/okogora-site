@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Post } from '../types';
 import { verifyToken, savePosts } from '../lib/github';
 import ImageUploader from '../components/ImageUploader';
-import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader } from 'lucide-react';
+import { importFromTelegraph } from '../lib/telegraph';
+import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader, Download } from 'lucide-react';
 
 const TOKEN_KEY = 'oko_admin_token';
 const USER_KEY = 'oko_admin_user';
@@ -32,6 +33,10 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'ok' | 'error'>('idle');
   const [saveMsg, setSaveMsg] = useState('');
+  const [tgUrl, setTgUrl] = useState('');
+  const [tgLoading, setTgLoading] = useState(false);
+  const [tgError, setTgError] = useState('');
+  const [showTgInput, setShowTgInput] = useState(false);
 
   const isAuthed = !!token && !!username;
 
@@ -117,6 +122,23 @@ export default function AdminPage() {
     } finally {
       setSaving(false);
       setTimeout(() => setSaveStatus('idle'), 3000);
+    }
+  }
+
+  async function handleTelegraphImport() {
+    if (!tgUrl.trim()) return;
+    setTgLoading(true);
+    setTgError('');
+    try {
+      const imported = await importFromTelegraph(tgUrl.trim());
+      setEditing({ ...emptyPost(), ...imported } as Post);
+      setIsNew(true);
+      setShowTgInput(false);
+      setTgUrl('');
+    } catch (e: any) {
+      setTgError(e.message || 'Помилка імпорту');
+    } finally {
+      setTgLoading(false);
     }
   }
 
@@ -353,12 +375,58 @@ export default function AdminPage() {
             <h1 className="text-4xl font-bold uppercase tracking-tighter mb-1">Статті</h1>
             <p className="font-mono text-[10px] text-[#f4f4f4]/30 uppercase tracking-widest">{posts.length} публікацій</p>
           </div>
-          <button
-            onClick={() => { setEditing(emptyPost()); setIsNew(true); }}
-            className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-6 py-3 hover:bg-[#f4f4f4] transition-colors"
-          >
-            <Plus className="w-4 h-4" /> НОВА СТАТТЯ
-          </button>
+          <div className="flex items-center gap-3">
+            {/* Telegraph import */}
+            {showTgInput ? (
+              <div className="flex items-center gap-2">
+                <div className="flex flex-col gap-1">
+                  <div className="flex gap-2">
+                    <input
+                      autoFocus
+                      value={tgUrl}
+                      onChange={e => { setTgUrl(e.target.value); setTgError(''); }}
+                      onKeyDown={e => e.key === 'Enter' && handleTelegraphImport()}
+                      placeholder="https://telegra.ph/..."
+                      className="w-72 bg-[#1a1a1a] border border-[#f4f4f4]/20 text-white font-mono text-xs px-3 py-2.5 outline-none focus:border-[#f4f4f4]/50 placeholder:text-[#f4f4f4]/20 transition-colors"
+                    />
+                    <button
+                      onClick={handleTelegraphImport}
+                      disabled={!tgUrl || tgLoading}
+                      className="flex items-center gap-2 border border-[#f4f4f4]/20 text-[#f4f4f4]/70 font-mono text-xs uppercase tracking-widest px-4 py-2.5 hover:text-white hover:border-[#f4f4f4]/60 disabled:opacity-30 transition-colors"
+                    >
+                      {tgLoading ? <Loader className="w-3 h-3 animate-spin" /> : <Download className="w-3 h-3" />}
+                      {tgLoading ? 'ІМПОРТ...' : 'OK'}
+                    </button>
+                    <button
+                      onClick={() => { setShowTgInput(false); setTgUrl(''); setTgError(''); }}
+                      className="px-3 py-2.5 border border-[#f4f4f4]/10 text-[#f4f4f4]/30 hover:text-white transition-colors"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                  {tgError && (
+                    <div className="flex items-center gap-1.5 text-red-400 font-mono text-[9px]">
+                      <AlertTriangle className="w-3 h-3" /> {tgError}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={() => setShowTgInput(true)}
+                className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-5 py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors"
+              >
+                <Download className="w-4 h-4" /> TELEGRAPH
+              </button>
+            )}
+
+            <button
+              onClick={() => { setEditing(emptyPost()); setIsNew(true); }}
+              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-6 py-3 hover:bg-[#f4f4f4] transition-colors"
+            >
+              <Plus className="w-4 h-4" /> НОВА СТАТТЯ
+            </button>
+          </div>
         </div>
 
         {/* Posts list */}

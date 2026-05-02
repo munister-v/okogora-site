@@ -110,6 +110,7 @@ export default function PostPage() {
               <img
                 src={imageUrl(post.image)}
                 alt={post.title}
+                onError={e => { (e.target as HTMLImageElement).parentElement!.style.display = 'none'; }}
                 className="w-full h-full object-cover grayscale contrast-[1.1]"
               />
               <div className="absolute inset-0 bg-[#111111]/5" />
@@ -155,6 +156,7 @@ export default function PostPage() {
                       <img
                         src={imageUrl(p.image)}
                         alt={p.title}
+                        onError={e => { (e.target as HTMLImageElement).parentElement!.style.display = 'none'; }}
                         className="w-full h-full object-cover grayscale contrast-[1.15] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
                       />
                     </div>

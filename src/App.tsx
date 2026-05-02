@@ -318,6 +318,7 @@ export default function App() {
                       <img
                         src={imageUrl(post.image)}
                         alt={post.title}
+                        onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
                         className="w-full h-full object-cover grayscale contrast-[1.15] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-[0.22,1,0.36,1]"
                       />
                     )}
