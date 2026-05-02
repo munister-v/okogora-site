@@ -1,13 +1,40 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+    <title>Око Гора | Стратегічний OSINT Монітор</title>
+    <meta name="description" content="Незалежний ресурс з моніторингу, аеророзвідки та стратегічної аналітики бойового простору." />
+    <meta property="og:title" content="Око Гора" />
+    <meta property="og:description" content="Тотальний візуальний контроль. Аналітика бойового простору." />
+    <meta property="og:url" content="https://okogora.com.ua" />
+    <link rel="canonical" href="https://okogora.com.ua" />
+    <style>
+      /* Disable text selection on non-input elements */
+      body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+      input, textarea { -webkit-user-select: text; user-select: text; }
+    </style>
+    <script>
+      // Disable right-click context menu
+      document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+      // Disable common devtools shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (
+          e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+          (e.ctrlKey && e.key === 'U') ||
+          (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))
+        ) {
+          e.preventDefault();
+          return false;
+        }
+      });
+      // Disable drag of images
+      document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

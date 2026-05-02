@@ -1,20 +1,22 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Око Гора — Стратегічний OSINT Монітор
 
-# Run and deploy your AI Studio app
+Незалежний ресурс з моніторингу, аеророзвідки та стратегічної аналітики бойового простору.
 
-This contains everything you need to run your app locally.
+**Сайт:** [okogora.com.ua](https://okogora.com.ua)  
+**Telegram:** [@oko_gora](https://t.me/oko_gora)
 
-View your app in AI Studio: https://ai.studio/apps/348a8739-a21f-4e6a-a3ef-2f96b9fea8fb
+## Локальний запуск
 
-## Run Locally
+**Вимоги:** Node.js 18+
 
-**Prerequisites:**  Node.js
+1. Встановити залежності: `npm install`
+2. Додати `GEMINI_API_KEY` у файл `.env.local`
+3. Запустити: `npm run dev`
 
+## Деплой
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm run build
+```
+
+Вміст папки `dist/` завантажити на хостинг або налаштувати GitHub Actions.
