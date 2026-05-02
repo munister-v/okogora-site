@@ -18,6 +18,14 @@ const DEFAULT_CONFIG = {
   ],
 };
 
+// Geographic gate for UA + western/southern RF theater to avoid "whole world" spillover.
+const UA_RF_BOUNDS = {
+  minLat: 42.0,
+  maxLat: 60.5,
+  minLng: 20.0,
+  maxLng: 45.5,
+};
+
 const REGION_UK = {
   kherson: 'Херсонської області',
   zaporizhye: 'Запорізької області',
@@ -358,6 +366,25 @@ function deduplicateItems(items, maxItems) {
     .slice(0, maxItems);
 }
 
+function isInsideUaRfBounds(position) {
+  if (!Array.isArray(position) || position.length < 2) return false;
+  const lat = Number(position[0]);
+  const lng = Number(position[1]);
+  if (Number.isNaN(lat) || Number.isNaN(lng)) return false;
+  return lat >= UA_RF_BOUNDS.minLat &&
+    lat <= UA_RF_BOUNDS.maxLat &&
+    lng >= UA_RF_BOUNDS.minLng &&
+    lng <= UA_RF_BOUNDS.maxLng;
+}
+
+function isUaRfContext(item) {
+  const text = `${item.title || ''} ${item.titleUk || ''} ${item.region || ''} ${item.mapTitle || ''}`.toLowerCase();
+  if (/(ukraine|україн|рос|russia|crimea|крим|donetsk|луган|luhansk|kharkiv|харків|kherson|херсон|sumy|суми|zaporizh|запоріж|mykolaiv|миколаїв|sevastopol|севастопол)/i.test(text)) {
+    return true;
+  }
+  return false;
+}
+
 async function main() {
   const config = await loadConfig();
   const enabledSources = (config.sources || []).filter((source) => source && source.enabled !== false && source.viewerUrl);
@@ -409,7 +436,9 @@ async function main() {
     }
   }
 
-  let items = deduplicateItems(allItems, config.maxItems);
+  let items = deduplicateItems(allItems, config.maxItems)
+    .filter((item) => isInsideUaRfBounds(item.position))
+    .filter((item) => isUaRfContext(item));
   if (items.length < 10 && previousItems.length > 0) {
     items = deduplicateItems(previousItems, config.maxItems);
   }
