@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket, Navigation, Rss, Target } from 'lucide-react';
-import { Post } from './types';
+import { Post, InvestigationArticle } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
 
@@ -56,6 +56,7 @@ function countStrikesFromRss(items: RssItem[]): number {
 export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [rssItems, setRssItems] = useState<RssItem[]>([]);
+  const [investigations, setInvestigations] = useState<InvestigationArticle[]>([]);
   const [sharedItemId, setSharedItemId] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -76,6 +77,11 @@ export default function App() {
       .then(r => r.json())
       .then(data => setRssItems(Array.isArray(data?.items) ? data.items : []))
       .catch(() => setRssItems([]));
+
+    fetch(`/data/investigations.json?t=${Date.now()}`)
+      .then(r => r.json())
+      .then((data: InvestigationArticle[]) => setInvestigations(Array.isArray(data) ? data : []))
+      .catch(() => setInvestigations([]));
   }, []);
 
   function formatRssDate(iso: string) {
@@ -451,15 +457,25 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {[
-                  { title: 'Ланцюг подій', text: "Покрокова реконструкція інцидентів за часом, географією та джерелами.", code: 'CASEFLOW' },
-                  { title: 'Гео-докази', text: "Прив’язка кадрів до координат, об’єктів інфраструктури та супутникових шарів.", code: 'GEO-TRACE' },
-                  { title: 'Порівняння версій', text: "Зіставлення заяв, медіа та фактичних змін на місцевості з маркерами довіри.", code: 'EVIDENCE-DELTA' },
-                ].map(item => (
+                {(investigations.length ? investigations.filter(i => (i.status || 'published') === 'published') : [
+                  { id: 'fallback-1', title: 'Ланцюг подій', summary: "Покрокова реконструкція інцидентів за часом, географією та джерелами.", code: 'CASEFLOW', tags: [], publishedAt: '', status: 'published' as const },
+                  { id: 'fallback-2', title: 'Гео-докази', summary: "Прив’язка кадрів до координат, об’єктів інфраструктури та супутникових шарів.", code: 'GEO-TRACE', tags: [], publishedAt: '', status: 'published' as const },
+                  { id: 'fallback-3', title: 'Порівняння версій', summary: "Зіставлення заяв, медіа та фактичних змін на місцевості з маркерами довіри.", code: 'EVIDENCE-DELTA', tags: [], publishedAt: '', status: 'published' as const },
+                ]).slice(0, 6).map(item => (
                   <article key={item.code} className="bg-[#2e2d1e] border border-[#c9a227]/20 p-6 md:p-8 hover:border-[#c9a227]/50 transition-colors">
                     <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c9a227] mb-4">{item.code}</p>
                     <h3 className="text-2xl font-bold tracking-tight uppercase mb-4 text-white">{item.title}</h3>
-                    <p className="text-white/50 text-sm leading-relaxed">{item.text}</p>
+                    <p className="text-white/50 text-sm leading-relaxed">{item.summary}</p>
+                    <div className="mt-4 flex items-center gap-4">
+                      <Link to={`/investigation/${item.id}`} className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/65 hover:text-[#c9a227] transition-colors">
+                        Детально <ArrowUpRight className="w-3 h-3" />
+                      </Link>
+                      {item.url && (
+                        <a href={item.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/45 hover:text-[#c9a227] transition-colors">
+                          Джерело <ArrowUpRight className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
                   </article>
                 ))}
               </div>

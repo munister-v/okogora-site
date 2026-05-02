@@ -1,6 +1,7 @@
 const REPO_OWNER = 'munister-v';
 const REPO_NAME = 'okogora';
 const POSTS_PATH = 'public/data/posts.json';
+const INVESTIGATIONS_PATH = 'public/data/investigations.json';
 const RSS_CONFIG_PATH = 'public/data/rss_twitter_config.json';
 const TG_SYNC_WORKFLOW_ID = 'sync-telegram-posts.yml';
 const X_RSS_SYNC_WORKFLOW_ID = 'sync-x-rss.yml';
@@ -74,6 +75,10 @@ async function saveJsonFile(token: string, filePath: string, payload: unknown, m
 
 export async function savePosts(token: string, posts: object[]): Promise<void> {
   await saveJsonFile(token, POSTS_PATH, posts, 'content: update posts [admin]');
+}
+
+export async function saveInvestigations(token: string, investigations: object[]): Promise<void> {
+  await saveJsonFile(token, INVESTIGATIONS_PATH, investigations, 'content: update investigations [admin]');
 }
 
 export async function saveRssConfig(token: string, config: RssSyncConfig): Promise<void> {

@@ -14,3 +14,15 @@ export interface Post {
     fetchedAt?: string;
   };
 }
+
+export interface InvestigationArticle {
+  id: string;
+  title: string;
+  summary: string;
+  code: string;
+  url?: string;
+  tags: string[];
+  publishedAt: string;
+  status?: 'draft' | 'published';
+  contentMarkdown?: string;
+}
