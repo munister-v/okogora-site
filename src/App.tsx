@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket, Navigation } from 'lucide-react';
+import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket, Navigation, Rss } from 'lucide-react';
 import { Post } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
@@ -24,8 +24,20 @@ const staggerContainer = {
   }
 };
 
+type RssItem = {
+  id: string;
+  title: string;
+  url: string;
+  summary: string;
+  publishedAt: string;
+  author: string;
+  handle: string;
+  tags?: string[];
+};
+
 export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [rssItems, setRssItems] = useState<RssItem[]>([]);
 
   useEffect(() => {
     setSeo({
@@ -39,7 +51,18 @@ export default function App() {
       .then(r => r.json())
       .then((data: Post[]) => setPosts(normalizePosts(data)))
       .catch(() => setPosts([]));
+
+    fetch(`/data/rss_twitter.json?t=${Date.now()}`)
+      .then(r => r.json())
+      .then(data => setRssItems(Array.isArray(data?.items) ? data.items : []))
+      .catch(() => setRssItems([]));
   }, []);
+
+  function formatRssDate(iso: string) {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return '';
+    return d.toLocaleString('uk-UA', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+  }
 
   return (
     <div className="min-h-screen bg-[#f4f4f4] text-[#111111] selection:bg-[#111111] selection:text-[#f4f4f4] font-sans overflow-x-hidden">
@@ -342,6 +365,56 @@ export default function App() {
                   </article>
                 ))}
               </div>
+            </div>
+          </motion.section>
+
+          {/* RSS X Investigations */}
+          <motion.section variants={fadeIn} className="mb-32 md:mb-48">
+            <div className="border-t border-[#111111] pt-12 md:pt-16">
+              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#111111]/40 mb-4 block">/ LIVE RSS</span>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">RSS пости з X: OSINT/HUMINT</h2>
+                  <p className="mt-4 text-[#111111]/60 max-w-3xl">
+                    Автоматична вибірка за останні 3 дні по темах, пов'язаних з Україною, з фокусом на іноземних OSINT/HUMINT авторів.
+                  </p>
+                </div>
+                <a href="https://x.com" target="_blank" rel="noreferrer" className="font-mono text-xs uppercase tracking-widest text-[#111111]/45 hover:text-[#111111] transition-colors">
+                  Джерела X / Twitter <ArrowUpRight className="inline w-3 h-3 ml-1" />
+                </a>
+              </div>
+
+              {rssItems.length === 0 ? (
+                <div className="border border-[#111111]/10 bg-white p-8 font-mono text-xs uppercase tracking-widest text-[#111111]/40">
+                  Дані RSS ще оновлюються. Перевір через кілька хвилин.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {rssItems.slice(0, 18).map((item) => (
+                    <article key={item.id} className="bg-white border border-[#111111]/10 p-6 hover:border-[#111111]/40 transition-colors">
+                      <div className="flex items-center justify-between mb-4">
+                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#111111]/45">{item.author}</p>
+                        <Rss className="w-3.5 h-3.5 text-[#111111]/30" />
+                      </div>
+                      <h3 className="text-xl font-bold tracking-tight mb-3 leading-tight">{item.title}</h3>
+                      <p className="text-sm text-[#111111]/65 leading-relaxed mb-4 line-clamp-4">{formatPreview(item.summary || '', 220)}</p>
+                      <div className="font-mono text-[9px] uppercase tracking-widest text-[#111111]/35 mb-4">
+                        @{item.handle} · {formatRssDate(item.publishedAt)}
+                      </div>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {(item.tags || ['OSINT', 'HUMINT', 'UKRAINE']).slice(0, 3).map((tag) => (
+                          <span key={`${item.id}-${tag}`} className="px-2 py-1 border border-[#111111]/10 font-mono text-[8px] uppercase tracking-widest text-[#111111]/50">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <a href={item.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-[#111111]/50 hover:text-[#111111] transition-colors">
+                        Відкрити пост <ArrowUpRight className="w-3 h-3" />
+                      </a>
+                    </article>
+                  ))}
+                </div>
+              )}
             </div>
           </motion.section>
 

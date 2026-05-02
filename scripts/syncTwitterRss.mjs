@@ -1,0 +1,193 @@
+import fs from 'node:fs/promises';
+import crypto from 'node:crypto';
+
+const OUTPUT_PATH = 'public/data/rss_twitter.json';
+const WINDOW_DAYS = 3;
+
+const AUTHORS = [
+  { handle: 'OSINTtechnical', name: 'OSINTtechnical' },
+  { handle: 'GeoConfirmed', name: 'GeoConfirmed' },
+  { handle: 'DefMon3', name: 'Def Mon' },
+  { handle: 'NOELreports', name: 'NOELREPORTS' },
+  { handle: 'War_Mapper', name: 'War Mapper' },
+  { handle: 'ChrisO_wiki', name: 'ChrisO_wiki' },
+  { handle: 'Tendar', name: 'Tendar' },
+  { handle: 'RALee85', name: 'Rob Lee' }
+];
+
+const KEYWORDS = [
+  'ukraine', 'ukrainian', 'kyiv', 'kharkiv', 'kherson', 'odesa', 'odes',
+  'donetsk', 'luhansk', 'crimea', 'zaporizhzhia', 'dnipro',
+  'osint', 'humint', 'intelligence', 'frontline', 'satellite',
+  'missile', 'drone', 'strike', 'air defense', 'russian', 'russia',
+  'occupation', 'naval', 'black sea', 'battle', 'brigade'
+];
+
+const FEED_FACTORIES = [
+  (handle) => `https://nitter.poast.org/${handle}/rss`,
+  (handle) => `https://twiiit.com/${handle}/rss`,
+  (handle) => `https://rsshub.app/twitter/user/${handle}`,
+  (handle) => `https://rsshub.pseudoyu.com/twitter/user/${handle}`,
+  (handle) => `https://rsshub.uocat.com/twitter/user/${handle}`,
+];
+
+function decodeHtml(input) {
+  return (input || '')
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function pickTag(itemXml, tagName) {
+  const re = new RegExp(`<${tagName}[^>]*>([\\s\\S]*?)<\\/${tagName}>`, 'i');
+  const m = itemXml.match(re);
+  return m ? decodeHtml(m[1]) : '';
+}
+
+function toIsoOrNow(pubDate) {
+  const d = new Date(pubDate);
+  if (Number.isNaN(d.getTime())) return new Date().toISOString();
+  return d.toISOString();
+}
+
+function withinDays(iso, days) {
+  const ts = new Date(iso).getTime();
+  const min = Date.now() - days * 24 * 60 * 60 * 1000;
+  return ts >= min;
+}
+
+function keywordMatch(text) {
+  const t = text.toLowerCase();
+  return KEYWORDS.some((k) => t.includes(k));
+}
+
+function hashKey(input) {
+  return crypto.createHash('sha1').update(input).digest('hex').slice(0, 12);
+}
+
+async function fetchText(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12000);
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (compatible; okogora-x-rss/1.0)',
+        Accept: 'application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.5',
+      },
+      signal: controller.signal,
+      redirect: 'follow',
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    if (!/<rss|<feed/i.test(text)) throw new Error('not_feed');
+    return text;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function parseItems(xml, author) {
+  const rawItems = xml.match(/<item[\s\S]*?<\/item>/gi) || [];
+
+  return rawItems.map((itemXml) => {
+    const title = pickTag(itemXml, 'title');
+    const link = pickTag(itemXml, 'link');
+    const description = pickTag(itemXml, 'description');
+    const pubDate = pickTag(itemXml, 'pubDate') || pickTag(itemXml, 'updated');
+    const publishedAt = toIsoOrNow(pubDate);
+
+    return {
+      id: `x-${author.handle}-${hashKey(link || title || publishedAt)}`,
+      title,
+      url: link,
+      summary: description,
+      publishedAt,
+      author: author.name,
+      handle: author.handle,
+      source: 'x_rss',
+      tags: ['OSINT', 'HUMINT', 'UKRAINE'],
+    };
+  });
+}
+
+async function fetchAuthorItems(author) {
+  for (const makeUrl of FEED_FACTORIES) {
+    const url = makeUrl(author.handle);
+    try {
+      const xml = await fetchText(url);
+      const parsed = parseItems(xml, author);
+      if (parsed.length > 0) {
+        console.log(`OK ${author.handle} via ${url} -> ${parsed.length}`);
+        return parsed;
+      }
+    } catch (err) {
+      console.log(`FAIL ${author.handle} via ${url}: ${String(err.message || err)}`);
+    }
+  }
+
+  return [];
+}
+
+async function main() {
+  const all = [];
+
+  for (const author of AUTHORS) {
+    const items = await fetchAuthorItems(author);
+    all.push(...items);
+  }
+
+  const dedupByUrl = new Set();
+  const dedupByTitle = new Set();
+
+  const filtered = all
+    .filter((item) => item.url && item.title)
+    .filter((item) => withinDays(item.publishedAt, WINDOW_DAYS))
+    .filter((item) => keywordMatch(`${item.title} ${item.summary}`))
+    .filter((item) => {
+      const u = item.url.trim();
+      if (dedupByUrl.has(u)) return false;
+      dedupByUrl.add(u);
+
+      const t = item.title.toLowerCase().replace(/\s+/g, ' ').replace(/[^\p{L}\p{N}\s]/gu, '').trim();
+      if (dedupByTitle.has(t)) return false;
+      dedupByTitle.add(t);
+      return true;
+    })
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, 80);
+
+  let finalItems = filtered;
+
+  if (finalItems.length === 0) {
+    try {
+      const prev = JSON.parse(await fs.readFile(OUTPUT_PATH, 'utf8'));
+      finalItems = Array.isArray(prev.items) ? prev.items : [];
+      console.log(`No fresh items, keeping previous snapshot (${finalItems.length})`);
+    } catch {
+      // noop
+    }
+  }
+
+  const payload = {
+    generatedAt: new Date().toISOString(),
+    windowDays: WINDOW_DAYS,
+    authors: AUTHORS.map((a) => a.handle),
+    items: finalItems,
+  };
+
+  await fs.writeFile(OUTPUT_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+  console.log(`Wrote ${OUTPUT_PATH} with ${finalItems.length} items`);
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
