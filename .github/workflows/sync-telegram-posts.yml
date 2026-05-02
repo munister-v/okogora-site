@@ -38,13 +38,14 @@ jobs:
 
       - name: Commit changes
         run: |
-          if git diff --quiet public/data/posts.json; then
-            echo "No changes in posts.json"
+          if git diff --quiet public/data/posts.json public/images/telegram; then
+            echo "No changes in posts.json/images"
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/data/posts.json
+          git add public/images/telegram
           git commit -m "content: sync posts from telegram [bot]"
           git push

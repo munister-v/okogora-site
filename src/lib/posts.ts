@@ -37,12 +37,21 @@ export function normalizePosts(posts: Post[]): Post[] {
       ...p,
       title: String(p.title).trim(),
       text: String(p.text || '').trim(),
+      image: String(p.image || '').trim(),
       telegramUrl: p.telegramUrl || postTelegramUrl(p),
       tags: Array.isArray(p.tags) ? p.tags : [],
     });
   }
 
   return result;
+}
+
+export function resolveImageUrl(img: string): string {
+  if (!img) return '';
+  if (img.startsWith('http://') || img.startsWith('https://')) return img;
+  if (img.startsWith('/')) return img;
+  if (img.startsWith('images/')) return `/${img}`;
+  return `https://raw.githubusercontent.com/munister-v/okogora/main/images/${img}`;
 }
 
 export function formatPreview(text: string, max = 200): string {

@@ -1,6 +1,8 @@
 import fs from 'node:fs/promises';
+import path from 'node:path';
 
 const POSTS_PATH = 'public/data/posts.json';
+const IMAGES_ROOT = 'public/images/telegram';
 
 function decodeHtmlEntities(input) {
   return input
@@ -40,15 +42,8 @@ function extractTags(text) {
   const tags = [];
 
   for (const tag of found) {
-    const cleaned = tag
-      .replace('#', '')
-      .trim()
-      .toUpperCase();
-
-    if (cleaned && !tags.includes(cleaned)) {
-      tags.push(cleaned);
-    }
-
+    const cleaned = tag.replace('#', '').trim().toUpperCase();
+    if (cleaned && !tags.includes(cleaned)) tags.push(cleaned);
     if (tags.length >= 4) break;
   }
 
@@ -62,6 +57,44 @@ function makeTitle(text) {
     .find(Boolean) || 'Оновлення каналу';
 
   return firstLine.length > 92 ? `${firstLine.slice(0, 89)}...` : firstLine;
+}
+
+function scoreImageUrl(url) {
+  let score = 0;
+  if (/orig|original|large|xlarge|1280|1920/i.test(url)) score += 50;
+  if (/name=orig/i.test(url)) score += 30;
+  if (/name=large/i.test(url)) score += 25;
+  if (/name=small|thumb|preview/i.test(url)) score -= 30;
+  if (/\.jpg|\.jpeg/i.test(url)) score += 8;
+  if (/\.png/i.test(url)) score += 4;
+  score += Math.min(url.length / 30, 20);
+  return score;
+}
+
+function collectImageCandidates(block) {
+  const set = new Set();
+
+  for (const match of block.matchAll(/background-image:url\('([^']+)'\)/g)) {
+    if (match[1]) set.add(match[1]);
+  }
+
+  for (const match of block.matchAll(/(https:\/\/[^"'\s)]+\.(?:jpg|jpeg|png|webp)(?:\?[^"'\s)]*)?)/gi)) {
+    if (match[1]) set.add(match[1]);
+  }
+
+  return [...set]
+    .map((url) => ({ url, score: scoreImageUrl(url) }))
+    .sort((a, b) => b.score - a.score)
+    .map((item) => item.url);
+}
+
+function normalizeTextKey(text) {
+  return text
+    .replace(/\s+/g, ' ')
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .trim()
+    .toLowerCase()
+    .slice(0, 220);
 }
 
 function parseTelegramHtml(html) {
@@ -84,16 +117,15 @@ function parseTelegramHtml(html) {
 
     const dtMatch = block.match(/<time[^>]*datetime="([^"]+)"/);
     const date = formatDate(dtMatch ? dtMatch[1] : new Date().toISOString());
-
-    const photoMatch = block.match(/background-image:url\('([^']+)'\)/);
-    const image = photoMatch ? photoMatch[1] : '';
+    const imageCandidates = collectImageCandidates(block);
 
     parsed.push({
       id: `TG-${postNum}`,
       date,
       title: makeTitle(rawText),
       text: rawText,
-      image,
+      image: imageCandidates[0] || '',
+      imageCandidates,
       tags: extractTags(rawText),
       telegramUrl: `https://t.me/${channelName}/${postNum}`,
       _num: postNum,
@@ -101,6 +133,7 @@ function parseTelegramHtml(html) {
   }
 
   parsed.sort((a, b) => b._num - a._num);
+
   const seenIds = new Set();
   const seenText = new Set();
 
@@ -108,11 +141,92 @@ function parseTelegramHtml(html) {
     if (seenIds.has(post.id)) return false;
     seenIds.add(post.id);
 
-    const textKey = `${post.title}\n${post.text}`.replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 220);
+    const textKey = normalizeTextKey(`${post.title}\n${post.text}`);
     if (seenText.has(textKey)) return false;
     seenText.add(textKey);
+
     return true;
   });
+}
+
+function extFromContentType(contentType) {
+  if (!contentType) return 'jpg';
+  if (contentType.includes('image/webp')) return 'webp';
+  if (contentType.includes('image/png')) return 'png';
+  if (contentType.includes('image/jpeg')) return 'jpg';
+  return 'jpg';
+}
+
+function qualityFlag(bytes) {
+  if (bytes >= 450_000) return 'high';
+  if (bytes >= 160_000) return 'medium';
+  return 'low';
+}
+
+async function exists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function downloadTelegramImage(post, old) {
+  const postDir = path.join(IMAGES_ROOT, post.id);
+  await fs.mkdir(postDir, { recursive: true });
+
+  if (old?.image?.startsWith('/images/telegram/')) {
+    const oldPath = path.join('public', old.image.replace(/^\//, ''));
+    if (await exists(oldPath)) {
+      return {
+        image: old.image,
+        imageMeta: old.imageMeta || { source: 'cached' },
+      };
+    }
+  }
+
+  for (const candidate of post.imageCandidates) {
+    try {
+      const res = await fetch(candidate, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; okogora-sync/1.0)',
+          Accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+          Referer: post.telegramUrl,
+        },
+      });
+
+      if (!res.ok) continue;
+      const contentType = (res.headers.get('content-type') || '').toLowerCase();
+      if (!contentType.startsWith('image/')) continue;
+
+      const buf = Buffer.from(await res.arrayBuffer());
+      if (buf.byteLength < 4_000) continue;
+
+      const ext = extFromContentType(contentType);
+      const filename = `original.${ext}`;
+      const localPath = path.join(postDir, filename);
+      await fs.writeFile(localPath, buf);
+
+      return {
+        image: `/images/telegram/${post.id}/${filename}`,
+        imageMeta: {
+          source: 'telegram_web',
+          originalUrl: candidate,
+          bytes: buf.byteLength,
+          qualityFlag: qualityFlag(buf.byteLength),
+          fetchedAt: new Date().toISOString(),
+        },
+      };
+    } catch {
+      // continue with next candidate
+    }
+  }
+
+  return {
+    image: old?.image || post.image || '',
+    imageMeta: old?.imageMeta || { source: 'fallback' },
+  };
 }
 
 async function main() {
@@ -122,6 +236,8 @@ async function main() {
 
   console.log(`Sync source: ${channelUrl}`);
   console.log(`Keep latest: ${keep}`);
+
+  await fs.mkdir(IMAGES_ROOT, { recursive: true });
 
   const res = await fetch(channelUrl, {
     headers: {
@@ -150,19 +266,23 @@ async function main() {
   }
 
   const existingById = new Map(existing.map((p) => [p.id, p]));
-  const merged = parsed.map((post) => {
-    const old = existingById.get(post.id);
+  const merged = [];
 
-    return {
+  for (const post of parsed) {
+    const old = existingById.get(post.id);
+    const imageData = await downloadTelegramImage(post, old);
+
+    merged.push({
       id: post.id,
       date: post.date,
       title: post.title,
       text: post.text,
-      image: post.image || old?.image || '',
+      image: imageData.image,
+      imageMeta: imageData.imageMeta,
       tags: post.tags.length ? post.tags : old?.tags || [],
       telegramUrl: post.telegramUrl || old?.telegramUrl || '',
-    };
-  });
+    });
+  }
 
   await fs.writeFile(POSTS_PATH, `${JSON.stringify(merged, null, 2)}\n`, 'utf8');
   console.log(`Updated ${POSTS_PATH} with ${merged.length} posts`);

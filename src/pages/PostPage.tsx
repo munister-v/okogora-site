@@ -3,13 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowLeft, ArrowUpRight, Calendar, Tag } from 'lucide-react';
 import { Post } from '../types';
-import { normalizePosts, postTelegramUrl, splitParagraphs } from '../lib/posts';
-
-function imageUrl(img: string) {
-  if (!img) return '';
-  if (img.startsWith('http')) return img;
-  return `https://raw.githubusercontent.com/munister-v/okogora/main/images/${img}`;
-}
+import { normalizePosts, postTelegramUrl, resolveImageUrl, splitParagraphs } from '../lib/posts';
 
 export default function PostPage() {
   const { id } = useParams<{ id: string }>();
@@ -110,12 +104,17 @@ export default function PostPage() {
           {post.image && (
             <div className="w-full aspect-video overflow-hidden bg-zinc-200 mb-10 md:mb-16 relative">
               <img
-                src={imageUrl(post.image)}
+                src={resolveImageUrl(post.image)}
                 alt={post.title}
                 onError={e => { (e.target as HTMLImageElement).parentElement!.style.display = 'none'; }}
                 className="w-full h-full object-cover contrast-[1.04] saturate-110"
               />
               <div className="absolute inset-0 bg-black/0" />
+              {post.imageMeta?.qualityFlag && (
+                <div className="absolute top-3 right-3 px-2 py-1 bg-black/55 text-white font-mono text-[8px] tracking-widest uppercase">
+                  {post.imageMeta.qualityFlag}
+                </div>
+              )}
             </div>
           )}
 
@@ -169,7 +168,7 @@ export default function PostPage() {
                   {p.image && (
                     <div className="aspect-video w-full overflow-hidden bg-zinc-100 mb-5">
                       <img
-                        src={imageUrl(p.image)}
+                        src={resolveImageUrl(p.image)}
                         alt={p.title}
                         onError={e => { (e.target as HTMLImageElement).parentElement!.style.display = 'none'; }}
                         className="w-full h-full object-cover contrast-[1.04] saturate-110 group-hover:scale-105 transition-all duration-700"

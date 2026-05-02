@@ -3,15 +3,9 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket, Navigation } from 'lucide-react';
 import { Post } from './types';
-import { formatPreview, normalizePosts, postTelegramUrl } from './lib/posts';
+import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 
 const MapService = lazy(() => import('./components/MapService'));
-
-function imageUrl(img: string) {
-  if (!img) return '';
-  if (img.startsWith('http')) return img;
-  return `https://raw.githubusercontent.com/munister-v/okogora/main/images/${img}`;
-}
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -317,11 +311,16 @@ export default function App() {
                   <div className="aspect-[16/9] w-full overflow-hidden bg-zinc-100 mb-6 relative">
                     {post.image && (
                       <img
-                        src={imageUrl(post.image)}
+                        src={resolveImageUrl(post.image)}
                         alt={post.title}
                         onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
                         className="w-full h-full object-cover contrast-[1.03] saturate-110 group-hover:scale-105 transition-all duration-1000 ease-[0.22,1,0.36,1]"
                       />
+                    )}
+                    {post.imageMeta?.qualityFlag && (
+                      <div className="absolute top-3 right-3 px-2 py-1 bg-black/55 text-white font-mono text-[8px] tracking-widest uppercase">
+                        {post.imageMeta.qualityFlag}
+                      </div>
                     )}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/0 transition-colors" />
                   </div>
