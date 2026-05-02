@@ -7,21 +7,31 @@ const MAX_PAGES = 50;
 const WINDOW_DAYS = 30;
 
 function extractEntries(html) {
-  const re = /data-post="([^"]+)"[\s\S]*?datetime="([^"]+)"/g;
+  const re = /data-post="([^"]+)"[\s\S]*?datetime="([^"]+)"[\s\S]*?<div class="tgme_widget_message_text js-message_text"[^>]*>([\s\S]*?)<\/div>/g;
   const entries = [];
   let m;
   while ((m = re.exec(html)) !== null) {
     const postPath = m[1];
     const dt = m[2];
+    const textHtml = m[3] || '';
     const idStr = postPath.split('/')[1] || '';
     const id = Number(idStr);
     const ts = Date.parse(dt);
     if (!Number.isFinite(id) || Number.isNaN(ts)) continue;
+    const textPlain = textHtml
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const serialMatch = textPlain.match(/^(\d{4,7})[\.\)]/);
     entries.push({
       id,
       datetime: dt,
       ts,
       url: `https://t.me/${postPath}`,
+      text: textPlain,
+      serial: serialMatch ? Number(serialMatch[1]) : null,
     });
   }
   return entries;
@@ -84,6 +94,7 @@ async function main() {
   all.sort((a, b) => b.ts - a.ts);
 
   const maxPostId = all.length ? Math.max(...all.map(e => e.id)) : 0;
+  const maxSerial = all.reduce((acc, e) => (e.serial && e.serial > acc ? e.serial : acc), 0);
   const inWindow = all.filter(e => e.ts >= cutoffTs);
 
   const dayCounts = new Map();
@@ -101,12 +112,13 @@ async function main() {
     sourceUrl: BASE_URL,
     methodology: {
       windowDays: WINDOW_DAYS,
-      note: 'Counts are based on public posts in Telegram web channel view. totalApproxByMaxPostId uses the maximum observed channel post ID.',
+      note: 'Counts are based on public posts in Telegram web channel view. totalBySerial uses the numeric index at the start of entry text; fallback totalApproxByMaxPostId uses maximum observed channel post ID.',
     },
     counters: {
       today: dayCounts.get(todayKey) || 0,
       last7Days: inWindow.filter(e => e.ts >= sevenDaysCutoff).length,
       last30Days: inWindow.length,
+      totalBySerial: maxSerial,
       totalApproxByMaxPostId: maxPostId,
     },
     days: Array.from(dayCounts.entries())
@@ -121,7 +133,7 @@ async function main() {
   };
 
   await writeFile(OUT_PATH, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
-  console.log(`[pechalbeda] saved ${OUT_PATH}; today=${output.counters.today}, 7d=${output.counters.last7Days}, approxTotal=${output.counters.totalApproxByMaxPostId}`);
+  console.log(`[pechalbeda] saved ${OUT_PATH}; today=${output.counters.today}, 7d=${output.counters.last7Days}, serialTotal=${output.counters.totalBySerial}`);
 }
 
 main().catch((err) => {

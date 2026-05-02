@@ -49,6 +49,7 @@ type PechalStats = {
     today: number;
     last7Days: number;
     last30Days: number;
+    totalBySerial?: number;
     totalApproxByMaxPostId: number;
   };
 };
@@ -535,7 +536,7 @@ export default function App() {
                       <div className="text-[8px] uppercase tracking-widest text-white/40">7 днів</div>
                     </div>
                     <div className="border border-[#c9a227]/20 py-2">
-                      <div className="text-lg font-bold text-white">{(pechalStats?.counters.totalApproxByMaxPostId ?? 0).toLocaleString('uk-UA')}</div>
+                      <div className="text-lg font-bold text-white">{(pechalStats?.counters.totalBySerial ?? pechalStats?.counters.totalApproxByMaxPostId ?? 0).toLocaleString('uk-UA')}</div>
                       <div className="text-[8px] uppercase tracking-widest text-white/40">сумарно*</div>
                     </div>
                   </div>
