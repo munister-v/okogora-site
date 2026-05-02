@@ -42,10 +42,22 @@ type RssItem = {
   tags?: string[];
 };
 
+type PechalStats = {
+  generatedAt: string;
+  sourceUrl: string;
+  counters: {
+    today: number;
+    last7Days: number;
+    last30Days: number;
+    totalApproxByMaxPostId: number;
+  };
+};
+
 export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [rssItems, setRssItems] = useState<RssItem[]>([]);
   const [fbItems, setFbItems] = useState<RssItem[]>([]);
+  const [pechalStats, setPechalStats] = useState<PechalStats | null>(null);
   const [investigations, setInvestigations] = useState<InvestigationArticle[]>([]);
   const [sharedItemId, setSharedItemId] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -77,6 +89,11 @@ export default function App() {
       .then(r => r.json())
       .then((data: InvestigationArticle[]) => setInvestigations(Array.isArray(data) ? data : []))
       .catch(() => setInvestigations([]));
+
+    fetch(`/data/pechalbeda_stats.json?t=${Date.now()}`)
+      .then(r => r.json())
+      .then((data: PechalStats) => setPechalStats(data && data.counters ? data : null))
+      .catch(() => setPechalStats(null));
   }, []);
 
   function formatRssDate(iso: string) {
@@ -506,11 +523,25 @@ export default function App() {
               <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-[#2e2d1e] border border-[#c9a227]/20 p-8 hover:border-[#c9a227]/60 hover:bg-[#363525] transition-all duration-500 group relative">
                   <Activity className="w-8 h-8 mb-6 text-[#c9a227]/40 group-hover:text-[#c9a227] transition-colors" />
-                  <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">Прозора аналітика ударів</h4>
-                  <p className="text-sm text-white/50 leading-snug mb-8">Рахуємо тільки події з публічним пруфом: дата, область, джерело та пряме посилання на пост.</p>
+                  <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">Горюшко · щоденне оновлення</h4>
+                  <p className="text-sm text-white/50 leading-snug mb-6">Автоматичний лічильник нових записів у каналі за поточний день і за 7 днів. Оновлюється щодня із публічного веб-фіду Telegram.</p>
+                  <div className="grid grid-cols-3 gap-2 mb-6 font-mono text-center">
+                    <div className="border border-[#c9a227]/20 py-2">
+                      <div className="text-lg font-bold text-[#c9a227]">{pechalStats?.counters.today ?? 0}</div>
+                      <div className="text-[8px] uppercase tracking-widest text-white/40">сьогодні</div>
+                    </div>
+                    <div className="border border-[#c9a227]/20 py-2">
+                      <div className="text-lg font-bold text-white">{pechalStats?.counters.last7Days ?? 0}</div>
+                      <div className="text-[8px] uppercase tracking-widest text-white/40">7 днів</div>
+                    </div>
+                    <div className="border border-[#c9a227]/20 py-2">
+                      <div className="text-lg font-bold text-white">{(pechalStats?.counters.totalApproxByMaxPostId ?? 0).toLocaleString('uk-UA')}</div>
+                      <div className="text-[8px] uppercase tracking-widest text-white/40">сумарно*</div>
+                    </div>
+                  </div>
                   <div className="flex justify-between items-center font-mono text-[10px] tracking-widest pt-4 border-t border-white/10">
-                    <span className="flex items-center gap-2 text-[#c9a227]"><Shield className="w-3 h-3" /> ONLY WITH PROOF</span>
-                    <span className="text-white/30">7 ДНІВ / LIVE</span>
+                    <a href={pechalStats?.sourceUrl || 'https://t.me/s/pechalbeda200'} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[#c9a227] hover:text-[#f1d98a] transition-colors"><Shield className="w-3 h-3" /> PROOF FEED</a>
+                    <span className="text-white/30">*MAX POST ID</span>
                   </div>
                 </div>
 
