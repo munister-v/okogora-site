@@ -1,29 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, LayersControl, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Crosshair, Map as MapIcon, Maximize, Shield, Target, Anchor, Plane, Layers, Info, Filter, Menu, X as CloseIcon, Navigation, Ruler, Activity, Clock, Database } from 'lucide-react';
 
-// Custom OSINT-style markers
+// Icons created lazily inside component to avoid Leaflet constructor errors at module level
 const createTacticalIcon = (color: string, label: string) => new L.DivIcon({
   className: 'tactical-marker',
   html: `
     <div class="relative group">
-      <div class="animate-ping absolute inset-0 rounded-full bg-${color}/20" style="background-color: ${color}33"></div>
-      <div style="width: 14px; height: 14px; background-color: ${color}; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 15px ${color}; position: relative; z-index: 10;"></div>
-      <div class="absolute left-6 top-1/2 -translate-y-1/2 bg-[#111111]/95 text-white text-[8px] font-mono px-2 py-0.5 whitespace-nowrap border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity z-50">
+      <div style="position:absolute;inset:0;border-radius:50%;background-color:${color}33;animation:ping 1s cubic-bezier(0,0,0.2,1) infinite"></div>
+      <div style="width:14px;height:14px;background-color:${color};border:2px solid #fff;border-radius:50%;box-shadow:0 0 15px ${color};position:relative;z-index:10"></div>
+      <div style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(17,17,17,0.95);color:#fff;font-size:8px;font-family:monospace;padding:2px 6px;white-space:nowrap;border:1px solid rgba(255,255,255,0.1);opacity:0;pointer-events:none;z-index:50">
         ${label}
       </div>
     </div>
   `,
   iconSize: [14, 14],
-  iconAnchor: [7, 7]
+  iconAnchor: [7, 7],
 });
-
-const strikeIcon = createTacticalIcon('#ff3333', 'ПІДТВЕРДЖЕНЕ_УРАЖЕННЯ');
-const navyIcon = createTacticalIcon('#3399ff', 'МОРСЬКА_ЦІЛЬ');
-const airbaseIcon = createTacticalIcon('#ffcc00', 'АВІАБАЗА_ОККУПАНТА');
-const logisticsIcon = createTacticalIcon('#00ff66', 'ЛОГІСТИЧНИЙ_ВУЗОЛ');
 
 function MapEvents({ onMouseMove, onClick }: { onMouseMove: (lat: number, lng: number) => void, onClick: (lat: number, lng: number) => void }) {
   useMapEvents({
@@ -43,6 +38,13 @@ export default function MapService() {
   const [telemetry, setTelemetry] = useState({ lat: 45.0, lng: 35.0 });
   const [measurePoints, setMeasurePoints] = useState<[number, number][]>([]);
   const [distance, setDistance] = useState<number | null>(null);
+
+  const icons = useMemo(() => ({
+    strike: createTacticalIcon('#ff3333', 'ПІДТВЕРДЖЕНЕ_УРАЖЕННЯ'),
+    navy: createTacticalIcon('#3399ff', 'МОРСЬКА_ЦІЛЬ'),
+    airbase: createTacticalIcon('#ffcc00', 'АВІАБАЗА_ОККУПАНТА'),
+    logistics: createTacticalIcon('#00ff66', 'ЛОГІСТИЧНИЙ_ВУЗОЛ'),
+  }), []);
 
   const toggleFilter = (filter: string) => {
     setActiveFilters(prev => 
@@ -254,7 +256,7 @@ export default function MapService() {
 
           {/* Strikes Data Markers */}
           {activeFilters.includes('strikes') && strikes.map(s => (
-            <Marker key={s.id} position={s.pos} icon={strikeIcon}>
+            <Marker key={s.id} position={s.pos} icon={icons.strike}>
               <Popup className="tactical-popup">
                 <div className="font-mono p-3 bg-[#111111] text-white border border-white/10 min-w-[200px]">
                   <div className="flex justify-between items-start mb-2 border-b border-red-500/30 pb-2">
