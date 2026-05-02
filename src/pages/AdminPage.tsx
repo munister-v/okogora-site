@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Post } from '../types';
-import { verifyToken, savePosts } from '../lib/github';
+import { verifyToken, savePosts, triggerTelegramSync } from '../lib/github';
 import ImageUploader from '../components/ImageUploader';
 import { importFromTelegraph } from '../lib/telegraph';
-import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader, Download } from 'lucide-react';
+import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader, Download, RefreshCw } from 'lucide-react';
 
 const TOKEN_KEY = 'oko_admin_token';
 const USER_KEY = 'oko_admin_user';
@@ -37,6 +37,7 @@ export default function AdminPage() {
   const [tgLoading, setTgLoading] = useState(false);
   const [tgError, setTgError] = useState('');
   const [showTgInput, setShowTgInput] = useState(false);
+  const [syncLoading, setSyncLoading] = useState(false);
 
   const isAuthed = !!token && !!username;
 
@@ -139,6 +140,23 @@ export default function AdminPage() {
       setTgError(e.message || 'Помилка імпорту');
     } finally {
       setTgLoading(false);
+    }
+  }
+
+  async function handleTelegramSync() {
+    setSyncLoading(true);
+    setSaveStatus('idle');
+
+    try {
+      await triggerTelegramSync(token);
+      setSaveStatus('ok');
+      setSaveMsg('Синхронізацію Telegram запущено у GitHub Actions');
+    } catch (e: any) {
+      setSaveStatus('error');
+      setSaveMsg(e.message || 'Не вдалося запустити sync workflow');
+    } finally {
+      setSyncLoading(false);
+      setTimeout(() => setSaveStatus('idle'), 5000);
     }
   }
 
@@ -419,6 +437,16 @@ export default function AdminPage() {
                 <Download className="w-4 h-4" /> TELEGRAPH
               </button>
             )}
+
+            <button
+              onClick={handleTelegramSync}
+              disabled={syncLoading}
+              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-5 py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              title="Запустити GitHub Action sync-telegram-posts.yml"
+            >
+              {syncLoading ? <Loader className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+              {syncLoading ? 'SYNC...' : 'SYNC TG'}
+            </button>
 
             <button
               onClick={() => { setEditing(emptyPost()); setIsNew(true); }}

@@ -1,0 +1,50 @@
+name: Sync Telegram Posts
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel_url:
+        description: 'Telegram channel URL, e.g. https://t.me/s/oko_gora'
+        required: false
+        default: 'https://t.me/s/oko_gora'
+      max_posts:
+        description: 'How many latest posts to keep'
+        required: false
+        default: '40'
+  schedule:
+    - cron: '*/30 * * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync posts from Telegram
+        env:
+          TG_CHANNEL_URL: ${{ github.event.inputs.channel_url || vars.TG_CHANNEL_URL || 'https://t.me/s/oko_gora' }}
+          TG_MAX_POSTS: ${{ github.event.inputs.max_posts || vars.TG_MAX_POSTS || '40' }}
+        run: node scripts/syncTelegramPosts.mjs
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet public/data/posts.json; then
+            echo "No changes in posts.json"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/posts.json
+          git commit -m "content: sync posts from telegram [bot]"
+          git push
