@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ArrowUpRight, Crosshair, Map, Radio, Eye, Activity, Database, Shield, Zap, Terminal, FileSearch, Layers, UploadCloud, Users, Target, Rocket, BarChart3, Menu, X as CloseIcon, Navigation } from 'lucide-react';
+import { ArrowUpRight, Crosshair, Map, Radio, Eye, Activity, Database, Shield, Zap, Terminal, FileSearch, Layers, UploadCloud, Users, Target, Rocket, BarChart3, Menu, X as CloseIcon, Navigation, Info, Clock, AlertTriangle } from 'lucide-react';
 import MapService from './components/MapService';
 
 const fadeIn = {
@@ -24,32 +24,32 @@ const posts = [
     date: '27 КВІТ 2026 / 11:47',
     title: 'Ітоги атаки БПЛА: Туапсинський резервуарний парк',
     text: 'Детальний аналіз ураження об\'єктів у Краснодарському краї. Знищено 24 резервуари (52%), пошкоджено 4. Загалом 61% потужностей виведено з ладу.',
-    image: '/tuapse_satellite.png',
-    tags: ['SATELLITE', 'DRONES', 'ANALYSIS']
+    image: 'tuapse_satellite.png',
+    tags: ['СУПУТНИК', 'ДРОНИ', 'АНАЛІТИКА']
   },
   {
     id: 'TG-1888',
     date: '26 КВІТ 2026 / 16:00',
     title: 'Ураження об\'єктів у Криму: кораблі та авіація',
     text: 'Результати комбінованої атаки. Зафіксовано пошкодження ВДК "Ямал", "Фильченков", розвідувального судна "Иван Хурс" та літака МіГ-31.',
-    image: '/crimea_thermal.png',
-    tags: ['NAVY', 'CRIMEA', 'COMBAT']
+    image: 'crimea_thermal.png',
+    tags: ['ФЛОТ', 'КРИМ', 'БОЙОВА_РОБОТА']
   },
   {
     id: 'TG-1887',
     date: '27 КВІТ 2026 / 10:43',
     title: 'Нові підрозділи БПЛА: СБС "Окремий батальйон"',
     text: 'Розгортання нових розвідувально-ударних комплексів. Перші кадри роботи дронів середнього радіусу дії від новостворених підрозділів СБС.',
-    image: '/uav_recon.png',
-    tags: ['UAV', 'RECON', 'STRATEGY']
+    image: 'uav_recon.png',
+    tags: ['БПЛА', 'РОЗВІДКА', 'СТРАТЕГІЯ']
   },
   {
     id: 'TG-1886',
     date: '25 КВІТ 2026 / 09:15',
     title: 'Моніторинг логістики: порт Туапсе',
     text: 'Аналіз пошкоджень насосних станцій та трубопровідних вузлів. Критичне сповільнення відвантаження нафтопродуктів через морський термінал.',
-    image: '/port_damage.png',
-    tags: ['LOGISTICS', 'PORT', 'DAMAGE']
+    image: 'port_damage.png',
+    tags: ['ЛОГІСТИКА', 'ПОРТ', 'УРАЖЕННЯ']
   }
 ];
 
@@ -63,14 +63,14 @@ export default function App() {
             <div className="w-4 h-4 bg-[#111111] rounded-full flex items-center justify-center">
               <div className="w-1.5 h-1.5 bg-[#f4f4f4] rounded-full animate-pulse" />
             </div>
-            <span className="font-bold">ОКО ГОРА</span>
+            <span className="font-bold tracking-tighter">ОКО ГОРА</span>
           </div>
           <div className="hidden md:block col-span-2 text-center text-[#111111]/40">
-            STRATEGIC_OSINT_DASHBOARD_V2.5
+            СТРАТЕГІЧНИЙ_OSINT_МОНІТОР_V3.0_UA
           </div>
           <div className="col-span-1 flex justify-end">
-            <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer" className="hover:opacity-60 transition-opacity flex items-center gap-1">
-              TELEGRAM <ArrowUpRight className="w-3 h-3" />
+            <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer" className="hover:opacity-60 transition-opacity flex items-center gap-1 font-bold">
+              ТЕЛЕГРАМ <ArrowUpRight className="w-3 h-3" />
             </a>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function App() {
             {/* Background Logo */}
             <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden pointer-events-none select-none">
               <motion.img 
-                src="/oko_logo.png" 
+                src="oko_logo.png" 
                 alt="Oko Gora Logo Background" 
                 initial={{ opacity: 0, scale: 1.1, rotate: -2 }}
                 animate={{ opacity: 0.18, scale: 1, rotate: 0 }}
@@ -140,7 +140,7 @@ export default function App() {
               <div className="lg:col-span-1 bg-[#111111] text-[#00ff41] p-6 font-mono text-[10px] leading-relaxed border border-[#00ff41]/20 shadow-2xl relative overflow-hidden group">
                 <div className="flex items-center gap-2 mb-4 border-b border-[#00ff41]/20 pb-2">
                   <Terminal className="w-3 h-3" />
-                  <span className="uppercase tracking-widest text-[9px]">Live_Inbound_Feed</span>
+                  <span className="uppercase tracking-widest text-[9px]">ПРЯМИЙ_ЕФІР_ДАННИХ</span>
                   <span className="ml-auto animate-pulse">●</span>
                 </div>
                 <div className="space-y-1 opacity-80 h-[120px] overflow-hidden">
@@ -152,8 +152,8 @@ export default function App() {
                   <p className="animate-pulse">_</p>
                 </div>
                 <div className="mt-8 pt-4 border-t border-[#00ff41]/10 flex justify-between opacity-30 text-[8px] uppercase tracking-widest">
-                  <span>CRYPTO_MODE: AES-GCM</span>
-                  <span>NODE: LVIV_PRIME</span>
+                  <span>ШИФРУВАННЯ: AES-GCM</span>
+                  <span>ВУЗОЛ: LVIV_PRIME</span>
                 </div>
               </div>
 
@@ -161,22 +161,37 @@ export default function App() {
               <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-white border border-[#111111]/10 p-8 hover:bg-[#111111] hover:text-[#f4f4f4] transition-all duration-500 group relative">
                   <Activity className="w-8 h-8 mb-6 group-hover:text-green-500 transition-colors" />
-                  <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">SIGINT Analyzer</h4>
-                  <p className="text-sm opacity-60 leading-snug mb-8">Аналіз радіочастотного спектру та перехоплення сигналів зв'язку в реальному часі.</p>
+                  <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">SIGINT Аналізатор</h4>
+                  <p className="text-sm opacity-60 leading-snug mb-8">Аналіз радіочастотного спектру та перехоплення сигналів зв'язку ворога в реальному часі.</p>
                   <div className="flex justify-between items-center font-mono text-[10px] tracking-widest pt-4 border-t border-[#111111]/10 group-hover:border-[#f4f4f4]/20">
                     <span className="flex items-center gap-2 animate-pulse"><Radio className="w-3 h-3" /> 424.000 MHZ</span>
-                    <span className="opacity-40">ENCRYPTED</span>
+                    <span className="opacity-40">ЗАШИФРОВАНО</span>
                   </div>
                 </div>
 
                 <div className="bg-white border border-[#111111]/10 p-8 hover:bg-[#111111] hover:text-[#f4f4f4] transition-all duration-500 group relative">
                   <Database className="w-8 h-8 mb-6 group-hover:text-blue-500 transition-colors" />
-                  <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">Target Database</h4>
-                  <p className="text-sm opacity-60 leading-snug mb-8">Автоматизована база даних об'єктів та одиниць техніки з використанням ШІ.</p>
+                  <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">База Цілей</h4>
+                  <p className="text-sm opacity-60 leading-snug mb-8">Автоматизована база даних об'єктів та одиниць техніки окупанта з використанням ШІ.</p>
                   <div className="flex justify-between items-center font-mono text-[10px] tracking-widest pt-4 border-t border-[#111111]/10 group-hover:border-[#f4f4f4]/20">
-                    <span className="flex items-center gap-2"><Shield className="w-3 h-3" /> 8.4k ENTRIES</span>
-                    <span className="opacity-40">STABLE</span>
+                    <span className="flex items-center gap-2"><Shield className="w-3 h-3" /> 8.4k ЗАПИСІВ</span>
+                    <span className="opacity-40">СТАБІЛЬНО</span>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Visual Dashboard Strip */}
+            <div className="mt-8 aspect-[21/4] w-full bg-[#111111] relative overflow-hidden group">
+              <img 
+                src="ui_dashboard.png" 
+                alt="System UI Dashboard" 
+                className="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#111111] via-transparent to-[#111111]" />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="text-[#f4f4f4] font-mono text-[10px] tracking-[0.5em] uppercase opacity-30">
+                  ЦІЛІСНІСТЬ_СИСТЕМИ_СТАБІЛЬНА // СИНХРОНІЗАЦІЯ_ХМАРИ_АКТИВНА
                 </div>
               </div>
             </div>
@@ -189,14 +204,14 @@ export default function App() {
                 <div className="max-w-3xl">
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#111111]/40 mb-6 block">/ СТРАТЕГІЧНИЙ МОНІТОРИНГ</span>
                   <h2 className="text-5xl md:text-8xl font-bold tracking-tighter uppercase leading-[0.85] mb-4">
-                    Middle Strikes <br />
-                    Analytics
+                    Аналітика <br />
+                    Ударів
                   </h2>
                 </div>
                 <div className="w-full lg:w-auto text-left lg:text-right bg-[#111111] lg:bg-transparent p-8 lg:p-0 border lg:border-0 border-[#111111]/10">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-white/40 lg:text-[#111111]/40 mb-3">/ Рахуємо разом</p>
                   <div className="text-7xl md:text-9xl font-bold tracking-tighter text-white lg:text-[#111111]">482</div>
-                  <div className="font-mono text-[10px] uppercase tracking-widest mt-2 text-white/20 lg:text-[#111111]/20">Total Confirmed Impacts</div>
+                  <div className="font-mono text-[10px] uppercase tracking-widest mt-2 text-white/20 lg:text-[#111111]/20">Всього підтверджених влучань</div>
                 </div>
               </div>
 
@@ -204,15 +219,15 @@ export default function App() {
                 {/* Visual Side */}
                 <div className="lg:col-span-7 bg-[#111111] aspect-square md:aspect-video relative overflow-hidden group">
                   <img 
-                    src="/missile_reach.png" 
+                    src="missile_reach.png" 
                     alt="Missile Reach Map" 
                     className="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-transparent to-transparent opacity-80" />
                   <div className="absolute bottom-8 left-8 right-8 flex justify-between items-center pointer-events-none">
                     <div className="font-mono text-[10px] text-white/50 space-y-1">
-                      <p className="flex items-center gap-2 text-green-500 font-bold uppercase"><span className="w-2 h-2 bg-green-500 rounded-full animate-ping" /> Strategic_Link_Active</p>
-                      <p>MONITORING_REACH: 1500KM</p>
+                      <p className="flex items-center gap-2 text-green-500 font-bold uppercase"><span className="w-2 h-2 bg-green-500 rounded-full animate-ping" /> СТРАТЕГІЧНИЙ_ЗВ'ЯЗОК_АКТИВНИЙ</p>
+                      <p>РАДІУС_МОНІТОРИНГУ: 1500 КМ</p>
                     </div>
                   </div>
                 </div>
@@ -227,9 +242,9 @@ export default function App() {
                       <span className="font-mono text-[10px] uppercase tracking-widest text-[#111111]/40 mb-8 block">/ Ракетна програма</span>
                       <div className="space-y-8">
                         {[
-                          { name: 'Palianytsia (Jet Drone)', progress: 85, dist: '750km' },
-                          { name: 'Neptune (R-360 Upgrade)', progress: 95, dist: '400km' },
-                          { name: 'Long Range UAV (Bober/Mura)', progress: 100, dist: '1200km' }
+                          { name: 'Паляниця (Реактивний дрон)', progress: 85, dist: '750км' },
+                          { name: 'Нептун (Модернізація R-360)', progress: 95, dist: '400км' },
+                          { name: 'Дальні БПЛА (Бобер/Лютий)', progress: 100, dist: '1200км' }
                         ].map(m => (
                           <div key={m.name} className="space-y-3">
                             <div className="flex justify-between font-mono text-[10px] uppercase tracking-tighter">
@@ -276,7 +291,7 @@ export default function App() {
                 </p>
               </div>
               <div className="mt-12 flex justify-between items-center font-mono text-[10px] uppercase tracking-widest opacity-20">
-                <span>SECURITY_LEVEL: HIGH</span>
+                <span>РІВЕНЬ_БЕЗПЕКИ: ВИСОКИЙ</span>
                 <ArrowUpRight className="w-4 h-4" />
               </div>
             </div>
@@ -301,7 +316,7 @@ export default function App() {
             <div className="flex justify-between items-end border-b border-[#111111] pb-6 mb-12">
               <h2 className="text-4xl md:text-7xl font-bold tracking-tighter uppercase">Стрічка</h2>
               <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer" className="font-mono text-xs tracking-widest hover:underline uppercase opacity-40 hover:opacity-100 transition-opacity">
-                All Posts <ArrowUpRight className="w-3 h-3 inline ml-1" />
+                Всі публікації <ArrowUpRight className="w-3 h-3 inline ml-1" />
               </a>
             </div>
             
@@ -367,12 +382,12 @@ export default function App() {
               <ul className="space-y-4 font-mono text-xs tracking-widest uppercase">
                 <li>
                   <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer" className="flex items-center justify-end gap-2 hover:opacity-70 transition-opacity">
-                    TELEGRAM CHANNEL <ArrowUpRight className="w-4 h-4" />
+                    ТЕЛЕГРАМ КАНАЛ <ArrowUpRight className="w-4 h-4" />
                   </a>
                 </li>
                 <li>
-                  <a href="https://x.com/oko_gora_tg" target="_blank" rel="noreferrer" className="flex items-center justify-end gap-2 hover:opacity-70 transition-opacity">
-                    X (TWITTER) INTEL <ArrowUpRight className="w-4 h-4" />
+                  <a href="https://x.com/oko_gora_tg" target="_blank" rel="noreferrer" className="flex items-center justify-end gap-2 hover:opacity-70 transition-opacity font-bold">
+                    X (TWITTER) РОЗВІДКА <ArrowUpRight className="w-4 h-4" />
                   </a>
                 </li>
               </ul>
@@ -380,10 +395,10 @@ export default function App() {
           </div>
           
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center font-mono text-[9px] tracking-[0.3em] text-white/20 uppercase">
-            <div>© {new Date().getFullYear()} OKO GORA GROUP. ALL DATA ENCRYPTED.</div>
+            <div>© {new Date().getFullYear()} OKO GORA GROUP. ВСІ ДАНІ ЗАШИФРОВАНІ.</div>
             <div className="mt-4 md:mt-0 flex gap-8">
-              <span>STATUS: OPERATIONAL</span>
-              <span>VERSION: 2.5.0-STABLE</span>
+              <span>СТАТУС: АКТИВНО</span>
+              <span>ВЕРСІЯ: 3.0.0-STABLE</span>
             </div>
           </div>
         </div>
