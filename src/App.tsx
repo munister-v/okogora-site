@@ -357,12 +357,25 @@ export default function App() {
 
             {/* Ukrainian Armed Forces insignia strip — official Wikimedia SVGs */}
             <div className="flex flex-wrap items-center gap-5 mb-10 relative z-10">
+              <div className="flex flex-col items-center gap-1.5 group cursor-default" title="Нарукавний знак ЗСУ">
+                <div className="w-14 h-14 flex items-center justify-center border border-[#c9a227]/30 bg-[#c9a227]/10 group-hover:border-[#c9a227]/70 group-hover:bg-[#c9a227]/20 transition-all duration-300 p-1.5">
+                  <img
+                    src="assets-zsu-patch.png"
+                    alt="Нарукавний знак ЗСУ"
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+                <span className="font-mono text-[8px] tracking-widest text-[#c9a227]/70 group-hover:text-[#c9a227] transition-colors uppercase">ЗСУ</span>
+              </div>
               {[
                 { label: 'СВ',  title: 'Сухопутні війська',           url: 'https://upload.wikimedia.org/wikipedia/commons/3/36/%D0%9D%D0%97_%D0%A1%D0%92.svg' },
                 { label: 'ПС',  title: 'Повітряні сили',              url: 'https://upload.wikimedia.org/wikipedia/commons/5/59/%D0%9D%D0%97_%D0%9F%D0%A1.svg' },
                 { label: 'ВМС', title: 'Військово-морські сили',      url: 'https://upload.wikimedia.org/wikipedia/commons/5/51/%D0%9D%D0%97_%D0%92%D0%9C%D0%A1.svg' },
                 { label: 'ССО', title: 'Сили спеціальних операцій',   url: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/%D0%9D%D0%97_%D0%A1%D0%A1%D0%9E.svg' },
                 { label: 'ДШВ', title: 'Десантно-штурмові війська',   url: 'https://upload.wikimedia.org/wikipedia/commons/8/81/%D0%9D%D0%97_%D0%92%D0%94%D0%92.svg' },
+                { label: 'ТРО', title: 'Сили територіальної оборони', url: 'https://upload.wikimedia.org/wikipedia/commons/9/97/%D0%9D%D0%97_%D0%A2%D1%80%D0%9E.svg' },
+                { label: 'СБС', title: 'Сили безпілотних систем',      url: 'https://upload.wikimedia.org/wikipedia/commons/9/95/%D0%9D%D0%97_%D0%A1%D0%91%D0%A1.svg' },
               ].map(branch => (
                 <div key={branch.label} className="flex flex-col items-center gap-1.5 group cursor-default" title={branch.title}>
                   <div className="w-14 h-14 flex items-center justify-center border border-[#c9a227]/20 bg-[#c9a227]/5 group-hover:border-[#c9a227]/60 group-hover:bg-[#c9a227]/10 transition-all duration-300 p-1">
@@ -380,6 +393,29 @@ export default function App() {
               <div className="ml-auto hidden md:block font-mono text-[9px] text-white/20 uppercase tracking-widest">
                 СЛАВА_УКРАЇНІ // ГЕРОЯМ_СЛАВА
               </div>
+            </div>
+            <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border border-[#c9a227]/25 bg-[#1c1c12]/70 p-4 md:p-5">
+              <p className="text-white/80 text-base md:text-lg font-semibold leading-snug">
+                Онлайн-платформа Telegram-пабліка «Око Гора - новини та аналітика»: оперативний моніторинг, OSINT/HUMINT-стрічка та інтерактивна мапа подій.
+              </p>
+              <a
+                href="https://t.me/oko_gora"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 self-start md:self-auto border border-[#c9a227]/50 bg-[#c9a227]/10 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f1d679] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors"
+              >
+                Перейти в Telegram <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+            <div className="mb-10 md:mb-14">
+              <a
+                href="https://uk.wikipedia.org/wiki/%D0%9D%D0%B0%D1%80%D1%83%D0%BA%D0%B0%D0%B2%D0%BD%D1%96_%D0%B7%D0%BD%D0%B0%D0%BA%D0%B8_%D0%97%D0%B1%D1%80%D0%BE%D0%B9%D0%BD%D0%B8%D1%85_%D1%81%D0%B8%D0%BB_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B8"
+                target="_blank"
+                rel="noreferrer"
+                className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-white/45 hover:text-[#c9a227] transition-colors"
+              >
+                Джерело символіки: Вікіпедія «Нарукавні знаки Збройних сил України» <ArrowUpRight className="inline w-3 h-3 mb-[2px]" />
+              </a>
             </div>
 
             <div id="map" className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-t border-[#c9a227]/30 pt-8 md:pt-12 mt-12 md:mt-24 relative z-10">
