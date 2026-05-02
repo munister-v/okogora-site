@@ -1,0 +1,73 @@
+name: Import from RSS
+
+on:
+  schedule:
+    - cron: '0 8 */2 * *'   # every 2 days at 08:00 UTC
+  workflow_dispatch:
+    inputs:
+      rss_url:
+        description: 'RSS feed URL'
+        required: true
+        default: 'https://www.mil.gov.ua/rss.xml'
+      count:
+        description: 'Max posts to import'
+        default: '10'
+        required: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Import RSS posts
+        run: node scripts/import-rss.mjs "${{ github.event.inputs.rss_url || 'https://www.mil.gov.ua/rss.xml' }}" ${{ github.event.inputs.count || '10' }}
+
+      - name: Commit changes
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Actions"
+          git add public/data/posts.json images/ 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "auto: import rss posts [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    needs: import
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - uses: actions/deploy-pages@v4
+        id: deployment

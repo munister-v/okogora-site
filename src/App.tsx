@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket, Navigation, Rss } from 'lucide-react';
+import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket, Navigation, Rss, Target } from 'lucide-react';
 import { Post } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
@@ -80,7 +80,10 @@ export default function App() {
           <div className="hidden md:block col-span-2 text-center text-[#111111]/40">
             СТРАТЕГІЧНИЙ_OSINT_МОНІТОР_V3.0_UA
           </div>
-          <div className="col-span-1 flex justify-end">
+          <div className="col-span-1 flex justify-end items-center gap-4">
+            <Link to="/targets" className="hidden md:flex items-center gap-1 hover:opacity-60 transition-opacity font-bold">
+              <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
+            </Link>
             <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer" className="hover:opacity-60 transition-opacity flex items-center gap-1 font-bold">
               ТЕЛЕГРАМ <ArrowUpRight className="w-3 h-3" />
             </a>
@@ -187,15 +190,15 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="bg-white border border-[#111111]/10 p-8 hover:bg-[#111111] hover:text-[#f4f4f4] transition-all duration-500 group relative">
+                <Link to="/targets" className="bg-white border border-[#111111]/10 p-8 hover:bg-[#111111] hover:text-[#f4f4f4] transition-all duration-500 group relative block">
                   <Database className="w-8 h-8 mb-6 group-hover:text-blue-500 transition-colors" />
                   <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">База Цілей</h4>
-                  <p className="text-sm opacity-60 leading-snug mb-8">Автоматизована база даних об'єктів та одиниць техніки окупанта з використанням ШІ.</p>
+                  <p className="text-sm opacity-60 leading-snug mb-8">Каталог НПЗ, авіабаз, складів і об'єктів ВПК Росії з координатами та статусом ураження.</p>
                   <div className="flex justify-between items-center font-mono text-[10px] tracking-widest pt-4 border-t border-[#111111]/10 group-hover:border-[#f4f4f4]/20">
-                    <span className="flex items-center gap-2"><Shield className="w-3 h-3" /> 8.4k ЗАПИСІВ</span>
-                    <span className="opacity-40">СТАБІЛЬНО</span>
+                    <span className="flex items-center gap-2"><Shield className="w-3 h-3" /> 38+ ОБ'ЄКТІВ</span>
+                    <span className="opacity-40 group-hover:opacity-100 flex items-center gap-1">ВІДКРИТИ <ArrowUpRight className="w-3 h-3" /></span>
                   </div>
-                </div>
+                </Link>
               </div>
             </div>
 
@@ -498,6 +501,7 @@ export default function App() {
             <div className="md:col-start-8 md:col-span-2 space-y-4">
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] opacity-30 block mb-8">/ НАВІГАЦІЯ</span>
               <ul className="space-y-4 font-mono text-xs tracking-widest uppercase text-[#f4f4f4]/60">
+                <li><Link to="/targets" className="hover:text-white transition-colors flex items-center gap-2"><Target className="w-3 h-3" />БАЗА ЦІЛЕЙ</Link></li>
                 <li><a href="#" className="hover:text-white transition-colors">МЕТОДОЛОГІЯ</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">АРХІВ УДАРІВ</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">КОНТАКТИ</a></li>
