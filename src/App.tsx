@@ -42,10 +42,22 @@ type RssItem = {
   tags?: string[];
 };
 
+const STRIKE_KEYWORDS = ['знищено', 'уражено', 'ураження', 'влучання', 'strike', 'destroyed', 'hit', 'explosion', 'уражен', 'підбито', 'горить', 'вибух'];
+
+function countStrikesFromRss(items: RssItem[]): number {
+  const base = 482;
+  const matched = items.filter(item => {
+    const text = ((item.titleUk || item.title || '') + ' ' + (item.summaryUk || item.summary || '')).toLowerCase();
+    return STRIKE_KEYWORDS.some(kw => text.includes(kw));
+  }).length;
+  return base + matched;
+}
+
 export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [rssItems, setRssItems] = useState<RssItem[]>([]);
   const [sharedItemId, setSharedItemId] = useState<string>('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setSeo({
@@ -109,26 +121,52 @@ export default function App() {
 
       {/* ── Navigation ─────────────────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 z-[1000] border-b border-[#c9a227]/20 bg-[#252519]/95 backdrop-blur-md">
-        <div className="grid grid-cols-2 md:grid-cols-4 px-4 md:px-8 py-3 md:py-4 text-[10px] md:text-xs font-mono uppercase tracking-widest items-center">
-          <div className="col-span-1 flex items-center gap-2">
+        <div className="flex items-center justify-between px-4 md:px-8 py-3 md:py-4 text-[10px] md:text-xs font-mono uppercase tracking-widest">
+          <div className="flex items-center gap-2">
             <div className="w-4 h-4 bg-[#c9a227] rounded-sm flex items-center justify-center">
               <div className="w-1.5 h-1.5 bg-[#252519] rounded-sm animate-pulse" />
             </div>
-            <span className="font-bold tracking-tighter text-white">ОКО ГОРА</span>
+            <Link to="/" className="font-bold tracking-tighter text-white hover:text-[#c9a227] transition-colors">ОКО ГОРА</Link>
           </div>
-          <div className="hidden md:block col-span-2 text-center text-white/30">
-            СТРАТЕГІЧНИЙ_OSINT_МОНІТОР_V3.0_UA
-          </div>
-          <div className="col-span-1 flex justify-end items-center gap-4">
-            <Link to="/targets" className="hidden md:flex items-center gap-1 text-[#c9a227] hover:text-white transition-colors font-bold">
+          {/* Desktop nav links */}
+          <div className="hidden md:flex items-center gap-6 text-white/50">
+            <Link to="/" className="hover:text-white transition-colors">Головна</Link>
+            <Link to="/targets" className="hover:text-white transition-colors flex items-center gap-1 text-[#c9a227] font-bold">
               <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
             </Link>
+            <a href="#map" className="hover:text-white transition-colors">Карта</a>
+            <a href="#feed" className="hover:text-white transition-colors">Стрічка</a>
             <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
-              className="hover:text-[#c9a227] transition-colors flex items-center gap-1 font-bold">
+              className="hover:text-[#c9a227] transition-colors flex items-center gap-1 font-bold text-white">
               ТЕЛЕГРАМ <ArrowUpRight className="w-3 h-3" />
             </a>
           </div>
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden flex flex-col gap-[5px] p-1"
+            onClick={() => setMobileMenuOpen(v => !v)}
+            aria-label="Меню"
+          >
+            <span className={`block w-5 h-[2px] bg-[#c9a227] transition-all duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+            <span className={`block w-5 h-[2px] bg-[#c9a227] transition-all duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-[2px] bg-[#c9a227] transition-all duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+          </button>
         </div>
+        {/* Mobile dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-[#c9a227]/20 bg-[#1c1c12] px-4 py-4 flex flex-col gap-4 font-mono text-[11px] uppercase tracking-widest">
+            <Link to="/" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Головна</Link>
+            <Link to="/targets" className="text-[#c9a227] font-bold flex items-center gap-1 py-1" onClick={() => setMobileMenuOpen(false)}>
+              <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
+            </Link>
+            <a href="#map" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Карта</a>
+            <a href="#feed" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Стрічка</a>
+            <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
+              className="text-white font-bold flex items-center gap-1 py-1 hover:text-[#c9a227] transition-colors">
+              ТЕЛЕГРАМ <ArrowUpRight className="w-3 h-3" />
+            </a>
+          </div>
+        )}
       </nav>
 
       {/* ── Main ───────────────────────────────────────────────────────────── */}
@@ -157,7 +195,71 @@ export default function App() {
               Око Гора
             </h1>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-t border-[#c9a227]/30 pt-8 md:pt-12 mt-12 md:mt-24 relative z-10">
+            {/* Ukrainian Armed Forces insignia strip */}
+            <div className="flex flex-wrap items-center gap-6 mb-10 relative z-10">
+              {[
+                { label: 'ЗСУ', title: 'Збройні сили України', svg: (
+                  <svg viewBox="0 0 40 48" className="w-8 h-10 fill-[#c9a227]">
+                    <path d="M20 2 L22 8 L28 8 L23 12 L25 18 L20 14 L15 18 L17 12 L12 8 L18 8 Z"/>
+                    <line x1="20" y1="18" x2="20" y2="32" stroke="#c9a227" strokeWidth="2"/>
+                    <path d="M12 32 Q20 28 28 32" fill="none" stroke="#c9a227" strokeWidth="2"/>
+                    <path d="M8 38 L32 38 L32 46 L8 46 Z" opacity="0.5"/>
+                    <text x="20" y="44" textAnchor="middle" fontSize="6" fontFamily="monospace" fill="#1c1c12" fontWeight="bold">ЗСУ</text>
+                  </svg>
+                )},
+                { label: 'СВ', title: 'Сухопутні війська', svg: (
+                  <svg viewBox="0 0 40 48" className="w-8 h-10 fill-[#c9a227]">
+                    <path d="M20 4 L23 10 L30 10 L24 14 L26 21 L20 17 L14 21 L16 14 L10 10 L17 10 Z"/>
+                    <path d="M14 26 L20 22 L26 26 L26 38 L14 38 Z" opacity="0.7"/>
+                    <line x1="20" y1="38" x2="20" y2="46" stroke="#c9a227" strokeWidth="2"/>
+                    <line x1="14" y1="43" x2="26" y2="43" stroke="#c9a227" strokeWidth="2"/>
+                  </svg>
+                )},
+                { label: 'ПС', title: 'Повітряні сили', svg: (
+                  <svg viewBox="0 0 48 40" className="w-10 h-8 fill-[#c9a227]">
+                    <path d="M24 8 L28 16 L44 12 L40 20 L44 28 L28 24 L24 32 L20 24 L4 28 L8 20 L4 12 L20 16 Z" opacity="0.8"/>
+                    <circle cx="24" cy="20" r="4"/>
+                    <path d="M20 4 L22 10 L26 4 Z"/>
+                  </svg>
+                )},
+                { label: 'ВМС', title: 'Військово-морські сили', svg: (
+                  <svg viewBox="0 0 40 48" className="w-8 h-10 fill-none" stroke="#c9a227" strokeWidth="1.5">
+                    <circle cx="20" cy="12" r="8" fill="#c9a227" fillOpacity="0.15"/>
+                    <path d="M20 4 L22 9 L28 9 L23 13 L25 19 L20 15 L15 19 L17 13 L12 9 L18 9 Z" fill="#c9a227"/>
+                    <line x1="20" y1="20" x2="20" y2="34"/>
+                    <path d="M10 30 Q20 26 30 30"/>
+                    <path d="M8 38 L12 34 L28 34 L32 38 L8 38 Z"/>
+                    <path d="M14 42 L26 42" strokeWidth="3"/>
+                  </svg>
+                )},
+                { label: 'ССО', title: 'Сили спеціальних операцій', svg: (
+                  <svg viewBox="0 0 40 48" className="w-8 h-10 fill-[#c9a227]">
+                    <path d="M20 2 C12 8 6 18 8 28 C10 38 20 46 20 46 C20 46 30 38 32 28 C34 18 28 8 20 2 Z" fillOpacity="0.2" stroke="#c9a227" strokeWidth="1.5" fill="none"/>
+                    <path d="M20 8 L22 13 L27 13 L23 16 L25 21 L20 18 L15 21 L17 16 L13 13 L18 13 Z"/>
+                    <line x1="20" y1="22" x2="20" y2="34"/>
+                    <path d="M14 30 L20 34 L26 30" fill="none" stroke="#c9a227" strokeWidth="1.5"/>
+                  </svg>
+                )},
+                { label: 'ДШВ', title: "Десантно-штурмові війська", svg: (
+                  <svg viewBox="0 0 48 40" className="w-10 h-8 fill-[#c9a227]">
+                    <path d="M24 4 L28 12 L36 8 L32 16 L40 16 L34 22 L38 30 L30 26 L28 34 L24 26 L20 34 L18 26 L10 30 L14 22 L8 16 L16 16 L12 8 L20 12 Z" opacity="0.8"/>
+                    <circle cx="24" cy="20" r="3"/>
+                  </svg>
+                )},
+              ].map(branch => (
+                <div key={branch.label} className="flex flex-col items-center gap-1.5 group cursor-default" title={branch.title}>
+                  <div className="w-12 h-12 flex items-center justify-center border border-[#c9a227]/20 bg-[#c9a227]/5 group-hover:border-[#c9a227]/60 group-hover:bg-[#c9a227]/10 transition-all duration-300">
+                    {branch.svg}
+                  </div>
+                  <span className="font-mono text-[8px] tracking-widest text-[#c9a227]/50 group-hover:text-[#c9a227] transition-colors">{branch.label}</span>
+                </div>
+              ))}
+              <div className="ml-auto hidden md:block font-mono text-[9px] text-white/20 uppercase tracking-widest">
+                СЛАВА_УКРАЇНІ // ГЕРОЯМ_СЛАВА
+              </div>
+            </div>
+
+            <div id="map" className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-t border-[#c9a227]/30 pt-8 md:pt-12 mt-12 md:mt-24 relative z-10">
               <div className="lg:col-span-5">
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ МІСІЯ</span>
                 <p className="text-2xl md:text-4xl font-medium leading-[1.1] tracking-tight text-white">
@@ -269,7 +371,7 @@ export default function App() {
                 </div>
                 <div className="w-full lg:w-auto text-left lg:text-right bg-[#1c1c12] border border-[#c9a227]/20 p-8 lg:p-0 lg:bg-transparent lg:border-0">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/60 mb-3">/ Рахуємо разом</p>
-                  <div className="text-7xl md:text-9xl font-bold tracking-tighter text-[#c9a227]">482</div>
+                  <div className="text-7xl md:text-9xl font-bold tracking-tighter text-[#c9a227]">{countStrikesFromRss(rssItems)}</div>
                   <div className="font-mono text-[10px] uppercase tracking-widest mt-2 text-white/20">Всього підтверджених влучань</div>
                 </div>
               </div>
@@ -467,7 +569,7 @@ export default function App() {
           </motion.section>
 
           {/* Posts Feed */}
-          <motion.div variants={fadeIn} className="mb-32">
+          <motion.div id="feed" variants={fadeIn} className="mb-32">
             <div className="flex justify-between items-end border-b border-[#c9a227]/30 pb-6 mb-12">
               <h2 className="text-4xl md:text-7xl font-bold tracking-tighter uppercase text-white">Стрічка</h2>
               <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
