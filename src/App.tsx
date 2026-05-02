@@ -131,84 +131,149 @@ export default function App() {
   const dashboard = useMemo(() => {
     const now = Date.now();
     const days: string[] = [];
-    const dayMap = new Map<string, number>();
+    const daySet = new Set<string>();
     for (let i = 6; i >= 0; i -= 1) {
       const d = new Date(now - i * 24 * 60 * 60 * 1000);
       const key = d.toISOString().slice(0, 10);
       days.push(key);
-      dayMap.set(key, i);
+      daySet.add(key);
     }
 
-    type Event = {
+    const UKR_MONTHS: Record<string, number> = {
+      січ: 0, лют: 1, бер: 2, кві: 3, тра: 4, чер: 5, лип: 6, сер: 7, вер: 8, жов: 9, лис: 10, гру: 11,
+    };
+
+    const parseLoosePostDate = (value: string): number => {
+      const raw = (value || '').toLowerCase().replace(/\./g, ' ').replace(/\s+/g, ' ').trim();
+      const m = raw.match(/(\d{1,2})\s+([а-яіїєґ]{3,})\s+(\d{4})(?:\s*\/\s*(\d{1,2}):(\d{2}))?/u);
+      if (!m) return Number.NaN;
+      const day = Number(m[1]);
+      const month = UKR_MONTHS[m[2].slice(0, 3)] ?? new Date().getMonth();
+      const year = Number(m[3]);
+      const hour = Number(m[4] || 0);
+      const min = Number(m[5] || 0);
+      return Date.UTC(year, month, day, hour, min);
+    };
+
+    type StrikeEvent = {
       day: string;
       source: 'X' | 'Facebook' | 'Telegram';
-      sourceName: string;
-      text: string;
-      type: 'Удари' | 'Логістика' | 'ППО/Авіа' | 'Море';
+      oblast: string;
+      headline: string;
+      ts: number;
     };
 
-    const pickType = (text: string): Event['type'] => {
-      const t = text.toLowerCase();
-      if (/(fleet|naval|морськ|black sea|sevastopol|порт)/i.test(t)) return 'Море';
-      if (/(airbase|airfield|f-16|ппо|air defense|авіа|аеродром)/i.test(t)) return 'ППО/Авіа';
-      if (/(logistics|нпз|refinery|depot|склад|rail|supply)/i.test(t)) return 'Логістика';
-      return 'Удари';
+    const oblastAliases: Array<{ oblast: string; aliases: string[] }> = [
+      { oblast: 'Харківська', aliases: ['харків', 'kharkiv'] },
+      { oblast: 'Донецька', aliases: ['донецьк', 'donetsk'] },
+      { oblast: 'Луганська', aliases: ['луган', 'luhansk', 'lugansk'] },
+      { oblast: 'Сумська', aliases: ['суми', 'sumy'] },
+      { oblast: 'Запорізька', aliases: ['запоріж', 'zaporizh'] },
+      { oblast: 'Херсонська', aliases: ['херсон', 'kherson'] },
+      { oblast: 'Дніпропетровська', aliases: ['дніпро', 'dnipro', 'дніпропетров', 'dnipropetrov'] },
+      { oblast: 'Миколаївська', aliases: ['миколаїв', 'mykolaiv', 'nikolaev'] },
+      { oblast: 'Одеська', aliases: ['одеса', 'odesa', 'odessa'] },
+      { oblast: 'Київська', aliases: ['київ', 'kyiv'] },
+      { oblast: 'Полтавська', aliases: ['полтав', 'poltava'] },
+      { oblast: 'Чернігівська', aliases: ['черніг', 'chernihiv'] },
+      { oblast: 'Крим', aliases: ['крим', 'crimea', 'севастопол', 'sevastopol'] },
+      { oblast: 'РФ: Бєлгород', aliases: ['бєлгород', 'белгород', 'belgorod'] },
+      { oblast: 'РФ: Курськ', aliases: ['курськ', 'kursk'] },
+      { oblast: 'РФ: Брянськ', aliases: ['брянськ', 'bryansk'] },
+      { oblast: 'РФ: Ростов', aliases: ['ростов', 'rostov'] },
+      { oblast: 'РФ: Краснодар', aliases: ['краснодар', 'krasnodar', 'туапсе', 'tuapse'] },
+    ];
+
+    const STRIKE_RE = /(удар|влуч|уражен|знищен|strike|struck|hit|explosion|blast|attack|drone|missile|бпла)/i;
+
+    const extractOblasts = (text: string): string[] => {
+      const low = text.toLowerCase();
+      const hit = oblastAliases
+        .filter((x) => x.aliases.some((a) => low.includes(a)))
+        .map((x) => x.oblast);
+      return Array.from(new Set(hit));
     };
 
-    const events: Event[] = [];
+    const events: StrikeEvent[] = [];
     for (const item of rssItems) {
       const ts = new Date(item.publishedAt).getTime();
       if (Number.isNaN(ts) || now - ts > 7 * 24 * 60 * 60 * 1000) continue;
       const day = new Date(ts).toISOString().slice(0, 10);
-      if (!dayMap.has(day)) continue;
-      const text = `${item.titleUk || item.title || ''} ${item.summaryUk || item.summary || ''}`;
-      events.push({ day, source: 'X', sourceName: item.author || `@${item.handle || 'x'}`, text, type: pickType(text) });
+      if (!daySet.has(day)) continue;
+      const headline = cleanRssText(item.titleUk || item.title || '');
+      const text = `${headline} ${cleanRssText(item.summaryUk || item.summary || '')}`;
+      if (!STRIKE_RE.test(text)) continue;
+      const hitOblasts = extractOblasts(text);
+      for (const oblast of hitOblasts) {
+        events.push({ day, source: 'X', oblast, headline, ts });
+      }
     }
     for (const item of fbItems) {
       const ts = new Date(item.publishedAt).getTime();
       if (Number.isNaN(ts) || now - ts > 7 * 24 * 60 * 60 * 1000) continue;
       const day = new Date(ts).toISOString().slice(0, 10);
-      if (!dayMap.has(day)) continue;
-      const text = `${item.titleUk || item.title || ''} ${item.summaryUk || item.summary || ''}`;
-      events.push({ day, source: 'Facebook', sourceName: item.author || `@${item.handle || 'fb'}`, text, type: pickType(text) });
+      if (!daySet.has(day)) continue;
+      const headline = cleanRssText(item.titleUk || item.title || '');
+      const text = `${headline} ${cleanRssText(item.summaryUk || item.summary || '')}`;
+      if (!STRIKE_RE.test(text)) continue;
+      const hitOblasts = extractOblasts(text);
+      for (const oblast of hitOblasts) {
+        events.push({ day, source: 'Facebook', oblast, headline, ts });
+      }
     }
     for (const post of posts) {
-      const ts = new Date(post.date).getTime();
+      const ts = parseLoosePostDate(post.date);
       if (Number.isNaN(ts) || now - ts > 7 * 24 * 60 * 60 * 1000) continue;
       const day = new Date(ts).toISOString().slice(0, 10);
-      if (!dayMap.has(day)) continue;
-      const text = `${post.title || ''} ${post.text || ''}`;
-      events.push({ day, source: 'Telegram', sourceName: 'Око Гора', text, type: pickType(text) });
+      if (!daySet.has(day)) continue;
+      const headline = (post.title || '').trim();
+      const text = `${headline} ${post.text || ''}`;
+      if (!STRIKE_RE.test(text)) continue;
+      const hitOblasts = extractOblasts(text);
+      for (const oblast of hitOblasts) {
+        events.push({ day, source: 'Telegram', oblast, headline, ts });
+      }
     }
 
-    const sources: Array<Event['source']> = ['X', 'Facebook', 'Telegram'];
-    const byDaySource: Record<string, Record<Event['source'], number>> = {};
-    const byTypeSource: Record<Event['type'], Record<Event['source'], number>> = {
-      'Удари': { X: 0, Facebook: 0, Telegram: 0 },
-      'Логістика': { X: 0, Facebook: 0, Telegram: 0 },
-      'ППО/Авіа': { X: 0, Facebook: 0, Telegram: 0 },
-      'Море': { X: 0, Facebook: 0, Telegram: 0 },
-    };
-    const topSourceMap = new Map<string, number>();
-    for (const d of days) byDaySource[d] = { X: 0, Facebook: 0, Telegram: 0 };
+    const oblastTotals = new Map<string, number>();
     for (const e of events) {
-      byDaySource[e.day][e.source] += 1;
-      byTypeSource[e.type][e.source] += 1;
-      topSourceMap.set(e.sourceName, (topSourceMap.get(e.sourceName) || 0) + 1);
+      oblastTotals.set(e.oblast, (oblastTotals.get(e.oblast) || 0) + 1);
+    }
+    const oblasts = Array.from(oblastTotals.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([oblast]) => oblast);
+
+    const byDayOblast: Record<string, Record<string, number>> = {};
+    for (const d of days) {
+      byDayOblast[d] = {};
+      for (const o of oblasts) byDayOblast[d][o] = 0;
+    }
+    for (const e of events) {
+      if (!oblasts.includes(e.oblast)) continue;
+      byDayOblast[e.day][e.oblast] += 1;
     }
 
     const maxCell = Math.max(
       1,
-      ...days.flatMap((d) => sources.map((s) => byDaySource[d][s])),
+      ...days.flatMap((d) => oblasts.map((o) => byDayOblast[d][o] || 0)),
     );
-    const topSources = Array.from(topSourceMap.entries()).sort((a, b) => b[1] - a[1]).slice(0, 5);
     const trend = days.map((d) => ({
       day: d,
-      total: sources.reduce((acc, s) => acc + byDaySource[d][s], 0),
+      total: oblasts.reduce((acc, o) => acc + (byDayOblast[d][o] || 0), 0),
     }));
     const maxTrend = Math.max(1, ...trend.map(t => t.total));
 
-    return { days, sources, byDaySource, byTypeSource, maxCell, topSources, trend, maxTrend, total: events.length };
+    const concreteByOblast = oblasts.map((oblast) => {
+      const samples = events
+        .filter((e) => e.oblast === oblast)
+        .sort((a, b) => b.ts - a.ts)
+        .slice(0, 2)
+        .map((e) => `${e.source}: ${e.headline}`);
+      return { oblast, total: oblastTotals.get(oblast) || 0, samples };
+    });
+
+    return { days, oblasts, byDayOblast, maxCell, trend, maxTrend, total: events.length, concreteByOblast };
   }, [rssItems, fbItems, posts]);
 
   return (
@@ -506,28 +571,28 @@ export default function App() {
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ OSINT DASHBOARD</span>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Активність оф. джерел за 7 днів</h2>
-                  <p className="mt-4 text-white/50 max-w-3xl text-sm">X, Facebook і Telegram в єдиному огляді: інтенсивність, матриця типів та джерел, пікові дні.</p>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Карта інтенсивності ударів по областях (7 днів)</h2>
+                  <p className="mt-4 text-white/50 max-w-3xl text-sm">Тільки ударні події з X, Facebook і Telegram. Теплова матриця показує щільність згадок по областях день за днем.</p>
                 </div>
                 <div className="bg-[#1c1c12] border border-[#c9a227]/20 px-6 py-5">
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Загалом подій (7 днів)</p>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Ударних подій (7 днів)</p>
                   <p className="text-5xl font-bold tracking-tighter text-white">{dashboard.total}</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
                 <div className="xl:col-span-7 bg-[#1c1c12] border border-[#c9a227]/20 p-6 md:p-8">
-                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Heatmap · День × Джерело</h3>
+                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Heatmap · День × Область</h3>
                   <div className="space-y-2">
                     {dashboard.days.map((day) => (
-                      <div key={day} className="grid grid-cols-[70px_repeat(3,minmax(0,1fr))] gap-2 items-center">
+                      <div key={day} className="grid gap-2 items-center" style={{ gridTemplateColumns: `70px repeat(${Math.max(1, dashboard.oblasts.length)}, minmax(0, 1fr))` }}>
                         <span className="font-mono text-[10px] text-white/35 uppercase">{day.slice(5)}</span>
-                        {dashboard.sources.map((src) => {
-                          const value = dashboard.byDaySource[day][src];
+                        {dashboard.oblasts.map((oblast) => {
+                          const value = dashboard.byDayOblast[day][oblast] || 0;
                           const alpha = value === 0 ? 0.06 : 0.18 + (value / dashboard.maxCell) * 0.82;
                           return (
-                            <div key={`${day}-${src}`} className="h-8 border border-[#c9a227]/20 flex items-center justify-between px-2" style={{ backgroundColor: `rgba(201,162,39,${alpha})` }}>
-                              <span className="font-mono text-[9px] uppercase text-white/70">{src}</span>
+                            <div key={`${day}-${oblast}`} className="h-8 border border-[#c9a227]/20 flex items-center justify-between px-2" style={{ backgroundColor: `rgba(201,162,39,${alpha})` }}>
+                              <span className="font-mono text-[9px] uppercase text-white/70 truncate">{oblast.replace('РФ: ', '')}</span>
                               <span className="font-mono text-[10px] font-bold text-white">{value}</span>
                             </div>
                           );
@@ -548,12 +613,12 @@ export default function App() {
                       </div>
                     ))}
                   </div>
-                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mt-8 mb-3">Топ-джерела</h3>
+                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mt-8 mb-3">Топ-області</h3>
                   <div className="space-y-2">
-                    {dashboard.topSources.map(([name, count]) => (
-                      <div key={name} className="flex items-center justify-between border-b border-white/10 pb-1">
-                        <span className="text-white/70 text-sm truncate">{name}</span>
-                        <span className="font-mono text-[10px] text-[#c9a227]">{count}</span>
+                    {dashboard.concreteByOblast.slice(0, 6).map((row) => (
+                      <div key={row.oblast} className="flex items-center justify-between border-b border-white/10 pb-1">
+                        <span className="text-white/70 text-sm truncate">{row.oblast}</span>
+                        <span className="font-mono text-[10px] text-[#c9a227]">{row.total}</span>
                       </div>
                     ))}
                   </div>
@@ -561,24 +626,21 @@ export default function App() {
               </div>
 
               <div className="mt-6 bg-[#1c1c12] border border-[#c9a227]/20 p-6 md:p-8">
-                <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Matrix · Тип події × Джерело</h3>
-                <div className="grid grid-cols-[180px_repeat(3,minmax(0,1fr))] gap-2">
-                  <div />
-                  {dashboard.sources.map((src) => (
-                    <div key={src} className="font-mono text-[10px] uppercase text-white/45">{src}</div>
-                  ))}
-                  {(Object.keys(dashboard.byTypeSource) as Array<keyof typeof dashboard.byTypeSource>).map((typeKey) => (
-                    <div key={typeKey} className="contents">
-                      <div className="font-mono text-[10px] uppercase text-white/65 border border-white/10 px-3 py-2">{typeKey}</div>
-                      {dashboard.sources.map((src) => {
-                        const value = dashboard.byTypeSource[typeKey][src];
-                        const alpha = value === 0 ? 0.04 : 0.2 + Math.min(0.8, value / 14);
-                        return (
-                          <div key={`${typeKey}-${src}`} className="border border-[#c9a227]/20 px-3 py-2 font-mono text-sm font-bold text-white" style={{ backgroundColor: `rgba(201,162,39,${alpha})` }}>
-                            {value}
-                          </div>
-                        );
-                      })}
+                <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Конкретика по областях</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {dashboard.concreteByOblast.map((row) => (
+                    <div key={row.oblast} className="border border-[#c9a227]/20 bg-[#2e2d1e] p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]">{row.oblast}</span>
+                        <span className="font-mono text-[10px] text-white/50">{row.total} подій</span>
+                      </div>
+                      <div className="space-y-2">
+                        {row.samples.length === 0 ? (
+                          <p className="text-xs text-white/40">Немає заголовків у вікні 7 днів.</p>
+                        ) : row.samples.map((s) => (
+                          <p key={s} className="text-sm text-white/75 leading-snug">• {s}</p>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>
