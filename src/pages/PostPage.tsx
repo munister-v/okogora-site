@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowLeft, ArrowUpRight, Calendar, Tag } from 'lucide-react';
 import { Post } from '../types';
+import { normalizePosts, postTelegramUrl, splitParagraphs } from '../lib/posts';
 
 function imageUrl(img: string) {
   if (!img) return '';
@@ -20,8 +21,9 @@ export default function PostPage() {
     fetch('/data/posts.json')
       .then(r => r.json())
       .then((data: Post[]) => {
-        setAllPosts(data);
-        setPost(data.find(p => p.id === id) || null);
+        const normalized = normalizePosts(data);
+        setAllPosts(normalized);
+        setPost(normalized.find(p => p.id === id) || null);
       })
       .finally(() => setLoading(false));
   }, [id]);
@@ -111,17 +113,30 @@ export default function PostPage() {
                 src={imageUrl(post.image)}
                 alt={post.title}
                 onError={e => { (e.target as HTMLImageElement).parentElement!.style.display = 'none'; }}
-                className="w-full h-full object-cover grayscale contrast-[1.1]"
+                className="w-full h-full object-cover contrast-[1.04] saturate-110"
               />
-              <div className="absolute inset-0 bg-[#111111]/5" />
+              <div className="absolute inset-0 bg-black/0" />
             </div>
           )}
 
           {/* Body */}
           <div className="max-w-2xl">
-            <p className="text-lg md:text-xl leading-relaxed text-[#111111]/80 mb-10">
-              {post.text}
-            </p>
+            <div className="space-y-5 text-lg md:text-xl leading-relaxed text-[#111111]/82 mb-10">
+              {splitParagraphs(post.text).map((paragraph, idx) => (
+                <p key={`${post.id}-p-${idx}`}>{paragraph}</p>
+              ))}
+            </div>
+
+            <div className="mb-10">
+              <a
+                href={postTelegramUrl(post)}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-[#111111]/45 hover:text-[#111111] transition-colors"
+              >
+                Джерело в Telegram <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
 
             {/* Tags */}
             {post.tags.length > 0 && (
@@ -157,7 +172,7 @@ export default function PostPage() {
                         src={imageUrl(p.image)}
                         alt={p.title}
                         onError={e => { (e.target as HTMLImageElement).parentElement!.style.display = 'none'; }}
-                        className="w-full h-full object-cover grayscale contrast-[1.15] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                        className="w-full h-full object-cover contrast-[1.04] saturate-110 group-hover:scale-105 transition-all duration-700"
                       />
                     </div>
                   )}

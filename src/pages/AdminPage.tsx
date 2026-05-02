@@ -15,6 +15,7 @@ const emptyPost = (): Post => ({
   text: '',
   image: '',
   tags: [],
+  telegramUrl: '',
 });
 
 export default function AdminPage() {
@@ -349,6 +350,16 @@ export default function AdminPage() {
                 onChange={e => setEditing({ ...editing, title: e.target.value })}
                 placeholder="Заголовок статті..."
                 className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/10 text-white text-lg px-4 py-3 outline-none focus:border-[#f4f4f4]/40 transition-colors placeholder:text-[#f4f4f4]/20"
+              />
+            </div>
+
+            <div>
+              <label className="block font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/30 mb-2">TELEGRAM URL</label>
+              <input
+                value={editing.telegramUrl || ''}
+                onChange={e => setEditing({ ...editing, telegramUrl: e.target.value })}
+                placeholder="https://t.me/oko_gora/12345"
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/10 text-white text-sm px-4 py-3 outline-none focus:border-[#f4f4f4]/40 transition-colors placeholder:text-[#f4f4f4]/20"
               />
             </div>
 

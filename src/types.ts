@@ -5,4 +5,5 @@ export interface Post {
   text: string;
   image: string;
   tags: string[];
+  telegramUrl?: string;
 }

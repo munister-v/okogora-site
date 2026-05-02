@@ -73,6 +73,7 @@ function parseTelegramHtml(html) {
     if (!dataPostMatch) continue;
 
     const dataPost = dataPostMatch[1];
+    const channelName = dataPost.split('/')[0];
     const postIdRaw = dataPost.split('/')[1];
     const postNum = Number(postIdRaw);
     if (!Number.isFinite(postNum)) continue;
@@ -94,12 +95,24 @@ function parseTelegramHtml(html) {
       text: rawText,
       image,
       tags: extractTags(rawText),
+      telegramUrl: `https://t.me/${channelName}/${postNum}`,
       _num: postNum,
     });
   }
 
   parsed.sort((a, b) => b._num - a._num);
-  return parsed;
+  const seenIds = new Set();
+  const seenText = new Set();
+
+  return parsed.filter((post) => {
+    if (seenIds.has(post.id)) return false;
+    seenIds.add(post.id);
+
+    const textKey = `${post.title}\n${post.text}`.replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 220);
+    if (seenText.has(textKey)) return false;
+    seenText.add(textKey);
+    return true;
+  });
 }
 
 async function main() {
@@ -147,6 +160,7 @@ async function main() {
       text: post.text,
       image: post.image || old?.image || '',
       tags: post.tags.length ? post.tags : old?.tags || [],
+      telegramUrl: post.telegramUrl || old?.telegramUrl || '',
     };
   });
 

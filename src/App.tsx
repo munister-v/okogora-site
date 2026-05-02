@@ -3,6 +3,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket, Navigation } from 'lucide-react';
 import { Post } from './types';
+import { formatPreview, normalizePosts, postTelegramUrl } from './lib/posts';
 
 const MapService = lazy(() => import('./components/MapService'));
 
@@ -34,7 +35,7 @@ export default function App() {
   useEffect(() => {
     fetch('/data/posts.json')
       .then(r => r.json())
-      .then(setPosts)
+      .then((data: Post[]) => setPosts(normalizePosts(data)))
       .catch(() => setPosts([]));
   }, []);
 
@@ -319,10 +320,10 @@ export default function App() {
                         src={imageUrl(post.image)}
                         alt={post.title}
                         onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                        className="w-full h-full object-cover grayscale contrast-[1.15] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-[0.22,1,0.36,1]"
+                        className="w-full h-full object-cover contrast-[1.03] saturate-110 group-hover:scale-105 transition-all duration-1000 ease-[0.22,1,0.36,1]"
                       />
                     )}
-                    <div className="absolute inset-0 bg-[#111111]/5 group-hover:bg-transparent transition-colors" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/0 transition-colors" />
                   </div>
                   <div className="flex gap-4 mb-4 font-mono text-[9px] tracking-[0.2em] uppercase text-[#111111]/40">
                     <span className="font-bold text-[#111111]/70">{post.id}</span>
@@ -331,9 +332,19 @@ export default function App() {
                   <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 group-hover:underline transition-all">
                     {post.title}
                   </h3>
-                  <p className="text-[#111111]/60 leading-snug mb-6 text-sm md:text-base line-clamp-3">
-                    {post.text}
+                  <p className="text-[#111111]/65 leading-relaxed mb-6 text-sm md:text-base line-clamp-4">
+                    {formatPreview(post.text, 240)}
                   </p>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.open(postTelegramUrl(post), '_blank', 'noopener,noreferrer');
+                    }}
+                    className="inline-flex items-center gap-1.5 mb-5 font-mono text-[9px] uppercase tracking-widest text-[#111111]/45 hover:text-[#111111] transition-colors"
+                  >
+                    Джерело в Telegram <ArrowUpRight className="w-3 h-3" />
+                  </button>
                   <div className="flex flex-wrap gap-2">
                     {post.tags.map(tag => (
                       <span key={tag} className="px-3 py-1 border border-[#111111]/10 font-mono text-[9px] tracking-widest uppercase opacity-60 group-hover:opacity-100 transition-opacity">
