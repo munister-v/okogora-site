@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { MapContainer, TileLayer, Popup, Circle, CircleMarker, LayersControl, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle, CircleMarker, LayersControl, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Map as MapIcon, Shield, Target, Anchor, Plane, Filter, Menu, X as CloseIcon, Ruler, Activity, Clock } from 'lucide-react';
