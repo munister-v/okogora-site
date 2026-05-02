@@ -38,17 +38,30 @@ const FEED_FACTORIES = [
 const TRANSLATE_ENDPOINT = 'https://translate.googleapis.com/translate_a/single';
 
 function decodeHtml(input) {
-  return (input || '')
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/<[^>]+>/g, ' ')
+  let text = (input || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1');
+
+  // Decode entities first so encoded tags like &lt;br&gt; become normal tags and can be removed.
+  text = text
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/\s+/g, ' ')
+    .replace(/&gt;/g, '>');
+
+  text = text
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<(video|img|source|iframe)[^>]*>/gi, ' ')
+    .replace(/<\/?(video|img|source|iframe)[^>]*>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\bhttps?:\/\/(?:pbs\.twimg\.com|pic\.twitter\.com)\S+/gi, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/\s+\n/g, '\n')
+    .replace(/\n\s+/g, '\n')
     .trim();
+
+  return text;
 }
 
 function pickTag(itemXml, tagName) {

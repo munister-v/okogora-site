@@ -40,6 +40,7 @@ type RssItem = {
 export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [rssItems, setRssItems] = useState<RssItem[]>([]);
+  const [sharedItemId, setSharedItemId] = useState<string>('');
 
   useEffect(() => {
     setSeo({
@@ -64,6 +65,38 @@ export default function App() {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '';
     return d.toLocaleString('uk-UA', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function cleanRssText(text: string) {
+    return (text || '')
+      .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\bhttps?:\/\/(?:pbs\.twimg\.com|pic\.twitter\.com)\S+/gi, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  async function shareLink(id: string, title: string, url: string) {
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, url });
+      } else if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+      setSharedItemId(id);
+      setTimeout(() => setSharedItemId(''), 1800);
+    } catch {
+      // ignore user-cancelled share
+    }
   }
 
   return (
@@ -401,8 +434,12 @@ export default function App() {
                         <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#111111]/45">{item.author}</p>
                         <Rss className="w-3.5 h-3.5 text-[#111111]/30" />
                       </div>
-                      <h3 className="text-xl font-bold tracking-tight mb-3 leading-tight">{item.titleUk || item.title}</h3>
-                      <p className="text-sm text-[#111111]/65 leading-relaxed mb-4 line-clamp-4">{formatPreview(item.summaryUk || item.summary || '', 220)}</p>
+                      <h3 className="text-[1.65rem] font-extrabold tracking-tight mb-3 leading-[1.14] text-[#111111]">
+                        {formatPreview(cleanRssText(item.titleUk || item.title || ''), 175)}
+                      </h3>
+                      <p className="text-[1rem] font-medium text-[#111111]/78 leading-relaxed mb-4 line-clamp-5">
+                        {formatPreview(cleanRssText(item.summaryUk || item.summary || ''), 260)}
+                      </p>
                       <div className="font-mono text-[9px] uppercase tracking-widest text-[#111111]/35 mb-4">
                         @{item.handle} · {formatRssDate(item.publishedAt)}
                       </div>
@@ -413,9 +450,18 @@ export default function App() {
                           </span>
                         ))}
                       </div>
-                      <a href={item.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-[#111111]/50 hover:text-[#111111] transition-colors">
-                        Відкрити пост <ArrowUpRight className="w-3 h-3" />
-                      </a>
+                      <div className="flex items-center gap-4">
+                        <a href={item.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-[#111111]/55 hover:text-[#111111] transition-colors">
+                          Відкрити пост <ArrowUpRight className="w-3 h-3" />
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => shareLink(item.id, cleanRssText(item.titleUk || item.title || ''), item.url)}
+                          className="font-mono text-[10px] uppercase tracking-widest text-[#111111]/45 hover:text-[#111111] transition-colors"
+                        >
+                          {sharedItemId === item.id ? 'Скопійовано' : 'Поділитися'}
+                        </button>
+                      </div>
                     </article>
                   ))}
                 </div>
@@ -455,22 +501,34 @@ export default function App() {
                     <span className="font-bold text-[#111111]/70">{post.id}</span>
                     <span>{post.date}</span>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4 group-hover:underline transition-all">
+                  <h3 className="text-[2rem] md:text-[2.2rem] font-extrabold uppercase tracking-tight mb-4 group-hover:underline transition-all leading-[1.03]">
                     {post.title}
                   </h3>
-                  <p className="text-[#111111]/65 leading-relaxed mb-6 text-sm md:text-base line-clamp-4">
+                  <p className="text-[#111111]/78 leading-relaxed mb-6 text-[1rem] md:text-[1.08rem] font-medium line-clamp-5">
                     {formatPreview(post.text, 240)}
                   </p>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.open(postTelegramUrl(post), '_blank', 'noopener,noreferrer');
-                    }}
-                    className="inline-flex items-center gap-1.5 mb-5 font-mono text-[9px] uppercase tracking-widest text-[#111111]/45 hover:text-[#111111] transition-colors"
-                  >
-                    Джерело в Telegram <ArrowUpRight className="w-3 h-3" />
-                  </button>
+                  <div className="flex items-center gap-4 mb-5">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(postTelegramUrl(post), '_blank', 'noopener,noreferrer');
+                      }}
+                      className="inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-[#111111]/45 hover:text-[#111111] transition-colors"
+                    >
+                      Джерело в Telegram <ArrowUpRight className="w-3 h-3" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        shareLink(post.id, post.title, `${window.location.origin}/#/post/${post.id}`);
+                      }}
+                      className="font-mono text-[9px] uppercase tracking-widest text-[#111111]/45 hover:text-[#111111] transition-colors"
+                    >
+                      {sharedItemId === post.id ? 'Скопійовано' : 'Поділитися'}
+                    </button>
+                  </div>
                   <div className="flex flex-wrap gap-2">
                     {post.tags.map(tag => (
                       <span key={tag} className="px-3 py-1 border border-[#111111]/10 font-mono text-[9px] tracking-widest uppercase opacity-60 group-hover:opacity-100 transition-opacity">
