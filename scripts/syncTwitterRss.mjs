@@ -2,26 +2,30 @@ import fs from 'node:fs/promises';
 import crypto from 'node:crypto';
 
 const OUTPUT_PATH = 'public/data/rss_twitter.json';
-const WINDOW_DAYS = 3;
+const CONFIG_PATH = 'public/data/rss_twitter_config.json';
 
-const AUTHORS = [
-  { handle: 'OSINTtechnical', name: 'OSINTtechnical' },
-  { handle: 'GeoConfirmed', name: 'GeoConfirmed' },
-  { handle: 'DefMon3', name: 'Def Mon' },
-  { handle: 'NOELreports', name: 'NOELREPORTS' },
-  { handle: 'War_Mapper', name: 'War Mapper' },
-  { handle: 'ChrisO_wiki', name: 'ChrisO_wiki' },
-  { handle: 'Tendar', name: 'Tendar' },
-  { handle: 'RALee85', name: 'Rob Lee' }
-];
-
-const KEYWORDS = [
-  'ukraine', 'ukrainian', 'kyiv', 'kharkiv', 'kherson', 'odesa', 'odes',
-  'donetsk', 'luhansk', 'crimea', 'zaporizhzhia', 'dnipro',
-  'osint', 'humint', 'intelligence', 'frontline', 'satellite',
-  'missile', 'drone', 'strike', 'air defense', 'russian', 'russia',
-  'occupation', 'naval', 'black sea', 'battle', 'brigade'
-];
+const DEFAULT_CONFIG = {
+  windowDays: 3,
+  maxItems: 80,
+  authors: [
+    { handle: 'OSINTtechnical', name: 'OSINTtechnical' },
+    { handle: 'GeoConfirmed', name: 'GeoConfirmed' },
+    { handle: 'DefMon3', name: 'Def Mon' },
+    { handle: 'NOELreports', name: 'NOELREPORTS' },
+    { handle: 'War_Mapper', name: 'War Mapper' },
+    { handle: 'ChrisO_wiki', name: 'ChrisO_wiki' },
+    { handle: 'Tendar', name: 'Tendar' },
+    { handle: 'RALee85', name: 'Rob Lee' },
+  ],
+  keywords: [
+    'ukraine', 'ukrainian', 'kyiv', 'kharkiv', 'kherson', 'odesa', 'odes',
+    'donetsk', 'luhansk', 'crimea', 'zaporizhzhia', 'dnipro',
+    'osint', 'humint', 'intelligence', 'frontline', 'satellite',
+    'missile', 'drone', 'strike', 'air defense', 'russian', 'russia',
+    'occupation', 'naval', 'black sea', 'battle', 'brigade',
+  ],
+  excludeKeywords: ['giveaway', 'promo', 'discount'],
+};
 
 const FEED_FACTORIES = [
   (handle) => `https://nitter.poast.org/${handle}/rss`,
@@ -63,9 +67,10 @@ function withinDays(iso, days) {
   return ts >= min;
 }
 
-function keywordMatch(text) {
-  const t = text.toLowerCase();
-  return KEYWORDS.some((k) => t.includes(k));
+function matchesFilters(text, keywords, excludeKeywords) {
+  const t = (text || '').toLowerCase();
+  if (excludeKeywords.some((k) => k && t.includes(k.toLowerCase()))) return false;
+  return keywords.some((k) => k && t.includes(k.toLowerCase()));
 }
 
 function hashKey(input) {
@@ -136,11 +141,34 @@ async function fetchAuthorItems(author) {
   return [];
 }
 
+async function loadConfig() {
+  try {
+    const raw = await fs.readFile(CONFIG_PATH, 'utf8');
+    const cfg = JSON.parse(raw);
+    return {
+      windowDays: Number(cfg.windowDays) > 0 ? Number(cfg.windowDays) : DEFAULT_CONFIG.windowDays,
+      maxItems: Number(cfg.maxItems) > 0 ? Number(cfg.maxItems) : DEFAULT_CONFIG.maxItems,
+      authors: Array.isArray(cfg.authors) && cfg.authors.length ? cfg.authors : DEFAULT_CONFIG.authors,
+      keywords: Array.isArray(cfg.keywords) && cfg.keywords.length ? cfg.keywords : DEFAULT_CONFIG.keywords,
+      excludeKeywords: Array.isArray(cfg.excludeKeywords) ? cfg.excludeKeywords : DEFAULT_CONFIG.excludeKeywords,
+    };
+  } catch {
+    return DEFAULT_CONFIG;
+  }
+}
+
 async function main() {
+  const cfg = await loadConfig();
   const all = [];
 
-  for (const author of AUTHORS) {
-    const items = await fetchAuthorItems(author);
+  for (const author of cfg.authors) {
+    const normalizedAuthor =
+      typeof author === 'string'
+        ? { handle: author.trim(), name: author.trim() }
+        : { handle: String(author.handle || '').trim(), name: String(author.name || author.handle || '').trim() };
+
+    if (!normalizedAuthor.handle) continue;
+    const items = await fetchAuthorItems(normalizedAuthor);
     all.push(...items);
   }
 
@@ -149,8 +177,8 @@ async function main() {
 
   const filtered = all
     .filter((item) => item.url && item.title)
-    .filter((item) => withinDays(item.publishedAt, WINDOW_DAYS))
-    .filter((item) => keywordMatch(`${item.title} ${item.summary}`))
+    .filter((item) => withinDays(item.publishedAt, cfg.windowDays))
+    .filter((item) => matchesFilters(`${item.title} ${item.summary}`, cfg.keywords, cfg.excludeKeywords))
     .filter((item) => {
       const u = item.url.trim();
       if (dedupByUrl.has(u)) return false;
@@ -162,7 +190,7 @@ async function main() {
       return true;
     })
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-    .slice(0, 80);
+    .slice(0, cfg.maxItems);
 
   let finalItems = filtered;
 
@@ -178,8 +206,10 @@ async function main() {
 
   const payload = {
     generatedAt: new Date().toISOString(),
-    windowDays: WINDOW_DAYS,
-    authors: AUTHORS.map((a) => a.handle),
+    windowDays: cfg.windowDays,
+    authors: cfg.authors,
+    keywords: cfg.keywords,
+    excludeKeywords: cfg.excludeKeywords,
     items: finalItems,
   };
 

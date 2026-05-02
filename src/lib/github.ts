@@ -1,7 +1,9 @@
 const REPO_OWNER = 'munister-v';
 const REPO_NAME = 'okogora';
 const POSTS_PATH = 'public/data/posts.json';
+const RSS_CONFIG_PATH = 'public/data/rss_twitter_config.json';
 const TG_SYNC_WORKFLOW_ID = 'sync-telegram-posts.yml';
+const X_RSS_SYNC_WORKFLOW_ID = 'sync-x-rss.yml';
 const DEPLOY_WORKFLOW_ID = 'deploy.yml';
 
 export interface GithubAuth {
@@ -18,6 +20,14 @@ export interface WorkflowRunStatus {
   name: string;
 }
 
+export interface RssSyncConfig {
+  windowDays: number;
+  maxItems: number;
+  authors: Array<{ handle: string; name: string }>;
+  keywords: string[];
+  excludeKeywords: string[];
+}
+
 export async function verifyToken(token: string): Promise<string | null> {
   const res = await fetch('https://api.github.com/user', {
     headers: { Authorization: `Bearer ${token}` },
@@ -27,9 +37,9 @@ export async function verifyToken(token: string): Promise<string | null> {
   return data.login;
 }
 
-async function getFileSha(token: string): Promise<string> {
+async function getFileSha(token: string, filePath: string): Promise<string> {
   const res = await fetch(
-    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${POSTS_PATH}`,
+    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
   if (!res.ok) throw new Error('Cannot fetch file SHA');
@@ -37,11 +47,11 @@ async function getFileSha(token: string): Promise<string> {
   return data.sha;
 }
 
-export async function savePosts(token: string, posts: object[]): Promise<void> {
-  const sha = await getFileSha(token);
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(posts, null, 2))));
+async function saveJsonFile(token: string, filePath: string, payload: unknown, message: string): Promise<void> {
+  const sha = await getFileSha(token, filePath);
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
   const res = await fetch(
-    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${POSTS_PATH}`,
+    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`,
     {
       method: 'PUT',
       headers: {
@@ -49,7 +59,7 @@ export async function savePosts(token: string, posts: object[]): Promise<void> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        message: `content: update posts [admin]`,
+        message,
         content,
         sha,
       }),
@@ -59,6 +69,14 @@ export async function savePosts(token: string, posts: object[]): Promise<void> {
     const err = await res.json();
     throw new Error(err.message || 'Failed to save');
   }
+}
+
+export async function savePosts(token: string, posts: object[]): Promise<void> {
+  await saveJsonFile(token, POSTS_PATH, posts, 'content: update posts [admin]');
+}
+
+export async function saveRssConfig(token: string, config: RssSyncConfig): Promise<void> {
+  await saveJsonFile(token, RSS_CONFIG_PATH, config, 'content: update x rss config [admin]');
 }
 
 export async function triggerTelegramSync(
@@ -101,6 +119,33 @@ export async function triggerTelegramSync(
   }
 }
 
+export async function triggerXRssSync(token: string): Promise<void> {
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${X_RSS_SYNC_WORKFLOW_ID}/dispatches`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ref: 'main',
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    let message = 'Failed to trigger workflow';
+    try {
+      const err = await res.json();
+      message = err.message || message;
+    } catch {
+      // noop
+    }
+    throw new Error(message);
+  }
+}
+
 async function fetchLatestWorkflowRun(token: string, workflowId: string): Promise<WorkflowRunStatus | null> {
   const res = await fetch(
     `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${workflowId}/runs?branch=main&per_page=1`,
@@ -126,12 +171,14 @@ async function fetchLatestWorkflowRun(token: string, workflowId: string): Promis
 
 export async function fetchWorkflowDashboard(token: string): Promise<{
   sync: WorkflowRunStatus | null;
+  xRssSync: WorkflowRunStatus | null;
   deploy: WorkflowRunStatus | null;
 }> {
-  const [sync, deploy] = await Promise.all([
+  const [sync, xRssSync, deploy] = await Promise.all([
     fetchLatestWorkflowRun(token, TG_SYNC_WORKFLOW_ID),
+    fetchLatestWorkflowRun(token, X_RSS_SYNC_WORKFLOW_ID),
     fetchLatestWorkflowRun(token, DEPLOY_WORKFLOW_ID),
   ]);
 
-  return { sync, deploy };
+  return { sync, xRssSync, deploy };
 }

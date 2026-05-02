@@ -1,0 +1,49 @@
+{
+  "windowDays": 3,
+  "maxItems": 80,
+  "authors": [
+    { "handle": "OSINTtechnical", "name": "OSINTtechnical" },
+    { "handle": "GeoConfirmed", "name": "GeoConfirmed" },
+    { "handle": "DefMon3", "name": "Def Mon" },
+    { "handle": "NOELreports", "name": "NOELREPORTS" },
+    { "handle": "War_Mapper", "name": "War Mapper" },
+    { "handle": "ChrisO_wiki", "name": "ChrisO_wiki" },
+    { "handle": "Tendar", "name": "Tendar" },
+    { "handle": "RALee85", "name": "Rob Lee" }
+  ],
+  "keywords": [
+    "ukraine",
+    "ukrainian",
+    "kyiv",
+    "kharkiv",
+    "kherson",
+    "odesa",
+    "odes",
+    "donetsk",
+    "luhansk",
+    "crimea",
+    "zaporizhzhia",
+    "dnipro",
+    "osint",
+    "humint",
+    "intelligence",
+    "frontline",
+    "satellite",
+    "missile",
+    "drone",
+    "strike",
+    "air defense",
+    "russian",
+    "russia",
+    "occupation",
+    "naval",
+    "black sea",
+    "battle",
+    "brigade"
+  ],
+  "excludeKeywords": [
+    "giveaway",
+    "promo",
+    "discount"
+  ]
+}

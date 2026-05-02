@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Post } from '../types';
-import { verifyToken, savePosts, triggerTelegramSync, fetchWorkflowDashboard, WorkflowRunStatus } from '../lib/github';
+import { verifyToken, savePosts, saveRssConfig, triggerTelegramSync, triggerXRssSync, fetchWorkflowDashboard, WorkflowRunStatus, RssSyncConfig } from '../lib/github';
 import ImageUploader from '../components/ImageUploader';
 import { importFromTelegraph } from '../lib/telegraph';
 import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader, Download, RefreshCw } from 'lucide-react';
@@ -18,6 +18,23 @@ const emptyPost = (): Post => ({
   tags: [],
   telegramUrl: '',
 });
+
+const defaultRssConfig: RssSyncConfig = {
+  windowDays: 3,
+  maxItems: 80,
+  authors: [
+    { handle: 'OSINTtechnical', name: 'OSINTtechnical' },
+    { handle: 'GeoConfirmed', name: 'GeoConfirmed' },
+    { handle: 'DefMon3', name: 'Def Mon' },
+    { handle: 'NOELreports', name: 'NOELREPORTS' },
+    { handle: 'War_Mapper', name: 'War Mapper' },
+    { handle: 'ChrisO_wiki', name: 'ChrisO_wiki' },
+    { handle: 'Tendar', name: 'Tendar' },
+    { handle: 'RALee85', name: 'Rob Lee' },
+  ],
+  keywords: ['ukraine', 'osint', 'humint'],
+  excludeKeywords: ['giveaway', 'promo'],
+};
 
 export default function AdminPage() {
   const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY) || '');
@@ -43,7 +60,16 @@ export default function AdminPage() {
   const [workflowLoading, setWorkflowLoading] = useState(false);
   const [workflowError, setWorkflowError] = useState('');
   const [syncRun, setSyncRun] = useState<WorkflowRunStatus | null>(null);
+  const [xRssRun, setXRssRun] = useState<WorkflowRunStatus | null>(null);
   const [deployRun, setDeployRun] = useState<WorkflowRunStatus | null>(null);
+  const [xRssLoading, setXRssLoading] = useState(false);
+
+  const [rssConfig, setRssConfig] = useState<RssSyncConfig>(defaultRssConfig);
+  const [rssConfigLoading, setRssConfigLoading] = useState(false);
+  const [rssConfigSaving, setRssConfigSaving] = useState(false);
+  const [authorsInput, setAuthorsInput] = useState('');
+  const [keywordsInput, setKeywordsInput] = useState('');
+  const [excludeInput, setExcludeInput] = useState('');
 
   const isAuthed = !!token && !!username;
 
@@ -59,13 +85,20 @@ export default function AdminPage() {
   useEffect(() => {
     if (isAuthed) {
       fetchPosts();
+      fetchRssConfigFromSite();
       refreshWorkflowStatus();
     }
   }, [isAuthed]);
 
   useEffect(() => {
     if (!isAuthed) return;
-    const shouldPoll = syncRun?.status === 'queued' || syncRun?.status === 'in_progress' || deployRun?.status === 'queued' || deployRun?.status === 'in_progress';
+    const shouldPoll =
+      syncRun?.status === 'queued' ||
+      syncRun?.status === 'in_progress' ||
+      xRssRun?.status === 'queued' ||
+      xRssRun?.status === 'in_progress' ||
+      deployRun?.status === 'queued' ||
+      deployRun?.status === 'in_progress';
     if (!shouldPoll) return;
 
     const timer = setInterval(() => {
@@ -73,7 +106,7 @@ export default function AdminPage() {
     }, 7000);
 
     return () => clearInterval(timer);
-  }, [isAuthed, syncRun?.status, deployRun?.status]);
+  }, [isAuthed, syncRun?.status, xRssRun?.status, deployRun?.status]);
 
   async function fetchPosts() {
     setLoadingPosts(true);
@@ -191,6 +224,90 @@ export default function AdminPage() {
     }
   }
 
+  async function handleXRssSync() {
+    setXRssLoading(true);
+    setSaveStatus('idle');
+    try {
+      await triggerXRssSync(token);
+      setSaveStatus('ok');
+      setSaveMsg('X RSS sync запущено. Статус нижче в Pipeline Monitor');
+      await refreshWorkflowStatus();
+    } catch (e: any) {
+      setSaveStatus('error');
+      setSaveMsg(e.message || 'Не вдалося запустити X RSS sync');
+    } finally {
+      setXRssLoading(false);
+      setTimeout(() => setSaveStatus('idle'), 5000);
+    }
+  }
+
+  async function fetchRssConfigFromSite() {
+    setRssConfigLoading(true);
+    try {
+      const res = await fetch(`/data/rss_twitter_config.json?t=${Date.now()}`);
+      const raw = await res.json();
+      const cfg: RssSyncConfig = {
+        windowDays: Number(raw?.windowDays) > 0 ? Number(raw.windowDays) : defaultRssConfig.windowDays,
+        maxItems: Number(raw?.maxItems) > 0 ? Number(raw.maxItems) : defaultRssConfig.maxItems,
+        authors: Array.isArray(raw?.authors) ? raw.authors : defaultRssConfig.authors,
+        keywords: Array.isArray(raw?.keywords) ? raw.keywords : defaultRssConfig.keywords,
+        excludeKeywords: Array.isArray(raw?.excludeKeywords) ? raw.excludeKeywords : defaultRssConfig.excludeKeywords,
+      };
+      setRssConfig(cfg);
+      setAuthorsInput(cfg.authors.map((a) => `${a.handle} | ${a.name}`).join('\n'));
+      setKeywordsInput(cfg.keywords.join('\n'));
+      setExcludeInput(cfg.excludeKeywords.join('\n'));
+    } catch {
+      setRssConfig(defaultRssConfig);
+      setAuthorsInput(defaultRssConfig.authors.map((a) => `${a.handle} | ${a.name}`).join('\n'));
+      setKeywordsInput(defaultRssConfig.keywords.join('\n'));
+      setExcludeInput(defaultRssConfig.excludeKeywords.join('\n'));
+    } finally {
+      setRssConfigLoading(false);
+    }
+  }
+
+  async function handleSaveRssConfig() {
+    const parsedAuthors = authorsInput
+      .split('\n')
+      .map((l) => l.trim())
+      .filter(Boolean)
+      .map((line) => {
+        const [handle, ...nameParts] = line.split('|').map((p) => p.trim());
+        return {
+          handle: (handle || '').replace(/^@/, ''),
+          name: nameParts.join(' | ') || (handle || '').replace(/^@/, ''),
+        };
+      })
+      .filter((a) => a.handle);
+
+    const parsedKeywords = keywordsInput.split('\n').map((l) => l.trim()).filter(Boolean);
+    const parsedExclude = excludeInput.split('\n').map((l) => l.trim()).filter(Boolean);
+
+    const nextConfig: RssSyncConfig = {
+      windowDays: Math.max(1, Math.min(14, Number(rssConfig.windowDays) || 3)),
+      maxItems: Math.max(10, Math.min(200, Number(rssConfig.maxItems) || 80)),
+      authors: parsedAuthors.length ? parsedAuthors : defaultRssConfig.authors,
+      keywords: parsedKeywords.length ? parsedKeywords : defaultRssConfig.keywords,
+      excludeKeywords: parsedExclude,
+    };
+
+    setRssConfigSaving(true);
+    setSaveStatus('idle');
+    try {
+      await saveRssConfig(token, nextConfig);
+      setRssConfig(nextConfig);
+      setSaveStatus('ok');
+      setSaveMsg('RSS-конфіг збережено. Запусти X RSS sync для оновлення стрічки.');
+    } catch (e: any) {
+      setSaveStatus('error');
+      setSaveMsg(e.message || 'Не вдалося зберегти RSS-конфіг');
+    } finally {
+      setRssConfigSaving(false);
+      setTimeout(() => setSaveStatus('idle'), 5000);
+    }
+  }
+
   async function refreshWorkflowStatus() {
     if (!token) return;
     setWorkflowLoading(true);
@@ -198,6 +315,7 @@ export default function AdminPage() {
     try {
       const data = await fetchWorkflowDashboard(token);
       setSyncRun(data.sync);
+      setXRssRun(data.xRssSync);
       setDeployRun(data.deploy);
     } catch (e: any) {
       setWorkflowError(e.message || 'Не вдалося отримати статус workflow');
@@ -531,6 +649,16 @@ export default function AdminPage() {
             </button>
 
             <button
+              onClick={handleXRssSync}
+              disabled={xRssLoading}
+              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-5 py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              title="Запустити GitHub Action sync-x-rss.yml"
+            >
+              {xRssLoading ? <Loader className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+              {xRssLoading ? 'SYNC...' : 'SYNC X RSS'}
+            </button>
+
+            <button
               onClick={refreshWorkflowStatus}
               disabled={workflowLoading}
               className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-4 py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
@@ -553,10 +681,10 @@ export default function AdminPage() {
         <div className="mb-6 border border-[#f4f4f4]/10 bg-[#101010] p-4">
           <div className="flex items-center justify-between gap-4 mb-3">
             <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/60">Pipeline Monitor</p>
-            <p className="font-mono text-[9px] text-[#f4f4f4]/30">SYNC TG → Sync Telegram Posts → Deploy to GitHub Pages</p>
+            <p className="font-mono text-[9px] text-[#f4f4f4]/30">SYNC TG / SYNC X RSS → Sync Workflows → Deploy to GitHub Pages</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-3">
-            {[{ title: 'Sync Telegram', run: syncRun }, { title: 'Deploy', run: deployRun }].map(item => (
+          <div className="grid md:grid-cols-3 gap-3">
+            {[{ title: 'Sync Telegram', run: syncRun }, { title: 'Sync X RSS', run: xRssRun }, { title: 'Deploy', run: deployRun }].map(item => (
               <div key={item.title} className="border border-[#f4f4f4]/10 p-3">
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/50">{item.title}</span>
@@ -585,12 +713,101 @@ export default function AdminPage() {
               <AlertTriangle className="w-3 h-3" /> {workflowError}
             </div>
           )}
-          {!workflowError && (syncRun?.status === 'queued' || syncRun?.status === 'in_progress' || deployRun?.status === 'queued' || deployRun?.status === 'in_progress') && (
+          {!workflowError && (syncRun?.status === 'queued' || syncRun?.status === 'in_progress' || xRssRun?.status === 'queued' || xRssRun?.status === 'in_progress' || deployRun?.status === 'queued' || deployRun?.status === 'in_progress') && (
             <div className="mt-3 font-mono text-[10px] text-amber-300">Оновлюється автоматично кожні 7 секунд, поки workflow у процесі.</div>
           )}
-          {!workflowError && syncRun?.conclusion === 'success' && deployRun?.conclusion === 'success' && (
+          {!workflowError && deployRun?.conclusion === 'success' && (
             <div className="mt-3 font-mono text-[10px] text-green-400">Синхронізація і деплой завершені. Онови сайт з hard refresh.</div>
           )}
+        </div>
+
+        <div className="mb-10 border border-[#f4f4f4]/10 bg-[#101010] p-4">
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/60">RSS X Configuration</p>
+            <p className="font-mono text-[9px] text-[#f4f4f4]/30">Керування авторами, ключами та фільтрами без редагування коду</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="block font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/35 mb-2">Window Days</label>
+              <input
+                type="number"
+                min={1}
+                max={14}
+                value={rssConfig.windowDays}
+                onChange={(e) => setRssConfig({ ...rssConfig, windowDays: Number(e.target.value) })}
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-sm px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40"
+              />
+            </div>
+            <div>
+              <label className="block font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/35 mb-2">Max Items</label>
+              <input
+                type="number"
+                min={10}
+                max={200}
+                value={rssConfig.maxItems}
+                onChange={(e) => setRssConfig({ ...rssConfig, maxItems: Number(e.target.value) })}
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-sm px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40"
+              />
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-4">
+            <div>
+              <label className="block font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/35 mb-2">Authors (`handle | Name`)</label>
+              <textarea
+                rows={10}
+                value={authorsInput}
+                onChange={(e) => setAuthorsInput(e.target.value)}
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-xs px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40 resize-none"
+              />
+            </div>
+            <div>
+              <label className="block font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/35 mb-2">Keywords (one per line)</label>
+              <textarea
+                rows={10}
+                value={keywordsInput}
+                onChange={(e) => setKeywordsInput(e.target.value)}
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-xs px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40 resize-none"
+              />
+            </div>
+            <div>
+              <label className="block font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/35 mb-2">Exclude Keywords</label>
+              <textarea
+                rows={10}
+                value={excludeInput}
+                onChange={(e) => setExcludeInput(e.target.value)}
+                className="w-full bg-[#1a1a1a] border border-[#f4f4f4]/15 text-white font-mono text-xs px-3 py-2.5 outline-none focus:border-[#f4f4f4]/40 resize-none"
+              />
+            </div>
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <button
+              onClick={handleSaveRssConfig}
+              disabled={rssConfigSaving}
+              className="flex items-center gap-2 border border-[#f4f4f4]/20 text-[#f4f4f4]/70 font-mono text-xs uppercase tracking-widest px-4 py-2.5 hover:text-white hover:border-[#f4f4f4]/60 disabled:opacity-30 transition-colors"
+            >
+              {rssConfigSaving ? <Loader className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
+              {rssConfigSaving ? 'SAVING...' : 'SAVE RSS CONFIG'}
+            </button>
+            <button
+              onClick={fetchRssConfigFromSite}
+              disabled={rssConfigLoading}
+              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-4 py-2.5 hover:text-white hover:border-[#f4f4f4]/50 disabled:opacity-30 transition-colors"
+            >
+              {rssConfigLoading ? <Loader className="w-3 h-3 animate-spin" /> : <RefreshCw className="w-3 h-3" />}
+              RELOAD CONFIG
+            </button>
+            <button
+              onClick={handleXRssSync}
+              disabled={xRssLoading}
+              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 hover:bg-[#f4f4f4] disabled:opacity-30 transition-colors"
+            >
+              {xRssLoading ? <Loader className="w-3 h-3 animate-spin" /> : <RefreshCw className="w-3 h-3" />}
+              RUN X RSS SYNC
+            </button>
+          </div>
         </div>
 
         {loadingPosts ? (
