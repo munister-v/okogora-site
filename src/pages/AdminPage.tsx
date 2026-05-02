@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Post } from '../types';
-import { verifyToken, savePosts, triggerTelegramSync } from '../lib/github';
+import { verifyToken, savePosts, triggerTelegramSync, fetchWorkflowDashboard, WorkflowRunStatus } from '../lib/github';
 import ImageUploader from '../components/ImageUploader';
 import { importFromTelegraph } from '../lib/telegraph';
 import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader, Download, RefreshCw } from 'lucide-react';
@@ -38,12 +38,31 @@ export default function AdminPage() {
   const [tgError, setTgError] = useState('');
   const [showTgInput, setShowTgInput] = useState(false);
   const [syncLoading, setSyncLoading] = useState(false);
+  const [workflowLoading, setWorkflowLoading] = useState(false);
+  const [workflowError, setWorkflowError] = useState('');
+  const [syncRun, setSyncRun] = useState<WorkflowRunStatus | null>(null);
+  const [deployRun, setDeployRun] = useState<WorkflowRunStatus | null>(null);
 
   const isAuthed = !!token && !!username;
 
   useEffect(() => {
-    if (isAuthed) fetchPosts();
+    if (isAuthed) {
+      fetchPosts();
+      refreshWorkflowStatus();
+    }
   }, [isAuthed]);
+
+  useEffect(() => {
+    if (!isAuthed) return;
+    const shouldPoll = syncRun?.status === 'queued' || syncRun?.status === 'in_progress' || deployRun?.status === 'queued' || deployRun?.status === 'in_progress';
+    if (!shouldPoll) return;
+
+    const timer = setInterval(() => {
+      refreshWorkflowStatus();
+    }, 7000);
+
+    return () => clearInterval(timer);
+  }, [isAuthed, syncRun?.status, deployRun?.status]);
 
   async function fetchPosts() {
     setLoadingPosts(true);
@@ -150,13 +169,55 @@ export default function AdminPage() {
     try {
       await triggerTelegramSync(token);
       setSaveStatus('ok');
-      setSaveMsg('Синхронізацію Telegram запущено у GitHub Actions');
+      setSaveMsg('SYNC запущено. Статус нижче в Pipeline Monitor');
+      await refreshWorkflowStatus();
     } catch (e: any) {
       setSaveStatus('error');
       setSaveMsg(e.message || 'Не вдалося запустити sync workflow');
     } finally {
       setSyncLoading(false);
       setTimeout(() => setSaveStatus('idle'), 5000);
+    }
+  }
+
+  async function refreshWorkflowStatus() {
+    if (!token) return;
+    setWorkflowLoading(true);
+    setWorkflowError('');
+    try {
+      const data = await fetchWorkflowDashboard(token);
+      setSyncRun(data.sync);
+      setDeployRun(data.deploy);
+    } catch (e: any) {
+      setWorkflowError(e.message || 'Не вдалося отримати статус workflow');
+    } finally {
+      setWorkflowLoading(false);
+    }
+  }
+
+  function statusLabel(run: WorkflowRunStatus | null): string {
+    if (!run) return 'Немає запусків';
+    if (run.status === 'queued') return 'В черзі';
+    if (run.status === 'in_progress') return 'Виконується';
+    if (run.conclusion === 'success') return 'Успішно';
+    if (run.conclusion === 'failure') return 'Помилка';
+    if (run.conclusion === 'cancelled') return 'Скасовано';
+    return run.status || 'Невідомо';
+  }
+
+  function statusClass(run: WorkflowRunStatus | null): string {
+    if (!run) return 'text-[#f4f4f4]/40 border-[#f4f4f4]/20';
+    if (run.status === 'queued' || run.status === 'in_progress') return 'text-amber-300 border-amber-400/40';
+    if (run.conclusion === 'success') return 'text-green-400 border-green-500/40';
+    return 'text-red-400 border-red-500/40';
+  }
+
+  function timeLabel(iso?: string): string {
+    if (!iso) return '';
+    try {
+      return new Date(iso).toLocaleString('uk-UA', { dateStyle: 'short', timeStyle: 'short' });
+    } catch {
+      return iso;
     }
   }
 
@@ -449,6 +510,16 @@ export default function AdminPage() {
             </button>
 
             <button
+              onClick={refreshWorkflowStatus}
+              disabled={workflowLoading}
+              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/50 font-mono text-xs uppercase tracking-widest px-4 py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              title="Оновити статус pipeline"
+            >
+              {workflowLoading ? <Loader className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+              STATUS
+            </button>
+
+            <button
               onClick={() => { setEditing(emptyPost()); setIsNew(true); }}
               className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-6 py-3 hover:bg-[#f4f4f4] transition-colors"
             >
@@ -458,6 +529,49 @@ export default function AdminPage() {
         </div>
 
         {/* Posts list */}
+        <div className="mb-6 border border-[#f4f4f4]/10 bg-[#101010] p-4">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/60">Pipeline Monitor</p>
+            <p className="font-mono text-[9px] text-[#f4f4f4]/30">SYNC TG → Sync Telegram Posts → Deploy to GitHub Pages</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-3">
+            {[{ title: 'Sync Telegram', run: syncRun }, { title: 'Deploy', run: deployRun }].map(item => (
+              <div key={item.title} className="border border-[#f4f4f4]/10 p-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/50">{item.title}</span>
+                  <span className={`px-2 py-1 border font-mono text-[9px] uppercase tracking-widest ${statusClass(item.run)}`}>
+                    {statusLabel(item.run)}
+                  </span>
+                </div>
+                <div className="mt-2 font-mono text-[9px] text-[#f4f4f4]/35">
+                  {item.run ? `Run #${item.run.id} • ${timeLabel(item.run.createdAt)}` : 'Ще немає запусків'}
+                </div>
+                {item.run?.htmlUrl && (
+                  <a
+                    href={item.run.htmlUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex mt-2 font-mono text-[9px] uppercase tracking-widest text-[#f4f4f4]/50 hover:text-white transition-colors"
+                  >
+                    Відкрити в GitHub
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+          {workflowError && (
+            <div className="mt-3 font-mono text-[10px] text-red-400 flex items-center gap-2">
+              <AlertTriangle className="w-3 h-3" /> {workflowError}
+            </div>
+          )}
+          {!workflowError && (syncRun?.status === 'queued' || syncRun?.status === 'in_progress' || deployRun?.status === 'queued' || deployRun?.status === 'in_progress') && (
+            <div className="mt-3 font-mono text-[10px] text-amber-300">Оновлюється автоматично кожні 7 секунд, поки workflow у процесі.</div>
+          )}
+          {!workflowError && syncRun?.conclusion === 'success' && deployRun?.conclusion === 'success' && (
+            <div className="mt-3 font-mono text-[10px] text-green-400">Синхронізація і деплой завершені. Онови сайт з hard refresh.</div>
+          )}
+        </div>
+
         {loadingPosts ? (
           <div className="flex items-center justify-center py-24 text-[#f4f4f4]/20">
             <Loader className="w-6 h-6 animate-spin mr-3" />

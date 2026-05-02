@@ -2,10 +2,20 @@ const REPO_OWNER = 'munister-v';
 const REPO_NAME = 'okogora';
 const POSTS_PATH = 'public/data/posts.json';
 const TG_SYNC_WORKFLOW_ID = 'sync-telegram-posts.yml';
+const DEPLOY_WORKFLOW_ID = 'deploy.yml';
 
 export interface GithubAuth {
   token: string;
   username: string;
+}
+
+export interface WorkflowRunStatus {
+  id: number;
+  htmlUrl: string;
+  status: 'queued' | 'in_progress' | 'completed' | string;
+  conclusion: 'success' | 'failure' | 'cancelled' | null | string;
+  createdAt: string;
+  name: string;
 }
 
 export async function verifyToken(token: string): Promise<string | null> {
@@ -89,4 +99,39 @@ export async function triggerTelegramSync(
     }
     throw new Error(message);
   }
+}
+
+async function fetchLatestWorkflowRun(token: string, workflowId: string): Promise<WorkflowRunStatus | null> {
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${workflowId}/runs?branch=main&per_page=1`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+
+  if (!res.ok) throw new Error('Failed to fetch workflow status');
+  const data = await res.json();
+  const run = data?.workflow_runs?.[0];
+  if (!run) return null;
+
+  return {
+    id: run.id,
+    htmlUrl: run.html_url,
+    status: run.status,
+    conclusion: run.conclusion,
+    createdAt: run.created_at,
+    name: run.name,
+  };
+}
+
+export async function fetchWorkflowDashboard(token: string): Promise<{
+  sync: WorkflowRunStatus | null;
+  deploy: WorkflowRunStatus | null;
+}> {
+  const [sync, deploy] = await Promise.all([
+    fetchLatestWorkflowRun(token, TG_SYNC_WORKFLOW_ID),
+    fetchLatestWorkflowRun(token, DEPLOY_WORKFLOW_ID),
+  ]);
+
+  return { sync, deploy };
 }
