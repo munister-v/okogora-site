@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Layers, UploadCloud, Rocket, Navigation, Rss, Target } from 'lucide-react';
+import { ArrowUpRight, Radio, Activity, Database, Shield, Terminal, Rocket, Rss, Target } from 'lucide-react';
 import { Post, InvestigationArticle } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
@@ -56,6 +56,7 @@ function countStrikesFromRss(items: RssItem[]): number {
 export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [rssItems, setRssItems] = useState<RssItem[]>([]);
+  const [fbItems, setFbItems] = useState<RssItem[]>([]);
   const [investigations, setInvestigations] = useState<InvestigationArticle[]>([]);
   const [sharedItemId, setSharedItemId] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -77,6 +78,11 @@ export default function App() {
       .then(r => r.json())
       .then(data => setRssItems(Array.isArray(data?.items) ? data.items : []))
       .catch(() => setRssItems([]));
+
+    fetch(`/data/rss_facebook.json?t=${Date.now()}`)
+      .then(r => r.json())
+      .then(data => setFbItems(Array.isArray(data?.items) ? data.items : []))
+      .catch(() => setFbItems([]));
 
     fetch(`/data/investigations.json?t=${Date.now()}`)
       .then(r => r.json())
@@ -121,6 +127,89 @@ export default function App() {
       // ignore user-cancelled share
     }
   }
+
+  const dashboard = useMemo(() => {
+    const now = Date.now();
+    const days: string[] = [];
+    const dayMap = new Map<string, number>();
+    for (let i = 6; i >= 0; i -= 1) {
+      const d = new Date(now - i * 24 * 60 * 60 * 1000);
+      const key = d.toISOString().slice(0, 10);
+      days.push(key);
+      dayMap.set(key, i);
+    }
+
+    type Event = {
+      day: string;
+      source: 'X' | 'Facebook' | 'Telegram';
+      sourceName: string;
+      text: string;
+      type: 'Удари' | 'Логістика' | 'ППО/Авіа' | 'Море';
+    };
+
+    const pickType = (text: string): Event['type'] => {
+      const t = text.toLowerCase();
+      if (/(fleet|naval|морськ|black sea|sevastopol|порт)/i.test(t)) return 'Море';
+      if (/(airbase|airfield|f-16|ппо|air defense|авіа|аеродром)/i.test(t)) return 'ППО/Авіа';
+      if (/(logistics|нпз|refinery|depot|склад|rail|supply)/i.test(t)) return 'Логістика';
+      return 'Удари';
+    };
+
+    const events: Event[] = [];
+    for (const item of rssItems) {
+      const ts = new Date(item.publishedAt).getTime();
+      if (Number.isNaN(ts) || now - ts > 7 * 24 * 60 * 60 * 1000) continue;
+      const day = new Date(ts).toISOString().slice(0, 10);
+      if (!dayMap.has(day)) continue;
+      const text = `${item.titleUk || item.title || ''} ${item.summaryUk || item.summary || ''}`;
+      events.push({ day, source: 'X', sourceName: item.author || `@${item.handle || 'x'}`, text, type: pickType(text) });
+    }
+    for (const item of fbItems) {
+      const ts = new Date(item.publishedAt).getTime();
+      if (Number.isNaN(ts) || now - ts > 7 * 24 * 60 * 60 * 1000) continue;
+      const day = new Date(ts).toISOString().slice(0, 10);
+      if (!dayMap.has(day)) continue;
+      const text = `${item.titleUk || item.title || ''} ${item.summaryUk || item.summary || ''}`;
+      events.push({ day, source: 'Facebook', sourceName: item.author || `@${item.handle || 'fb'}`, text, type: pickType(text) });
+    }
+    for (const post of posts) {
+      const ts = new Date(post.date).getTime();
+      if (Number.isNaN(ts) || now - ts > 7 * 24 * 60 * 60 * 1000) continue;
+      const day = new Date(ts).toISOString().slice(0, 10);
+      if (!dayMap.has(day)) continue;
+      const text = `${post.title || ''} ${post.text || ''}`;
+      events.push({ day, source: 'Telegram', sourceName: 'Око Гора', text, type: pickType(text) });
+    }
+
+    const sources: Array<Event['source']> = ['X', 'Facebook', 'Telegram'];
+    const byDaySource: Record<string, Record<Event['source'], number>> = {};
+    const byTypeSource: Record<Event['type'], Record<Event['source'], number>> = {
+      'Удари': { X: 0, Facebook: 0, Telegram: 0 },
+      'Логістика': { X: 0, Facebook: 0, Telegram: 0 },
+      'ППО/Авіа': { X: 0, Facebook: 0, Telegram: 0 },
+      'Море': { X: 0, Facebook: 0, Telegram: 0 },
+    };
+    const topSourceMap = new Map<string, number>();
+    for (const d of days) byDaySource[d] = { X: 0, Facebook: 0, Telegram: 0 };
+    for (const e of events) {
+      byDaySource[e.day][e.source] += 1;
+      byTypeSource[e.type][e.source] += 1;
+      topSourceMap.set(e.sourceName, (topSourceMap.get(e.sourceName) || 0) + 1);
+    }
+
+    const maxCell = Math.max(
+      1,
+      ...days.flatMap((d) => sources.map((s) => byDaySource[d][s])),
+    );
+    const topSources = Array.from(topSourceMap.entries()).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const trend = days.map((d) => ({
+      day: d,
+      total: sources.reduce((acc, s) => acc + byDaySource[d][s], 0),
+    }));
+    const maxTrend = Math.max(1, ...trend.map(t => t.total));
+
+    return { days, sources, byDaySource, byTypeSource, maxCell, topSources, trend, maxTrend, total: events.length };
+  }, [rssItems, fbItems, posts]);
 
   return (
     <div className="min-h-screen bg-[#252519] text-white selection:bg-[#c9a227] selection:text-[#1c1c12] font-sans overflow-x-hidden">
@@ -411,36 +500,91 @@ export default function App() {
             </div>
           </motion.div>
 
-          {/* Community Cards */}
-          <motion.div variants={fadeIn} className="mb-32 md:mb-48 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-            <div className="bg-[#1c1c12] border border-[#c9a227]/20 text-white p-10 md:p-16 flex flex-col justify-between group cursor-pointer hover:border-[#c9a227]/50 transition-all">
-              <div>
-                <UploadCloud className="w-12 h-12 mb-10 text-[#c9a227]/30 group-hover:text-[#c9a227] transition-colors" />
-                <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-6 leading-[0.9]">Передача <br /> даних</h3>
-                <p className="text-white/40 font-mono text-[10px] md:text-xs leading-relaxed max-w-sm">
-                  Захищений шлюз для збору координат, фото та відео з окупованих територій. Повна анонімність гарантована.
-                </p>
+          {/* 7D Dashboard */}
+          <motion.section variants={fadeIn} className="mb-32 md:mb-48">
+            <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
+              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ OSINT DASHBOARD</span>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Активність оф. джерел за 7 днів</h2>
+                  <p className="mt-4 text-white/50 max-w-3xl text-sm">X, Facebook і Telegram в єдиному огляді: інтенсивність, матриця типів та джерел, пікові дні.</p>
+                </div>
+                <div className="bg-[#1c1c12] border border-[#c9a227]/20 px-6 py-5">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Загалом подій (7 днів)</p>
+                  <p className="text-5xl font-bold tracking-tighter text-white">{dashboard.total}</p>
+                </div>
               </div>
-              <div className="mt-12 flex justify-between items-center font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/30 group-hover:text-[#c9a227]/60 transition-colors">
-                <span>РІВЕНЬ_БЕЗПЕКИ: ВИСОКИЙ</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </div>
-            </div>
 
-            <div className="bg-[#2e2d1e] border border-[#c9a227]/20 p-10 md:p-16 flex flex-col justify-between group cursor-pointer hover:border-[#c9a227]/50 transition-all">
-              <div>
-                <Layers className="w-12 h-12 mb-10 text-[#c9a227]/30 group-hover:text-[#c9a227] transition-colors" />
-                <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-tighter mb-6 leading-[0.9]">Архів та <br /> Аналіз</h3>
-                <p className="text-white/40 font-mono text-[10px] md:text-xs leading-relaxed max-w-sm">
-                  Доступ до детальної бази даних подій. Пошук за датою, типом техніки або сектором.
-                </p>
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+                <div className="xl:col-span-7 bg-[#1c1c12] border border-[#c9a227]/20 p-6 md:p-8">
+                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Heatmap · День × Джерело</h3>
+                  <div className="space-y-2">
+                    {dashboard.days.map((day) => (
+                      <div key={day} className="grid grid-cols-[70px_repeat(3,minmax(0,1fr))] gap-2 items-center">
+                        <span className="font-mono text-[10px] text-white/35 uppercase">{day.slice(5)}</span>
+                        {dashboard.sources.map((src) => {
+                          const value = dashboard.byDaySource[day][src];
+                          const alpha = value === 0 ? 0.06 : 0.18 + (value / dashboard.maxCell) * 0.82;
+                          return (
+                            <div key={`${day}-${src}`} className="h-8 border border-[#c9a227]/20 flex items-center justify-between px-2" style={{ backgroundColor: `rgba(201,162,39,${alpha})` }}>
+                              <span className="font-mono text-[9px] uppercase text-white/70">{src}</span>
+                              <span className="font-mono text-[10px] font-bold text-white">{value}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="xl:col-span-5 bg-[#2e2d1e] border border-[#c9a227]/20 p-6 md:p-8">
+                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Тренд · День</h3>
+                  <div className="space-y-2">
+                    {dashboard.trend.map((t) => (
+                      <div key={t.day} className="flex items-center gap-3">
+                        <span className="font-mono text-[10px] text-white/35 w-14">{t.day.slice(5)}</span>
+                        <div className="h-3 bg-[#c9a227] transition-all" style={{ width: `${Math.max(6, (t.total / dashboard.maxTrend) * 100)}%` }} />
+                        <span className="font-mono text-[10px] text-white/75">{t.total}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mt-8 mb-3">Топ-джерела</h3>
+                  <div className="space-y-2">
+                    {dashboard.topSources.map(([name, count]) => (
+                      <div key={name} className="flex items-center justify-between border-b border-white/10 pb-1">
+                        <span className="text-white/70 text-sm truncate">{name}</span>
+                        <span className="font-mono text-[10px] text-[#c9a227]">{count}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <ul className="mt-12 space-y-2 font-mono text-[9px] md:text-[10px] tracking-widest text-[#c9a227]/40 uppercase">
-                <li className="flex items-center gap-2"><Navigation className="w-3 h-3" /> Геолокація об'єктів</li>
-                <li className="flex items-center gap-2"><Activity className="w-3 h-3" /> Статистика втрат</li>
-              </ul>
+
+              <div className="mt-6 bg-[#1c1c12] border border-[#c9a227]/20 p-6 md:p-8">
+                <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Matrix · Тип події × Джерело</h3>
+                <div className="grid grid-cols-[180px_repeat(3,minmax(0,1fr))] gap-2">
+                  <div />
+                  {dashboard.sources.map((src) => (
+                    <div key={src} className="font-mono text-[10px] uppercase text-white/45">{src}</div>
+                  ))}
+                  {(Object.keys(dashboard.byTypeSource) as Array<keyof typeof dashboard.byTypeSource>).map((typeKey) => (
+                    <div key={typeKey} className="contents">
+                      <div className="font-mono text-[10px] uppercase text-white/65 border border-white/10 px-3 py-2">{typeKey}</div>
+                      {dashboard.sources.map((src) => {
+                        const value = dashboard.byTypeSource[typeKey][src];
+                        const alpha = value === 0 ? 0.04 : 0.2 + Math.min(0.8, value / 14);
+                        return (
+                          <div key={`${typeKey}-${src}`} className="border border-[#c9a227]/20 px-3 py-2 font-mono text-sm font-bold text-white" style={{ backgroundColor: `rgba(201,162,39,${alpha})` }}>
+                            {value}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </motion.div>
+          </motion.section>
 
           {/* Interactive Investigations */}
           <motion.section variants={fadeIn} className="mb-32 md:mb-48">
