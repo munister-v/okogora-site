@@ -415,7 +415,7 @@ export default function AdminPage() {
               <button
                 onClick={handleLogin}
                 disabled={!tokenInput || authLoading}
-                className="w-full bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest py-3 hover:bg-[#f4f4f4] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest py-3 hover:bg-[#252519] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
               >
                 {authLoading ? <Loader className="w-4 h-4 animate-spin" /> : <Shield className="w-4 h-4" />}
                 {authLoading ? 'ПЕРЕВІРКА...' : 'УВІЙТИ'}
@@ -546,7 +546,7 @@ export default function AdminPage() {
             <button
               onClick={handleSave}
               disabled={saving || !editing.title}
-              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-8 py-3 hover:bg-[#f4f4f4] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-8 py-3 hover:bg-[#252519] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               {saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
               {saving ? 'ЗБЕРЕЖЕННЯ...' : 'ЗБЕРЕГТИ І ДЕПЛОЇТИ'}
@@ -670,7 +670,7 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setEditing(emptyPost()); setIsNew(true); }}
-              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-6 py-3 hover:bg-[#f4f4f4] transition-colors"
+              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-6 py-3 hover:bg-[#252519] transition-colors"
             >
               <Plus className="w-4 h-4" /> НОВА СТАТТЯ
             </button>
@@ -802,7 +802,7 @@ export default function AdminPage() {
             <button
               onClick={handleXRssSync}
               disabled={xRssLoading}
-              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 hover:bg-[#f4f4f4] disabled:opacity-30 transition-colors"
+              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 hover:bg-[#252519] disabled:opacity-30 transition-colors"
             >
               {xRssLoading ? <Loader className="w-3 h-3 animate-spin" /> : <RefreshCw className="w-3 h-3" />}
               RUN X RSS SYNC
