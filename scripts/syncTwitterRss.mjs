@@ -100,6 +100,16 @@ function normalizeTitleKey(title) {
     .trim();
 }
 
+function normalizeRssItem(item) {
+  return {
+    ...item,
+    title: decodeHtml(item.title || ''),
+    summary: decodeHtml(item.summary || ''),
+    titleUk: decodeHtml(item.titleUk || ''),
+    summaryUk: decodeHtml(item.summaryUk || ''),
+  };
+}
+
 function isProbablyUkrainian(text) {
   if (!text) return false;
   const t = text.toLowerCase();
@@ -308,6 +318,10 @@ async function main() {
     finalItems = previousItems;
     console.log(`No fresh items, keeping previous snapshot (${finalItems.length})`);
   }
+
+  finalItems = finalItems
+    .map(normalizeRssItem)
+    .filter((item) => item.url && item.title);
 
   const payload = {
     generatedAt: new Date().toISOString(),
