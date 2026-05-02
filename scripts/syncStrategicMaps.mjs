@@ -31,6 +31,73 @@ const REGION_UK = {
   mykolaiv: 'Миколаївської області',
 };
 
+const REGION_CONTEXT = {
+  kherson: {
+    military: 'контроль лівобережжя та вогневий вплив на дельту Дніпра',
+    infra: 'логістика через прибережні траси, переправи та вузли постачання до Криму',
+  },
+  zaporizhye: {
+    military: 'тиск на південному фронті та формування опорних рубежів',
+    infra: 'вплив на сухопутний коридор, траси постачання і тилові склади',
+  },
+  zaporizhzhia: {
+    military: 'тиск на південному фронті та формування опорних рубежів',
+    infra: 'вплив на сухопутний коридор, траси постачання і тилові склади',
+  },
+  donetsk: {
+    military: 'активні наступальні дії на ключових напрямках східного фронту',
+    infra: 'контроль дорожніх вузлів, промислових зон та залізничних підходів',
+  },
+  luhansk: {
+    military: 'закріплення рубежів і маневр резервами на східній ділянці',
+    infra: 'використання дорожньої та залізничної мережі для перекидання сил',
+  },
+  lugansk: {
+    military: 'закріплення рубежів і маневр резервами на східній ділянці',
+    infra: 'використання дорожньої та залізничної мережі для перекидання сил',
+  },
+  kharkiv: {
+    military: 'тиск на прикордонних секторах і спроби розширення плацдармів',
+    infra: 'вплив на прикордонну логістику, магістралі та підвезення боєприпасів',
+  },
+  sumy: {
+    military: 'активність у прикордонній зоні з ризиком диверсійного проникнення',
+    infra: 'тиск на прикордонні траси, пункти накопичення та транспортні вузли',
+  },
+  dnipropetrovsk: {
+    military: 'наближення бойової активності до центральних тилових районів',
+    infra: 'загроза для транспортних коридорів і опорної логістики фронту',
+  },
+  mykolaiv: {
+    military: 'вплив на оборону півдня та підходи до чорноморського узбережжя',
+    infra: 'контроль прибережної інфраструктури, доріг та тилового забезпечення',
+  },
+  crimea: {
+    military: 'стратегічний військовий плацдарм РФ на Чорному морі',
+    infra: 'вузол аеродромної, морської та складської інфраструктури',
+  },
+  sevastopol: {
+    military: 'базування корабельного компонента та військово-морських засобів',
+    infra: 'портова інфраструктура, ремонтні потужності і логістика флоту',
+  },
+  tuzla: {
+    military: 'контроль підходів у районі Керченської протоки',
+    infra: 'вплив на морську логістику та інженерні обʼєкти протоки',
+  },
+  toretsk: {
+    military: 'контактна зона з інтенсивними боями на тактичній глибині',
+    infra: 'вузли доріг і міська інфраструктура у зоні вогневого впливу',
+  },
+  bakhmut: {
+    military: 'виснажливі бої за тактичні висоти та опорні райони',
+    infra: 'промислова та дорожня мережа як основа маневру підрозділів',
+  },
+  terny: {
+    military: 'локальні штурмові дії на стиках підрозділів',
+    infra: 'контроль польових шляхів і тактичних підʼїздів',
+  },
+};
+
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
@@ -99,6 +166,64 @@ function translateTitle(rawTitle) {
   }
 
   return title;
+}
+
+function extractYear(rawTitle) {
+  const match = String(rawTitle || '').match(/\b(20\d{2})\b/);
+  return match ? Number(match[1]) : null;
+}
+
+function regionContext(regionRaw) {
+  const key = String(regionRaw || '').toLowerCase();
+  return REGION_CONTEXT[key] || null;
+}
+
+function categoryContext(category) {
+  if (category === 'airbase') {
+    return {
+      military: 'майданчик бойової авіації, БПЛА або засобів ППО',
+      infra: 'злітно-посадкова та технічна інфраструктура забезпечення вильотів',
+    };
+  }
+  if (category === 'naval') {
+    return {
+      military: 'військово-морський район із потенційною активністю корабельного складу',
+      infra: 'портові споруди, причали, склади ПММ та обслуговування флоту',
+    };
+  }
+  if (category === 'logistics') {
+    return {
+      military: 'тилова зона накопичення та перекидання ресурсів',
+      infra: 'дорожні, залізничні або складські вузли постачання',
+    };
+  }
+  if (category === 'occupation') {
+    return {
+      military: 'район окупаційної присутності та фортифікаційного закріплення',
+      infra: 'контроль транспортних коридорів, вузлів і тилового забезпечення',
+    };
+  }
+  return {
+    military: 'стратегічний район із потенційним військовим значенням',
+    infra: 'локальна критична інфраструктура у зоні моніторингу',
+  };
+}
+
+function buildStrategicNote({ rawTitle, titleUk, category, region, radiusMeters }) {
+  const year = extractYear(rawTitle);
+  const categoryInfo = categoryContext(category);
+  const regionInfo = regionContext(region);
+  const lead = year
+    ? `Зона зафіксована у шарі ${year} року.`
+    : 'Зона зафіксована у зовнішньому стратегічному шарі.';
+  const military = regionInfo?.military || categoryInfo.military;
+  const infra = regionInfo?.infra || categoryInfo.infra;
+  const radiusKm = Math.round(Number(radiusMeters || 0) / 1000);
+  const sizeText = radiusKm > 0 ? `Оціночний радіус покриття: близько ${radiusKm} км.` : '';
+
+  return `${lead} Воєнний контекст: ${military}. Інфраструктурний контекст: ${infra}. ${sizeText} Назва з джерела: ${titleUk || rawTitle}.`
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function approxRadiusMeters(bbox) {
@@ -193,6 +318,8 @@ function extractFeatureFromNode(node, source, mapTitle) {
 
   const category = classifyCategory(rawTitle, source.categoryHint);
   const translatedTitle = translateTitle(rawTitle);
+  const region = extractRegion(rawTitle);
+  const radiusMeters = approxRadiusMeters(bbox);
 
   return {
     id: `strat-${source.id}-${externalId.toLowerCase()}`,
@@ -203,12 +330,12 @@ function extractFeatureFromNode(node, source, mapTitle) {
     title: rawTitle,
     titleUk: translatedTitle,
     category,
-    region: extractRegion(rawTitle),
+    region,
     layerLabel: source.name,
     position: [lat, lng],
     bbox: bbox.map(Number),
-    radiusMeters: approxRadiusMeters(bbox),
-    note: 'Імпортована зона з публічної карти. Це центр і приблизний радіус, а не точний полігон.',
+    radiusMeters,
+    note: buildStrategicNote({ rawTitle, titleUk: translatedTitle, category, region, radiusMeters }),
     importedAt: new Date().toISOString(),
     tags: Array.from(new Set([...(source.tags || []), category.toUpperCase()])),
   };
