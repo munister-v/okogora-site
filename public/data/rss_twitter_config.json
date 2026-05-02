@@ -1,6 +1,6 @@
 {
-  "windowDays": 3,
-  "maxItems": 80,
+  "windowDays": 7,
+  "maxItems": 180,
   "authors": [
     { "handle": "OSINTtechnical", "name": "OSINTtechnical" },
     { "handle": "GeoConfirmed", "name": "GeoConfirmed" },
@@ -9,7 +9,14 @@
     { "handle": "War_Mapper", "name": "War Mapper" },
     { "handle": "ChrisO_wiki", "name": "ChrisO_wiki" },
     { "handle": "Tendar", "name": "Tendar" },
-    { "handle": "RALee85", "name": "Rob Lee" }
+    { "handle": "RALee85", "name": "Rob Lee" },
+    { "handle": "Maks_NAFO_FELLA", "name": "Maks NAFO" },
+    { "handle": "COUPSURE", "name": "Intelligence Focus" },
+    { "handle": "front_ukrainian", "name": "Frontline Ukraine" },
+    { "handle": "GeoInsider", "name": "GeoInsider" },
+    { "handle": "mil_in_ua", "name": "MIL IN UA" },
+    { "handle": "DefenceHQ", "name": "UK Defence HQ" },
+    { "handle": "Osint613", "name": "OSINT613" }
   ],
   "keywords": [
     "ukraine",
@@ -32,6 +39,16 @@
     "missile",
     "drone",
     "strike",
+    "shahed",
+    "ballistic",
+    "iskander",
+    "explosion",
+    "blast",
+    "air raid",
+    "alert",
+    "damaged",
+    "oblast",
+    "region",
     "air defense",
     "russian",
     "russia",
