@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, lazy, Suspense, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowUpRight, Activity, Database, Shield, Terminal, Rss, Target } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ArrowUpRight, Activity, Database, Shield, Terminal, Rss, Target, Lock } from 'lucide-react';
 import { Post, InvestigationArticle } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
@@ -54,7 +54,12 @@ type PechalStats = {
   };
 };
 
+const SECTION_IDS = ['map', 'analytics', 'investigations', 'rss', 'feed', 'contacts'] as const;
+type SectionId = typeof SECTION_IDS[number];
+
 export default function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [posts, setPosts] = useState<Post[]>([]);
   const [rssItems, setRssItems] = useState<RssItem[]>([]);
   const [fbItems, setFbItems] = useState<RssItem[]>([]);
@@ -62,6 +67,22 @@ export default function App() {
   const [investigations, setInvestigations] = useState<InvestigationArticle[]>([]);
   const [sharedItemId, setSharedItemId] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  function scrollToSection(id: SectionId, smooth = true) {
+    const node = document.getElementById(id);
+    if (!node) return;
+    node.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+  }
+
+  function openSection(id: SectionId) {
+    setMobileMenuOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/', { replace: false });
+      window.setTimeout(() => scrollToSection(id), 120);
+      return;
+    }
+    scrollToSection(id);
+  }
 
   useEffect(() => {
     setSeo({
@@ -96,6 +117,14 @@ export default function App() {
       .then((data: PechalStats) => setPechalStats(data && data.counters ? data : null))
       .catch(() => setPechalStats(null));
   }, []);
+
+  useEffect(() => {
+    const rawPath = (location.pathname || '').replace(/^\/+/, '').toLowerCase();
+    if (!rawPath) return;
+    if (!SECTION_IDS.includes(rawPath as SectionId)) return;
+    navigate('/', { replace: true });
+    window.setTimeout(() => scrollToSection(rawPath as SectionId, false), 80);
+  }, [location.pathname, navigate]);
 
   function formatRssDate(iso: string) {
     const d = new Date(iso);
@@ -324,11 +353,11 @@ export default function App() {
             <Link to="/targets" className="hover:text-white transition-colors flex items-center gap-1 text-[#c9a227] font-bold">
               <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
             </Link>
-            <a href="#map" className="hover:text-white transition-colors">Карта</a>
-            <a href="#analytics" className="hover:text-white transition-colors">Аналітика</a>
-            <a href="#investigations" className="hover:text-white transition-colors">Розслідування</a>
-            <a href="#rss" className="hover:text-white transition-colors">RSS</a>
-            <a href="#feed" className="hover:text-white transition-colors">Стрічка</a>
+            <button type="button" onClick={() => openSection('map')} className="hover:text-white transition-colors">Карта</button>
+            <button type="button" onClick={() => openSection('analytics')} className="hover:text-white transition-colors">Аналітика</button>
+            <button type="button" onClick={() => openSection('investigations')} className="hover:text-white transition-colors">Розслідування</button>
+            <button type="button" onClick={() => openSection('rss')} className="hover:text-white transition-colors">RSS</button>
+            <button type="button" onClick={() => openSection('feed')} className="hover:text-white transition-colors">Стрічка</button>
             <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
               className="hover:text-[#c9a227] transition-colors flex items-center gap-1 font-bold text-white">
               ТЕЛЕГРАМ <ArrowUpRight className="w-3 h-3" />
@@ -352,11 +381,11 @@ export default function App() {
             <Link to="/targets" className="text-[#c9a227] font-bold flex items-center gap-1 py-1" onClick={() => setMobileMenuOpen(false)}>
               <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
             </Link>
-            <a href="#map" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Карта</a>
-            <a href="#analytics" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Аналітика</a>
-            <a href="#investigations" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Розслідування</a>
-            <a href="#rss" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>RSS</a>
-            <a href="#feed" className="text-white/60 hover:text-[#c9a227] transition-colors py-1" onClick={() => setMobileMenuOpen(false)}>Стрічка</a>
+            <button type="button" onClick={() => openSection('map')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Карта</button>
+            <button type="button" onClick={() => openSection('analytics')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Аналітика</button>
+            <button type="button" onClick={() => openSection('investigations')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Розслідування</button>
+            <button type="button" onClick={() => openSection('rss')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">RSS</button>
+            <button type="button" onClick={() => openSection('feed')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Стрічка</button>
             <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
               className="text-white font-bold flex items-center gap-1 py-1 hover:text-[#c9a227] transition-colors">
               ТЕЛЕГРАМ <ArrowUpRight className="w-3 h-3" />
@@ -542,7 +571,7 @@ export default function App() {
                   </div>
                   <div className="flex justify-between items-center font-mono text-[10px] tracking-widest pt-4 border-t border-white/10">
                     <a href={pechalStats?.sourceUrl || 'https://t.me/s/pechalbeda200'} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[#c9a227] hover:text-[#f1d98a] transition-colors"><Shield className="w-3 h-3" /> PROOF FEED</a>
-                    <span className="text-white/30">*MAX POST ID</span>
+                    <span className="text-white/30">*серійний номер</span>
                   </div>
                 </div>
 
@@ -580,12 +609,27 @@ export default function App() {
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ OSINT DASHBOARD</span>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Карта інтенсивності ударів по областях (7 днів)</h2>
-                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Враховані тільки події, де є дата, згадка удару в тексті та публічне джерело. Кожен доказ нижче містить пряме посилання на первинний пост.</p>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Інтенсивність ударів (7 днів)</h2>
+                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Це оперативна карта щільності ударних згадок по областях. Дані проходять фільтр на ключові ознаки удару, геоприв’язку та виводяться тільки з пруф-посиланнями.</p>
                 </div>
                 <div className="bg-[#1c1c12] border border-[#c9a227]/20 px-6 py-5">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Ударних подій (7 днів)</p>
                   <p className="text-5xl font-bold tracking-tighter text-white">{dashboard.total}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div className="border border-[#c9a227]/20 bg-[#1c1c12] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">Що показує heatmap</p>
+                  <p className="text-sm text-white/70 leading-relaxed">Кожна клітинка: кількість зафіксованих ударних згадок для конкретної області у конкретний день.</p>
+                </div>
+                <div className="border border-[#c9a227]/20 bg-[#1c1c12] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">Що показує тренд</p>
+                  <p className="text-sm text-white/70 leading-relaxed">Горизонтальна шкала праворуч: сумарна кількість подій за добу по всіх областях, що ввійшли в топ.</p>
+                </div>
+                <div className="border border-[#c9a227]/20 bg-[#1c1c12] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">Що таке “Конкретика”</p>
+                  <p className="text-sm text-white/70 leading-relaxed">Нижче наведені реальні заголовки з джерел, дата та автор. Клік по рядку відкриває першоджерело.</p>
                 </div>
               </div>
 
@@ -690,6 +734,19 @@ export default function App() {
                 </a>
               </div>
 
+              <div className="mb-6 border border-[#c9a227]/30 bg-[#11120d] p-5 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 border border-[#c9a227]/40 bg-[#c9a227]/10 flex items-center justify-center shrink-0">
+                    <Lock className="w-5 h-5 text-[#c9a227]" />
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/80">Службова заглушка</p>
+                    <p className="text-lg md:text-xl font-bold text-white">Скоро буде. Очікуйте.</p>
+                    <p className="text-sm text-white/55 mt-1">Готуємо повноцінний модуль інтерактивних кейсів з таймлайном, картами та доказами.</p>
+                  </div>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {(investigations.length ? investigations.filter(i => (i.status || 'published') === 'published') : [
                   { id: 'fallback-1', title: 'Ланцюг подій', summary: "Покрокова реконструкція інцидентів за часом, географією та джерелами.", code: 'CASEFLOW', tags: [], publishedAt: '', status: 'published' as const },
@@ -723,8 +780,8 @@ export default function App() {
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ LIVE RSS</span>
                   <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">RSS пости з X: OSINT/HUMINT</h2>
-                  <p className="mt-4 text-white/50 max-w-3xl text-sm">
-                    Автоматична вибірка за останні 3 дні по темах, пов'язаних з Україною, з фокусом на іноземних OSINT/HUMINT авторів.
+                  <p className="mt-4 text-white/65 max-w-3xl text-sm leading-relaxed">
+                    Автоматична вибірка за останні 3 дні по темах, пов'язаних з Україною, з фокусом на іноземних OSINT/HUMINT авторах. Кожна картка містить перекладений заголовок, короткий контекст і прямий перехід до джерела.
                   </p>
                 </div>
                 <a href="https://x.com" target="_blank" rel="noreferrer"
@@ -738,21 +795,23 @@ export default function App() {
                   Дані RSS ще оновлюються. Перевір через кілька хвилин.
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {rssItems.slice(0, 18).map(item => (
-                    <article key={item.id} className="bg-[#2e2d1e] border border-[#c9a227]/15 p-6 hover:border-[#c9a227]/45 transition-colors">
+                    <article key={item.id} className="bg-[#2b2a1f] border border-[#c9a227]/20 p-6 md:p-7 hover:border-[#c9a227]/55 transition-colors shadow-[0_12px_40px_rgba(0,0,0,0.25)]">
                       <div className="flex items-center justify-between mb-4">
-                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#c9a227]/60">{item.author}</p>
-                        <Rss className="w-3.5 h-3.5 text-[#c9a227]/30" />
+                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#c9a227]/75">{item.author}</p>
+                        <Rss className="w-4 h-4 text-[#c9a227]/45" />
                       </div>
-                      <h3 className="text-[1.65rem] font-extrabold tracking-tight mb-3 leading-[1.14] text-white">
+                      <h3 className="text-[1.35rem] md:text-[1.5rem] font-extrabold tracking-tight mb-3 leading-[1.2] text-white">
                         {formatPreview(cleanRssText(item.titleUk || item.title || ''), 175)}
                       </h3>
-                      <p className="text-[1rem] font-medium text-white/55 leading-relaxed mb-4 line-clamp-5">
+                      <p className="text-[1.02rem] font-semibold text-white/78 leading-relaxed mb-5 line-clamp-5">
                         {formatPreview(cleanRssText(item.summaryUk || item.summary || ''), 260)}
                       </p>
-                      <div className="font-mono text-[9px] uppercase tracking-widest text-white/25 mb-4">
-                        @{item.handle} · {formatRssDate(item.publishedAt)}
+                      <div className="font-mono text-[10px] tracking-wider text-white/45 mb-4 flex items-center gap-2">
+                        <span>@{item.handle}</span>
+                        <span className="text-[#c9a227]/60">•</span>
+                        <span>{formatRssDate(item.publishedAt)}</span>
                       </div>
                       <div className="flex flex-wrap gap-2 mb-4">
                         {(item.tags || ['OSINT', 'HUMINT', 'UKRAINE']).slice(0, 3).map(tag => (
@@ -761,15 +820,15 @@ export default function App() {
                           </span>
                         ))}
                       </div>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-4 pt-2 border-t border-white/10">
                         <a href={item.url} target="_blank" rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/30 hover:text-[#c9a227] transition-colors">
+                          className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/60 hover:text-[#c9a227] transition-colors">
                           Відкрити пост <ArrowUpRight className="w-3 h-3" />
                         </a>
                         <button
                           type="button"
                           onClick={() => shareLink(item.id, cleanRssText(item.titleUk || item.title || ''), item.url)}
-                          className="font-mono text-[10px] uppercase tracking-widest text-white/25 hover:text-[#c9a227] transition-colors"
+                          className="font-mono text-[10px] uppercase tracking-widest text-white/45 hover:text-[#c9a227] transition-colors"
                         >
                           {sharedItemId === item.id ? 'Скопійовано' : 'Поділитися'}
                         </button>
@@ -847,43 +906,43 @@ export default function App() {
       </main>
 
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
-      <footer id="contacts" className="border-t border-[#c9a227]/30 px-4 md:px-8 py-20 md:py-40 bg-[#1c1c12] text-white scroll-mt-28">
+      <footer id="contacts" className="border-t border-[#c9a227]/30 px-4 md:px-8 py-14 md:py-24 bg-[#1c1c12] text-white scroll-mt-28">
         <div className="max-w-[1800px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-32">
-            <div className="md:col-span-6">
-              <h3 className="text-5xl md:text-8xl font-bold tracking-tighter uppercase mb-8 leading-[0.85] text-[#c9a227]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-14 mb-16 md:mb-20">
+            <div className="lg:col-span-6">
+              <h3 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-6 leading-[0.9] text-[#c9a227]">
                 Око Гора
               </h3>
-              <p className="text-white/30 max-w-md font-mono text-xs md:text-sm leading-relaxed">
+              <p className="text-white/45 max-w-xl font-mono text-xs md:text-sm leading-relaxed">
                 Незалежний ресурс з моніторингу, аеророзвідки та стратегічної аналітики бойового простору. Побудовано для тих, хто бачить далі горизонту.
               </p>
             </div>
 
-            <div className="md:col-start-8 md:col-span-2 space-y-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/50 block mb-8">/ НАВІГАЦІЯ</span>
-              <ul className="space-y-4 font-mono text-xs tracking-widest uppercase text-white/40">
+            <div className="lg:col-start-8 lg:col-span-2 space-y-3">
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/60 block mb-4">/ НАВІГАЦІЯ</span>
+              <ul className="space-y-3 font-mono text-xs tracking-widest uppercase text-white/50">
                 <li><Link to="/targets" className="hover:text-[#c9a227] transition-colors flex items-center gap-2"><Target className="w-3 h-3" />БАЗА ЦІЛЕЙ</Link></li>
-                <li><a href="#map" className="hover:text-[#c9a227] transition-colors">КАРТА</a></li>
-                <li><a href="#analytics" className="hover:text-[#c9a227] transition-colors">АНАЛІТИКА УДАРІВ</a></li>
-                <li><a href="#investigations" className="hover:text-[#c9a227] transition-colors">РОЗСЛІДУВАННЯ</a></li>
-                <li><a href="#rss" className="hover:text-[#c9a227] transition-colors">RSS</a></li>
-                <li><a href="#feed" className="hover:text-[#c9a227] transition-colors">СТРІЧКА</a></li>
-                <li><a href="#contacts" className="hover:text-[#c9a227] transition-colors">КОНТАКТИ</a></li>
+                <li><button type="button" onClick={() => openSection('map')} className="hover:text-[#c9a227] transition-colors text-left">КАРТА</button></li>
+                <li><button type="button" onClick={() => openSection('analytics')} className="hover:text-[#c9a227] transition-colors text-left">АНАЛІТИКА УДАРІВ</button></li>
+                <li><button type="button" onClick={() => openSection('investigations')} className="hover:text-[#c9a227] transition-colors text-left">РОЗСЛІДУВАННЯ</button></li>
+                <li><button type="button" onClick={() => openSection('rss')} className="hover:text-[#c9a227] transition-colors text-left">RSS</button></li>
+                <li><button type="button" onClick={() => openSection('feed')} className="hover:text-[#c9a227] transition-colors text-left">СТРІЧКА</button></li>
+                <li><button type="button" onClick={() => openSection('contacts')} className="hover:text-[#c9a227] transition-colors text-left">КОНТАКТИ</button></li>
               </ul>
             </div>
 
-            <div className="md:col-span-3 space-y-4 text-right">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/50 block mb-8">/ ПРИЄДНАТИСЬ</span>
-              <ul className="space-y-4 font-mono text-xs tracking-widest uppercase">
+            <div className="lg:col-span-4 space-y-3 text-left lg:text-right">
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/60 block mb-4">/ ПРИЄДНАТИСЬ</span>
+              <ul className="space-y-3 font-mono text-xs tracking-widest uppercase">
                 <li>
                   <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
-                    className="flex items-center justify-end gap-2 text-white/50 hover:text-[#c9a227] transition-colors">
+                    className="flex items-center justify-start lg:justify-end gap-2 text-white/55 hover:text-[#c9a227] transition-colors">
                     ТЕЛЕГРАМ КАНАЛ <ArrowUpRight className="w-4 h-4" />
                   </a>
                 </li>
                 <li>
                   <a href="https://x.com/oko_gora_tg" target="_blank" rel="noreferrer"
-                    className="flex items-center justify-end gap-2 text-white/50 hover:text-[#c9a227] transition-colors font-bold">
+                    className="flex items-center justify-start lg:justify-end gap-2 text-white/55 hover:text-[#c9a227] transition-colors font-bold">
                     X (TWITTER) РОЗВІДКА <ArrowUpRight className="w-4 h-4" />
                   </a>
                 </li>
@@ -891,9 +950,9 @@ export default function App() {
             </div>
           </div>
 
-          <div className="pt-8 border-t border-[#c9a227]/10 flex flex-col md:flex-row justify-between items-center font-mono text-[9px] tracking-[0.3em] text-white/15 uppercase">
+          <div className="pt-6 border-t border-[#c9a227]/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-mono text-[9px] tracking-[0.25em] text-white/25 uppercase">
             <div>© {new Date().getFullYear()} OKO GORA GROUP. ВСІ ДАНІ ЗАШИФРОВАНІ.</div>
-            <div className="mt-4 md:mt-0 flex gap-8">
+            <div className="flex gap-5 md:gap-8">
               <span>СТАТУС: АКТИВНО</span>
               <span>ВЕРСІЯ: 3.0.0-STABLE</span>
             </div>
