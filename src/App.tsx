@@ -1,6 +1,8 @@
 import { motion } from 'motion/react';
-import { ArrowUpRight, Crosshair, Map, Radio, Eye, Activity, Database, Shield, Zap, Terminal, FileSearch, Layers, UploadCloud, Users, Target, Rocket, BarChart3, Menu, X as CloseIcon, Navigation, Info, Clock, AlertTriangle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowUpRight, Radio, Eye, Activity, Database, Shield, Terminal, Layers, UploadCloud, Target, Rocket, Navigation } from 'lucide-react';
 import MapService from './components/MapService';
+import { Post } from './types';
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -18,42 +20,16 @@ const staggerContainer = {
   }
 };
 
-const posts = [
-  {
-    id: 'TG-1889',
-    date: '27 КВІТ 2026 / 11:47',
-    title: 'Ітоги атаки БПЛА: Туапсинський резервуарний парк',
-    text: 'Детальний аналіз ураження об\'єктів у Краснодарському краї. Знищено 24 резервуари (52%), пошкоджено 4. Загалом 61% потужностей виведено з ладу.',
-    image: 'tuapse_satellite.png',
-    tags: ['СУПУТНИК', 'ДРОНИ', 'АНАЛІТИКА']
-  },
-  {
-    id: 'TG-1888',
-    date: '26 КВІТ 2026 / 16:00',
-    title: 'Ураження об\'єктів у Криму: кораблі та авіація',
-    text: 'Результати комбінованої атаки. Зафіксовано пошкодження ВДК "Ямал", "Фильченков", розвідувального судна "Иван Хурс" та літака МіГ-31.',
-    image: 'crimea_thermal.png',
-    tags: ['ФЛОТ', 'КРИМ', 'БОЙОВА_РОБОТА']
-  },
-  {
-    id: 'TG-1887',
-    date: '27 КВІТ 2026 / 10:43',
-    title: 'Нові підрозділи БПЛА: СБС "Окремий батальйон"',
-    text: 'Розгортання нових розвідувально-ударних комплексів. Перші кадри роботи дронів середнього радіусу дії від новостворених підрозділів СБС.',
-    image: 'uav_recon.png',
-    tags: ['БПЛА', 'РОЗВІДКА', 'СТРАТЕГІЯ']
-  },
-  {
-    id: 'TG-1886',
-    date: '25 КВІТ 2026 / 09:15',
-    title: 'Моніторинг логістики: порт Туапсе',
-    text: 'Аналіз пошкоджень насосних станцій та трубопровідних вузлів. Критичне сповільнення відвантаження нафтопродуктів через морський термінал.',
-    image: 'port_damage.png',
-    tags: ['ЛОГІСТИКА', 'ПОРТ', 'УРАЖЕННЯ']
-  }
-];
-
 export default function App() {
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    fetch('/data/posts.json')
+      .then(r => r.json())
+      .then(setPosts)
+      .catch(() => setPosts([]));
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#f4f4f4] text-[#111111] selection:bg-[#111111] selection:text-[#f4f4f4] font-sans overflow-x-hidden">
       {/* Navigation Bar */}

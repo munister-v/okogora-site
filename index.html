@@ -31,6 +31,14 @@
       });
       // Disable drag of images
       document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+      // SPA routing: restore path after 404 redirect
+      (function() {
+        var redirect = sessionStorage.getItem('redirect');
+        if (redirect && redirect !== '/') {
+          sessionStorage.removeItem('redirect');
+          window.history.replaceState(null, '', redirect);
+        }
+      })();
     </script>
   </head>
   <body>
