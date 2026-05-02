@@ -48,4 +48,5 @@ jobs:
           git add public/data/posts.json
           git add public/images/telegram
           git commit -m "content: sync posts from telegram [bot]"
+          git pull --rebase origin main
           git push

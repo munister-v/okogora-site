@@ -35,4 +35,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/data/rss_twitter.json
           git commit -m "content: sync x rss investigations [bot]"
+          git pull --rebase origin main
           git push
