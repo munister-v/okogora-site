@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Circle, LayersControl, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
+import { MapContainer, TileLayer, Popup, Circle, CircleMarker, LayersControl, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Map as MapIcon, Shield, Target, Anchor, Plane, Filter, Menu, X as CloseIcon, Ruler, Activity, Clock } from 'lucide-react';
-import type { Post } from '../types';
+import type { Post, StrategicTarget } from '../types';
 import { postTelegramUrl } from '../lib/posts';
 
-type FilterId = 'strikes' | 'navy' | 'airbases' | 'logistics';
+type OperationalFilterId = 'strikes' | 'navy' | 'airbases' | 'logistics';
+type FilterId = OperationalFilterId | 'strategic';
 
 type RssItem = {
   id: string;
@@ -27,7 +28,7 @@ type FeedEvent = {
   source: 'telegram' | 'rss' | 'facebook';
   sourceName: string;
   sourceUrl: string;
-  type: FilterId;
+  type: OperationalFilterId;
   location: string;
   position: [number, number];
   confidence: number;
@@ -38,7 +39,13 @@ type LocationPoint = {
   name: string;
   aliases: string[];
   position: [number, number];
-  typeHint?: FilterId;
+  typeHint?: OperationalFilterId;
+};
+
+type StrategicFeed = {
+  generatedAt?: string;
+  itemCount?: number;
+  items?: StrategicTarget[];
 };
 
 const LOCATION_POINTS: LocationPoint[] = [
@@ -93,7 +100,7 @@ const DIRECTION_POINTS: Array<{ pattern: RegExp; point: LocationPoint }> = [
   { pattern: /курськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Курський напрямок', aliases: [], position: [51.73, 36.19], typeHint: 'strikes' } },
 ];
 
-const KEYWORDS: Record<FilterId, RegExp[]> = {
+const KEYWORDS: Record<OperationalFilterId, RegExp[]> = {
   strikes: [
     /уражен/gi, /знищен/gi, /удар/gi, /strike/gi, /struck/gi, /hit\b/gi, /destroyed/gi, /attack/gi, /drone/gi, /бпла/gi, /влуч/gi
   ],
@@ -209,8 +216,8 @@ function countMatches(text: string, patterns: RegExp[]) {
   }, 0);
 }
 
-function classifyType(text: string, locationHints: FilterId[]) {
-  const scores: Record<FilterId, number> = {
+function classifyType(text: string, locationHints: OperationalFilterId[]) {
+  const scores: Record<OperationalFilterId, number> = {
     strikes: countMatches(text, KEYWORDS.strikes),
     navy: countMatches(text, KEYWORDS.navy),
     airbases: countMatches(text, KEYWORDS.airbases),
@@ -221,9 +228,9 @@ function classifyType(text: string, locationHints: FilterId[]) {
     scores[hint] += 2;
   }
 
-  let best: FilterId = 'strikes';
+  let best: OperationalFilterId = 'strikes';
   let bestScore = -1;
-  (Object.keys(scores) as FilterId[]).forEach((k) => {
+  (Object.keys(scores) as OperationalFilterId[]).forEach((k) => {
     if (scores[k] > bestScore) {
       best = k;
       bestScore = scores[k];
@@ -259,6 +266,72 @@ function withinDays(iso: string, days: number) {
   if (Number.isNaN(ts)) return false;
   const min = Date.now() - days * 24 * 60 * 60 * 1000;
   return ts >= min;
+}
+
+function strategicCategoryLabel(category: StrategicTarget['category']) {
+  switch (category) {
+    case 'occupation':
+      return 'ОКУПАЦІЙНА ЗОНА';
+    case 'airbase':
+      return 'АВІАЦІЙНИЙ ОБʼЄКТ';
+    case 'naval':
+      return 'МОРСЬКИЙ ОБʼЄКТ';
+    case 'logistics':
+      return 'ЛОГІСТИЧНИЙ ОБʼЄКТ';
+    default:
+      return 'СТРАТЕГІЧНИЙ ШАР';
+  }
+}
+
+function strategicYear(item: StrategicTarget) {
+  const text = `${item.titleUk || ''} ${item.title || ''}`;
+  const match = text.match(/\b(20\d{2})\b/);
+  return match ? Number(match[1]) : null;
+}
+
+function strategicYearLabel(year: number | null) {
+  if (!year) return 'БЕЗ ДАТИ';
+  return `${year}`;
+}
+
+function strategicAccent(item: StrategicTarget) {
+  const year = strategicYear(item);
+  if (year === 2022) return '#7dd3fc';
+  if (year === 2024) return '#facc15';
+  if (year === 2025) return '#fb923c';
+  if (year === 2026) return '#f43f5e';
+  return strategicCategoryColor(item.category);
+}
+
+function strategicRenderPosition(item: StrategicTarget): [number, number] {
+  const base = item.position;
+  const key = item.id || `${item.title}:${base[0]}:${base[1]}`;
+  let hash = 0;
+  for (let i = 0; i < key.length; i += 1) {
+    hash = ((hash << 5) - hash + key.charCodeAt(i)) | 0;
+  }
+
+  const angle = ((Math.abs(hash) % 360) * Math.PI) / 180;
+  const distance = 0.035 + ((Math.abs(hash) >> 8) % 5) * 0.012;
+  const latOffset = Math.sin(angle) * distance;
+  const lngOffset = Math.cos(angle) * distance;
+
+  return [base[0] + latOffset, base[1] + lngOffset];
+}
+
+function strategicCategoryColor(category: StrategicTarget['category']) {
+  switch (category) {
+    case 'occupation':
+      return '#ff7a00';
+    case 'airbase':
+      return '#ffcc00';
+    case 'naval':
+      return '#4cc3ff';
+    case 'logistics':
+      return '#00d27a';
+    default:
+      return '#d8d8d8';
+  }
 }
 
 function buildEvents(posts: Post[], rss: RssItem[], facebook: RssItem[], windowDays = 7) {
@@ -308,7 +381,7 @@ function buildEvents(posts: Post[], rss: RssItem[], facebook: RssItem[], windowD
 
     const locationHints = locations
       .map((loc) => loc.typeHint)
-      .filter(Boolean) as FilterId[];
+      .filter(Boolean) as OperationalFilterId[];
 
     const { type, score } = classifyType(clean, locationHints);
     const status = statusFromText(clean);
@@ -358,18 +431,21 @@ function MapEvents({ onMouseMove, onClick }: { onMouseMove: (lat: number, lng: n
 }
 
 export default function MapService() {
-  const [activeFilters, setActiveFilters] = useState<FilterId[]>(['strikes', 'navy', 'airbases', 'logistics']);
+  const [activeFilters, setActiveFilters] = useState<FilterId[]>(['strikes', 'navy', 'airbases', 'logistics', 'strategic']);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [telemetry, setTelemetry] = useState({ lat: 45.0, lng: 35.0 });
   const [measurePoints, setMeasurePoints] = useState<[number, number][]>([]);
   const [distance, setDistance] = useState<number | null>(null);
   const [events, setEvents] = useState<FeedEvent[]>([]);
+  const [strategicItems, setStrategicItems] = useState<StrategicTarget[]>([]);
+  const [strategicGeneratedAt, setStrategicGeneratedAt] = useState('');
 
   const icons = useMemo(() => ({
     strikes: createTacticalIcon('#ff3333', 'ПІДТВЕРДЖЕНЕ_УРАЖЕННЯ'),
     navy: createTacticalIcon('#3399ff', 'МОРСЬКА_АКТИВНІСТЬ'),
     airbases: createTacticalIcon('#ffcc00', 'АВІА_АКТИВНІСТЬ'),
     logistics: createTacticalIcon('#00ff66', 'ЛОГІСТИЧНИЙ_ВУЗОЛ'),
+    strategic: createTacticalIcon('#ff7a00', 'ЗОВНІШНІЙ_СТРАТ_ШАР'),
   }), []);
 
   useEffect(() => {
@@ -378,8 +454,9 @@ export default function MapService() {
       fetch('/data/posts.json').then((r) => (r.ok ? r.json() : [])),
       fetch('/data/rss_twitter.json').then((r) => (r.ok ? r.json() : { items: [] })),
       fetch('/data/rss_facebook.json').then((r) => (r.ok ? r.json() : { items: [] })),
+      fetch('/data/strategic_targets.json').then((r) => (r.ok ? r.json() : { items: [] })),
     ])
-      .then(([postsData, rssData, fbData]) => {
+      .then(([postsData, rssData, fbData, strategicData]) => {
         if (!mounted) return;
         const mapped = buildEvents(
           Array.isArray(postsData) ? postsData : [],
@@ -388,9 +465,17 @@ export default function MapService() {
           7,
         );
         setEvents(mapped);
+        const strategicFeed = strategicData as StrategicFeed;
+        const items = Array.isArray(strategicFeed?.items) ? strategicFeed.items : [];
+        setStrategicItems(items);
+        setStrategicGeneratedAt(strategicFeed?.generatedAt || '');
       })
       .catch(() => {
-        if (mounted) setEvents([]);
+        if (mounted) {
+          setEvents([]);
+          setStrategicItems([]);
+          setStrategicGeneratedAt('');
+        }
       });
 
     return () => {
@@ -403,19 +488,62 @@ export default function MapService() {
     [events, activeFilters],
   );
 
+  const filteredStrategicItems = useMemo(
+    () => (activeFilters.includes('strategic') ? strategicItems : []),
+    [activeFilters, strategicItems],
+  );
+
   const activityByType = useMemo(() => {
-    const acc: Record<FilterId, number> = { strikes: 0, navy: 0, airbases: 0, logistics: 0 };
+    const acc: Record<FilterId, number> = { strikes: 0, navy: 0, airbases: 0, logistics: 0, strategic: strategicItems.length };
     for (const e of events) acc[e.type] += 1;
     return acc;
-  }, [events]);
+  }, [events, strategicItems.length]);
 
   const mapCenter: [number, number] = useMemo(() => {
-    if (filteredEvents.length === 0) return [47.2, 34.6];
-    const sample = filteredEvents.slice(0, 12);
-    const lat = sample.reduce((sum, e) => sum + e.position[0], 0) / sample.length;
-    const lng = sample.reduce((sum, e) => sum + e.position[1], 0) / sample.length;
+    const combined = [
+      ...filteredEvents.map((event) => event.position),
+      ...filteredStrategicItems.map((item) => item.position),
+    ];
+    if (combined.length === 0) return [47.2, 34.6];
+    const sample = combined.slice(0, 12);
+    const lat = sample.reduce((sum, position) => sum + position[0], 0) / sample.length;
+    const lng = sample.reduce((sum, position) => sum + position[1], 0) / sample.length;
     return [lat, lng];
-  }, [filteredEvents]);
+  }, [filteredEvents, filteredStrategicItems]);
+
+  const sidebarStrategicItems = useMemo(
+    () => filteredStrategicItems.slice(0, 4),
+    [filteredStrategicItems],
+  );
+
+  const strategicUpdatedLabel = useMemo(() => {
+    if (!strategicGeneratedAt) return '';
+    try {
+      return new Date(strategicGeneratedAt).toLocaleString('uk-UA', { dateStyle: 'short', timeStyle: 'short' });
+    } catch {
+      return strategicGeneratedAt;
+    }
+  }, [strategicGeneratedAt]);
+
+  const strategicTopRegions = useMemo(() => {
+    const counter = new Map<string, number>();
+    for (const item of strategicItems) {
+      const region = item.region || 'Інші зони';
+      counter.set(region, (counter.get(region) || 0) + 1);
+    }
+    return Array.from(counter.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 4);
+  }, [strategicItems]);
+
+  const strategicYearBands = useMemo(() => {
+    const counter = new Map<string, number>();
+    for (const item of strategicItems) {
+      const yearKey = strategicYearLabel(strategicYear(item));
+      counter.set(yearKey, (counter.get(yearKey) || 0) + 1);
+    }
+    return Array.from(counter.entries()).sort((a, b) => b[0].localeCompare(a[0]));
+  }, [strategicItems]);
 
   const toggleFilter = (filter: FilterId) => {
     setActiveFilters((prev) =>
@@ -466,7 +594,7 @@ export default function MapService() {
           </button>
           <div className="flex items-center gap-2 text-red-500 font-bold border-l border-[#111111]/10 pl-4 animate-pulse">
             <Activity className="w-3 h-3" />
-            <span>LIVE ({events.length})</span>
+            <span>LIVE ({events.length + strategicItems.length})</span>
           </div>
         </div>
       </div>
@@ -485,6 +613,7 @@ export default function MapService() {
                 { id: 'navy' as const, label: `Морські цілі (${activityByType.navy})`, color: 'bg-[#3399ff]', icon: Anchor },
                 { id: 'airbases' as const, label: `Авіабази РФ (${activityByType.airbases})`, color: 'bg-[#ffcc00]', icon: Plane },
                 { id: 'logistics' as const, label: `Логістика (${activityByType.logistics})`, color: 'bg-[#00ff66]', icon: Shield },
+                { id: 'strategic' as const, label: `Зовнішній Intel (${activityByType.strategic})`, color: 'bg-[#ff7a00]', icon: MapIcon },
               ].map((f) => (
                 <button
                   key={f.id}
@@ -516,10 +645,52 @@ export default function MapService() {
                   <div className="text-[8px] text-white/35 truncate">{event.title}</div>
                 </div>
               ))}
-              {filteredEvents.length === 0 && (
+              {filteredEvents.length === 0 && sidebarStrategicItems.map((item) => (
+                <div key={item.id} className="border-b border-white/5 pb-1.5">
+                  <div className="flex justify-between items-center gap-2">
+                    <span className="truncate text-white/85">{item.titleUk || item.title}</span>
+                    <span className="text-orange-300">{strategicCategoryLabel(item.category)}</span>
+                  </div>
+                  <div className="text-[8px] text-white/35 truncate">{item.mapTitle || item.sourceName}</div>
+                </div>
+              ))}
+              {filteredEvents.length === 0 && sidebarStrategicItems.length === 0 && (
                 <div className="text-white/45 leading-relaxed">Немає релевантних гео-подій у поточному наборі даних.</div>
               )}
+              {sidebarStrategicItems.length > 0 && (
+                <div className="pt-1 text-[8px] text-white/30">
+                  Зовнішній шар оновлено: {strategicUpdatedLabel || 'н/д'}
+                </div>
+              )}
             </div>
+          </div>
+
+          <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
+            <div className="flex items-center gap-2 mb-3">
+              <MapIcon className="w-3 h-3 text-orange-300" />
+              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Зовнішній Шар</span>
+            </div>
+            <p className="mb-3 font-mono text-[8px] uppercase tracking-widest text-white/35">
+              GOOGLE MY MAPS · {strategicItems.length} ЗОН
+            </p>
+            <div className="space-y-2.5 text-[9px] font-mono text-[#f4f4f4]/65">
+              {strategicTopRegions.map(([region, count]) => (
+                <div key={region} className="flex items-center justify-between border-b border-white/5 pb-1">
+                  <span className="truncate text-white/78">{region}</span>
+                  <span className="text-orange-300 font-bold">{count}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {strategicYearBands.map(([year, count]) => (
+                <span key={year} className="border border-white/10 px-2 py-1 text-[8px] text-white/60">
+                  {year}: {count}
+                </span>
+              ))}
+            </div>
+            <p className="mt-3 text-[8px] text-white/32 leading-relaxed">
+              Зони показують імпортований контекст окупації та зовнішніх обʼєктів. Точки шару трохи розведені візуально, щоб 400 вузлів не злипалися в одну пляму.
+            </p>
           </div>
 
           <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
@@ -558,8 +729,37 @@ export default function MapService() {
             </div>
             <div className="flex justify-between gap-12 text-[9px] pt-1">
               <span className="opacity-30 text-blue-400 font-bold">EVENTS</span>
-              <span className="text-blue-400/80">{filteredEvents.length} ACTIVE</span>
+              <span className="text-blue-400/80">{filteredEvents.length + filteredStrategicItems.length} ACTIVE</span>
             </div>
+            <div className="flex justify-between gap-12 text-[9px] pt-1">
+              <span className="opacity-30 text-orange-300 font-bold">STRAT</span>
+              <span className="text-orange-300/90">{filteredStrategicItems.length} VISIBLE / {strategicItems.length} LOADED</span>
+            </div>
+          </div>
+        </div>
+
+        {strategicItems.length === 0 && (
+          <div className="absolute top-6 right-6 z-[500] bg-red-500/15 border border-red-400/40 text-red-200 px-4 py-3 font-mono text-[10px] uppercase tracking-widest shadow-2xl">
+            STRAT DATA NOT LOADED
+          </div>
+        )}
+
+        <div className="absolute bottom-6 right-6 z-[400] bg-[#111111]/90 text-[#f4f4f4] p-4 font-mono border border-[#f4f4f4]/10 backdrop-blur-md pointer-events-none shadow-2xl max-w-[220px]">
+          <div className="mb-3 border-b border-[#f4f4f4]/10 pb-2">
+            <span className="tracking-widest uppercase text-[10px] font-bold opacity-90">ЛЕГЕНДА STRAT</span>
+          </div>
+          <div className="space-y-2 text-[9px]">
+            {[
+              ['#7dd3fc', '2022 / рання окупація'],
+              ['#facc15', '2024 / зміни фронту'],
+              ['#fb923c', '2025 / тиск на напрямках'],
+              ['#f43f5e', '2026 / нові зони'],
+            ].map(([color, label]) => (
+              <div key={label} className="flex items-center gap-2">
+                <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: color }} />
+                <span className="text-white/65">{label}</span>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -643,6 +843,76 @@ export default function MapService() {
               </Marker>
             </React.Fragment>
           ))}
+
+          {filteredStrategicItems.map((item) => {
+            const accent = strategicAccent(item);
+            const year = strategicYear(item);
+            const markerPosition = strategicRenderPosition(item);
+            return (
+              <React.Fragment key={item.id}>
+                <Circle
+                  center={item.position}
+                  radius={item.radiusMeters}
+                  pathOptions={{
+                    color: accent,
+                    fillColor: accent,
+                    fillOpacity: 0.08,
+                    weight: 1,
+                    dashArray: '6 6',
+                  }}
+                />
+                <CircleMarker
+                  center={markerPosition}
+                  radius={7}
+                  pathOptions={{
+                    color: '#ffffff',
+                    weight: 2,
+                    fillColor: accent,
+                    fillOpacity: 1,
+                  }}
+                >
+                  <Tooltip direction="top" offset={[0, -4]} opacity={0.95}>
+                    <span className="font-mono text-[10px]">
+                      {item.titleUk || item.title}
+                    </span>
+                  </Tooltip>
+                  <Popup className="tactical-popup">
+                    <div className="font-mono p-3 bg-[#111111] text-white border border-white/10 min-w-[270px]">
+                      <div className="flex justify-between items-start mb-2 border-b border-white/15 pb-2 gap-2">
+                        <h5 className="font-bold text-white uppercase text-xs tracking-tight leading-tight">{item.titleUk || item.title}</h5>
+                        <span className="text-[8px] px-1.5 py-0.5 bg-white/10 text-white/80">{year ? `${strategicCategoryLabel(item.category)} · ${year}` : strategicCategoryLabel(item.category)}</span>
+                      </div>
+                      <div className="space-y-2 text-[9px]">
+                        <div className="text-white/55 leading-relaxed">{item.note || 'Імпортований зовнішній шар для контексту ситуації.'}</div>
+                        <div className="flex justify-between border-t border-white/5 pt-2">
+                          <span className="opacity-45 uppercase">Джерело:</span>
+                          <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="text-blue-300 hover:text-blue-200">
+                            {item.sourceName}
+                          </a>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-45 uppercase">Карта:</span>
+                          <span className="text-white/75 text-right">{item.mapTitle}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-45 uppercase">Радіус:</span>
+                          <span className="text-orange-300 font-bold">~ {Math.round(item.radiusMeters / 1000)} км</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-45 uppercase">Центр зони:</span>
+                          <span className="text-white/75">{item.position[0].toFixed(2)}, {item.position[1].toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-45 uppercase">Колір шару:</span>
+                          <span className="font-bold" style={{ color: accent }}>{strategicYearLabel(year)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Popup>
+                </CircleMarker>
+              </React.Fragment>
+            );
+          })}
         </MapContainer>
 
         <div className="absolute inset-0 pointer-events-none z-[450] opacity-[0.03] overflow-hidden bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]"></div>

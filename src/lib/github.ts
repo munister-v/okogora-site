@@ -6,6 +6,7 @@ const RSS_CONFIG_PATH = 'public/data/rss_twitter_config.json';
 const TG_SYNC_WORKFLOW_ID = 'sync-telegram-posts.yml';
 const X_RSS_SYNC_WORKFLOW_ID = 'sync-x-rss.yml';
 const FB_RSS_SYNC_WORKFLOW_ID = 'sync-facebook-rss.yml';
+const STRATEGIC_MAPS_SYNC_WORKFLOW_ID = 'sync-strategic-maps.yml';
 const DEPLOY_WORKFLOW_ID = 'deploy.yml';
 
 export interface GithubAuth {
@@ -179,6 +180,33 @@ export async function triggerFacebookRssSync(token: string): Promise<void> {
   }
 }
 
+export async function triggerStrategicMapsSync(token: string): Promise<void> {
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${STRATEGIC_MAPS_SYNC_WORKFLOW_ID}/dispatches`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ref: 'main',
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    let message = 'Failed to trigger workflow';
+    try {
+      const err = await res.json();
+      message = err.message || message;
+    } catch {
+      // noop
+    }
+    throw new Error(message);
+  }
+}
+
 async function fetchLatestWorkflowRun(token: string, workflowId: string): Promise<WorkflowRunStatus | null> {
   const res = await fetch(
     `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${workflowId}/runs?branch=main&per_page=1`,
@@ -206,14 +234,16 @@ export async function fetchWorkflowDashboard(token: string): Promise<{
   sync: WorkflowRunStatus | null;
   xRssSync: WorkflowRunStatus | null;
   fbRssSync: WorkflowRunStatus | null;
+  strategicSync: WorkflowRunStatus | null;
   deploy: WorkflowRunStatus | null;
 }> {
-  const [sync, xRssSync, fbRssSync, deploy] = await Promise.all([
+  const [sync, xRssSync, fbRssSync, strategicSync, deploy] = await Promise.all([
     fetchLatestWorkflowRun(token, TG_SYNC_WORKFLOW_ID),
     fetchLatestWorkflowRun(token, X_RSS_SYNC_WORKFLOW_ID),
     fetchLatestWorkflowRun(token, FB_RSS_SYNC_WORKFLOW_ID),
+    fetchLatestWorkflowRun(token, STRATEGIC_MAPS_SYNC_WORKFLOW_ID),
     fetchLatestWorkflowRun(token, DEPLOY_WORKFLOW_ID),
   ]);
 
-  return { sync, xRssSync, fbRssSync, deploy };
+  return { sync, xRssSync, fbRssSync, strategicSync, deploy };
 }

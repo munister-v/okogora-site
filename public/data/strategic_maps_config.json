@@ -1,0 +1,18 @@
+{
+  "maxItems": 400,
+  "sources": [
+    {
+      "id": "stormap365-russo-ukrainian-war",
+      "name": "StorMap365 / Russo-Ukrainian war",
+      "viewerUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "categoryHint": "occupation",
+      "enabled": true,
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE"
+      ]
+    }
+  ]
+}

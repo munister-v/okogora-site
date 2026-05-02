@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Post, InvestigationArticle } from '../types';
-import { verifyToken, savePosts, saveInvestigations, saveRssConfig, triggerTelegramSync, triggerXRssSync, triggerFacebookRssSync, fetchWorkflowDashboard, WorkflowRunStatus, RssSyncConfig } from '../lib/github';
+import { verifyToken, savePosts, saveInvestigations, saveRssConfig, triggerTelegramSync, triggerXRssSync, triggerFacebookRssSync, triggerStrategicMapsSync, fetchWorkflowDashboard, WorkflowRunStatus, RssSyncConfig } from '../lib/github';
 import ImageUploader from '../components/ImageUploader';
 import { importFromTelegraph } from '../lib/telegraph';
 import { Shield, LogOut, Plus, Edit2, Trash2, Save, X, ChevronUp, ChevronDown, Eye, EyeOff, AlertTriangle, CheckCircle, Loader, Download, RefreshCw, Sparkles, CircleHelp } from 'lucide-react';
@@ -68,9 +68,11 @@ export default function AdminPage() {
   const [syncRun, setSyncRun] = useState<WorkflowRunStatus | null>(null);
   const [xRssRun, setXRssRun] = useState<WorkflowRunStatus | null>(null);
   const [fbRssRun, setFbRssRun] = useState<WorkflowRunStatus | null>(null);
+  const [strategicRun, setStrategicRun] = useState<WorkflowRunStatus | null>(null);
   const [deployRun, setDeployRun] = useState<WorkflowRunStatus | null>(null);
   const [xRssLoading, setXRssLoading] = useState(false);
   const [fbRssLoading, setFbRssLoading] = useState(false);
+  const [strategicLoading, setStrategicLoading] = useState(false);
 
   const [rssConfig, setRssConfig] = useState<RssSyncConfig>(defaultRssConfig);
   const [rssConfigLoading, setRssConfigLoading] = useState(false);
@@ -108,6 +110,8 @@ export default function AdminPage() {
       xRssRun?.status === 'in_progress' ||
       fbRssRun?.status === 'queued' ||
       fbRssRun?.status === 'in_progress' ||
+      strategicRun?.status === 'queued' ||
+      strategicRun?.status === 'in_progress' ||
       deployRun?.status === 'queued' ||
       deployRun?.status === 'in_progress';
     if (!shouldPoll) return;
@@ -117,7 +121,7 @@ export default function AdminPage() {
     }, 7000);
 
     return () => clearInterval(timer);
-  }, [isAuthed, syncRun?.status, xRssRun?.status, fbRssRun?.status, deployRun?.status]);
+  }, [isAuthed, syncRun?.status, xRssRun?.status, fbRssRun?.status, strategicRun?.status, deployRun?.status]);
 
   async function fetchPosts() {
     setLoadingPosts(true);
@@ -282,6 +286,23 @@ export default function AdminPage() {
     }
   }
 
+  async function handleStrategicMapsSync() {
+    setStrategicLoading(true);
+    setSaveStatus('idle');
+    try {
+      await triggerStrategicMapsSync(token);
+      setSaveStatus('ok');
+      setSaveMsg('Стратегічний імпорт запущено. Статус нижче в Pipeline Monitor');
+      await refreshWorkflowStatus();
+    } catch (e: any) {
+      setSaveStatus('error');
+      setSaveMsg(e.message || 'Не вдалося запустити strategic maps sync');
+    } finally {
+      setStrategicLoading(false);
+      setTimeout(() => setSaveStatus('idle'), 5000);
+    }
+  }
+
   async function fetchRssConfigFromSite() {
     setRssConfigLoading(true);
     try {
@@ -358,6 +379,7 @@ export default function AdminPage() {
       setSyncRun(data.sync);
       setXRssRun(data.xRssSync);
       setFbRssRun(data.fbRssSync);
+      setStrategicRun(data.strategicSync);
       setDeployRun(data.deploy);
     } catch (e: any) {
       setWorkflowError(e.message || 'Не вдалося отримати статус workflow');
@@ -433,6 +455,8 @@ export default function AdminPage() {
     xRssRun?.status === 'in_progress' ||
     fbRssRun?.status === 'queued' ||
     fbRssRun?.status === 'in_progress' ||
+    strategicRun?.status === 'queued' ||
+    strategicRun?.status === 'in_progress' ||
     deployRun?.status === 'queued' ||
     deployRun?.status === 'in_progress';
 
@@ -890,6 +914,15 @@ export default function AdminPage() {
               {fbRssLoading ? <Loader className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
               {fbRssLoading ? 'SYNC...' : 'SYNC FB RSS'}
             </button>
+            <button
+              onClick={handleStrategicMapsSync}
+              disabled={strategicLoading}
+              className="flex items-center gap-2 border border-[#f4f4f4]/15 text-[#f4f4f4]/65 font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 sm:px-5 sm:py-3 hover:text-white hover:border-[#f4f4f4]/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              title="Запустити GitHub Action sync-strategic-maps.yml"
+            >
+              {strategicLoading ? <Loader className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+              {strategicLoading ? 'SYNC...' : 'SYNC STRAT MAP'}
+            </button>
 
             <button
               onClick={refreshWorkflowStatus}
@@ -933,13 +966,13 @@ export default function AdminPage() {
           <div className="lg:col-span-2 border border-[#f4f4f4]/10 bg-[#101010] p-4">
             <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/65 mb-2 flex items-center gap-2"><Sparkles className="w-3 h-3" /> Швидкий сценарій роботи</p>
             <p className="text-sm font-semibold text-[#f4f4f4]/88 leading-relaxed">
-              1) Оновити контент через <span className="text-white">SYNC TG / X / FB</span>, 2) дочекатися <span className="text-white">Deploy = Успішно</span>, 3) перевірити сайт.
+              1) Оновити контент через <span className="text-white">SYNC TG / X / FB / STRAT</span>, 2) дочекатися <span className="text-white">Deploy = Успішно</span>, 3) перевірити сайт.
             </p>
           </div>
           <div className="border border-[#f4f4f4]/10 bg-[#101010] p-4">
             <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/65 mb-2 flex items-center gap-2"><CircleHelp className="w-3 h-3" /> Підказка</p>
             <p className="text-xs font-semibold text-[#f4f4f4]/72 leading-relaxed">
-              {isAnySyncRunning ? 'Йде синхронізація: не запускай повторно ті самі кнопки до завершення.' : 'Синхронізації неактивні — можна запускати оновлення безпечно.'}
+              {isAnySyncRunning ? 'Йде синхронізація: не запускай повторно ті самі кнопки до завершення.' : 'Синхронізації неактивні. STRAT-шар підтягне зовнішні Google My Maps зони в тактичну карту.'}
             </p>
           </div>
         </div>
@@ -948,10 +981,10 @@ export default function AdminPage() {
         <div className="mb-6 border border-[#f4f4f4]/10 bg-[#101010] p-4 sm:p-5">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 mb-3">
             <p className="font-mono text-[10px] uppercase tracking-widest text-[#f4f4f4]/70 font-bold">Pipeline Monitor</p>
-            <p className="font-mono text-[10px] text-[#f4f4f4]/45">SYNC TG / X RSS / FB RSS → Sync Workflows → Deploy to GitHub Pages</p>
+            <p className="font-mono text-[10px] text-[#f4f4f4]/45">SYNC TG / X RSS / FB RSS / STRAT → Sync Workflows → Deploy to GitHub Pages</p>
           </div>
-          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-3">
-            {[{ title: 'Sync Telegram', run: syncRun }, { title: 'Sync X RSS', run: xRssRun }, { title: 'Sync FB RSS', run: fbRssRun }, { title: 'Deploy', run: deployRun }].map(item => (
+          <div className="grid md:grid-cols-2 xl:grid-cols-5 gap-3">
+            {[{ title: 'Sync Telegram', run: syncRun }, { title: 'Sync X RSS', run: xRssRun }, { title: 'Sync FB RSS', run: fbRssRun }, { title: 'Sync Strategic', run: strategicRun }, { title: 'Deploy', run: deployRun }].map(item => (
               <div key={item.title} className="border border-[#f4f4f4]/10 p-3 bg-[#f4f4f4]/[0.02] relative overflow-hidden">
                 <div className={`absolute left-0 top-0 h-full w-1 ${
                   !item.run ? 'bg-white/20' :
@@ -985,7 +1018,7 @@ export default function AdminPage() {
               <AlertTriangle className="w-3 h-3" /> {workflowError}
             </div>
           )}
-          {!workflowError && (syncRun?.status === 'queued' || syncRun?.status === 'in_progress' || xRssRun?.status === 'queued' || xRssRun?.status === 'in_progress' || fbRssRun?.status === 'queued' || fbRssRun?.status === 'in_progress' || deployRun?.status === 'queued' || deployRun?.status === 'in_progress') && (
+          {!workflowError && (syncRun?.status === 'queued' || syncRun?.status === 'in_progress' || xRssRun?.status === 'queued' || xRssRun?.status === 'in_progress' || fbRssRun?.status === 'queued' || fbRssRun?.status === 'in_progress' || strategicRun?.status === 'queued' || strategicRun?.status === 'in_progress' || deployRun?.status === 'queued' || deployRun?.status === 'in_progress') && (
             <div className="mt-3 font-mono text-[10px] text-amber-300">Оновлюється автоматично кожні 7 секунд, поки workflow у процесі.</div>
           )}
           {!workflowError && deployRun?.conclusion === 'success' && (

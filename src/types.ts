@@ -26,3 +26,22 @@ export interface InvestigationArticle {
   status?: 'draft' | 'published';
   contentMarkdown?: string;
 }
+
+export interface StrategicTarget {
+  id: string;
+  sourceId: string;
+  sourceName: string;
+  sourceUrl: string;
+  mapTitle: string;
+  title: string;
+  titleUk?: string;
+  category: 'occupation' | 'airbase' | 'naval' | 'logistics' | 'strategic';
+  region?: string;
+  layerLabel?: string;
+  position: [number, number];
+  bbox?: [number, number, number, number];
+  radiusMeters: number;
+  note?: string;
+  importedAt?: string;
+  tags?: string[];
+}
