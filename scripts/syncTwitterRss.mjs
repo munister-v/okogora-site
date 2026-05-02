@@ -38,17 +38,30 @@ const FEED_FACTORIES = [
 const TRANSLATE_ENDPOINT = 'https://translate.googleapis.com/translate_a/single';
 
 function decodeHtml(input) {
-  return (input || '')
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/<[^>]+>/g, ' ')
+  let text = (input || '').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1');
+
+  // Decode entities first so encoded tags like &lt;br&gt; become normal tags and can be removed.
+  text = text
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/\s+/g, ' ')
+    .replace(/&gt;/g, '>');
+
+  text = text
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<(video|img|source|iframe)[^>]*>/gi, ' ')
+    .replace(/<\/?(video|img|source|iframe)[^>]*>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\bhttps?:\/\/(?:pbs\.twimg\.com|pic\.twitter\.com)\S+/gi, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/[ \t]{2,}/g, ' ')
+    .replace(/\s+\n/g, '\n')
+    .replace(/\n\s+/g, '\n')
     .trim();
+
+  return text;
 }
 
 function pickTag(itemXml, tagName) {
@@ -85,6 +98,16 @@ function normalizeTitleKey(title) {
     .replace(/\s+/g, ' ')
     .replace(/[^\p{L}\p{N}\s]/gu, '')
     .trim();
+}
+
+function normalizeRssItem(item) {
+  return {
+    ...item,
+    title: decodeHtml(item.title || ''),
+    summary: decodeHtml(item.summary || ''),
+    titleUk: decodeHtml(item.titleUk || ''),
+    summaryUk: decodeHtml(item.summaryUk || ''),
+  };
 }
 
 function isProbablyUkrainian(text) {
@@ -295,6 +318,10 @@ async function main() {
     finalItems = previousItems;
     console.log(`No fresh items, keeping previous snapshot (${finalItems.length})`);
   }
+
+  finalItems = finalItems
+    .map(normalizeRssItem)
+    .filter((item) => item.url && item.title);
 
   const payload = {
     generatedAt: new Date().toISOString(),

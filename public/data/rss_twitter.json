@@ -1,22 +1,98 @@
 {
-  "generatedAt": "2026-05-02T10:41:25.009Z",
+  "generatedAt": "2026-05-02T13:50:33.291Z",
   "windowDays": 3,
   "authors": [
-    "OSINTtechnical",
-    "GeoConfirmed",
-    "DefMon3",
-    "NOELreports",
-    "War_Mapper",
-    "ChrisO_wiki",
-    "Tendar",
-    "RALee85"
+    {
+      "handle": "OSINTtechnical",
+      "name": "OSINTtechnical"
+    },
+    {
+      "handle": "GeoConfirmed",
+      "name": "GeoConfirmed"
+    },
+    {
+      "handle": "DefMon3",
+      "name": "Def Mon"
+    },
+    {
+      "handle": "NOELreports",
+      "name": "NOELREPORTS"
+    },
+    {
+      "handle": "War_Mapper",
+      "name": "War Mapper"
+    },
+    {
+      "handle": "ChrisO_wiki",
+      "name": "ChrisO_wiki"
+    },
+    {
+      "handle": "Tendar",
+      "name": "Tendar"
+    },
+    {
+      "handle": "RALee85",
+      "name": "Rob Lee"
+    }
+  ],
+  "keywords": [
+    "ukraine",
+    "ukrainian",
+    "kyiv",
+    "kharkiv",
+    "kherson",
+    "odesa",
+    "odes",
+    "donetsk",
+    "luhansk",
+    "crimea",
+    "zaporizhzhia",
+    "dnipro",
+    "osint",
+    "humint",
+    "intelligence",
+    "frontline",
+    "satellite",
+    "missile",
+    "drone",
+    "strike",
+    "air defense",
+    "russian",
+    "russia",
+    "occupation",
+    "naval",
+    "black sea",
+    "battle",
+    "brigade"
+  ],
+  "excludeKeywords": [
+    "giveaway",
+    "promo",
+    "discount"
   ],
   "items": [
+    {
+      "id": "x-NOELreports-f1ab390c4684",
+      "title": "Ukrainian company ARMOLAB is testing its \"Robonosh\" unmanned ground vehicle, capable of carrying 100 kg. This short-range UGV is designed for auxiliar...",
+      "url": "https://x.com/NOELreports/status/2050530379765780591",
+      "summary": "Ukrainian company ARMOLAB is testing its \"Robonosh\" unmanned ground vehicle, capable of carrying 100 kg. This short-range UGV is designed for auxiliary missions, including transporting wounded personnel or supplies over distances up to 10 km, potentially replacing manual carrying. #Ukraine",
+      "publishedAt": "2026-05-02T10:58:34.000Z",
+      "author": "NOELREPORTS",
+      "handle": "NOELreports",
+      "source": "x_rss",
+      "tags": [
+        "OSINT",
+        "HUMINT",
+        "UKRAINE"
+      ],
+      "titleUk": "Українська компанія АРМОЛАБ тестує безпілотний наземний транспортний засіб «Робоноша», здатний перевозити 100 кг. Цей УГВ малої дальності призначений для допоміжних...",
+      "summaryUk": "Українська компанія АРМОЛАБ тестує безпілотний наземний транспортний засіб «Робоноша», здатний перевозити 100 кг. Цей UGV малої дальності призначений для допоміжних місій, включаючи транспортування поранених або припасів на відстані до 10 км, потенційно замінюючи ручне перенесення. #Україна"
+    },
     {
       "id": "x-NOELreports-67ec62d3fdf2",
       "title": "Ukraine’s 210th Assault Regiment performed a night evacuation of two wounded soldiers under targeted Russian fire, with both brought out alive. #Ukra...",
       "url": "https://x.com/NOELreports/status/2050516096898228283",
-      "summary": "Ukraine’s 210th Assault Regiment performed a night evacuation of two wounded soldiers under targeted Russian fire, with both brought out alive. #Ukraine<br><video width=\"960\" height=\"540\" src=\"https://video.twimg.com/amplify_video/2050515433246113792/vid/avc1/960x540/iGuyUt64FcVdmRaw.mp4?tag=27\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2050515433246113792/img/CNmJB8RM1Ixm-pNB.jpg\"></video>",
+      "summary": "Ukraine’s 210th Assault Regiment performed a night evacuation of two wounded soldiers under targeted Russian fire, with both brought out alive. #Ukraine",
       "publishedAt": "2026-05-02T10:01:48.000Z",
       "author": "NOELREPORTS",
       "handle": "NOELreports",
@@ -25,7 +101,9 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Під прицільним вогнем росіян 210-й десантно-штурмовий полк України здійснив нічну евакуацію двох поранених бійців, обох вивезли живими. #Україна...",
+      "summaryUk": "Під прицільним вогнем росіян 210-й десантно-штурмовий полк України здійснив нічну евакуацію двох поранених бійців, обох вивезли живими. #Україна"
     },
     {
       "id": "x-NOELreports-9ae3332af66e",
@@ -40,13 +118,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "❗️The Financial Times каже, що намагання Зеленського зафіксувати 2027 рік, оскільки Україна має на меті вступ до ЄС, напружує зв’язки з європейськими союзниками, багато з яких...",
+      "summaryUk": "❗️Financial Times каже, що прагнення Зеленського зафіксувати 2027 рік як ціль вступу України до ЄС напружує зв’язки з європейськими союзниками, багато з яких вважають цей графік нереалістичним з огляду на масштаб реформ і правила розширення блоку. #Україна"
     },
     {
       "id": "x-RALee85-7df53ed4e407",
       "title": ".@Deepstate_UA assesses that Russia occupied 141 square kilometers in April, 11.9% less than in March. https://t.me/DeepStateUA/23460",
       "url": "https://x.com/RALee85/status/2050514167657029831",
-      "summary": ".@Deepstate_UA assesses that Russia occupied 141 square kilometers in April, 11.9% less than in March.<br>https://t.me/DeepStateUA/23460<br><img width=\"1280\" height=\"754\" style=\"\" src=\"https://pbs.twimg.com/media/HHTjNVjbIAAC1jp?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\"><div class=\"rsshub-quote\"><br><br>Rob Lee: .@Deepstate_UA assesses that Russia occupied 160 square kilometers in March, 27% more than in February. <br>https://t.me/DeepStateUA/23359<br><br><img width=\"1280\" height=\"733\" style=\"\" src=\"https://pbs.twimg.com/media/HE2DylwWcAAnKni?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\"></div>",
+      "summary": ".@Deepstate_UA assesses that Russia occupied 141 square kilometers in April, 11.9% less than in March.\nhttps://t.me/DeepStateUA/23460\nRob Lee: .@Deepstate_UA assesses that Russia occupied 160 square kilometers in March, 27% more than in February.\nhttps://t.me/DeepStateUA/23359",
       "publishedAt": "2026-05-02T09:54:08.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -55,13 +135,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": ".@Deepstate_UA оцінює, що у квітні Росія окупувала 141 квадратний кілометр, що на 11,9% менше, ніж у березні. https://t.me/DeepStateUA/23460",
+      "summaryUk": ".@Deepstate_UA оцінює, що у квітні Росія окупувала 141 квадратний кілометр, що на 11,9% менше, ніж у березні.\nhttps://t.me/DeepStateUA/23460\nРоб Лі: .@Deepstate_UA оцінює, що Росія окупувала 160 квадратних кілометрів у березні, що на 27% більше, ніж у лютому.\nhttps://t.me/DeepStateUA/23359"
     },
     {
       "id": "x-NOELreports-392abcff2e98",
       "title": "Ukrainian deep strikes hit Russian logistics 65 to 100 km behind the front, including a successful hit on a UAZ van and an attempted strike on a truck...",
       "url": "https://x.com/NOELreports/status/2050511130687160387",
-      "summary": "Ukrainian deep strikes hit Russian logistics 65 to 100 km behind the front, including a successful hit on a UAZ van and an attempted strike on a truck column. The targets were moving on key rear roads linking Crimea to Zaporizhzhia and Mariupol to Donetsk. #Ukraine<br><video width=\"640\" height=\"360\" src=\"https://video.twimg.com/amplify_video/2050511058540937216/vid/avc1/640x360/DF5FBlFnQVs4A-o4.mp4?tag=27\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2050511058540937216/img/D7tDw8lJKJth2qBs.jpg\"></video>",
+      "summary": "Ukrainian deep strikes hit Russian logistics 65 to 100 km behind the front, including a successful hit on a UAZ van and an attempted strike on a truck column. The targets were moving on key rear roads linking Crimea to Zaporizhzhia and Mariupol to Donetsk. #Ukraine",
       "publishedAt": "2026-05-02T09:42:04.000Z",
       "author": "NOELREPORTS",
       "handle": "NOELreports",
@@ -70,7 +152,9 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Українські глибокі удари вразили російське матеріально-технічне забезпечення від 65 до 100 км позаду фронту, включно з успішним ударом по мікроавтобусу УАЗ і спробі удару по вантажівці...",
+      "summaryUk": "Українські глибокі удари вразили російське матеріально-технічне забезпечення на відстані від 65 до 100 км позаду фронту, включно з успішним ударом по мікроавтобусу УАЗ і спробі удару по колоні вантажівок. Цілі рухалися ключовими артеріальними дорогами, що сполучають Крим – Запоріжжя та Маріуполь – Донецьк. #Україна"
     },
     {
       "id": "x-NOELreports-c2bebbee7e4a",
@@ -85,13 +169,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "❗️Румунія підняла F-16 після того, як російський безпілотник ненадовго увійшов у її повітряний простір поблизу Чилі під час нічної атаки Москви на Одеську область, перед...",
+      "summaryUk": "❗️Румунія підняла F-16 після того, як російський безпілотник ненадовго увійшов у її повітряний простір поблизу Чилі під час нічної атаки Москви на Одеську область, перш ніж БПЛА повернувся в бік України. #Румунія"
     },
     {
       "id": "x-NOELreports-f493c077d850",
       "title": "Ukraine’s Air Force continues striking high-rise buildings in Stepnohirsk on the Zaporizhzhia axis that Russian troops are using as positions. The st...",
       "url": "https://x.com/NOELreports/status/2050497133338391000",
-      "summary": "Ukraine’s Air Force continues striking high-rise buildings in Stepnohirsk on the Zaporizhzhia axis that Russian troops are using as positions. The strikes target urban strongpoints where Russian forces have been setting up inside apartment blocks. #Ukraine<br><video width=\"1280\" height=\"752\" src=\"https://video.twimg.com/amplify_video/2050497005571452928/vid/avc1/1280x752/ADmZEFpts9VAS7QX.mp4?tag=27\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2050497005571452928/img/Yrp9XxIgqnzO3bNZ.jpg\"></video>",
+      "summary": "Ukraine’s Air Force continues striking high-rise buildings in Stepnohirsk on the Zaporizhzhia axis that Russian troops are using as positions. The strikes target urban strongpoints where Russian forces have been setting up inside apartment blocks. #Ukraine",
       "publishedAt": "2026-05-02T08:46:27.000Z",
       "author": "NOELREPORTS",
       "handle": "NOELreports",
@@ -100,13 +186,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Військово-повітряні сили України продовжують наносити удари по висотних будинках у Степногірську на запорізькому напрямку, які російські війська використовують як позиції. вул...",
+      "summaryUk": "Військово-повітряні сили України продовжують наносити удари по висотних будинках у Степногірську на запорізькому напрямку, які російські війська використовують як позиції. Удари завдано по міським опорним пунктам, де російські війська розмістилися в житлових будинках. #Україна"
     },
     {
       "id": "x-NOELreports-68a1fdcacae8",
       "title": "In Smolensk, Russian air defense is engaging Ukrainian drones. #Russia",
       "url": "https://x.com/NOELreports/status/2050496808212726171",
-      "summary": "In Smolensk, Russian air defense is engaging Ukrainian drones. #Russia<br><img width=\"960\" height=\"1280\" style=\"\" src=\"https://pbs.twimg.com/media/HHTT7QmW8AA80CH?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "In Smolensk, Russian air defense is engaging Ukrainian drones. #Russia",
       "publishedAt": "2026-05-02T08:45:10.000Z",
       "author": "NOELREPORTS",
       "handle": "NOELreports",
@@ -115,13 +203,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "У Смоленську російська ППО застосовує українські безпілотники. #Росія",
+      "summaryUk": "У Смоленську російська ППО застосовує українські безпілотники. #Росія"
     },
     {
       "id": "x-NOELreports-6ce826db3153",
       "title": "The fire at the oil pumping station in Perm, Russia, is still ongoing for a third consecutive day. #Russia",
       "url": "https://x.com/NOELreports/status/2050496472504816071",
-      "summary": "The fire at the oil pumping station in Perm, Russia, is still ongoing for a third consecutive day. #Russia<br><img width=\"596\" height=\"941\" style=\"\" src=\"https://pbs.twimg.com/media/HHTTmsXXsAALqBB?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "The fire at the oil pumping station in Perm, Russia, is still ongoing for a third consecutive day. #Russia",
       "publishedAt": "2026-05-02T08:43:50.000Z",
       "author": "NOELREPORTS",
       "handle": "NOELreports",
@@ -130,13 +220,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Третій день поспіль триває пожежа на нафтонасосній станції в російському Пермі. #Росія",
+      "summaryUk": "Третій день поспіль триває пожежа на нафтонасосній станції в російському Пермі. #Росія"
     },
     {
       "id": "x-NOELreports-cea8acbe62da",
       "title": "Russia struck multiple Ukrainian cities after launching 163 drones overnight, killing 2 people in a UAV hit on a minibus in Kherson and wounding 7 mor...",
       "url": "https://x.com/NOELreports/status/2050495837755617371",
-      "summary": "Russia struck multiple Ukrainian cities after launching 163 drones overnight, killing 2 people in a UAV hit on a minibus in Kherson and wounding 7 more. Damage was also reported in Kharkiv, Dnipropetrovsk, Odesa, Zaporizhzhia, and Mykolaiv. #Ukraine<br><img width=\"1280\" height=\"853\" style=\"\" src=\"https://pbs.twimg.com/media/HHTTCDIXwAAY2jy?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "Russia struck multiple Ukrainian cities after launching 163 drones overnight, killing 2 people in a UAV hit on a minibus in Kherson and wounding 7 more. Damage was also reported in Kharkiv, Dnipropetrovsk, Odesa, Zaporizhzhia, and Mykolaiv. #Ukraine",
       "publishedAt": "2026-05-02T08:41:18.000Z",
       "author": "NOELREPORTS",
       "handle": "NOELreports",
@@ -145,13 +237,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Росія завдала ударів по кількох українських містах після того, як за ніч запустила 163 безпілотники, убивши 2 людей під час удару БПЛА по мікроавтобусу в Херсоні та поранивши 7...",
+      "summaryUk": "Росія завдала ударів по кількох містах України після того, як за ніч запустила 163 безпілотники, убивши 2 людей під час удару БПЛА по мікроавтобусу в Херсоні та поранивши ще 7. Пошкодження зафіксовано також у Харкові, Дніпропетровську, Одесі, Запоріжжі та Миколаєві. #Україна"
     },
     {
       "id": "x-NOELreports-b9246fd0f2b5",
       "title": "Russia launched 163 drones against Ukraine overnight, including about 100 Shaheds, and Ukrainian air defenses said they downed or suppressed 142 by 08...",
       "url": "https://x.com/NOELreports/status/2050495537632190683",
-      "summary": "Russia launched 163 drones against Ukraine overnight, including about 100 Shaheds, and Ukrainian air defenses said they downed or suppressed 142 by 08:00. Officials recorded 17 drone hits across 12 locations, with debris falling at 2 more sites. #Ukraine<br><img width=\"1280\" height=\"1280\" style=\"\" src=\"https://pbs.twimg.com/media/HHTSw03XEAAl1D9?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "Russia launched 163 drones against Ukraine overnight, including about 100 Shaheds, and Ukrainian air defenses said they downed or suppressed 142 by 08:00. Officials recorded 17 drone hits across 12 locations, with debris falling at 2 more sites. #Ukraine",
       "publishedAt": "2026-05-02T08:40:07.000Z",
       "author": "NOELREPORTS",
       "handle": "NOELreports",
@@ -160,13 +254,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "За ніч Росія запустила проти України 163 безпілотники, у тому числі близько 100 «Шахедів», а українська ППО заявила, що до 08.08 збила або придушила 142...",
+      "summaryUk": "За ніч Росія запустила проти України 163 безпілотники, у тому числі близько 100 «Шахедів», а українська ППО заявила, що до 08:00 збила або придушила 142. Офіційні особи зафіксували 17 ударів безпілотників у 12 місцях, уламки падали ще на 2 місця. #Україна"
     },
     {
       "id": "x-NOELreports-a4008e5a65af",
       "title": "Russian losses per 02/05/26 reported by the Ukrainian General Staff +1240 men +3 tanks +4 ACVs +73 artillery +6 (!) MLRS +2305 UAVs",
       "url": "https://x.com/NOELreports/status/2050495149696844048",
-      "summary": "Russian losses per 02/05/26 reported by the Ukrainian General Staff<br><br>+1240 men<br>+3 tanks<br>+4 ACVs<br>+73 artillery<br>+6 (!) MLRS<br>+2305 UAVs<br><img width=\"1024\" height=\"1280\" style=\"\" src=\"https://pbs.twimg.com/media/HHTSWsfXkAAxbrl?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "Russian losses per 02/05/26 reported by the Ukrainian General Staff\n+1240 men\n+3 tanks\n+4 ACVs\n+73 artillery\n+6 (!) MLRS\n+2305 UAVs",
       "publishedAt": "2026-05-02T08:38:34.000Z",
       "author": "NOELREPORTS",
       "handle": "NOELreports",
@@ -175,13 +271,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Втрати росіян за 05.02.26 за даними українського генштабу +1240 осіб +3 танки +4 БМП +73 артилерії +6 (!) РСЗВ +2305 БПЛА",
+      "summaryUk": "Втрати росіян за 05.02.26 повідомляє український Генштаб\n+1240 чоловік\n+3 танки\n+4 ACV\n+73 артилерія\n+6 (!) РСЗВ\n+2305 БПЛА"
     },
     {
       "id": "x-NOELreports-c942aeae01a6",
       "title": "The 01/05/26 SitRep on Ukraine is ready: https://threadreaderapp.com/thread/2050494402284445720.html Nearly 700,000 people rely on our Ukraine war rep...",
       "url": "https://x.com/NOELreports/status/2050494946377916894",
-      "summary": "The 01/05/26 SitRep on Ukraine is ready: https://threadreaderapp.com/thread/2050494402284445720.html<br><br>Nearly 700,000 people rely on our Ukraine war reporting across platforms, reaching over 800 million impressions per year. This reporting has no sponsors, no corporate backing, and no political funding. It exists because readers chose to support it.<br><br>For nearly four years, we’ve delivered real-time, verified updates, tracked developments, and cut through misinformation. Reader support directly funds verification tools, source networks, and the expansion of our team to increase speed, accuracy, coverage and quality of content.<br><br>Reach alone does not sustain independent reporting. It survives because individuals decide it is worth supporting.<br><br>If our work has helped you stay informed, consider contributing. Even small monthly support makes a meaningful difference and helps secure this work long-term.<br><br>Patreon (monthly): https://patreon.com/NOELREPORTS<br>One-time support: https://buymeacoffee.com/noelreports<br><br>Thank you for helping keep independent Ukraine war reporting alive.<br><br>Greetings,<br>NOEL &amp; Team<br><img width=\"790\" height=\"848\" style=\"\" src=\"https://pbs.twimg.com/media/HHTR4YlWkAAAUGu?format=png&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "The 01/05/26 SitRep on Ukraine is ready: https://threadreaderapp.com/thread/2050494402284445720.html\nNearly 700,000 people rely on our Ukraine war reporting across platforms, reaching over 800 million impressions per year. This reporting has no sponsors, no corporate backing, and no political funding. It exists because readers chose to support it.\nFor nearly four years, we’ve delivered real-time, verified updates, tracked developments, and cut through misinformation. Reader support directly funds verification tools, source networks, and the expansion of our team to increase speed, accuracy, coverage and quality of content.\nReach alone does not sustain independent reporting. It survives because individuals decide it is worth supporting.\nIf our work has helped you stay informed, consider contributing. Even small monthly support makes a meaningful difference and helps secure this work long-term.\nPatreon (monthly): https://patreon.com/NOELREPORTS\nOne-time support: https://buymeacoffee.com/noelreports\nThank you for helping keep independent Ukraine war reporting alive.\nGreetings,\nNOEL & Team",
       "publishedAt": "2026-05-02T08:37:46.000Z",
       "author": "NOELREPORTS",
       "handle": "NOELreports",
@@ -190,13 +288,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Ситуаційна доповідь щодо України від 01.05.26 готова: https://threadreaderapp.com/thread/2050494402284445720.html Майже 700 000 людей покладаються на нашу військову представництво України...",
+      "summaryUk": "Ситуаційний звіт по Україні від 01.05.26 готовий: https://threadreaderapp.com/thread/2050494402284445720.html\nМайже 700 000 людей покладаються на наші репортажі про війну в Україні на різних платформах, охоплюючи понад 800 мільйонів показів на рік. Цей репортаж не має ні спонсорів, ні корпоративної підтримки, ні політичного фінансування. Він існує тому, що читачі вирішили його підтримати.\nПротягом майже чотирьох років ми надавали в режимі реального часу, перевіряли оновлення, відстежували розвиток і видаляли дезінформацію. Підтримка Reader напряму фінансує інструменти перевірки, вихідні мережі та розширення нашої команди для підвищення швидкості, точності, охоплення та якості вмісту.\nОдне охоплення не забезпечує незалежного звітування. Він виживає, тому що люди вирішують, що його варто підтримувати.\nЯкщо наша робота допомогла вам бути в курсі, подумайте про внесок. Навіть невелика щомісячна підтримка має суттєве значення та допомагає забезпечити цю роботу надовго.\nPatreon (щомісяця): https://patreon.com/NOELREPORTS\nОдноразова підтримка: https://buymeacoffee.com/noelreports\nДякуємо за те, що допомагаєте підтримувати репортажі про війну незалежної України.\nвітаю,\nNOEL & Team"
     },
     {
       "id": "x-RALee85-27062a61cc4b",
       "title": "RT Christopher Miller: Two people killed, seven more wounded in a Russian FPV drone attack on a civilian bus in Kherson, the governor of the southern ...",
       "url": "https://x.com/RALee85/status/2050500407923818571",
-      "summary": "RT Christopher Miller<br>Two people killed, seven more wounded in a Russian FPV drone attack on a civilian bus in Kherson, the governor of the southern Ukrainian region reports. The Kremlin’s army continues to hunt residents as part of the “human safari” that the UN has said amounts to crimes against humanity.<div class=\"rsshub-quote\"><br><br>Oleksandr Prokudin: Early this morning, Russian terrorists attacked a minibus in Kherson with a drone.<br>As a result of the strike, a woman and a municipal worker were killed at the scene.<br>Six more men and one woman were injured. They are currently in hospital receiving medical care.<br><br><video width=\"1920\" height=\"1080\" src=\"https://video.twimg.com/amplify_video/2050474043539656704/vid/avc1/1280x720/qpv8AmsuIotVYkDj.mp4?tag=14\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2050474043539656704/img/etgZfEMl5fI8ZxMQ.jpg\"></video></div>",
+      "summary": "RT Christopher Miller\nTwo people killed, seven more wounded in a Russian FPV drone attack on a civilian bus in Kherson, the governor of the southern Ukrainian region reports. The Kremlin’s army continues to hunt residents as part of the “human safari” that the UN has said amounts to crimes against humanity.\nOleksandr Prokudin: Early this morning, Russian terrorists attacked a minibus in Kherson with a drone.\nAs a result of the strike, a woman and a municipal worker were killed at the scene.\nSix more men and one woman were injured. They are currently in hospital receiving medical care.",
       "publishedAt": "2026-05-02T08:25:54.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -205,43 +305,32 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "RT Крістофер Міллер: Двоє людей загинули, ще семеро отримали поранення внаслідок атаки російського FPV на цивільний автобус у Херсоні, губернатор південного ...",
+      "summaryUk": "RT Крістофер Міллер\nДвоє людей загинули, ще семеро отримали поранення внаслідок атаки російського безпілотника на цивільний автобус у Херсоні, повідомляє губернатор Південноукраїнської області. Кремлівська армія продовжує полювати на жителів у рамках «людського сафарі», яке ООН назвало злочинами проти людства.\nОлександр Прокудін: Сьогодні рано вранці російські терористи атакували з безпілотника маршрутку в Херсоні.\nВнаслідок удару на місці події загинули жінка та комунальний працівник.\nЩе шестеро чоловіків і одна жінка отримали поранення. Зараз вони перебувають у лікарні, їм надається медична допомога."
     },
     {
-      "id": "x-ChrisO_wiki-0c3f269343cd",
-      "title": "In case you've ever wondered why Iran is so reluctant to strike a deal with Trump",
-      "url": "https://x.com/ChrisO_wiki/status/2050475358080643343",
-      "summary": "In case you've ever wondered why Iran is so reluctant to strike a deal with Trump<div class=\"rsshub-quote\"><br><br>David Henig 🇺🇦: Your regular reminder that no trade deal with President Trump can be considered permanent, and it might not even last the day.<br><br><img width=\"576\" height=\"488\" style=\"\" src=\"https://pbs.twimg.com/media/HHPvdCaXwAEppTW?format=png&amp;name=orig\" referrerpolicy=\"no-referrer\"></div>",
-      "publishedAt": "2026-05-02T07:19:56.000Z",
-      "author": "ChrisO_wiki",
-      "handle": "ChrisO_wiki",
+      "id": "x-RALee85-4a72a04710fa",
+      "title": "RT Kevin Rothrock: For Kennan, @kirlant wrote a sharp piece on how Russia has navigated the West's Ukraine sanctions. The \"politico-economic lessons\" ...",
+      "url": "https://x.com/RALee85/status/2050547500201791933",
+      "summary": "RT Kevin Rothrock\nFor Kennan, @kirlant wrote a sharp piece on how Russia has navigated the West's Ukraine sanctions. The \"politico-economic lessons\" of this \"most ambitious exercise in economic coercion,\" he writes, are ultimately \"disconcerting\" (for the West). https://www.kennaninstitute.org/articles/to-leave-or-not-to-leave",
+      "publishedAt": "2026-05-01T21:40:53.000Z",
+      "author": "Rob Lee",
+      "handle": "RALee85",
       "source": "x_rss",
       "tags": [
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
-    },
-    {
-      "id": "x-ChrisO_wiki-67d8aeec843b",
-      "title": "RT Mike Young: In closed-door meetings, J.D. Vance has repeatedly questioned whether the Pentagon has understated the depletion of U.S. missile stockp...",
-      "url": "https://x.com/ChrisO_wiki/status/2050446618931970163",
-      "summary": "RT Mike Young<br>In closed-door meetings, J.D. Vance has repeatedly questioned whether the Pentagon has understated the depletion of U.S. missile stockpiles. He has raised his concerns with Trump directly. His advisers say some believe Hegseth's portrayal has been \"so positive as to be misleading.\"<br><br>Here is what the unclassified record shows.<br><br>The U.S. has expended at least 45% of its stockpile of Precision Strike Missiles, at least half of its THAAD interceptors, and nearly 50% of its Patriot air defense missiles during the first seven weeks of the Iran war, according to CSIS. The number of critical munitions remaining is no longer sufficient to confront a near-peer adversary like China, and it will likely take years before inventory returns to pre-war levels.<br><br>Trump said stockpiles are \"virtually unlimited\" and that wars can be fought \"forever.\" Hegseth boasted in March of \"complete control\" of Iranian skies. In April, Iran downed an American fighter jet. According to intelligence assessments cited by the Atlantic, Iran retains two-thirds of its air force, the bulk of its missile-launching capability, and most of its small fast boats capable of mining the Strait of Hormuz. <br><br>The cease-fire that was supposed to expire last Tuesday has been extended indefinitely. Vance's peace mission to Pakistan was scrubbed when Iran did not send negotiators. The IRGC seized commercial vessels in the Strait of Hormuz last week.<br><br>One former Trump official described Hegseth as having \"strived to tell the president exactly what he wants to hear\" and called it \"dangerous.\" The Hegseth briefings happen at 8 a.m. - when Trump is known to watch Fox News.<br><img width=\"900\" height=\"469\" style=\"\" src=\"https://pbs.twimg.com/media/HG9fZGxawAAjtJA?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\"><div class=\"rsshub-quote\"><br><br>Alex Ward: \"J. D. Vance has repeatedly questioned the Defense Department’s depiction of the war in Iran and whether the Pentagon has understated what appears to be the drastic depletion of U.S. missile stockpiles.\" https://www.theatlantic.com/national-security/2026/04/iran-war-vance-hegseth-trump/686905/?gift=fWZVhRn1-qBNjn8zz1AXnHYywwFp9WfpjX-zyNWwfl8&amp;utm_source=copy-link&amp;utm_medium=social&amp;utm_campaign=share<br></div>",
-      "publishedAt": "2026-05-01T21:01:00.000Z",
-      "author": "ChrisO_wiki",
-      "handle": "ChrisO_wiki",
-      "source": "x_rss",
-      "tags": [
-        "OSINT",
-        "HUMINT",
-        "UKRAINE"
-      ]
+      ],
+      "titleUk": "RT Кевін Ротрок: Для Кеннана @kirlant написав гострий матеріал про те, як Росія орієнтувалася на санкції Заходу проти України. «Політико-економічні уроки»...",
+      "summaryUk": "RT Кевін Ротрок\nДля Кеннана @kirlant написав гострий матеріал про те, як Росія орієнтувалася на санкції Заходу проти України. «Політико-економічні уроки» цієї «найамбітнішої спроби економічного примусу», пише він, зрештою «збентежують» (для Заходу). https://www.kennaninstitute.org/articles/to-leave-or-not-to-leave"
     },
     {
       "id": "x-Tendar-539804e5618d",
       "title": "The Russian air defense across Russia is increasingly overwhelmed to counter the Ukrainian air campaign. The situation in Russia's South, most notably...",
       "url": "https://x.com/Tendar/status/2050229568653402367",
-      "summary": "The Russian air defense across Russia is increasingly overwhelmed to counter the Ukrainian air campaign. The situation in Russia's South, most notably in and around Tuapse, is currently the most prominent example, but it is happening across the country.<br><br>What was once Russia advantage, its size, has become a liability. The Russian regime has to make compromises, and this is protecting Moscow at all costs while abandoning other parts of Russia. <br><br>However, in Moscow it is dawning that even the capital is at risk of being successfully struck, no matter whether Russian rust buckets are rolling or not. This is why Putin made the pathetic offer for having a truce on May 9. It is as transparent as it can get: Russians are very afraid.<br><br>Moscow might get soon into the cross hairs, but this isn't even the worst for Putin. The Russian regime will have to allocate huge amount of air defense assets to the capital and by doing so exposing the rest of the country. And there is not much they can do.<br><img width=\"2048\" height=\"1492\" style=\"\" src=\"https://pbs.twimg.com/media/HHPZcz0WgAAXatD?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "The Russian air defense across Russia is increasingly overwhelmed to counter the Ukrainian air campaign. The situation in Russia's South, most notably in and around Tuapse, is currently the most prominent example, but it is happening across the country.\nWhat was once Russia advantage, its size, has become a liability. The Russian regime has to make compromises, and this is protecting Moscow at all costs while abandoning other parts of Russia.\nHowever, in Moscow it is dawning that even the capital is at risk of being successfully struck, no matter whether Russian rust buckets are rolling or not. This is why Putin made the pathetic offer for having a truce on May 9. It is as transparent as it can get: Russians are very afraid.\nMoscow might get soon into the cross hairs, but this isn't even the worst for Putin. The Russian regime will have to allocate huge amount of air defense assets to the capital and by doing so exposing the rest of the country. And there is not much they can do.",
       "publishedAt": "2026-05-01T15:03:15.000Z",
       "author": "Tendar",
       "handle": "Tendar",
@@ -250,13 +339,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Російська протиповітряна оборона по всій Росії дедалі більше перевантажена, щоб протистояти українській повітряній кампанії. Ситуація на півдні Росії, особливо...",
+      "summaryUk": "Російська протиповітряна оборона по всій Росії дедалі більше перевантажена, щоб протистояти українській повітряній кампанії. Ситуація на Півдні Росії, особливо в Туапсе та навколо нього, наразі є найяскравішим прикладом, але це відбувається по всій країні.\nТе, що колись було перевагою Росії, її розмір, стало недоліком. Російський режим має йти на компроміси, і це захищає Москву будь-якою ціною, залишаючи інші частини Росії.\nОднак у Москві розуміють, що навіть столиця ризикує отримати вдалий удар, незалежно від того, котяться російські іржаві відра чи ні. Ось чому Путін зробив жалюгідну пропозицію про перемир’я 9 травня. Це максимально прозоро: росіяни дуже бояться.\nНевдовзі Москва може потрапити під приціл, але це ще не найгірше для Путіна. Російському режиму доведеться виділити величезну кількість засобів протиповітряної оборони в столицю і, таким чином, оголити решту країни. І вони мало що можуть зробити."
     },
     {
       "id": "x-RALee85-ce860cc09fe1",
       "title": "Video from the Ukrainian National Guard’s @khartiiabrygada of an operation in February in Kupyansk with kamikaze UAS and UGVs that killed 10 Russian ...",
       "url": "https://x.com/RALee85/status/2050215382787523002",
-      "summary": "Video from the Ukrainian National Guard’s @khartiiabrygada of an operation in February in Kupyansk with kamikaze UAS and UGVs that killed 10 Russian soldiers in a building. <br>https://t.me/khartiia/3898<br><video width=\"2048\" height=\"858\" src=\"https://video.twimg.com/amplify_video/2050214934231830529/vid/avc1/3840x1608/vyo4dmgNyTsP124i.mp4?tag=27\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2050214934231830529/img/PIELnLNAuGAXcY2C.jpg\"></video>",
+      "summary": "Video from the Ukrainian National Guard’s @khartiiabrygada of an operation in February in Kupyansk with kamikaze UAS and UGVs that killed 10 Russian soldiers in a building.\nhttps://t.me/khartiia/3898",
       "publishedAt": "2026-05-01T14:06:53.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -265,13 +356,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Відео від Нацгвардії України @khartiiabrygada про лютневу операцію в Куп’янську з БПЛА та УГВ-камікадзе, в результаті якої загинули 10 російських ...",
+      "summaryUk": "Відео від Нацгвардії України @khartiiabrygada про лютневу операцію в Куп’янську з БПЛА та УГВ-камікадзе, яка вбила 10 російських військових у будівлі.\nhttps://t.me/khartiia/3898"
     },
     {
       "id": "x-Tendar-8f7fa3279daa",
       "title": "Tuapse, Krasnodar region, in Russia was once again targeted last night. This is now the 4th time within the last two weeks that the Russian port city ...",
       "url": "https://x.com/Tendar/status/2050210819644834100",
-      "summary": "Tuapse, Krasnodar region, in Russia was once again targeted last night. This is now the 4th time within the last two weeks that the Russian port city was struck. This time the port terminal was struck and caused a fire.<br><img width=\"2048\" height=\"1492\" style=\"\" src=\"https://pbs.twimg.com/media/HHPPZXhXwAAelqm?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "Tuapse, Krasnodar region, in Russia was once again targeted last night. This is now the 4th time within the last two weeks that the Russian port city was struck. This time the port terminal was struck and caused a fire.",
       "publishedAt": "2026-05-01T13:48:45.000Z",
       "author": "Tendar",
       "handle": "Tendar",
@@ -280,13 +373,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Минулої ночі знову обстріляли Туапсе Краснодарського краю в Росії. Це вже четвертий раз за останні два тижні, коли російське портове місто ...",
+      "summaryUk": "Минулої ночі знову обстріляли Туапсе Краснодарського краю в Росії. Це вже четвертий удар за останні два тижні по російському портовому місту. Цього разу було вдарено по портовому терміналу, що спричинило пожежу."
     },
     {
       "id": "x-Tendar-52902d16a3d5",
       "title": "Ukrainian forces conducted a deep strike operation against the Russian Shagol air base in Chelyabinsk, Russia. Two fighter jets, one Su-34 and one Su-...",
       "url": "https://x.com/Tendar/status/2050207914384667001",
-      "summary": "Ukrainian forces conducted a deep strike operation against the Russian Shagol air base in Chelyabinsk, Russia. Two fighter jets, one Su-34 and one Su-57, were struck. Satellite pictures obtained by TG channel Exilenova confirm the hits.<br><br>The air base is around 1,700 km (1,100 miles) from the Ukrainian border.<br><img width=\"2048\" height=\"1492\" style=\"\" src=\"https://pbs.twimg.com/media/HHPM4EjW4AAo9vu?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\"><br><img width=\"1929\" height=\"1530\" style=\"\" src=\"https://pbs.twimg.com/media/HHPNJXuWEAAiDtK?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "Ukrainian forces conducted a deep strike operation against the Russian Shagol air base in Chelyabinsk, Russia. Two fighter jets, one Su-34 and one Su-57, were struck. Satellite pictures obtained by TG channel Exilenova confirm the hits.\nThe air base is around 1,700 km (1,100 miles) from the Ukrainian border.",
       "publishedAt": "2026-05-01T13:37:12.000Z",
       "author": "Tendar",
       "handle": "Tendar",
@@ -295,13 +390,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Українські війська завдали глибокого удару по російській авіабазі Шагол у російському Челябінську. Два винищувачі, один Су-34 і один Су-...",
+      "summaryUk": "Українські війська завдали глибокого удару по російській авіабазі Шагол у російському Челябінську. Були збиті два винищувачі Су-34 і Су-57. Супутникові знімки, отримані ТГ-каналом Exilenova, підтверджують влучення.\nАвіабаза розташована приблизно за 1700 км (1100 миль) від українського кордону."
     },
     {
       "id": "x-OSINTtechnical-c3dbf98250c8",
       "title": "Ukrainian attack drones hit Russia’s Tuapse oil refinery and export terminal again last night, setting the facility on fire. This is the fourth time ...",
       "url": "https://x.com/Osinttechnical/status/2050207197875834884",
-      "summary": "Ukrainian attack drones hit Russia’s Tuapse oil refinery and export terminal again last night, setting the facility on fire. <br><br>This is the fourth time the refinery has been set on fire in recent days.<br><img width=\"564\" height=\"530\" style=\"\" src=\"https://pbs.twimg.com/media/HHPMlOCXEAAuxvq?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "Ukrainian attack drones hit Russia’s Tuapse oil refinery and export terminal again last night, setting the facility on fire.\nThis is the fourth time the refinery has been set on fire in recent days.",
       "publishedAt": "2026-05-01T13:34:21.000Z",
       "author": "OSINTtechnical",
       "handle": "OSINTtechnical",
@@ -310,13 +407,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Українські ударні безпілотники вчора ввечері знову вдарили по Туапсинському нафтопереробному заводу та експортному терміналу, підпаливши це підприємство. Це вже четвертий раз...",
+      "summaryUk": "Українські ударні безпілотники вчора ввечері знову вдарили по Туапсинському нафтопереробному заводу та експортному терміналу, підпаливши це підприємство.\nЗа останні дні це вже четвертий підпал НПЗ."
     },
     {
       "id": "x-RALee85-d24ffb7140e9",
       "title": "Video from Russia’s Rubicon Center of FPVs dropped by mothership drones. https://t.me/icpbtrubicon/1458",
       "url": "https://x.com/RALee85/status/2050200295129350393",
-      "summary": "Video from Russia’s Rubicon Center of FPVs dropped by mothership drones. <br>https://t.me/icpbtrubicon/1458<br><video width=\"1920\" height=\"1080\" src=\"https://video.twimg.com/amplify_video/2050199897094168576/vid/avc1/1920x1080/iylUO2ytyOC2u7-l.mp4?tag=27\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2050199897094168576/img/zn27-1ZQJGmRUZXS.jpg\"></video>",
+      "summary": "Video from Russia’s Rubicon Center of FPVs dropped by mothership drones.\nhttps://t.me/icpbtrubicon/1458",
       "publishedAt": "2026-05-01T13:06:55.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -325,13 +424,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Відео з російського центру «Рубікон» FPV, скинутих безпілотними літальними кораблями. https://t.me/icpbtrubicon/1458",
+      "summaryUk": "Відео з російського центру «Рубікон» FPV, скинутих безпілотними літальними кораблями.\nhttps://t.me/icpbtrubicon/1458"
     },
     {
       "id": "x-RALee85-9191dfc69788",
       "title": "RT Ukraine Control Map: Ukrainian drones struck the Shagol airfield, claiming to destroy a Su-34 and 2 x Su-57 on the 25th April 2026 Thanks to @Exile...",
       "url": "https://x.com/RALee85/status/2050198088812245447",
-      "summary": "RT Ukraine Control Map<br>Ukrainian drones struck the Shagol airfield, claiming to destroy a Su-34 and 2 x Su-57 on the 25th April 2026 <br><br>Thanks to @Exilenova_plus for being a champ with the satellite imagery. Only looks like one aircraft struck to us though<br><img width=\"1929\" height=\"1530\" style=\"\" src=\"https://pbs.twimg.com/media/HHO8Vc4WgAA4HiM?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "RT Ukraine Control Map\nUkrainian drones struck the Shagol airfield, claiming to destroy a Su-34 and 2 x Su-57 on the 25th April 2026\nThanks to @Exilenova_plus for being a champ with the satellite imagery. Only looks like one aircraft struck to us though",
       "publishedAt": "2026-05-01T12:24:29.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -340,13 +441,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "RT Ukraine Control Map: 25 квітня 2026 року українські безпілотники завдали удару по аеродрому Шагола, стверджуючи, що знищили Су-34 і 2 Су-57. Завдяки @Exile...",
+      "summaryUk": "RT Україна контрольна карта\n25 квітня 2026 року українські безпілотники завдали удару по аеродрому Шагола, знищивши Су-34 і 2 Су-57.\nДякую @Exilenova_plus за те, що вона є чемпіоном із супутниковими знімками. Але схоже, що один літак вразив нас"
     },
     {
       "id": "x-RALee85-5a146c736f26",
       "title": "Video from Ukraine’s Unmanned Systems Forces of FPV, FP2, Hornet, and other kamikaze UAS strikes on Russian Nebo-M, Buk-M3, vehicles, and warehouses ...",
       "url": "https://x.com/RALee85/status/2050188987277422679",
-      "summary": "Video from Ukraine’s Unmanned Systems Forces of FPV, FP2, Hornet, and other kamikaze UAS strikes on Russian Nebo-M, Buk-M3, vehicles, and warehouses and depots. <br>https://t.me/robert_magyar/2292<br><video width=\"1280\" height=\"720\" src=\"https://video.twimg.com/amplify_video/2050188707328651264/vid/avc1/1280x720/AdgxSqGANR1wk0vf.mp4?tag=27\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2050188707328651264/img/g-mWb0Lk8-9yHtdO.jpg\"></video>",
+      "summary": "Video from Ukraine’s Unmanned Systems Forces of FPV, FP2, Hornet, and other kamikaze UAS strikes on Russian Nebo-M, Buk-M3, vehicles, and warehouses and depots.\nhttps://t.me/robert_magyar/2292",
       "publishedAt": "2026-05-01T12:21:59.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -355,13 +458,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Відео ударів БПЛА ЗСУ FPV, FP2, Hornet та інших БПЛА камікадзе по російським Небо-М, Бук-М3, техніці та складам...",
+      "summaryUk": "Відео ударів українських БПЛА FPV, FP2, Hornet та інших БПЛА-камікадзе по російським Небо-М, Бук-М3, техніці, складам і складам.\nhttps://t.me/robert_magyar/2292"
     },
     {
       "id": "x-RALee85-1aa8ca471525",
       "title": "RT Ukraine Control Map: Daily Ukraine map thread for Thursday 30 April 2026 Highlights: A focus on the west of Zaporizhia area today, where the initia...",
       "url": "https://x.com/RALee85/status/2050160278911000950",
-      "summary": "RT Ukraine Control Map<br>Daily Ukraine map thread for Thursday 30 April 2026<br><br>Highlights: A focus on the west of Zaporizhia area today, where the initial Russian infiltrations have been reversed and they're back to no difference than at the start of the year, except for the ones who are dead. <br><br>Towards Hulyaipole, Russian forces still attempt to push onwards, but still have not regained the positions that they lost to Ukraine earlier in the year. <br><br>Elsewhere, Ukrainian long range strikes continue - striking two patrol boats in the Kerch Strait with USVs, and striking Perm refinery in Perm.<br><img width=\"2048\" height=\"1403\" style=\"\" src=\"https://pbs.twimg.com/media/HHL2tmFXcAAwwiI?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\"><br><img width=\"1254\" height=\"2048\" style=\"\" src=\"https://pbs.twimg.com/media/HHL2tmEXwAAKBR_?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "RT Ukraine Control Map\nDaily Ukraine map thread for Thursday 30 April 2026\nHighlights: A focus on the west of Zaporizhia area today, where the initial Russian infiltrations have been reversed and they're back to no difference than at the start of the year, except for the ones who are dead.\nTowards Hulyaipole, Russian forces still attempt to push onwards, but still have not regained the positions that they lost to Ukraine earlier in the year.\nElsewhere, Ukrainian long range strikes continue - striking two patrol boats in the Kerch Strait with USVs, and striking Perm refinery in Perm.",
       "publishedAt": "2026-04-30T22:11:21.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -370,13 +475,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "RT Ukraine Control Map: Щоденна тематика карт України за четвер, 30 квітня 2026 року. Основні моменти: Сьогодні у центрі уваги захід Запоріжжя, де розпочато...",
+      "summaryUk": "RT Україна контрольна карта\nЩоденна тематика карти України за четвер, 30 квітня 2026 року\nОсновні моменти: акцент на західній частині Запоріжжя сьогодні, де початкові російські проникнення були скасовані, і вони повернулися до тих пір, як на початку року, за винятком тих, хто мертвий.\nУ напрямку Гуляйполя російські війська все ще намагаються просуватися, але досі не відновили позицій, які вони втратили для України на початку року.\nВ інших місцях українські удари на дальню дистанцію тривають – удари з USV по двох патрульних катерах у Керченській протоці та по Пермському нафтопереробному заводу в Пермі."
     },
     {
       "id": "x-RALee85-9e61e99cf90e",
       "title": "RT Ryan O'Leary: I agree with Rob. To be quite honest drone warfare has weakened what a traditional static war looks like. There is no second or third...",
       "url": "https://x.com/RALee85/status/2049882689558209005",
-      "summary": "RT Ryan O'Leary<br>I agree with Rob. To be quite honest drone warfare has weakened what a traditional static war looks like. There is no second or third line. 3-5km from 0= DJI, recce and light bomber drones. <br>5-10(sometimes 15km) is your fpv and heavy bomber as well as UGV. <br><br>There is no more second or third lines with infantry. It is now the drone line/s. Drone teams lack the ability to counter direct infantry threats that break through into their lines. <br><br>The biggest issue on maneuver warfare right now is both sides lack planning, command &amp; control and cohesion.<div class=\"rsshub-quote\"><br><br>Rob Lee: I disagree. The Ukrainian offensive operations in Kupyansk and Zaporizhzhia from last fall and this winter demonstrated that offensive maneuver is possible even with brigades and regiments that only had a company-size element of infantry. In both cases, breakthroughs were<br></div>",
+      "summary": "RT Ryan O'Leary\nI agree with Rob. To be quite honest drone warfare has weakened what a traditional static war looks like. There is no second or third line. 3-5km from 0= DJI, recce and light bomber drones.\n5-10(sometimes 15km) is your fpv and heavy bomber as well as UGV.\nThere is no more second or third lines with infantry. It is now the drone line/s. Drone teams lack the ability to counter direct infantry threats that break through into their lines.\nThe biggest issue on maneuver warfare right now is both sides lack planning, command & control and cohesion.\nRob Lee: I disagree. The Ukrainian offensive operations in Kupyansk and Zaporizhzhia from last fall and this winter demonstrated that offensive maneuver is possible even with brigades and regiments that only had a company-size element of infantry. In both cases, breakthroughs were",
       "publishedAt": "2026-04-30T16:01:41.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -385,13 +492,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "RT Райан О'Лірі: Я згоден з Робом. Чесно кажучи, війна безпілотників послабила те, як виглядає традиційна статична війна. Нема ні другого, ні третього...",
+      "summaryUk": "RT Райан О'Лірі\nЯ згоден з Робом. Чесно кажучи, війна безпілотників послабила те, як виглядає традиційна статична війна. Другої чи третьої лінії немає. 3-5 км від 0= DJI, розвідувальні та легкі бомбардувальники.\n5-10 (іноді 15 км) — це ваш fpv і важкий бомбардувальник, а також UGV.\nДругої чи третьої лінії з піхотою більше немає. Тепер це лінійка безпілотників. Командам безпілотників бракує здатності протистояти прямим загрозам піхоти, які прориваються в їхні лінії.\nНайбільша проблема маневреної війни зараз полягає в тому, що обидві сторони не мають планування, командування та контролю та єдності.\nРоб Лі: Я не згоден. Українські наступальні операції в Куп’янську та Запоріжжі минулої осені та цієї зими показали, що наступальний маневр можливий навіть бригадами та полками, які мали лише ротний елемент піхоти. В обох випадках прориви були"
     },
     {
       "id": "x-RALee85-3a169b2a220d",
       "title": "RT imi (m): UA middlestrike - BDA 47.08082, 35.36001 destroyed Bukhanka near Melitopol ~70km deep Novobohdanivka, Zaporizhia @UAControlMap @GeoConfirm...",
       "url": "https://x.com/RALee85/status/2050221992893452496",
-      "summary": "RT imi (m)<br>UA middlestrike - BDA<br>47.08082, 35.36001 destroyed Bukhanka<br>near Melitopol ~70km deep <br>Novobohdanivka, Zaporizhia<br>@UAControlMap @GeoConfirmed<br><video width=\"1280\" height=\"720\" src=\"https://video.twimg.com/amplify_video/2049872726471454720/vid/avc1/1280x720/qvcQSsCuZY8uxAhM.mp4?tag=27\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2049872726471454720/img/sK_-OwJJXQsjkHgf.jpg\"></video><br><img width=\"1446\" height=\"1618\" style=\"\" src=\"https://pbs.twimg.com/media/HHKchs0WQAEYjUR?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\"><br><img width=\"1588\" height=\"1441\" style=\"\" src=\"https://pbs.twimg.com/media/HHKckETXQAAyWWr?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "RT imi (m)\nUA middlestrike - BDA\n47.08082, 35.36001 destroyed Bukhanka\nnear Melitopol ~70km deep\nNovobohdanivka, Zaporizhia\n@UAControlMap @GeoConfirmed",
       "publishedAt": "2026-04-30T15:26:41.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -400,13 +509,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "RT imi (m): Проміжний удар UA - BDA 47.08082, 35.36001 зруйновано Буханку біля Мелітополя глибиною ~70 км Новобогданівка, Запоріжжя @UAControlMap @GeoConfirm...",
+      "summaryUk": "RT imi (м)\nUA середній удар - BDA\n47.08082, 35.36001 зруйнована Буханка\nбіля Мелітополя глибина ~70 км\nНовобогданівка, Запоріжжя\n@UAControlMap @GeoConfirmed"
     },
     {
       "id": "x-RALee85-6e0f13762153",
       "title": "I disagree. The Ukrainian offensive operations in Kupyansk and Zaporizhzhia from last fall and this winter demonstrated that offensive maneuver is pos...",
       "url": "https://x.com/RALee85/status/2049829139641692294",
-      "summary": "I disagree. The Ukrainian offensive operations in Kupyansk and Zaporizhzhia from last fall and this winter demonstrated that offensive maneuver is possible even with brigades and regiments that only had a company-size element of infantry. In both cases, breakthroughs were possible if Ukraine had sufficient forces to exploit success. Proper planning, task organization, rehearsals, intelligence, and employment of fires/CUAS can set the conditions for successful offensive operations. UAS can enable, not only hinder, maneuver.<div class=\"rsshub-quote\"><br><br>Giorgi Revishvili: General Valerii Zaluzhnyi, former Commander-in-Chief of the Ukrainian Armed Forces and current Ambassador to the UK:<br><br>Due to scientific and technological progress, it has become impossible, regardless of what others may claim, to carry out operational-level tasks. 1/12<br><br><img width=\"1480\" height=\"833\" style=\"\" src=\"https://pbs.twimg.com/media/HHGAzJxasAAiydI?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\"></div>",
+      "summary": "I disagree. The Ukrainian offensive operations in Kupyansk and Zaporizhzhia from last fall and this winter demonstrated that offensive maneuver is possible even with brigades and regiments that only had a company-size element of infantry. In both cases, breakthroughs were possible if Ukraine had sufficient forces to exploit success. Proper planning, task organization, rehearsals, intelligence, and employment of fires/CUAS can set the conditions for successful offensive operations. UAS can enable, not only hinder, maneuver.\nGiorgi Revishvili: General Valerii Zaluzhnyi, former Commander-in-Chief of the Ukrainian Armed Forces and current Ambassador to the UK:\nDue to scientific and technological progress, it has become impossible, regardless of what others may claim, to carry out operational-level tasks. 1/12",
       "publishedAt": "2026-04-30T12:32:05.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -415,13 +526,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Я не згоден. Українські наступальні операції в Куп'янську та Запоріжжі минулої осені та цієї зими показали, що наступальний маневр можливий...",
+      "summaryUk": "Я не згоден. Українські наступальні операції в Куп’янську та Запоріжжі минулої осені та цієї зими показали, що наступальний маневр можливий навіть бригадами та полками, які мали лише ротний елемент піхоти. В обох випадках прорив був можливий, якщо Україна мала достатньо сил для використання успіху. Правильне планування, організація завдань, репетиції, розвідка та використання вогню/CUAS можуть створити умови для успішних наступальних операцій. БПЛА можуть не тільки заважати, але й уможливлювати маневр.\nГеоргій Ревішвілі: Генерал Валерій Залужний, колишній Головнокомандувач Збройних Сил України та нинішній Посол у Великобританії:\nУ зв'язку з науково-технічним прогресом, незважаючи на те, що заявляють інші, виконання завдань оперативного рівня стало неможливим. 1/12"
     },
     {
       "id": "x-Tendar-45a633342842",
       "title": "The Russian May 9 parade this year will be reduced down to troops only. No landsystems will be presented. The excuses why the parade will be trimmed d...",
       "url": "https://x.com/Tendar/status/2049791411323633893",
-      "summary": "The Russian May 9 parade this year will be reduced down to troops only. No landsystems will be presented.<br><br>The excuses why the parade will be trimmed down are colorful, but the real reason is that Russians are afraid. And they all reasons to be afraid. This war has gone so wrong for them that most people haven't entirely grasped it.<br><img width=\"1170\" height=\"653\" style=\"\" src=\"https://pbs.twimg.com/media/HHJQ9XdXAAAibzY?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "The Russian May 9 parade this year will be reduced down to troops only. No landsystems will be presented.\nThe excuses why the parade will be trimmed down are colorful, but the real reason is that Russians are afraid. And they all reasons to be afraid. This war has gone so wrong for them that most people haven't entirely grasped it.",
       "publishedAt": "2026-04-30T10:02:10.000Z",
       "author": "Tendar",
       "handle": "Tendar",
@@ -430,13 +543,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Російський парад 9 травня цього року буде зведений лише до військ. Земельні системи представлені не будуть. Відмовки, чому парад обрізають, д...",
+      "summaryUk": "Російський парад 9 травня цього року буде зведений лише до військ. Земельні системи представлені не будуть.\nВідмовки про згортання параду різнокольорові, але справжня причина в тому, що росіяни бояться. І всі вони мають підстави для страху. Ця війна пішла для них настільки погано, що більшість людей не до кінця це усвідомили."
     },
     {
       "id": "x-Tendar-e1ba90cae0c5",
       "title": "The burning pipeline in Perm, Russia, which got struck yesterday, exploded.",
       "url": "https://x.com/Tendar/status/2049769721881370981",
-      "summary": "The burning pipeline in Perm, Russia, which got struck yesterday, exploded.<br><video width=\"1080\" height=\"1920\" src=\"https://video.twimg.com/amplify_video/2049769481010819072/vid/avc1/1080x1920/mIXLoioR2RJLcMCs.mp4?tag=21\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2049769481010819072/img/H3w5EdnmwJeStvdq.jpg\"></video>",
+      "summary": "The burning pipeline in Perm, Russia, which got struck yesterday, exploded.",
       "publishedAt": "2026-04-30T08:35:59.000Z",
       "author": "Tendar",
       "handle": "Tendar",
@@ -445,13 +560,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Палаючий трубопровід у російській Пермі, який стався вчора, вибухнув.",
+      "summaryUk": "Палаючий трубопровід у російській Пермі, який стався вчора, вибухнув."
     },
     {
       "id": "x-Tendar-0a8d2adfd57e",
       "title": "Trump in his rant claiming that according to him „Ukraine is militarily defeated“ aimlessly rambles about what supposed to be Iran, clearly mixing u...",
       "url": "https://x.com/Tendar/status/2049573208626462912",
-      "summary": "Trump in his rant claiming that according to him „Ukraine is militarily defeated“ aimlessly rambles about what supposed to be Iran, clearly mixing up those two wars. Ukraine never had 159 ships.<br><br>Ukraine situation is far better than it was a year ago.<br><video width=\"1280\" height=\"720\" src=\"https://video.twimg.com/amplify_video/2049555363335438336/vid/avc1/1280x720/OwkSqDjK4yX3_Zyi.mp4?tag=14\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2049555363335438336/img/R7XG-Co3paEFLFOu.jpg\"></video>",
+      "summary": "Trump in his rant claiming that according to him „Ukraine is militarily defeated“ aimlessly rambles about what supposed to be Iran, clearly mixing up those two wars. Ukraine never had 159 ships.\nUkraine situation is far better than it was a year ago.",
       "publishedAt": "2026-04-29T19:35:06.000Z",
       "author": "Tendar",
       "handle": "Tendar",
@@ -460,13 +577,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Трамп у своєму висловлюванні, стверджуючи, що, за його словами, «Україна зазнала військової поразки», безцільно балакає про те, що має бути Іраном, явно змішуючи з...",
+      "summaryUk": "Трамп у своєму висловлюванні, стверджуючи, що, за його словами, «Україна зазнала військової поразки», безцільно базікає про те, що має бути Іраном, явно змішуючи ці дві війни. Україна ніколи не мала 159 кораблів.\nСитуація в Україні набагато краща, ніж була рік тому."
     },
     {
       "id": "x-RALee85-a1d902fdad94",
       "title": "RT Qalaat Al Mudiq: Unlike the war in Ukraine, Syrian Rebels rarely invested in decoys. A rare example from N. #Hama countryside. 📸 August 23, 2019...",
       "url": "https://x.com/RALee85/status/2049587657643028663",
-      "summary": "RT Qalaat Al Mudiq<br>Unlike the war in Ukraine, Syrian Rebels rarely invested in decoys.<br><br>A rare example from N. #Hama countryside.<br><br>📸 August 23, 2019.<br><img width=\"1000\" height=\"750\" style=\"\" src=\"https://pbs.twimg.com/media/HG7ZgGbawAATi83?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "RT Qalaat Al Mudiq\nUnlike the war in Ukraine, Syrian Rebels rarely invested in decoys.\nA rare example from N. #Hama countryside.\n📸 August 23, 2019.",
       "publishedAt": "2026-04-29T19:30:00.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -475,13 +594,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "RT Qalaat Al Mudiq: На відміну від війни в Україні, сирійські повстанці рідко інвестували в приманки. Рідкісний приклад із сільської місцевості N. #Hama. 📸 23 серпня ц.",
+      "summaryUk": "RT Калаат Аль Мудік\nНа відміну від війни в Україні, сирійські повстанці рідко інвестували в приманки.\nРідкісний приклад із сільської місцевості N. #Hama.\n📸 23 серпня ц."
     },
     {
       "id": "x-RALee85-7d54e95f8656",
       "title": "RT Ukraine Control Map: Daily Ukraine map thread for Wednesday 29th April 2026 Highlights: Today we zoom out, to look at a handful of the strikes done...",
       "url": "https://x.com/RALee85/status/2049567751988191453",
-      "summary": "RT Ukraine Control Map<br>Daily Ukraine map thread for Wednesday 29th April 2026<br><br>Highlights: Today we zoom out, to look at a handful of the strikes done this month (April) alone. In one of the longest successful strikes thus far, Perm pumping station was hit by a strike causing two large storage tanks to burn heavily. A Lyuity type drone also reached Orsk refinery near the Kazakhstan border. <br><br>In a rare interesting midstrike, a forward operating base for Russian army aviation was struck, destroying an Mi-17 and Mi-28.<br><br>On the front, the flanks at Kostyantynivka are under severe pressure. The entire Kostyantynivka to west of Siversk area is under severe threat.<br><br>Elsewhere, we've pulled Russian presence back. The Dniper islands, which we hadn't touched for quite some time, as one example.<br><img width=\"2048\" height=\"1449\" style=\"\" src=\"https://pbs.twimg.com/media/HHF-iSXaEAAnf4A?format=jpg&amp;name=orig\" referrerpolicy=\"no-referrer\">",
+      "summary": "RT Ukraine Control Map\nDaily Ukraine map thread for Wednesday 29th April 2026\nHighlights: Today we zoom out, to look at a handful of the strikes done this month (April) alone. In one of the longest successful strikes thus far, Perm pumping station was hit by a strike causing two large storage tanks to burn heavily. A Lyuity type drone also reached Orsk refinery near the Kazakhstan border.\nIn a rare interesting midstrike, a forward operating base for Russian army aviation was struck, destroying an Mi-17 and Mi-28.\nOn the front, the flanks at Kostyantynivka are under severe pressure. The entire Kostyantynivka to west of Siversk area is under severe threat.\nElsewhere, we've pulled Russian presence back. The Dniper islands, which we hadn't touched for quite some time, as one example.",
       "publishedAt": "2026-04-29T18:49:57.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -490,13 +611,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "RT Ukraine Control Map: Щоденна тематика карт України за середу, 29 квітня 2026 року. Основні моменти: Сьогодні ми зменшили масштаб, щоб переглянути кілька завданих ударів...",
+      "summaryUk": "RT Україна контрольна карта\nЩоденна тематика карт України за середу, 29 квітня 2026 року\nОсновні моменти: сьогодні ми зменшили масштаб, щоб переглянути лише кілька страйків, зроблених цього місяця (квітень). Під час одного з найтриваліших успішних страйків на сьогодні Пермська насосна станція постраждала від удару, що спричинило сильні горіння двох великих резервуарів. Безпілотник типу \"Люіті\" також досяг Орського НПЗ поблизу кордону з Казахстаном.\nУ рідкісному цікавому проміжному ударі було вражено передову оперативну базу російської армійської авіації, знищивши Мі-17 і Мі-28.\nНа фронті фланги біля Костянтинівки відчувають сильний тиск. Під серйозною загрозою вся Костянтинівка на захід від Сіверська.\nВ іншому місці ми повернули російську присутність. Наприклад, дніпровські острови, яких ми давно не торкалися."
     },
     {
       "id": "x-Tendar-4e4f60978586",
       "title": "During a hearing Congressman Adam Smith asked Secretary of Defense Pete Hegseth why the Trump administration miscalculated Ukraine‘s capabilities, qu...",
       "url": "https://x.com/Tendar/status/2049557793061892273",
-      "summary": "During a hearing Congressman Adam Smith asked Secretary of Defense Pete Hegseth why the Trump administration miscalculated Ukraine‘s capabilities, questioning why the Trump admin tried to push Ukraine into an unfavorable deal. Hegseth deflected and didn’t respond to the question.<br><video width=\"1920\" height=\"1080\" src=\"https://video.twimg.com/amplify_video/2049557727949864960/vid/avc1/1920x1080/w9feJKg3U85eB5Xj.mp4?tag=21\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2049557727949864960/img/7mkqxvHUp6E8l4Va.jpg\"></video>",
+      "summary": "During a hearing Congressman Adam Smith asked Secretary of Defense Pete Hegseth why the Trump administration miscalculated Ukraine‘s capabilities, questioning why the Trump admin tried to push Ukraine into an unfavorable deal. Hegseth deflected and didn’t respond to the question.",
       "publishedAt": "2026-04-29T18:33:51.000Z",
       "author": "Tendar",
       "handle": "Tendar",
@@ -505,13 +628,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Під час слухань конгресмен Адам Сміт запитав міністра оборони Піта Хегсета, чому адміністрація Трампа неправильно розрахувала можливості України.",
+      "summaryUk": "Під час слухань конгресмен Адам Сміт запитав міністра оборони Піта Хегсета, чому адміністрація Трампа неправильно розрахувала можливості України, ставлячи під сумнів, чому адміністрація Трампа намагалася підштовхнути Україну до невигідної угоди. Гегсет відхилився й не відповів на запитання."
     },
     {
       "id": "x-Tendar-3bc124d5a65b",
       "title": "Ukrainian mid-range drones struck deep into Russian territory. In the Voronezh region two choppers (Mi-17 and Mi-28) were detected by a surveillance d...",
       "url": "https://x.com/Tendar/status/2049552816276943206",
-      "summary": "Ukrainian mid-range drones struck deep into Russian territory. In the Voronezh region two choppers (Mi-17 and Mi-28) were detected by a surveillance drone and struck by two strike-drones. Clearly the Russian military expected to be safe here. Apparently, they were not.<br><video width=\"1920\" height=\"1080\" src=\"https://video.twimg.com/amplify_video/2049552751953346560/vid/avc1/1920x1080/nWDCf1htHTp-EYvq.mp4?tag=21\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2049552751953346560/img/5WcW6Is1bxCAZgRS.jpg\"></video>",
+      "summary": "Ukrainian mid-range drones struck deep into Russian territory. In the Voronezh region two choppers (Mi-17 and Mi-28) were detected by a surveillance drone and struck by two strike-drones. Clearly the Russian military expected to be safe here. Apparently, they were not.",
       "publishedAt": "2026-04-29T18:14:04.000Z",
       "author": "Tendar",
       "handle": "Tendar",
@@ -520,13 +645,15 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Українські безпілотники середнього радіусу дії вдарили вглиб території Росії. У Воронезькій області два вертольоти (Мі-17 і Мі-28) були виявлені оглядовим д...",
+      "summaryUk": "Українські безпілотники середнього радіусу дії вдарили вглиб території Росії. У Воронезькій області два вертольоти (Мі-17 і Мі-28) були виявлені розвідувальним безпілотником і збиті двома ударними БПЛА. Очевидно, російські військові розраховували бути тут у безпеці. Мабуть, не були."
     },
     {
       "id": "x-RALee85-0f2d4bff8c09",
       "title": "Video of UAS strikes by the 429th Achilles Unmanned Systems Brigade and 43rd Artillery Brigade on Russian Mi-28 and Mi-8/17 helicopters in Voronezh ob...",
       "url": "https://x.com/RALee85/status/2049502291384729944",
-      "summary": "Video of UAS strikes by the 429th Achilles Unmanned Systems Brigade and 43rd Artillery Brigade on Russian Mi-28 and Mi-8/17 helicopters in Voronezh oblast, more than 150km from the front line. <br>https://t.me/robert_magyar/2283<br><video width=\"1280\" height=\"720\" src=\"https://video.twimg.com/amplify_video/2049502108425322497/vid/avc1/1280x720/5kjMoPuKEjCoEi6d.mp4?tag=21\" controls=\"controls\" poster=\"https://pbs.twimg.com/amplify_video_thumb/2049502108425322497/img/QeVucy3egu3goHr1.jpg\"></video>",
+      "summary": "Video of UAS strikes by the 429th Achilles Unmanned Systems Brigade and 43rd Artillery Brigade on Russian Mi-28 and Mi-8/17 helicopters in Voronezh oblast, more than 150km from the front line.\nhttps://t.me/robert_magyar/2283",
       "publishedAt": "2026-04-29T14:53:18.000Z",
       "author": "Rob Lee",
       "handle": "RALee85",
@@ -535,7 +662,9 @@
         "OSINT",
         "HUMINT",
         "UKRAINE"
-      ]
+      ],
+      "titleUk": "Відео ударів ЗСУ 429-ї ОБРРБр «Ахілл» і 43-ї ОМСБр по російським вертольотам Мі-28 і Мі-8/17 у Воронезькій обл.",
+      "summaryUk": "Відео ударів БПЛА 429-ї бригади безпілотних систем «Ахілл» і 43-ї артилерійської бригади по російських вертольотах Мі-28 і Мі-8/17 у Воронезькій області, понад 150 км від лінії фронту.\nhttps://t.me/robert_magyar/2283"
     }
   ]
 }
