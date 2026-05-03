@@ -54,8 +54,45 @@ type PechalStats = {
   };
 };
 
-const SECTION_IDS = ['map', 'analytics', 'investigations', 'rss', 'feed', 'contacts'] as const;
+const SECTION_IDS = ['map', 'brigades', 'analytics', 'investigations', 'rss', 'feed', 'contacts'] as const;
 type SectionId = typeof SECTION_IDS[number];
+
+type BrigadeDashboardItem = {
+  id: string;
+  title: string;
+  titleUk?: string;
+  summary?: string;
+  summaryUk?: string;
+  url: string;
+  publishedAt: string;
+  source: 'x' | 'facebook' | string;
+  sourceLabel: string;
+  origin: 'official' | 'mention';
+  score?: number;
+};
+
+type BrigadeDashboardRow = {
+  id: string;
+  name: string;
+  officialItems: number;
+  mentionItems: number;
+  significantItems: number;
+  hasOfficialFeed: boolean;
+  items: BrigadeDashboardItem[];
+};
+
+type BrigadeDashboardPayload = {
+  generatedAt: string;
+  windowDays: number;
+  totals: {
+    brigades: number;
+    brigadesWithOfficialFeeds: number;
+    officialItems: number;
+    mentionItems: number;
+    significantItems: number;
+  };
+  brigades: BrigadeDashboardRow[];
+};
 
 export default function App() {
   const location = useLocation();
@@ -63,6 +100,7 @@ export default function App() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [rssItems, setRssItems] = useState<RssItem[]>([]);
   const [fbItems, setFbItems] = useState<RssItem[]>([]);
+  const [brigadeDashboard, setBrigadeDashboard] = useState<BrigadeDashboardPayload | null>(null);
   const [pechalStats, setPechalStats] = useState<PechalStats | null>(null);
   const [investigations, setInvestigations] = useState<InvestigationArticle[]>([]);
   const [sharedItemId, setSharedItemId] = useState<string>('');
@@ -111,6 +149,11 @@ export default function App() {
       .then(r => r.json())
       .then((data: InvestigationArticle[]) => setInvestigations(Array.isArray(data) ? data : []))
       .catch(() => setInvestigations([]));
+
+    fetch(`/data/brigades_dashboard.json?t=${Date.now()}`)
+      .then(r => r.json())
+      .then((data: BrigadeDashboardPayload) => setBrigadeDashboard(data && Array.isArray(data.brigades) ? data : null))
+      .catch(() => setBrigadeDashboard(null));
 
     fetch(`/data/pechalbeda_stats.json?t=${Date.now()}`)
       .then(r => r.json())
@@ -354,6 +397,7 @@ export default function App() {
               <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
             </Link>
             <button type="button" onClick={() => openSection('map')} className="hover:text-white transition-colors">Карта</button>
+            <button type="button" onClick={() => openSection('brigades')} className="hover:text-white transition-colors">Бригади</button>
             <button type="button" onClick={() => openSection('analytics')} className="hover:text-white transition-colors">Аналітика</button>
             <button type="button" onClick={() => openSection('investigations')} className="hover:text-white transition-colors">Розслідування</button>
             <button type="button" onClick={() => openSection('rss')} className="hover:text-white transition-colors">RSS</button>
@@ -382,6 +426,7 @@ export default function App() {
               <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
             </Link>
             <button type="button" onClick={() => openSection('map')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Карта</button>
+            <button type="button" onClick={() => openSection('brigades')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Бригади</button>
             <button type="button" onClick={() => openSection('analytics')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Аналітика</button>
             <button type="button" onClick={() => openSection('investigations')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Розслідування</button>
             <button type="button" onClick={() => openSection('rss')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">RSS</button>
@@ -602,6 +647,70 @@ export default function App() {
               </div>
             </div>
           </motion.div>
+
+          {/* Brigades Dashboard */}
+          <motion.section id="brigades" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
+            <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
+              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ BRIGADES DASHBOARD</span>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Огляд бригад (3 доби)</h2>
+                  <p className="mt-4 text-white/60 max-w-4xl text-sm leading-relaxed">
+                    Автоматичний моніторинг X/Facebook-пабів бригад і релевантних згадок. Виділяємо значимі публікації за ключовими ознаками бойової активності.
+                  </p>
+                </div>
+                <div className="bg-[#1c1c12] border border-[#c9a227]/20 px-6 py-5 min-w-[260px]">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Статус вибірки</p>
+                  <p className="text-xl font-bold tracking-tight text-white">{brigadeDashboard?.totals.brigadesWithOfficialFeeds ?? 0}/{brigadeDashboard?.totals.brigades ?? 0} з офіційними фідами</p>
+                  <p className="mt-1 text-xs text-white/45">Оновлено: {brigadeDashboard?.generatedAt ? formatRssDate(brigadeDashboard.generatedAt) : 'очікується...'}</p>
+                </div>
+              </div>
+
+              {!brigadeDashboard || !brigadeDashboard.brigades.length ? (
+                <div className="border border-[#c9a227]/20 bg-[#2e2d1e] p-8 font-mono text-xs uppercase tracking-widest text-white/40">
+                  Дані бригадного дашборду ще формуються. Запусти синхронізацію або зачекай автооновлення.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                  {brigadeDashboard.brigades.map((row) => (
+                    <article key={row.id} className="bg-[#2b2a1f] border border-[#c9a227]/20 p-5 md:p-6">
+                      <h3 className="text-xl font-extrabold leading-snug mb-4">{row.name}</h3>
+                      <div className="grid grid-cols-3 gap-2 mb-4 font-mono text-center">
+                        <div className="border border-[#c9a227]/20 py-2">
+                          <div className="text-base font-bold text-[#c9a227]">{row.officialItems}</div>
+                          <div className="text-[8px] uppercase tracking-widest text-white/40">офіційні</div>
+                        </div>
+                        <div className="border border-[#c9a227]/20 py-2">
+                          <div className="text-base font-bold text-white">{row.mentionItems}</div>
+                          <div className="text-[8px] uppercase tracking-widest text-white/40">згадки</div>
+                        </div>
+                        <div className="border border-[#c9a227]/20 py-2">
+                          <div className="text-base font-bold text-white">{row.significantItems}</div>
+                          <div className="text-[8px] uppercase tracking-widest text-white/40">значимі</div>
+                        </div>
+                      </div>
+
+                      {row.items.length === 0 ? (
+                        <p className="text-sm text-white/45 leading-relaxed">За останні 3 доби не знайдено релевантних постів у доступних публічних фідах.</p>
+                      ) : (
+                        <div className="space-y-3">
+                          {row.items.slice(0, 3).map((item) => (
+                            <a key={item.id} href={item.url} target="_blank" rel="noreferrer" className="block border border-white/10 p-3 hover:border-[#c9a227]/45 transition-colors">
+                              <div className="flex items-center justify-between mb-2 font-mono text-[9px] tracking-widest uppercase">
+                                <span className={item.origin === 'official' ? 'text-[#c9a227]' : 'text-white/50'}>{item.origin === 'official' ? 'Офіційний паб' : 'Моніторинг згадок'}</span>
+                                <span className="text-white/35">{formatRssDate(item.publishedAt)}</span>
+                              </div>
+                              <p className="text-sm text-white/80 leading-snug">{formatPreview(item.titleUk || item.title || '', 130)}</p>
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </article>
+                  ))}
+                </div>
+              )}
+            </div>
+          </motion.section>
 
           {/* 7D Dashboard */}
           <motion.section id="analytics" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
@@ -923,6 +1032,7 @@ export default function App() {
               <ul className="space-y-3 font-mono text-xs tracking-widest uppercase text-white/50">
                 <li><Link to="/targets" className="hover:text-[#c9a227] transition-colors flex items-center gap-2"><Target className="w-3 h-3" />БАЗА ЦІЛЕЙ</Link></li>
                 <li><button type="button" onClick={() => openSection('map')} className="hover:text-[#c9a227] transition-colors text-left">КАРТА</button></li>
+                <li><button type="button" onClick={() => openSection('brigades')} className="hover:text-[#c9a227] transition-colors text-left">БРИГАДИ</button></li>
                 <li><button type="button" onClick={() => openSection('analytics')} className="hover:text-[#c9a227] transition-colors text-left">АНАЛІТИКА УДАРІВ</button></li>
                 <li><button type="button" onClick={() => openSection('investigations')} className="hover:text-[#c9a227] transition-colors text-left">РОЗСЛІДУВАННЯ</button></li>
                 <li><button type="button" onClick={() => openSection('rss')} className="hover:text-[#c9a227] transition-colors text-left">RSS</button></li>

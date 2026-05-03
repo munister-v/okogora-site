@@ -1,0 +1,175 @@
+{
+  "windowDays": 3,
+  "maxItemsPerBrigade": 8,
+  "maxItemsTotal": 360,
+  "brigades": [
+    {
+      "id": "3-assault",
+      "name": "3 ОШБр / 3-й Армійський Корпус",
+      "aliases": ["3 ошбр", "третій армійський корпус", "third assault brigade", "ab3"],
+      "sources": [
+        { "platform": "x", "handle": "ab3army", "trusted": true }
+      ]
+    },
+    {
+      "id": "3-iron",
+      "name": "3 ОВМБр «Залізна»",
+      "aliases": ["3 овмбр", "залізна бригада", "3 iron brigade", "3 важка механізована"],
+      "sources": [
+        { "platform": "x", "handle": "3ironbrigade", "trusted": true }
+      ]
+    },
+    {
+      "id": "10-ogshbr",
+      "name": "10 ОГШБр «Едельвейс»",
+      "aliases": ["10 огшбр", "едельвейс", "10th mountain brigade"],
+      "sources": []
+    },
+    {
+      "id": "22-ombr",
+      "name": "22 ОМБр",
+      "aliases": ["22 омбр", "22nd mechanized brigade"],
+      "sources": [
+        { "platform": "x", "handle": "22ombr", "trusted": true }
+      ]
+    },
+    {
+      "id": "24-ombr",
+      "name": "24 ОМБр імені короля Данила",
+      "aliases": ["24 омбр", "24th mechanized brigade"],
+      "sources": []
+    },
+    {
+      "id": "25-odshbr",
+      "name": "25 ОПДБр (Січеслав)",
+      "aliases": ["25 опдбр", "25 січеслав", "25th airborne brigade"],
+      "sources": []
+    },
+    {
+      "id": "28-ombr",
+      "name": "28 ОМБр імені Лицарів Зимового Походу",
+      "aliases": ["28 омбр", "28th mechanized brigade"],
+      "sources": [
+        { "platform": "x", "handle": "28ombr", "trusted": true }
+      ]
+    },
+    {
+      "id": "30-ombr",
+      "name": "30 ОМБр імені князя Костянтина Острозького",
+      "aliases": ["30 омбр", "30th mechanized brigade"],
+      "sources": []
+    },
+    {
+      "id": "34-coast",
+      "name": "34 ОБрБО",
+      "aliases": ["34 обрбо", "34th coast guard brigade"],
+      "sources": []
+    },
+    {
+      "id": "36-obrmp",
+      "name": "36 ОБрМП",
+      "aliases": ["36 обрмп", "36th marine brigade", "миколаївські морпіхи"],
+      "sources": [
+        { "platform": "x", "handle": "36obrmp", "trusted": true }
+      ]
+    },
+    {
+      "id": "38-obrmp",
+      "name": "38 ОБрМП",
+      "aliases": ["38 обрмп", "38th marine brigade"],
+      "sources": [
+        { "platform": "x", "handle": "38obrmp", "trusted": true }
+      ]
+    },
+    {
+      "id": "39-coast",
+      "name": "39 ОБрБО",
+      "aliases": ["39 обрбо", "39th coast guard brigade"],
+      "sources": []
+    },
+    {
+      "id": "47-ombr",
+      "name": "47 ОМБр «Маґура»",
+      "aliases": ["47 омбр", "магура", "47th mechanized brigade"],
+      "sources": []
+    },
+    {
+      "id": "54-ombr",
+      "name": "54 ОМБр імені Івана Мазепи",
+      "aliases": ["54 омбр", "54th mechanized brigade", "мазепи"],
+      "sources": []
+    },
+    {
+      "id": "59-oshbr",
+      "name": "59 ОШБр",
+      "aliases": ["59 ошбр", "59th assault brigade"],
+      "sources": []
+    },
+    {
+      "id": "72-ombr",
+      "name": "72 ОМБр імені Чорних Запорожців",
+      "aliases": ["72 омбр", "чорних запорожців", "72nd mechanized brigade"],
+      "sources": []
+    },
+    {
+      "id": "80-odshbr",
+      "name": "80 ОДШБр",
+      "aliases": ["80 одшбр", "80th air assault brigade"],
+      "sources": []
+    },
+    {
+      "id": "82-odshbr",
+      "name": "82 ОДШБр «Буковина»",
+      "aliases": ["82 одшбр", "буковина", "82nd air assault brigade"],
+      "sources": []
+    },
+    {
+      "id": "92-oshbr",
+      "name": "92 ОШБр імені Івана Сірка",
+      "aliases": ["92 ошбр", "92nd assault brigade", "івана сірка"],
+      "sources": []
+    },
+    {
+      "id": "93-ombr",
+      "name": "93 ОМБр «Холодний Яр»",
+      "aliases": ["93 омбр", "холодний яр", "93rd mechanized brigade"],
+      "sources": []
+    },
+    {
+      "id": "95-odshbr",
+      "name": "95 ОДШБр",
+      "aliases": ["95 одшбр", "95th air assault brigade"],
+      "sources": []
+    },
+    {
+      "id": "103-tro",
+      "name": "103 ОБрТрО",
+      "aliases": ["103 обртро", "103rd territorial defense brigade"],
+      "sources": []
+    },
+    {
+      "id": "108-tro",
+      "name": "108 ОБрТрО",
+      "aliases": ["108 обртро", "108th territorial defense brigade"],
+      "sources": []
+    },
+    {
+      "id": "127-tro",
+      "name": "127 ОБрТрО",
+      "aliases": ["127 обртро", "127th territorial defense brigade"],
+      "sources": []
+    },
+    {
+      "id": "128-ogshbr",
+      "name": "128 ОГШБр",
+      "aliases": ["128 огшбр", "128th mountain assault brigade"],
+      "sources": []
+    }
+  ],
+  "significantKeywords": [
+    "знищ", "ліквід", "уражен", "влуч", "удар", "штурм", "полон", "евак",
+    "втрат", "піхот", "fpv", "дрон", "бпла", "артилер", "strike", "hit",
+    "destroy", "eliminate", "captured", "assault", "offensive"
+  ],
+  "excludeKeywords": ["реклама", "giveaway", "promo", "discount"]
+}
