@@ -20,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/map" element={<App />} />
+        <Route path="/brigades" element={<App />} />
         <Route path="/analytics" element={<App />} />
         <Route path="/investigations" element={<App />} />
         <Route path="/rss" element={<App />} />

@@ -69,6 +69,10 @@ type BrigadeDashboardItem = {
   sourceLabel: string;
   origin: 'official' | 'mention';
   score?: number;
+  strikeScore?: number;
+  reorgScore?: number;
+  isStrike?: boolean;
+  isReorg?: boolean;
 };
 
 type BrigadeDashboardRow = {
@@ -77,6 +81,8 @@ type BrigadeDashboardRow = {
   officialItems: number;
   mentionItems: number;
   significantItems: number;
+  strikeItems: number;
+  reorgItems: number;
   hasOfficialFeed: boolean;
   items: BrigadeDashboardItem[];
 };
@@ -90,6 +96,8 @@ type BrigadeDashboardPayload = {
     officialItems: number;
     mentionItems: number;
     significantItems: number;
+    strikeItems: number;
+    reorgItems: number;
   };
   brigades: BrigadeDashboardRow[];
 };
@@ -654,14 +662,16 @@ export default function App() {
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ BRIGADES DASHBOARD</span>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Огляд бригад (3 доби)</h2>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Огляд бригад: ураження та реорганізація</h2>
                   <p className="mt-4 text-white/60 max-w-4xl text-sm leading-relaxed">
-                    Автоматичний моніторинг X/Facebook-пабів бригад і релевантних згадок. Виділяємо значимі публікації за ключовими ознаками бойової активності.
+                    Автоматичний моніторинг X/Facebook-пабів за останні 3 доби. Окремо рахуємо пости про ураження/бойові результати та новини про зміни структури, корпуси й реорганізацію.
                   </p>
                 </div>
                 <div className="bg-[#1c1c12] border border-[#c9a227]/20 px-6 py-5 min-w-[260px]">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Статус вибірки</p>
                   <p className="text-xl font-bold tracking-tight text-white">{brigadeDashboard?.totals.brigadesWithOfficialFeeds ?? 0}/{brigadeDashboard?.totals.brigades ?? 0} з офіційними фідами</p>
+                  <p className="mt-1 text-xs text-white/45">Ураження: {brigadeDashboard?.totals.strikeItems ?? 0}</p>
+                  <p className="text-xs text-white/45">Реорганізація: {brigadeDashboard?.totals.reorgItems ?? 0}</p>
                   <p className="mt-1 text-xs text-white/45">Оновлено: {brigadeDashboard?.generatedAt ? formatRssDate(brigadeDashboard.generatedAt) : 'очікується...'}</p>
                 </div>
               </div>
@@ -675,7 +685,7 @@ export default function App() {
                   {brigadeDashboard.brigades.map((row) => (
                     <article key={row.id} className="bg-[#2b2a1f] border border-[#c9a227]/20 p-5 md:p-6">
                       <h3 className="text-xl font-extrabold leading-snug mb-4">{row.name}</h3>
-                      <div className="grid grid-cols-3 gap-2 mb-4 font-mono text-center">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4 font-mono text-center">
                         <div className="border border-[#c9a227]/20 py-2">
                           <div className="text-base font-bold text-[#c9a227]">{row.officialItems}</div>
                           <div className="text-[8px] uppercase tracking-widest text-white/40">офіційні</div>
@@ -687,6 +697,14 @@ export default function App() {
                         <div className="border border-[#c9a227]/20 py-2">
                           <div className="text-base font-bold text-white">{row.significantItems}</div>
                           <div className="text-[8px] uppercase tracking-widest text-white/40">значимі</div>
+                        </div>
+                        <div className="border border-[#c9a227]/20 py-2">
+                          <div className="text-base font-bold text-white">{row.strikeItems}</div>
+                          <div className="text-[8px] uppercase tracking-widest text-white/40">ураження</div>
+                        </div>
+                        <div className="border border-[#c9a227]/20 py-2">
+                          <div className="text-base font-bold text-white">{row.reorgItems}</div>
+                          <div className="text-[8px] uppercase tracking-widest text-white/40">реорганізація</div>
                         </div>
                       </div>
 
@@ -701,6 +719,14 @@ export default function App() {
                                 <span className="text-white/35">{formatRssDate(item.publishedAt)}</span>
                               </div>
                               <p className="text-sm text-white/80 leading-snug">{formatPreview(item.titleUk || item.title || '', 130)}</p>
+                              <div className="mt-2 flex flex-wrap gap-2">
+                                {item.isStrike && (
+                                  <span className="px-2 py-0.5 border border-[#c9a227]/40 text-[9px] font-mono uppercase tracking-widest text-[#c9a227]">Ураження</span>
+                                )}
+                                {item.isReorg && (
+                                  <span className="px-2 py-0.5 border border-sky-400/40 text-[9px] font-mono uppercase tracking-widest text-sky-300">Реорганізація</span>
+                                )}
+                              </div>
                             </a>
                           ))}
                         </div>

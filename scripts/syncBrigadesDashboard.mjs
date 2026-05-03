@@ -135,6 +135,17 @@ function significanceScore(text, keywords) {
   return Math.min(score, 9);
 }
 
+function keywordHitCount(text, keywords) {
+  const norm = normalizeText(text);
+  let hits = 0;
+  for (const kw of keywords) {
+    const key = normalizeText(kw);
+    if (!key) continue;
+    if (norm.includes(key)) hits += 1;
+  }
+  return hits;
+}
+
 function isProbablyUkrainian(text) {
   return /[іїєґ]/i.test(text || '');
 }
@@ -223,6 +234,12 @@ async function main() {
   const maxItemsPerBrigade = Number(cfg.maxItemsPerBrigade) > 0 ? Number(cfg.maxItemsPerBrigade) : 8;
   const maxItemsTotal = Number(cfg.maxItemsTotal) > 0 ? Number(cfg.maxItemsTotal) : 360;
   const significantKeywords = Array.isArray(cfg.significantKeywords) ? cfg.significantKeywords : [];
+  const strikeKeywords = Array.isArray(cfg.strikeKeywords) && cfg.strikeKeywords.length
+    ? cfg.strikeKeywords
+    : ['удар', 'уражен', 'знищ', 'ліквід', 'влуч', 'strike', 'hit', 'destroy', 'eliminate', 'drone strike', 'бпла'];
+  const reorgKeywords = Array.isArray(cfg.reorgKeywords) && cfg.reorgKeywords.length
+    ? cfg.reorgKeywords
+    : ['реорганіз', 'реформ', 'корпус', 'створенн', 'підпорядк', 'переформ', 'new corps', 'reorganization', 'command structure'];
   const excludeKeywords = Array.isArray(cfg.excludeKeywords) ? cfg.excludeKeywords : [];
 
   const xPool = await readJson(X_RSS_PATH, { items: [] });
@@ -239,6 +256,20 @@ async function main() {
       sourceLabel: item.handle || item.author || 'monitor',
       origin: 'mention',
     }));
+
+  const classifyPost = (text) => {
+    const strikeScore = keywordHitCount(text, strikeKeywords);
+    const reorgScore = keywordHitCount(text, reorgKeywords);
+    const baseScore = significanceScore(text, significantKeywords);
+    const score = Math.min(9, baseScore + (strikeScore > 0 ? 2 : 0) + (reorgScore > 0 ? 2 : 0));
+    return {
+      score,
+      strikeScore,
+      reorgScore,
+      isStrike: strikeScore > 0,
+      isReorg: reorgScore > 0,
+    };
+  };
 
   const feedCache = new Map();
 
@@ -295,10 +326,11 @@ async function main() {
         if (seenOfficial.has(dedup)) continue;
         seenOfficial.add(dedup);
 
+        const cls = classifyPost(txt);
         official.push({
           ...item,
           sourceLabel: source.handle,
-          score: significanceScore(txt, significantKeywords),
+          ...cls,
         });
       }
     }
@@ -312,17 +344,19 @@ async function main() {
       if (seenOfficial.has(dedup) || seenMention.has(dedup)) continue;
       seenMention.add(dedup);
 
+      const cls = classifyPost(txt);
       mentions.push({
         ...item,
-        score: significanceScore(txt, significantKeywords),
+        ...cls,
       });
     }
 
-    const merged = [...official, ...mentions]
+    const allItems = [...official, ...mentions];
+    const merged = allItems
       .sort((a, b) => {
-        const tDiff = new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
-        if (tDiff !== 0) return tDiff;
-        return (b.score || 0) - (a.score || 0);
+        const sDiff = (b.score || 0) - (a.score || 0);
+        if (sDiff !== 0) return sDiff;
+        return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
       })
       .slice(0, maxItemsPerBrigade)
       .map(sanitizeItem);
@@ -333,7 +367,9 @@ async function main() {
       item.summaryUk = await translateToUkrainian(item.summary || '');
     }
 
-    const significantItems = merged.filter((i) => (i.score || 0) >= 2).length;
+    const significantItems = allItems.filter((i) => (i.score || 0) >= 2).length;
+    const strikeItems = allItems.filter((i) => i.isStrike).length;
+    const reorgItems = allItems.filter((i) => i.isReorg).length;
 
     brigadeRows.push({
       id: brigade.id,
@@ -343,6 +379,8 @@ async function main() {
       officialItems: official.length,
       mentionItems: mentions.length,
       significantItems,
+      strikeItems,
+      reorgItems,
       hasOfficialFeed: official.length > 0,
       items: merged,
     });
@@ -350,8 +388,8 @@ async function main() {
 
   const sortedRows = brigadeRows
     .sort((a, b) => {
-      const as = a.significantItems + a.officialItems;
-      const bs = b.significantItems + b.officialItems;
+      const as = a.significantItems + a.officialItems + a.strikeItems * 2 + a.reorgItems;
+      const bs = b.significantItems + b.officialItems + b.strikeItems * 2 + b.reorgItems;
       return bs - as;
     })
     .slice(0, Math.max(1, maxItemsTotal));
@@ -365,12 +403,28 @@ async function main() {
       officialItems: sortedRows.reduce((acc, b) => acc + b.officialItems, 0),
       mentionItems: sortedRows.reduce((acc, b) => acc + b.mentionItems, 0),
       significantItems: sortedRows.reduce((acc, b) => acc + b.significantItems, 0),
+      strikeItems: sortedRows.reduce((acc, b) => acc + b.strikeItems, 0),
+      reorgItems: sortedRows.reduce((acc, b) => acc + b.reorgItems, 0),
     },
     brigades: sortedRows,
   };
 
+  // Guardrail: do not overwrite good data with an empty snapshot caused by
+  // temporary RSS/network outages.
+  if (payload.totals.officialItems === 0 && payload.totals.mentionItems === 0) {
+    const previous = await readJson(OUTPUT_PATH, null);
+    const prevOfficial = Number(previous?.totals?.officialItems || 0);
+    const prevMention = Number(previous?.totals?.mentionItems || 0);
+    if (prevOfficial > 0 || prevMention > 0) {
+      console.warn(
+        `[syncBrigadesDashboard] empty refresh detected, keeping previous snapshot from ${previous.generatedAt || 'unknown time'}`
+      );
+      return;
+    }
+  }
+
   await fs.writeFile(OUTPUT_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
-  console.log(`Wrote ${OUTPUT_PATH}: brigades=${payload.totals.brigades}, official=${payload.totals.officialItems}, significant=${payload.totals.significantItems}`);
+  console.log(`Wrote ${OUTPUT_PATH}: brigades=${payload.totals.brigades}, official=${payload.totals.officialItems}, strike=${payload.totals.strikeItems}, reorg=${payload.totals.reorgItems}`);
 }
 
 main().catch((err) => {
