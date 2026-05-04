@@ -182,6 +182,9 @@ export default function App() {
   const [deepstateTable, setDeepstateTable] = useState<DeepstateTablePayload | null>(null);
   const [investigations, setInvestigations] = useState<InvestigationArticle[]>([]);
   const [sharedItemId, setSharedItemId] = useState<string>('');
+  const [rssSourceFilter, setRssSourceFilter] = useState<'all' | 'x' | 'facebook'>('all');
+  const [rssTopicFilter, setRssTopicFilter] = useState('all');
+  const [rssSearch, setRssSearch] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   function scrollToSection(id: SectionId, smooth = true) {
@@ -499,6 +502,42 @@ export default function App() {
     { label: 'Активні підрозділи', value: brigadeDashboard?.totals.unitsWithOfficialFeeds ?? brigadeDashboard?.totals.brigadesWithOfficialFeeds ?? 0, note: 'останні 3 доби' },
     { label: 'Події ударів', value: dashboard.total, note: '7 днів / з пруфами' },
   ];
+  const rssFeed = useMemo(() => {
+    const normalized = [
+      ...rssItems.map((item) => ({ ...item, feedSource: 'x' as const, sourceLabel: 'X / Twitter' })),
+      ...fbItems.map((item) => ({ ...item, feedSource: 'facebook' as const, sourceLabel: 'Facebook' })),
+    ].map((item) => {
+      const title = cleanRssText(item.titleUk || item.title || '');
+      const summary = cleanRssText(item.summaryUk || item.summary || '');
+      const tags = (item.tags?.length ? item.tags : ['OSINT', 'HUMINT', 'UKRAINE']).map((tag) => tag.toUpperCase());
+      return {
+        ...item,
+        titleClean: title,
+        summaryClean: summary,
+        tagsClean: Array.from(new Set(tags)),
+        ts: new Date(item.publishedAt).getTime() || 0,
+      };
+    }).sort((a, b) => b.ts - a.ts);
+
+    const q = rssSearch.trim().toLowerCase();
+    return normalized.filter((item) => {
+      if (rssSourceFilter !== 'all' && item.feedSource !== rssSourceFilter) return false;
+      if (rssTopicFilter !== 'all' && !item.tagsClean.includes(rssTopicFilter)) return false;
+      if (!q) return true;
+      return `${item.titleClean} ${item.summaryClean} ${item.author} ${item.handle} ${item.tagsClean.join(' ')}`.toLowerCase().includes(q);
+    });
+  }, [rssItems, fbItems, rssSourceFilter, rssTopicFilter, rssSearch]);
+  const rssTopics = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const item of [...rssItems, ...fbItems]) {
+      const tags = (item.tags?.length ? item.tags : ['OSINT', 'HUMINT', 'UKRAINE']).map((tag) => tag.toUpperCase());
+      for (const tag of tags.slice(0, 5)) counts.set(tag, (counts.get(tag) || 0) + 1);
+    }
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([tag, count]) => ({ tag, count }));
+  }, [rssItems, fbItems]);
 
   return (
     <div className="min-h-screen bg-[#252519] text-white selection:bg-[#c9a227] selection:text-[#1c1c12] font-sans overflow-x-hidden">
@@ -1254,62 +1293,145 @@ export default function App() {
           {/* RSS / X feed */}
           <motion.section id="rss" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
             <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
-              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
+              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ LIVE RSS</span>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">RSS пости з X: OSINT/HUMINT</h2>
-                  <p className="mt-4 text-white/65 max-w-3xl text-sm leading-relaxed">
-                    Автоматична вибірка за останні 3 дні по темах, пов'язаних з Україною, з фокусом на іноземних OSINT/HUMINT авторах. Кожна картка містить перекладений заголовок, короткий контекст і прямий перехід до джерела.
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">RSS OSINT-стрічка</h2>
+                  <p className="mt-4 text-white/70 max-w-4xl text-sm md:text-base leading-relaxed font-medium">
+                    Вибірка за останні 3 дні з X/Facebook по темах України, OSINT/HUMINT, ударів, підрозділів та реорганізації. Текст очищається від HTML-вставок, картки сортуються за часом, а фільтри допомагають швидко знайти потрібний сигнал.
                   </p>
                 </div>
                 <a href="https://x.com" target="_blank" rel="noreferrer"
-                  className="font-mono text-xs uppercase tracking-widest text-white/30 hover:text-[#c9a227] transition-colors shrink-0">
-                  Джерела X / Twitter <ArrowUpRight className="inline w-3 h-3 ml-1" />
+                  className="inline-flex items-center gap-2 self-start lg:self-auto border border-[#c9a227]/45 bg-[#c9a227]/10 px-4 py-3 font-mono text-[11px] uppercase tracking-widest text-[#f3d97f] hover:bg-[#c9a227]/16 transition-colors shrink-0">
+                  Перевірити X <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               </div>
 
-              {rssItems.length === 0 ? (
+              <div className="mb-6 grid grid-cols-1 xl:grid-cols-12 gap-4">
+                <div className="xl:col-span-5 border border-[#c9a227]/20 bg-[#1c1c12]/80 p-4 md:p-5">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-3">швидкий пошук</p>
+                  <input
+                    value={rssSearch}
+                    onChange={(e) => setRssSearch(e.target.value)}
+                    placeholder="Пошук: Pokrovsk, drone, СБС, reorg..."
+                    className="w-full bg-[#10110d] border border-[#c9a227]/25 px-4 py-3 text-base font-bold text-white placeholder:text-white/28 outline-none focus:border-[#c9a227]/70 transition-colors"
+                  />
+                </div>
+                <div className="xl:col-span-4 border border-[#c9a227]/20 bg-[#1c1c12]/80 p-4 md:p-5">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-3">джерело</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      ['all', 'Усі', rssItems.length + fbItems.length],
+                      ['x', 'X', rssItems.length],
+                      ['facebook', 'Facebook', fbItems.length],
+                    ].map(([id, label, count]) => (
+                      <button
+                        key={id as string}
+                        type="button"
+                        onClick={() => setRssSourceFilter(id as 'all' | 'x' | 'facebook')}
+                        className={`border px-3 py-2 text-left transition-colors ${rssSourceFilter === id ? 'border-[#c9a227] bg-[#c9a227]/18 text-[#f3d97f]' : 'border-white/10 bg-white/[0.03] text-white/52 hover:text-white hover:border-[#c9a227]/40'}`}
+                      >
+                        <span className="block font-mono text-[9px] uppercase tracking-widest">{label}</span>
+                        <span className="block mt-1 text-xl font-black tabular-nums">{formatNumber(count as number)}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="xl:col-span-3 border border-[#c9a227]/20 bg-[#1c1c12]/80 p-4 md:p-5">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-3">результат</p>
+                  <div className="flex items-end justify-between gap-4">
+                    <div>
+                      <p className="text-4xl font-black tracking-tighter text-[#f3d97f] tabular-nums">{formatNumber(rssFeed.length)}</p>
+                      <p className="text-xs text-white/45 font-bold">карток після фільтрів</p>
+                    </div>
+                    <Rss className="w-8 h-8 text-[#c9a227]/60 mb-1" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-8 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => setRssTopicFilter('all')}
+                  className={`px-3 py-2 border font-mono text-[10px] uppercase tracking-widest transition-colors ${rssTopicFilter === 'all' ? 'border-[#c9a227] bg-[#c9a227]/18 text-[#f3d97f]' : 'border-white/10 text-white/45 hover:text-white hover:border-[#c9a227]/40'}`}
+                >
+                  Усі теми
+                </button>
+                {rssTopics.map((topic) => (
+                  <button
+                    key={topic.tag}
+                    type="button"
+                    onClick={() => setRssTopicFilter(topic.tag)}
+                    className={`px-3 py-2 border font-mono text-[10px] uppercase tracking-widest transition-colors ${rssTopicFilter === topic.tag ? 'border-[#c9a227] bg-[#c9a227]/18 text-[#f3d97f]' : 'border-white/10 text-white/45 hover:text-white hover:border-[#c9a227]/40'}`}
+                  >
+                    {topic.tag} <span className="text-white/35">{topic.count}</span>
+                  </button>
+                ))}
+              </div>
+
+              {rssItems.length + fbItems.length === 0 ? (
                 <div className="border border-[#c9a227]/20 bg-[#2e2d1e] p-8 font-mono text-xs uppercase tracking-widest text-white/30">
                   Дані RSS ще оновлюються. Перевір через кілька хвилин.
                 </div>
+              ) : rssFeed.length === 0 ? (
+                <div className="border border-[#c9a227]/20 bg-[#2e2d1e] p-8">
+                  <p className="text-2xl font-black uppercase tracking-tight text-white">Нічого не знайдено</p>
+                  <p className="mt-2 text-sm text-white/55 leading-relaxed">Спробуй очистити пошук або вибрати іншу тему. Фільтри працюють по перекладеному заголовку, опису, автору і тегам.</p>
+                  <button type="button" onClick={() => { setRssSearch(''); setRssSourceFilter('all'); setRssTopicFilter('all'); }} className="mt-5 border border-[#c9a227]/40 px-4 py-3 font-mono text-[10px] uppercase tracking-widest text-[#f3d97f] hover:bg-[#c9a227]/10 transition-colors">
+                    Скинути фільтри
+                  </button>
+                </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {rssItems.slice(0, 18).map(item => (
-                    <article key={item.id} className="bg-[#2b2a1f] border border-[#c9a227]/20 p-6 md:p-7 hover:border-[#c9a227]/55 transition-colors shadow-[0_12px_40px_rgba(0,0,0,0.25)]">
-                      <div className="flex items-center justify-between mb-4">
-                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#c9a227]/75">{item.author}</p>
-                        <Rss className="w-4 h-4 text-[#c9a227]/45" />
-                      </div>
-                      <h3 className="text-[1.35rem] md:text-[1.5rem] font-extrabold tracking-tight mb-3 leading-[1.2] text-white">
-                        {formatPreview(cleanRssText(item.titleUk || item.title || ''), 175)}
-                      </h3>
-                      <p className="text-[1.02rem] font-semibold text-white/78 leading-relaxed mb-5 line-clamp-5">
-                        {formatPreview(cleanRssText(item.summaryUk || item.summary || ''), 260)}
-                      </p>
-                      <div className="font-mono text-[10px] tracking-wider text-white/45 mb-4 flex items-center gap-2">
-                        <span>@{item.handle}</span>
-                        <span className="text-[#c9a227]/60">•</span>
-                        <span>{formatRssDate(item.publishedAt)}</span>
-                      </div>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {(item.tags || ['OSINT', 'HUMINT', 'UKRAINE']).slice(0, 3).map(tag => (
-                          <span key={`${item.id}-${tag}`} className="px-2 py-1 border border-[#c9a227]/20 font-mono text-[8px] uppercase tracking-widest text-[#c9a227]/60">
-                            {tag}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                  {rssFeed.slice(0, 24).map((item, index) => (
+                    <article
+                      key={`${item.feedSource}-${item.id}`}
+                      className={`${index === 0 ? 'lg:col-span-6 lg:row-span-2' : 'lg:col-span-3'} group relative overflow-hidden border border-[#c9a227]/18 bg-[#1c1c12] hover:border-[#c9a227]/55 transition-colors shadow-[0_14px_45px_rgba(0,0,0,0.24)]`}
+                    >
+                      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#c9a227] via-[#f3d97f] to-transparent opacity-60" />
+                      <div className="p-5 md:p-6 flex min-h-full flex-col">
+                        <div className="flex items-start justify-between gap-4 mb-5">
+                          <div>
+                            <p className="font-mono text-[9px] uppercase tracking-[0.24em] text-[#c9a227]/75">{item.sourceLabel}</p>
+                            <p className="mt-1 font-mono text-[10px] tracking-wider text-white/38">@{item.handle || item.author}</p>
+                          </div>
+                          <span className="shrink-0 border border-[#c9a227]/22 bg-[#c9a227]/8 px-2 py-1 font-mono text-[9px] uppercase tracking-widest text-[#f3d97f]/80">
+                            {formatRssDate(item.publishedAt)}
                           </span>
-                        ))}
-                      </div>
-                      <div className="flex items-center gap-4 pt-2 border-t border-white/10">
-                        <a href={item.url} target="_blank" rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/60 hover:text-[#c9a227] transition-colors">
-                          Відкрити пост <ArrowUpRight className="w-3 h-3" />
-                        </a>
-                        <button
-                          type="button"
-                          onClick={() => shareLink(item.id, cleanRssText(item.titleUk || item.title || ''), item.url)}
-                          className="font-mono text-[10px] uppercase tracking-widest text-white/45 hover:text-[#c9a227] transition-colors"
-                        >
-                          {sharedItemId === item.id ? 'Скопійовано' : 'Поділитися'}
-                        </button>
+                        </div>
+                        <h3 className={`${index === 0 ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'} font-black tracking-tight mb-4 leading-[1.05] text-white group-hover:text-[#f3d97f] transition-colors`}>
+                          {formatPreview(item.titleClean, index === 0 ? 230 : 150)}
+                        </h3>
+                        <p className={`${index === 0 ? 'text-base md:text-lg line-clamp-7' : 'text-[0.98rem] line-clamp-5'} font-semibold text-white/72 leading-relaxed mb-5`}>
+                          {formatPreview(item.summaryClean, index === 0 ? 420 : 240)}
+                        </p>
+                        <div className="mt-auto">
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {item.tagsClean.slice(0, index === 0 ? 5 : 3).map(tag => (
+                              <button
+                                key={`${item.id}-${tag}`}
+                                type="button"
+                                onClick={() => setRssTopicFilter(tag)}
+                                className="px-2.5 py-1 border border-[#c9a227]/20 font-mono text-[8px] uppercase tracking-widest text-[#c9a227]/62 hover:text-[#f3d97f] hover:border-[#c9a227]/50 transition-colors"
+                              >
+                                {tag}
+                              </button>
+                            ))}
+                          </div>
+                          <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/10">
+                            <a href={item.url} target="_blank" rel="noreferrer"
+                              className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/65 hover:text-[#c9a227] transition-colors">
+                              Відкрити пост <ArrowUpRight className="w-3 h-3" />
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => shareLink(item.id, item.titleClean, item.url)}
+                              className="font-mono text-[10px] uppercase tracking-widest text-white/45 hover:text-[#c9a227] transition-colors"
+                            >
+                              {sharedItemId === item.id ? 'Скопійовано' : 'Поділитися'}
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </article>
                   ))}
