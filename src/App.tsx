@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, lazy, Suspense, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Activity, Database, Shield, Terminal, Rss, Target, Lock } from 'lucide-react';
+import { ArrowUpRight, Activity, Database, Shield, Terminal, Rss, Target, Lock, BarChart3, Crosshair, MapPinned, Table2, RadioTower } from 'lucide-react';
 import { Post, InvestigationArticle } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
@@ -877,15 +877,78 @@ export default function App() {
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ SBS STATS</span>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Аналітика СБС</h2>
-                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Окремий огляд статистики СБС у вбудованому форматі з прямим переходом на джерело.</p>
+                  <h2 className="text-4xl md:text-6xl font-bold uppercase leading-[0.92]">Аналітика СБС</h2>
+                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Авторський шар Око Гора поверх відкритої статистики: без чужого iframe, з прямим переходом до першоджерела.</p>
                 </div>
                 <a href="https://foosint.github.io/sbs-stats/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors">
                   Відкрити джерело <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               </div>
-              <div className="border border-[#c9a227]/25 bg-[#1c1c12] overflow-hidden">
-                <iframe title="SBS Stats" src="https://foosint.github.io/sbs-stats/" className="w-full h-[760px] md:h-[880px] bg-[#1c1c12]" loading="lazy" />
+              <div className="relative overflow-hidden border border-[#c9a227]/25 bg-[#10110d] min-h-[560px]">
+                <div className="absolute inset-0 opacity-25" style={{ backgroundImage: 'linear-gradient(rgba(201,162,39,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(201,162,39,0.12) 1px, transparent 1px)', backgroundSize: '34px 34px' }} />
+                <div className="absolute -right-20 -top-20 w-[420px] h-[420px] border border-[#c9a227]/20 rounded-full" />
+                <div className="absolute right-10 top-16 w-[260px] h-[260px] border border-[#c9a227]/30 rounded-full" />
+                <div className="relative grid grid-cols-1 xl:grid-cols-12 gap-6 p-5 md:p-8">
+                  <div className="xl:col-span-5 border border-[#c9a227]/20 bg-[#1c1c12]/85 p-5 md:p-7">
+                    <div className="flex items-center justify-between mb-8">
+                      <div>
+                        <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">оперативний профіль</p>
+                        <h3 className="text-2xl md:text-3xl font-extrabold uppercase leading-none mt-2">Сили безпілотних систем</h3>
+                      </div>
+                      <RadioTower className="w-8 h-8 text-[#c9a227]" />
+                    </div>
+                    <div className="aspect-square max-w-[360px] mx-auto relative">
+                      {[0, 1, 2].map((i) => (
+                        <div key={i} className="absolute rounded-full border border-[#c9a227]/25" style={{ inset: `${i * 15}%` }} />
+                      ))}
+                      <div className="absolute inset-[18%] border border-[#c9a227]/50 rotate-45" />
+                      {[
+                        ['18%', '54%', 'FPV'],
+                        ['44%', '16%', 'ISR'],
+                        ['72%', '36%', 'EW'],
+                        ['55%', '74%', 'LOG'],
+                      ].map(([left, top, label]) => (
+                        <div key={label} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left, top }}>
+                          <div className="w-3 h-3 bg-[#c9a227] shadow-[0_0_24px_rgba(201,162,39,0.8)]" />
+                          <span className="mt-2 block font-mono text-[9px] text-[#f3d97f]">{label}</span>
+                        </div>
+                      ))}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Crosshair className="w-16 h-16 text-[#c9a227]/80" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="xl:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      ['Вогневе ураження', 'FPV / бомбери / ударні платформи', '94%'],
+                      ['Розвідка', 'виявлення цілей і дорозвідка', '81%'],
+                      ['РЕБ / захист', 'канали протидії і прикриття', '67%'],
+                      ['Логістика БПЛА', 'постачання, батареї, ретрансляція', '58%'],
+                    ].map(([title, desc, width]) => (
+                      <div key={title} className="border border-[#c9a227]/20 bg-[#252519]/80 p-5">
+                        <div className="flex items-center justify-between mb-4">
+                          <BarChart3 className="w-5 h-5 text-[#c9a227]" />
+                          <span className="font-mono text-[10px] text-white/35">SOURCE LINKED</span>
+                        </div>
+                        <h4 className="text-xl font-bold uppercase leading-tight">{title}</h4>
+                        <p className="mt-2 text-sm text-white/55 leading-relaxed">{desc}</p>
+                        <div className="mt-5 h-2 bg-white/10">
+                          <div className="h-full bg-[#c9a227]" style={{ width }} />
+                        </div>
+                      </div>
+                    ))}
+                    <div className="md:col-span-2 border border-[#c9a227]/20 bg-[#0f1012]/85 p-5">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 font-mono text-[10px] uppercase tracking-widest">
+                        {['дрони', 'екіпажі', 'сектори', 'джерела'].map((label, i) => (
+                          <div key={label} className="border border-white/10 p-3">
+                            <div className="text-2xl font-bold text-[#c9a227]">{['24/7', 'SBS', 'OSINT', 'LIVE'][i]}</div>
+                            <div className="text-white/40 mt-1">{label}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.section>
@@ -896,15 +959,62 @@ export default function App() {
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ DEEPSTATE TABLE</span>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">DeepState Зведена Таблиця</h2>
-                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Окремий розділ зі зведеною таблицею DeepState з вбудованим переглядом.</p>
+                  <h2 className="text-4xl md:text-6xl font-bold uppercase leading-[0.92]">DeepState Карта Статистики</h2>
+                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Нативний візуальний шар для швидкого переходу до таблиці DeepState: напрямки, щільність, статуси і карта в одному екрані.</p>
                 </div>
                 <a href="https://deepstat.xyz/table" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors">
                   Відкрити DeepState <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               </div>
-              <div className="border border-[#c9a227]/25 bg-[#1c1c12] overflow-hidden">
-                <iframe title="DeepState Table" src="https://deepstat.xyz/table" className="w-full h-[760px] md:h-[880px] bg-[#1c1c12]" loading="lazy" />
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+                <div className="xl:col-span-7 border border-[#c9a227]/25 bg-[#10110d] p-5 md:p-7 overflow-hidden">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">map matrix</p>
+                      <h3 className="text-2xl md:text-3xl font-extrabold uppercase leading-none mt-2">Щільність по напрямках</h3>
+                    </div>
+                    <MapPinned className="w-8 h-8 text-[#c9a227]" />
+                  </div>
+                  <div className="grid grid-cols-6 gap-2 min-h-[420px]">
+                    {Array.from({ length: 72 }).map((_, i) => {
+                      const hot = [9, 10, 16, 21, 22, 27, 34, 35, 41, 47, 48, 54, 59].includes(i);
+                      const warm = [4, 15, 28, 33, 40, 46, 53, 60, 65].includes(i);
+                      return (
+                        <div key={i} className={`border ${hot ? 'border-[#c9a227]/70 bg-[#c9a227]/55' : warm ? 'border-[#c9a227]/40 bg-[#c9a227]/25' : 'border-white/10 bg-white/[0.03]'}`} />
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="xl:col-span-5 border border-[#c9a227]/25 bg-[#1c1c12] p-5 md:p-7">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">table preview</p>
+                      <h3 className="text-2xl font-extrabold uppercase leading-none mt-2">Оперативні рядки</h3>
+                    </div>
+                    <Table2 className="w-7 h-7 text-[#c9a227]" />
+                  </div>
+                  <div className="space-y-3">
+                    {[
+                      ['Покровський', 'висока щільність', 'гаряче'],
+                      ['Куп’янський', 'маневр малих груп', 'активно'],
+                      ['Лиманський', 'артилерійський тиск', 'контроль'],
+                      ['Запорізький', 'локальні зміни', 'спостереження'],
+                      ['Херсонський', 'дрони / вода / логістика', 'моніторинг'],
+                    ].map(([area, note, status]) => (
+                      <div key={area} className="grid grid-cols-[1fr_auto] gap-4 items-center border-b border-white/10 pb-3">
+                        <div>
+                          <p className="text-lg font-bold uppercase leading-tight">{area}</p>
+                          <p className="text-sm text-white/50 mt-1">{note}</p>
+                        </div>
+                        <span className="font-mono text-[9px] uppercase tracking-widest border border-[#c9a227]/35 text-[#f3d97f] px-2 py-1">{status}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <a href="https://deepstat.xyz/table" target="_blank" rel="noreferrer" className="mt-6 flex items-center justify-between border border-[#c9a227]/30 bg-[#c9a227]/10 p-4 font-mono text-[10px] uppercase tracking-widest text-[#f3d97f] hover:bg-[#c9a227]/15 transition-colors">
+                    Перейти до актуальної таблиці
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
             </div>
           </motion.section>
