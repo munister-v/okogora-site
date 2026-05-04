@@ -2,6 +2,8 @@
   "windowDays": 3,
   "maxItemsPerBrigade": 8,
   "maxItemsTotal": 360,
+  "minOfficialItems": 1,
+  "includeMentionOnlyRows": false,
   "brigades": [
     {
       "id": "3-assault",
@@ -164,8 +166,99 @@
       "name": "128 ОГШБр",
       "aliases": ["128 огшбр", "128th mountain assault brigade"],
       "sources": []
+    },
+    {
+      "id": "13-khartia",
+      "name": "13 Бригада НГУ «Хартія»",
+      "aliases": ["хартія", "13 бригада нгу", "khartia brigade", "13th operational brigade"],
+      "sources": [
+        { "platform": "x", "handle": "khartiiabrygada", "trusted": true }
+      ]
+    },
+    {
+      "id": "156-ombr",
+      "name": "156 ОМБр",
+      "aliases": ["156 омбр", "156 separate mechanized brigade", "156 mechanized brigade"],
+      "sources": [
+        { "platform": "x", "handle": "156ombr_AFU", "trusted": true }
+      ]
+    },
+    {
+      "id": "413-raid",
+      "name": "413 Окремий Батальйон «RAID»",
+      "aliases": ["413 raid", "413 батальйон", "413 окремий батальйон"],
+      "sources": [
+        { "platform": "x", "handle": "413_raid", "trusted": true }
+      ]
+    },
+    {
+      "id": "ua-navy",
+      "name": "ВМС ЗС України",
+      "aliases": ["вмс зс україни", "ua navy", "ukrainian navy"],
+      "sources": [
+        { "platform": "x", "handle": "UA_NAVY", "trusted": true }
+      ]
+    },
+    {
+      "id": "ngu",
+      "name": "Національна Гвардія України",
+      "aliases": ["нгу", "національна гвардія україни", "national guard of ukraine"],
+      "sources": [
+        { "platform": "x", "handle": "ng_ukraine", "trusted": true }
+      ]
+    },
+    {
+      "id": "stratcom-afu",
+      "name": "СтратКом ЗСУ",
+      "aliases": ["стратком зсу", "stratcom afu"],
+      "sources": [
+        { "platform": "x", "handle": "StratCom_AFU", "trusted": true }
+      ]
+    },
+    {
+      "id": "general-staff-ua",
+      "name": "Генеральний Штаб ЗСУ",
+      "aliases": ["генеральний штаб зсу", "general staff ua"],
+      "sources": [
+        { "platform": "x", "handle": "GeneralStaffUA", "trusted": true }
+      ]
     }
   ],
+  "autoDiscovery": {
+    "enabled": false,
+    "maxCandidates": 12,
+    "maxNewUnits": 10,
+    "minScore": 3,
+    "minHits": 1,
+    "xKeywords": [
+      "окрема бригада",
+      "окремий батальйон",
+      "артилерійська бригада",
+      "полк зсу",
+      "корпус зсу",
+      "морська піхота україни",
+      "дшв зсу",
+      "тероборона бригада",
+      "бригада нгу"
+    ],
+    "excludeHandles": [
+      "osinttechnical",
+      "geoconfirmed",
+      "defmon3",
+      "noelreports",
+      "war_mapper",
+      "chriso_wiki",
+      "tendar",
+      "ralee85",
+      "maks_nafo_fella",
+      "coupsure",
+      "front_ukrainian",
+      "geoinsider",
+      "mil_in_ua",
+      "defencehq",
+      "osint613"
+    ]
+  },
   "strikeKeywords": [
     "удар",
     "уражен",

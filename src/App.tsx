@@ -78,6 +78,7 @@ type BrigadeDashboardItem = {
 type BrigadeDashboardRow = {
   id: string;
   name: string;
+  autoDiscovered?: boolean;
   officialItems: number;
   mentionItems: number;
   significantItems: number;
@@ -91,6 +92,9 @@ type BrigadeDashboardPayload = {
   generatedAt: string;
   windowDays: number;
   totals: {
+    units?: number;
+    unitsWithOfficialFeeds?: number;
+    autoDiscoveredUnits?: number;
     brigades: number;
     brigadesWithOfficialFeeds: number;
     officialItems: number;
@@ -405,7 +409,7 @@ export default function App() {
               <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
             </Link>
             <button type="button" onClick={() => openSection('map')} className="hover:text-white transition-colors">Карта</button>
-            <button type="button" onClick={() => openSection('brigades')} className="hover:text-white transition-colors">Бригади</button>
+            <button type="button" onClick={() => openSection('brigades')} className="hover:text-white transition-colors">Підрозділи</button>
             <button type="button" onClick={() => openSection('analytics')} className="hover:text-white transition-colors">Аналітика</button>
             <button type="button" onClick={() => openSection('investigations')} className="hover:text-white transition-colors">Розслідування</button>
             <button type="button" onClick={() => openSection('rss')} className="hover:text-white transition-colors">RSS</button>
@@ -434,7 +438,7 @@ export default function App() {
               <Target className="w-3 h-3" /> БАЗА ЦІЛЕЙ
             </Link>
             <button type="button" onClick={() => openSection('map')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Карта</button>
-            <button type="button" onClick={() => openSection('brigades')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Бригади</button>
+            <button type="button" onClick={() => openSection('brigades')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Підрозділи</button>
             <button type="button" onClick={() => openSection('analytics')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Аналітика</button>
             <button type="button" onClick={() => openSection('investigations')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Розслідування</button>
             <button type="button" onClick={() => openSection('rss')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">RSS</button>
@@ -661,30 +665,38 @@ export default function App() {
             <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
                 <div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ BRIGADES DASHBOARD</span>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Огляд бригад: ураження та реорганізація</h2>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ UNITS DASHBOARD</span>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Активні підрозділи: ураження та реорганізація</h2>
                   <p className="mt-4 text-white/60 max-w-4xl text-sm leading-relaxed">
-                    Автоматичний моніторинг X/Facebook-пабів за останні 3 доби. Окремо рахуємо пости про ураження/бойові результати та новини про зміни структури, корпуси й реорганізацію.
+                    Автоматичний моніторинг офіційних X/Facebook-пабів українських підрозділів (бригади, полки, батальйони та інші) за останні 3 доби. Показуємо тільки ті підрозділи, що реально активні в цей період.
                   </p>
                 </div>
                 <div className="bg-[#1c1c12] border border-[#c9a227]/20 px-6 py-5 min-w-[260px]">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Статус вибірки</p>
-                  <p className="text-xl font-bold tracking-tight text-white">{brigadeDashboard?.totals.brigadesWithOfficialFeeds ?? 0}/{brigadeDashboard?.totals.brigades ?? 0} з офіційними фідами</p>
+                  <p className="text-xl font-bold tracking-tight text-white">
+                    {(brigadeDashboard?.totals.unitsWithOfficialFeeds ?? brigadeDashboard?.totals.brigadesWithOfficialFeeds ?? 0)}
+                    /
+                    {(brigadeDashboard?.totals.units ?? brigadeDashboard?.totals.brigades ?? 0)} активних
+                  </p>
                   <p className="mt-1 text-xs text-white/45">Ураження: {brigadeDashboard?.totals.strikeItems ?? 0}</p>
                   <p className="text-xs text-white/45">Реорганізація: {brigadeDashboard?.totals.reorgItems ?? 0}</p>
+                  <p className="text-xs text-white/45">Автознайдено підрозділів: {brigadeDashboard?.totals.autoDiscoveredUnits ?? 0}</p>
                   <p className="mt-1 text-xs text-white/45">Оновлено: {brigadeDashboard?.generatedAt ? formatRssDate(brigadeDashboard.generatedAt) : 'очікується...'}</p>
                 </div>
               </div>
 
               {!brigadeDashboard || !brigadeDashboard.brigades.length ? (
                 <div className="border border-[#c9a227]/20 bg-[#2e2d1e] p-8 font-mono text-xs uppercase tracking-widest text-white/40">
-                  Дані бригадного дашборду ще формуються. Запусти синхронізацію або зачекай автооновлення.
+                  Дані дашборду підрозділів ще формуються. Запусти синхронізацію або зачекай автооновлення.
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                   {brigadeDashboard.brigades.map((row) => (
                     <article key={row.id} className="bg-[#2b2a1f] border border-[#c9a227]/20 p-5 md:p-6">
-                      <h3 className="text-xl font-extrabold leading-snug mb-4">{row.name}</h3>
+                      <h3 className="text-xl font-extrabold leading-snug mb-4">
+                        {row.name}
+                        {row.autoDiscovered ? <span className="ml-2 text-[10px] align-middle px-2 py-0.5 border border-emerald-400/40 text-emerald-300 font-mono uppercase tracking-widest">auto</span> : null}
+                      </h3>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4 font-mono text-center">
                         <div className="border border-[#c9a227]/20 py-2">
                           <div className="text-base font-bold text-[#c9a227]">{row.officialItems}</div>
@@ -1058,7 +1070,7 @@ export default function App() {
               <ul className="space-y-3 font-mono text-xs tracking-widest uppercase text-white/50">
                 <li><Link to="/targets" className="hover:text-[#c9a227] transition-colors flex items-center gap-2"><Target className="w-3 h-3" />БАЗА ЦІЛЕЙ</Link></li>
                 <li><button type="button" onClick={() => openSection('map')} className="hover:text-[#c9a227] transition-colors text-left">КАРТА</button></li>
-                <li><button type="button" onClick={() => openSection('brigades')} className="hover:text-[#c9a227] transition-colors text-left">БРИГАДИ</button></li>
+                <li><button type="button" onClick={() => openSection('brigades')} className="hover:text-[#c9a227] transition-colors text-left">ПІДРОЗДІЛИ</button></li>
                 <li><button type="button" onClick={() => openSection('analytics')} className="hover:text-[#c9a227] transition-colors text-left">АНАЛІТИКА УДАРІВ</button></li>
                 <li><button type="button" onClick={() => openSection('investigations')} className="hover:text-[#c9a227] transition-colors text-left">РОЗСЛІДУВАННЯ</button></li>
                 <li><button type="button" onClick={() => openSection('rss')} className="hover:text-[#c9a227] transition-colors text-left">RSS</button></li>
