@@ -678,18 +678,20 @@ export default function App() {
                   <span className="font-mono text-[8px] tracking-widest text-[#c9a227]/50 group-hover:text-[#c9a227] transition-colors uppercase">{branch.label}</span>
                 </div>
               ))}
-              <div className="ml-auto hidden md:block font-mono text-[9px] text-white/20 uppercase tracking-widest">
-                Telegram-канал і сайт працюють як одна платформа
-              </div>
+              <a
+                href="https://t.me/oko_gora"
+                target="_blank"
+                rel="noreferrer"
+                className="ml-auto hidden md:inline-flex items-center gap-1.5 font-mono text-[9px] text-[#f3d97f]/55 hover:text-[#f3d97f] uppercase tracking-widest transition-colors"
+              >
+                t.me/oko_gora <ArrowUpRight className="w-3 h-3" />
+              </a>
             </div>
             <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-l-2 border-[#c9a227]/80 bg-[#0f1012]/70 p-4 md:p-5">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-2">/ ЦИФРОВА ПЛАТФОРМА КАНАЛУ</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-2">/ ПЛАТФОРМА TELEGRAM-КАНАЛУ</p>
                 <p className="text-white/95 text-lg md:text-2xl font-extrabold leading-tight max-w-5xl">
-                  Це сайт Telegram-каналу «Око Гора - новини та аналітика». Тут зібрані пости каналу, мапа, RSS-стрічка, офіційні джерела підрозділів, статистика SBS і таблиця DeepState.
-                </p>
-                <p className="mt-3 text-sm md:text-base text-white/58 leading-relaxed max-w-4xl">
-                  Завдання просте: швидко показати, що оновилося, звідки взята інформація і куди перейти, щоб перевірити першоджерело.
+                  Око Гора - цифрова платформа Telegram-каналу про новини, карту, джерела та аналітику.
                 </p>
               </div>
               <a
@@ -710,44 +712,63 @@ export default function App() {
                 </div>
               ))}
             </div>
-            <div className="mb-10 md:mb-14">
-              <a
-                href="https://t.me/oko_gora"
-                target="_blank"
-                rel="noreferrer"
-                className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-white/45 hover:text-[#c9a227] transition-colors"
-              >
-                Telegram-канал «Око Гора — новини та аналітика» <ArrowUpRight className="inline w-3 h-3 mb-[2px]" />
-              </a>
-            </div>
-
-            <div id="map" className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-t border-[#c9a227]/30 pt-8 md:pt-12 mt-12 md:mt-24 relative z-10">
-              <div className="lg:col-span-5">
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ЩО ТУТ Є</span>
-                <p className="text-2xl md:text-4xl font-extrabold leading-[1.05] tracking-tight text-white">
-                  Пости, карта, джерела, таблиці й короткі пояснення в одному місці, щоб не стрибати між десятком вкладок.
-                </p>
-              </div>
-              <div className="lg:col-start-8 lg:col-span-5">
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ЯК КОРИСТУВАТИСЬ</span>
-                <ul className="space-y-4 font-mono text-[10px] md:text-xs uppercase tracking-widest">
-                  {[
-                    { label: 'ДИВИСЬ СТРІЧКУ ТА RSS, ЩОБ БАЧИТИ НОВЕ', n: '01' },
-                    { label: 'ВІДКРИВАЙ МАПУ, ЯКЩО ПОТРІБЕН КОНТЕКСТ МІСЦЯ', n: '02' },
-                    { label: 'ПЕРЕХОДЬ У ДЖЕРЕЛО, ЯКЩО ТРЕБА ПЕРЕВІРИТИ ДЕТАЛІ', n: '03' },
-                  ].map(item => (
-                    <li key={item.n} className="flex justify-between gap-4 border-b border-white/10 pb-2 hover:border-[#c9a227]/40 text-white/62 hover:text-white transition-all">
-                      <span>{item.label}</span>
-                      <span className="text-[#c9a227]">{item.n}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
           </motion.div>
 
+          {/* Interactive Investigations */}
+          <motion.section id="investigations" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
+            <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ НОВИЙ РОЗДІЛ</span>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Інтерактивні розслідування</h2>
+                </div>
+                <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
+                  className="font-mono text-xs uppercase tracking-widest text-white/30 hover:text-[#c9a227] transition-colors">
+                  Telegram-канал <ArrowUpRight className="inline w-3 h-3 ml-1" />
+                </a>
+              </div>
+
+              <div className="mb-6 border border-[#c9a227]/30 bg-[#11120d] p-5 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 border border-[#c9a227]/40 bg-[#c9a227]/10 flex items-center justify-center shrink-0">
+                    <Lock className="w-5 h-5 text-[#c9a227]" />
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/80">Розділ у роботі</p>
+                    <p className="text-lg md:text-xl font-bold text-white">Скоро буде. Очікуйте.</p>
+                    <p className="text-sm text-white/55 mt-1">Тут будуть окремі матеріали з хронологією, мапою, джерелами і коротким поясненням, що саме сталося.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {(investigations.length ? investigations.filter(i => (i.status || 'published') === 'published') : [
+                  { id: 'fallback-1', title: 'Хронологія події', summary: "Що сталося, коли зʼявилися перші повідомлення і які джерела це підтверджують.", code: 'TIMELINE', tags: [], publishedAt: '', status: 'published' as const },
+                  { id: 'fallback-2', title: 'Місце на карті', summary: "Координати, найближчі обʼєкти, фото або відео, якщо вони є у відкритому доступі.", code: 'MAP', tags: [], publishedAt: '', status: 'published' as const },
+                  { id: 'fallback-3', title: 'Що відомо зараз', summary: "Короткий висновок без перебільшень: що підтверджено, що потребує перевірки, де читати далі.", code: 'SUMMARY', tags: [], publishedAt: '', status: 'published' as const },
+                ]).slice(0, 6).map(item => (
+                  <article key={item.code} className="bg-[#2e2d1e] border border-[#c9a227]/20 p-6 md:p-8 hover:border-[#c9a227]/50 transition-colors">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c9a227] mb-4">{item.code}</p>
+                    <h3 className="text-2xl font-bold tracking-tight uppercase mb-4 text-white">{item.title}</h3>
+                    <p className="text-white/50 text-sm leading-relaxed">{item.summary}</p>
+                    <div className="mt-4 flex items-center gap-4">
+                      <Link to={`/investigation/${item.id}`} className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/65 hover:text-[#c9a227] transition-colors">
+                        Детально <ArrowUpRight className="w-3 h-3" />
+                      </Link>
+                      {item.url && (
+                        <a href={item.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/45 hover:text-[#c9a227] transition-colors">
+                          Джерело <ArrowUpRight className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </motion.section>
+
           {/* Map */}
-          <motion.div variants={fadeIn} className="mb-32 md:mb-48 w-full">
+          <motion.div id="map" variants={fadeIn} className="mb-32 md:mb-48 w-full scroll-mt-28">
             <Suspense fallback={
               <div className="w-full h-[500px] md:h-[800px] bg-[#1c1c12] border border-[#c9a227]/20 flex items-center justify-center">
                 <span className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/40 animate-pulse">ЗАВАНТАЖЕННЯ_МАПИ...</span>
@@ -1260,59 +1281,6 @@ export default function App() {
             </div>
           </motion.section>
 
-          {/* Interactive Investigations */}
-          <motion.section id="investigations" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
-            <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
-                <div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ НОВИЙ РОЗДІЛ</span>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Інтерактивні розслідування</h2>
-                </div>
-                <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
-                  className="font-mono text-xs uppercase tracking-widest text-white/30 hover:text-[#c9a227] transition-colors">
-                  Telegram-канал <ArrowUpRight className="inline w-3 h-3 ml-1" />
-                </a>
-              </div>
-
-              <div className="mb-6 border border-[#c9a227]/30 bg-[#11120d] p-5 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 border border-[#c9a227]/40 bg-[#c9a227]/10 flex items-center justify-center shrink-0">
-                    <Lock className="w-5 h-5 text-[#c9a227]" />
-                  </div>
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/80">Розділ у роботі</p>
-                    <p className="text-lg md:text-xl font-bold text-white">Скоро буде. Очікуйте.</p>
-                    <p className="text-sm text-white/55 mt-1">Тут будуть окремі матеріали з хронологією, мапою, джерелами і коротким поясненням, що саме сталося.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {(investigations.length ? investigations.filter(i => (i.status || 'published') === 'published') : [
-                  { id: 'fallback-1', title: 'Хронологія події', summary: "Що сталося, коли зʼявилися перші повідомлення і які джерела це підтверджують.", code: 'TIMELINE', tags: [], publishedAt: '', status: 'published' as const },
-                  { id: 'fallback-2', title: 'Місце на карті', summary: "Координати, найближчі обʼєкти, фото або відео, якщо вони є у відкритому доступі.", code: 'MAP', tags: [], publishedAt: '', status: 'published' as const },
-                  { id: 'fallback-3', title: 'Що відомо зараз', summary: "Короткий висновок без перебільшень: що підтверджено, що потребує перевірки, де читати далі.", code: 'SUMMARY', tags: [], publishedAt: '', status: 'published' as const },
-                ]).slice(0, 6).map(item => (
-                  <article key={item.code} className="bg-[#2e2d1e] border border-[#c9a227]/20 p-6 md:p-8 hover:border-[#c9a227]/50 transition-colors">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c9a227] mb-4">{item.code}</p>
-                    <h3 className="text-2xl font-bold tracking-tight uppercase mb-4 text-white">{item.title}</h3>
-                    <p className="text-white/50 text-sm leading-relaxed">{item.summary}</p>
-                    <div className="mt-4 flex items-center gap-4">
-                      <Link to={`/investigation/${item.id}`} className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/65 hover:text-[#c9a227] transition-colors">
-                        Детально <ArrowUpRight className="w-3 h-3" />
-                      </Link>
-                      {item.url && (
-                        <a href={item.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/45 hover:text-[#c9a227] transition-colors">
-                          Джерело <ArrowUpRight className="w-3 h-3" />
-                        </a>
-                      )}
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </motion.section>
-
           {/* RSS / X feed */}
           <motion.section id="rss" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
             <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
@@ -1464,66 +1432,100 @@ export default function App() {
           </motion.section>
 
           {/* Posts Feed */}
-          <motion.div id="feed" variants={fadeIn} className="mb-32">
-            <div className="flex justify-between items-end border-b border-[#c9a227]/30 pb-6 mb-12">
-              <h2 className="text-4xl md:text-7xl font-bold tracking-tighter uppercase text-white">Стрічка</h2>
-              <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
-                className="font-mono text-xs tracking-widest uppercase text-white/30 hover:text-[#c9a227] transition-colors flex items-center gap-1">
-                Всі публікації <ArrowUpRight className="w-3 h-3" />
-              </a>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
-              {posts.map(post => (
-                <Link key={post.id} to={`/post/${post.id}`} className="group block">
-                  <div className="aspect-[16/9] w-full overflow-hidden bg-[#2e2d1e] mb-6 relative border border-[#c9a227]/10 group-hover:border-[#c9a227]/30 transition-colors">
-                    {post.image && (
-                      <img
-                        src={resolveImageUrl(post.image)}
-                        alt={post.title}
-                        onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-[#252519]/20 group-hover:bg-transparent transition-colors" />
-                  </div>
-                  <div className="flex gap-4 mb-4 font-mono text-[9px] tracking-[0.2em] uppercase text-white/30">
-                    <span className="font-bold text-[#c9a227]/70">{post.id}</span>
-                    <span>{post.date}</span>
-                  </div>
-                  <h3 className="text-[2rem] md:text-[2.2rem] font-extrabold uppercase tracking-tight mb-4 group-hover:text-[#c9a227] transition-colors leading-[1.03]">
-                    {post.title}
-                  </h3>
-                  <p className="text-white/55 leading-relaxed mb-6 text-[1rem] md:text-[1.08rem] font-medium line-clamp-5">
-                    {formatPreview(post.text, 240)}
+          <motion.section id="feed" variants={fadeIn} className="mb-32 scroll-mt-28">
+            <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
+              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 border-b border-[#c9a227]/22 pb-7 mb-8 md:mb-10">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ПУБЛІКАЦІЇ КАНАЛУ</span>
+                  <h2 className="text-4xl md:text-7xl font-bold tracking-tighter uppercase text-white leading-[0.88]">Стрічка Око Гора</h2>
+                  <p className="mt-4 max-w-3xl text-base md:text-lg font-semibold leading-relaxed text-white/64">
+                    Останні пости з Telegram-каналу: коротке превʼю, джерело внизу картки та швидка кнопка для поширення.
                   </p>
-                  <div className="flex items-center gap-4 mb-5">
-                    <button
-                      type="button"
-                      onClick={e => { e.preventDefault(); window.open(postTelegramUrl(post), '_blank', 'noopener,noreferrer'); }}
-                      className="inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-white/25 hover:text-[#c9a227] transition-colors"
+                </div>
+                <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
+                  className="inline-flex items-center gap-2 self-start lg:self-auto border border-[#c9a227]/45 bg-[#c9a227]/10 px-4 py-3 font-mono text-[11px] uppercase tracking-widest text-[#f3d97f] hover:bg-[#c9a227]/16 hover:border-[#c9a227]/70 transition-colors">
+                  Відкрити Telegram <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-6">
+                {posts.map((post, index) => {
+                  const isLead = index === 0;
+                  const postUrl = `/#/post/${post.id}`;
+                  return (
+                    <article
+                      key={post.id}
+                      className={`${isLead ? 'lg:col-span-6 lg:row-span-2' : 'lg:col-span-3'} group overflow-hidden border border-[#c9a227]/18 bg-[#1c1c12] hover:border-[#c9a227]/55 transition-colors shadow-[0_18px_55px_rgba(0,0,0,0.24)]`}
                     >
-                      Джерело в Telegram <ArrowUpRight className="w-3 h-3" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={e => { e.preventDefault(); shareLink(post.id, post.title, `${window.location.origin}/#/post/${post.id}`); }}
-                      className="font-mono text-[9px] uppercase tracking-widest text-white/25 hover:text-[#c9a227] transition-colors"
-                    >
-                      {sharedItemId === post.id ? 'Скопійовано' : 'Поділитися'}
-                    </button>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map(tag => (
-                      <span key={tag} className="px-3 py-1 border border-[#c9a227]/20 font-mono text-[9px] tracking-widest uppercase text-[#c9a227]/50 group-hover:border-[#c9a227]/50 group-hover:text-[#c9a227]/80 transition-all">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                </Link>
-              ))}
+                      <Link to={`/post/${post.id}`} className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c9a227]/80">
+                        <div className={`${isLead ? 'aspect-[16/10] md:aspect-[21/10]' : 'aspect-[16/9]'} relative overflow-hidden bg-[#252519]`}>
+                          {post.image ? (
+                            <img
+                              src={resolveImageUrl(post.image)}
+                              alt={post.title}
+                              loading="lazy"
+                              onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                              className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-[1.035] transition-all duration-700"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(201,162,39,0.22),transparent_34%),linear-gradient(135deg,#2e2d1e,#10110d)]">
+                              <img src="oko_logo.png" alt="" className="w-20 h-20 object-contain opacity-28" loading="lazy" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0c0d10] via-[#0c0d10]/18 to-transparent" />
+                          <div className="absolute left-4 top-4 flex flex-wrap items-center gap-2">
+                            <span className="border border-[#c9a227]/45 bg-[#0c0d10]/72 px-2.5 py-1 font-mono text-[9px] uppercase tracking-widest text-[#f3d97f]">
+                              {post.id}
+                            </span>
+                            <span className="border border-white/15 bg-[#0c0d10]/58 px-2.5 py-1 font-mono text-[9px] uppercase tracking-widest text-white/68">
+                              {post.date}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="p-5 md:p-6">
+                          <div className="mb-4 flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.22em] text-white/36">
+                            <span>Telegram / Око Гора</span>
+                            <span>{(post.tags || []).slice(0, 1).map(tag => `#${tag}`).join(' ')}</span>
+                          </div>
+                          <h3 className={`${isLead ? 'text-3xl md:text-5xl' : 'text-[1.7rem] md:text-[2rem]'} font-black uppercase tracking-tight mb-4 group-hover:text-[#f3d97f] transition-colors leading-[1.02] text-white`}>
+                            {post.title}
+                          </h3>
+                          <p className={`${isLead ? 'text-base md:text-lg line-clamp-7' : 'text-[1rem] line-clamp-5'} text-white/68 leading-relaxed mb-5 font-semibold`}>
+                            {formatPreview(post.text, isLead ? 420 : 260)}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {(post.tags || []).slice(0, isLead ? 6 : 4).map(tag => (
+                              <span key={tag} className="px-2.5 py-1 border border-[#c9a227]/20 font-mono text-[8px] tracking-widest uppercase text-[#c9a227]/64 group-hover:border-[#c9a227]/50 group-hover:text-[#f3d97f] transition-all">
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </Link>
+
+                      <div className="mx-5 md:mx-6 mb-5 md:mb-6 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
+                        <button
+                          type="button"
+                          onClick={() => window.open(postTelegramUrl(post), '_blank', 'noopener,noreferrer')}
+                          className="inline-flex min-h-11 items-center gap-1.5 border border-[#c9a227]/25 bg-[#c9a227]/8 px-3 py-2 font-mono text-[9px] uppercase tracking-widest text-white/62 hover:text-[#f3d97f] hover:border-[#c9a227]/55 hover:bg-[#c9a227]/12 transition-colors"
+                        >
+                          Джерело в Telegram <ArrowUpRight className="w-3 h-3" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => shareLink(post.id, post.title, `${window.location.origin}${postUrl}`)}
+                          className="inline-flex min-h-11 items-center border border-white/10 px-3 py-2 font-mono text-[9px] uppercase tracking-widest text-white/48 hover:text-[#f3d97f] hover:border-[#c9a227]/45 transition-colors"
+                        >
+                          {sharedItemId === post.id ? 'Скопійовано' : 'Поділитися з друзями'}
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
             </div>
-          </motion.div>
+          </motion.section>
 
         </motion.div>
       </main>
