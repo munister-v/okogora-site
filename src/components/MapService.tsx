@@ -32,6 +32,7 @@ type FeedEvent = {
   location: string;
   position: [number, number];
   confidence: number;
+  precision: 'exact' | 'settlement';
   status: 'ПІДТВЕРДЖЕНО' | 'ЙМОВІРНО' | 'АНАЛІТИКА';
 };
 
@@ -40,6 +41,7 @@ type LocationPoint = {
   aliases: string[];
   position: [number, number];
   typeHint?: OperationalFilterId;
+  precision: 'exact' | 'settlement' | 'broad';
 };
 
 type StrategicFeed = {
@@ -49,55 +51,24 @@ type StrategicFeed = {
 };
 
 const LOCATION_POINTS: LocationPoint[] = [
-  { name: 'Одеса', aliases: ['одеса', 'odesa', 'odessa'], position: [46.4825, 30.7233], typeHint: 'strikes' },
-  { name: 'Туапсе', aliases: ['туапсе', 'tuapse'], position: [44.1065, 39.0739], typeHint: 'logistics' },
-  { name: 'Шагол', aliases: ['шагол', 'shagol', 'chelyabinsk shagol'], position: [55.2572, 61.2983], typeHint: 'airbases' },
-  { name: 'Челябінськ', aliases: ['челябинск', 'челябінськ', 'chelyabinsk'], position: [55.1644, 61.4368], typeHint: 'airbases' },
-  { name: 'Дружне (Крим)', aliases: ['дружне', 'druzhne', 'druzhnoe'], position: [44.8972, 34.2917], typeHint: 'strikes' },
-  { name: 'Севастополь', aliases: ['севастополь', 'sevastopol'], position: [44.6167, 33.5254], typeHint: 'navy' },
-  { name: 'Крим', aliases: ['крим', 'crimea'], position: [44.9521, 34.1024], typeHint: 'strikes' },
-  { name: 'Запоріжжя', aliases: ['запоріжж', 'zaporizhzh'], position: [47.8388, 35.1396], typeHint: 'strikes' },
-  { name: 'Степногірськ', aliases: ['stepnohirsk', 'степногірськ'], position: [47.5167, 35.7833], typeHint: 'strikes' },
-  { name: 'Суми', aliases: ['суми', 'sumy'], position: [50.9077, 34.7981], typeHint: 'strikes' },
-  { name: 'Харків', aliases: ['харків', 'kharkiv'], position: [49.9935, 36.2304], typeHint: 'strikes' },
-  { name: 'Київ', aliases: ['київ', 'kyiv'], position: [50.4501, 30.5234], typeHint: 'strikes' },
-  { name: 'Дніпро', aliases: ['дніпро', 'dnipro'], position: [48.4647, 35.0462], typeHint: 'logistics' },
-  { name: 'Херсон', aliases: ['херсон', 'kherson'], position: [46.6354, 32.6169], typeHint: 'strikes' },
-  { name: 'Миколаїв', aliases: ['миколаїв', 'mykolaiv', 'nikolaev'], position: [46.975, 31.9946], typeHint: 'logistics' },
-  { name: 'Чорне море', aliases: ['black sea', 'чорне море'], position: [44.9, 33.4], typeHint: 'navy' },
-  { name: 'Смоленськ', aliases: ['смоленск', 'smolensk'], position: [54.7826, 32.0453], typeHint: 'strikes' },
-  { name: 'Перм', aliases: ['перм', 'perm'], position: [58.0105, 56.2502], typeHint: 'logistics' },
-  { name: 'Курськ', aliases: ['курск', 'kursk'], position: [51.7304, 36.1926], typeHint: 'strikes' },
-  { name: 'Бєлгород', aliases: ['белгород', 'бєлгород', 'belgorod'], position: [50.5954, 36.5879], typeHint: 'logistics' },
-  { name: 'Румунія (кордон)', aliases: ['romania', 'румун'], position: [45.2333, 28.7167], typeHint: 'airbases' },
-  { name: 'Чілія', aliases: ['chilia'], position: [45.4167, 29.2833], typeHint: 'airbases' },
-  { name: 'Москва', aliases: ['москва', 'moscow'], position: [55.7558, 37.6173], typeHint: 'logistics' },
-  { name: 'Покровськ', aliases: ['покровськ', 'pokrovsk'], position: [48.282, 37.181], typeHint: 'strikes' },
-  { name: 'Лиман', aliases: ['лиман', 'lyman'], position: [49.0139, 37.8028], typeHint: 'strikes' },
-  { name: 'Купʼянськ', aliases: ['купʼянськ', 'купянськ', 'kupyansk'], position: [49.7106, 37.6156], typeHint: 'strikes' },
-  { name: 'Торецьк', aliases: ['торецьк', 'toretsk'], position: [48.3986, 37.8472], typeHint: 'strikes' },
-  { name: 'Краматорськ', aliases: ['краматорськ', 'kramatorsk'], position: [48.7231, 37.5563], typeHint: 'strikes' },
-  { name: 'Новопавлівка', aliases: ['новопавлів', 'novopavliv'], position: [47.5933, 36.2378], typeHint: 'strikes' },
-  { name: 'Оріхів', aliases: ['оріхів', 'орехов', 'orikhiv'], position: [47.5676, 35.7851], typeHint: 'strikes' },
-  { name: 'Гуляйполе', aliases: ['гуляйпол', 'huliaipole', 'gulyaypole'], position: [47.6642, 36.2572], typeHint: 'strikes' },
-  { name: 'Вовчанськ', aliases: ['вовчанськ', 'volchansk', 'vovchansk'], position: [50.2908, 36.9419], typeHint: 'strikes' },
-  { name: 'Сіверськ', aliases: ['сіверськ', 'seversk', 'siversk'], position: [48.8686, 38.102], typeHint: 'strikes' },
-  { name: 'Часів Яр', aliases: ['часів яр', 'chasiv yar'], position: [48.5864, 37.8326], typeHint: 'strikes' }
-];
-
-const DIRECTION_POINTS: Array<{ pattern: RegExp; point: LocationPoint }> = [
-  { pattern: /харківськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Харківський напрямок', aliases: [], position: [50.04, 36.62], typeHint: 'strikes' } },
-  { pattern: /куп[’'`ʼ]?янськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Купʼянський напрямок', aliases: [], position: [49.72, 37.62], typeHint: 'strikes' } },
-  { pattern: /лиманськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Лиманський напрямок', aliases: [], position: [49.03, 37.86], typeHint: 'strikes' } },
-  { pattern: /сіверськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Сіверський напрямок', aliases: [], position: [48.88, 38.08], typeHint: 'strikes' } },
-  { pattern: /краматорськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Краматорський напрямок', aliases: [], position: [48.72, 37.56], typeHint: 'strikes' } },
-  { pattern: /торецьк(?:ому|ий)?\s+напрям/iu, point: { name: 'Торецький напрямок', aliases: [], position: [48.39, 37.85], typeHint: 'strikes' } },
-  { pattern: /покровськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Покровський напрямок', aliases: [], position: [48.28, 37.18], typeHint: 'strikes' } },
-  { pattern: /новопавлівськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Новопавлівський напрямок', aliases: [], position: [47.59, 36.24], typeHint: 'strikes' } },
-  { pattern: /оріхівськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Оріхівський напрямок', aliases: [], position: [47.57, 35.79], typeHint: 'strikes' } },
-  { pattern: /гул[яй]+йпільськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Гуляйпільський напрямок', aliases: [], position: [47.66, 36.26], typeHint: 'strikes' } },
-  { pattern: /придніпровськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Придніпровський напрямок', aliases: [], position: [46.72, 32.71], typeHint: 'logistics' } },
-  { pattern: /курськ(?:ому|ий)?\s+напрям/iu, point: { name: 'Курський напрямок', aliases: [], position: [51.73, 36.19], typeHint: 'strikes' } },
+  { name: 'Туапсе', aliases: ['туапсе', 'tuapse'], position: [44.1065, 39.0739], typeHint: 'logistics', precision: 'settlement' },
+  { name: 'Авіабаза Шагол', aliases: ['шагол', 'shagol', 'chelyabinsk shagol'], position: [55.2572, 61.2983], typeHint: 'airbases', precision: 'exact' },
+  { name: 'Дружне (Крим)', aliases: ['дружне', 'druzhne', 'druzhnoe'], position: [44.8972, 34.2917], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Севастополь', aliases: ['севастополь', 'sevastopol'], position: [44.6167, 33.5254], typeHint: 'navy', precision: 'settlement' },
+  { name: 'Степногірськ', aliases: ['stepnohirsk', 'степногірськ'], position: [47.5167, 35.7833], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Перм', aliases: ['перм', 'perm'], position: [58.0105, 56.2502], typeHint: 'logistics', precision: 'settlement' },
+  { name: 'Бєлгород', aliases: ['белгород', 'бєлгород', 'belgorod'], position: [50.5954, 36.5879], typeHint: 'logistics', precision: 'settlement' },
+  { name: 'Чілія', aliases: ['chilia', 'chilia veche'], position: [45.4167, 29.2833], typeHint: 'airbases', precision: 'settlement' },
+  { name: 'Покровськ', aliases: ['покровськ', 'pokrovsk'], position: [48.282, 37.181], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Лиман', aliases: ['лиман', 'lyman'], position: [49.0139, 37.8028], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Купʼянськ', aliases: ['купʼянськ', 'купянськ', 'kupyansk'], position: [49.7106, 37.6156], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Торецьк', aliases: ['торецьк', 'toretsk'], position: [48.3986, 37.8472], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Краматорськ', aliases: ['краматорськ', 'kramatorsk'], position: [48.7231, 37.5563], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Оріхів', aliases: ['оріхів', 'орехов', 'orikhiv'], position: [47.5676, 35.7851], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Гуляйполе', aliases: ['гуляйпол', 'huliaipole', 'gulyaypole'], position: [47.6642, 36.2572], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Вовчанськ', aliases: ['вовчанськ', 'volchansk', 'vovchansk'], position: [50.2908, 36.9419], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Сіверськ', aliases: ['сіверськ', 'seversk', 'siversk'], position: [48.8686, 38.102], typeHint: 'strikes', precision: 'settlement' },
+  { name: 'Часів Яр', aliases: ['часів яр', 'chasiv yar'], position: [48.5864, 37.8326], typeHint: 'strikes', precision: 'settlement' }
 ];
 
 const KEYWORDS: Record<OperationalFilterId, RegExp[]> = {
@@ -117,6 +88,7 @@ const KEYWORDS: Record<OperationalFilterId, RegExp[]> = {
 
 const CONFIRMED_RE = /(підтвердж|confirmed|destroyed|знищен|уражен|successful hit|occupied)/i;
 const PROBABLE_RE = /(ймовір|likely|assess|reportedly|можливо|claimed)/i;
+const MIN_EVENT_CONFIDENCE = 0.72;
 const UKR_MONTHS: Record<string, number> = {
   січ: 0,
   фев: 1,
@@ -198,12 +170,9 @@ function parsePostDate(value: string) {
 function findLocations(text: string) {
   const low = text.toLowerCase();
   const matched = LOCATION_POINTS.filter((point) => point.aliases.some((alias) => low.includes(alias.toLowerCase())));
-  const fromDirections = DIRECTION_POINTS
-    .filter((d) => d.pattern.test(text))
-    .map((d) => d.point);
 
   const uniq = new Map<string, LocationPoint>();
-  [...matched, ...fromDirections].forEach((loc) => {
+  matched.forEach((loc) => {
     uniq.set(`${loc.name}:${loc.position[0]}:${loc.position[1]}`, loc);
   });
   return Array.from(uniq.values());
@@ -255,6 +224,10 @@ function scoreConfidence(keywordScore: number, locationCount: number, source: 't
   return clamp(conf, 0.35, 0.97);
 }
 
+function precisionLabel(value: FeedEvent['precision']) {
+  return value === 'exact' ? 'ТОЧНА ТОЧКА' : 'ЦЕНТР НАСЕЛЕНОГО ПУНКТУ';
+}
+
 function confidenceLabel(value: number) {
   if (value >= 0.78) return 'ВИСОКА';
   if (value >= 0.62) return 'СЕРЕДНЯ';
@@ -301,22 +274,6 @@ function strategicAccent(item: StrategicTarget) {
   if (year === 2025) return '#fb923c';
   if (year === 2026) return '#f43f5e';
   return strategicCategoryColor(item.category);
-}
-
-function strategicRenderPosition(item: StrategicTarget): [number, number] {
-  const base = item.position;
-  const key = item.id || `${item.title}:${base[0]}:${base[1]}`;
-  let hash = 0;
-  for (let i = 0; i < key.length; i += 1) {
-    hash = ((hash << 5) - hash + key.charCodeAt(i)) | 0;
-  }
-
-  const angle = ((Math.abs(hash) % 360) * Math.PI) / 180;
-  const distance = 0.035 + ((Math.abs(hash) >> 8) % 5) * 0.012;
-  const latOffset = Math.sin(angle) * distance;
-  const lngOffset = Math.cos(angle) * distance;
-
-  return [base[0] + latOffset, base[1] + lngOffset];
 }
 
 function strategicCategoryColor(category: StrategicTarget['category']) {
@@ -386,8 +343,9 @@ function buildEvents(posts: Post[], rss: RssItem[], facebook: RssItem[], windowD
     const { type, score } = classifyType(clean, locationHints);
     const status = statusFromText(clean);
     const confidence = scoreConfidence(score, locations.length, item.source, status);
+    if (confidence < MIN_EVENT_CONFIDENCE) continue;
 
-    for (const location of locations.slice(0, 2)) {
+    for (const location of locations.filter((loc) => loc.precision !== 'broad').slice(0, 1)) {
       const normKey = `${normalizeForKey(item.title).slice(0, 96)}|${location.name}|${type}`;
       if (dedup.has(normKey)) continue;
       dedup.add(normKey);
@@ -404,6 +362,7 @@ function buildEvents(posts: Post[], rss: RssItem[], facebook: RssItem[], windowD
         location: location.name,
         position: location.position,
         confidence,
+        precision: location.precision === 'exact' ? 'exact' : 'settlement',
         status,
       });
     }
@@ -415,7 +374,7 @@ function buildEvents(posts: Post[], rss: RssItem[], facebook: RssItem[], windowD
       if (dt !== 0) return dt;
       return b.confidence - a.confidence;
     })
-    .slice(0, 60);
+    .slice(0, 24);
 }
 
 function MapEvents({ onMouseMove, onClick }: { onMouseMove: (lat: number, lng: number) => void; onClick: (lat: number, lng: number) => void }) {
@@ -433,6 +392,7 @@ function MapEvents({ onMouseMove, onClick }: { onMouseMove: (lat: number, lng: n
 export default function MapService() {
   const [activeFilters, setActiveFilters] = useState<FilterId[]>(['strikes', 'navy', 'airbases', 'logistics', 'strategic']);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [showOnlyExactEvents, setShowOnlyExactEvents] = useState(false);
   const [telemetry, setTelemetry] = useState({ lat: 45.0, lng: 35.0 });
   const [measurePoints, setMeasurePoints] = useState<[number, number][]>([]);
   const [distance, setDistance] = useState<number | null>(null);
@@ -441,11 +401,11 @@ export default function MapService() {
   const [strategicGeneratedAt, setStrategicGeneratedAt] = useState('');
 
   const icons = useMemo(() => ({
-    strikes: createTacticalIcon('#ff3333', 'ПІДТВЕРДЖЕНЕ_УРАЖЕННЯ'),
-    navy: createTacticalIcon('#3399ff', 'МОРСЬКА_АКТИВНІСТЬ'),
-    airbases: createTacticalIcon('#ffcc00', 'АВІА_АКТИВНІСТЬ'),
-    logistics: createTacticalIcon('#00ff66', 'ЛОГІСТИЧНИЙ_ВУЗОЛ'),
-    strategic: createTacticalIcon('#ff7a00', 'ЗОВНІШНІЙ_СТРАТ_ШАР'),
+    strikes: createTacticalIcon('#ff3333', 'Подія з геотегом'),
+    navy: createTacticalIcon('#3399ff', 'Морський обʼєкт'),
+    airbases: createTacticalIcon('#ffcc00', 'Авіаційний обʼєкт'),
+    logistics: createTacticalIcon('#00ff66', 'Логістика'),
+    strategic: createTacticalIcon('#ff7a00', 'Зовнішній геошар'),
   }), []);
 
   useEffect(() => {
@@ -484,8 +444,8 @@ export default function MapService() {
   }, []);
 
   const filteredEvents = useMemo(
-    () => events.filter((e) => activeFilters.includes(e.type)),
-    [events, activeFilters],
+    () => events.filter((e) => activeFilters.includes(e.type) && (!showOnlyExactEvents || e.precision === 'exact')),
+    [events, activeFilters, showOnlyExactEvents],
   );
 
   const filteredStrategicItems = useMemo(
@@ -510,6 +470,9 @@ export default function MapService() {
     const lng = sample.reduce((sum, position) => sum + position[1], 0) / sample.length;
     return [lat, lng];
   }, [filteredEvents, filteredStrategicItems]);
+
+  const exactEventCount = useMemo(() => events.filter((event) => event.precision === 'exact').length, [events]);
+  const settlementEventCount = Math.max(0, events.length - exactEventCount);
 
   const sidebarStrategicItems = useMemo(
     () => filteredStrategicItems.slice(0, 4),
@@ -582,7 +545,7 @@ export default function MapService() {
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
           <MapIcon className="w-4 h-4" />
-          <span className="font-bold">ТАКТИЧНИЙ МОНІТОР v3.1 // DATA-LINKED</span>
+          <span className="font-bold">ТАКТИЧНИЙ МОНІТОР // ТІЛЬКИ ГЕОДАНІ З ДЖЕРЕЛ</span>
         </div>
         <div className="flex items-center gap-4 md:gap-6 text-[#111111]/55">
           <button
@@ -590,11 +553,11 @@ export default function MapService() {
             className="flex items-center gap-2 bg-[#111111] text-white px-3 py-1 text-[9px] hover:bg-zinc-800 transition-colors font-semibold"
           >
             {isSidebarOpen ? <CloseIcon className="w-3 h-3" /> : <Menu className="w-3 h-3" />}
-            {isSidebarOpen ? 'ПРИХОВАТИ_UI' : 'ПОКАЗАТИ_UI'}
+            {isSidebarOpen ? 'ПРИХОВАТИ ПАНЕЛЬ' : 'ПОКАЗАТИ ПАНЕЛЬ'}
           </button>
           <div className="flex items-center gap-2 text-red-500 font-bold border-l border-[#111111]/10 pl-4 animate-pulse">
             <Activity className="w-3 h-3" />
-            <span>LIVE ({events.length + strategicItems.length})</span>
+            <span>{events.length + strategicItems.length} ТОЧОК</span>
           </div>
         </div>
       </div>
@@ -604,16 +567,16 @@ export default function MapService() {
           <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
             <div className="flex items-center gap-2 mb-5 border-b border-[#f4f4f4]/10 pb-3">
               <Filter className="w-3 h-3 text-blue-400" />
-              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Тактичні Фільтри</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Фільтри карти</span>
             </div>
-            <p className="mb-3 font-mono text-[8px] uppercase tracking-widest text-white/35">ВІКНО ДАНИХ: ОСТАННІ 7 ДІБ</p>
+            <p className="mb-3 font-mono text-[8px] uppercase tracking-widest text-white/35">Події: 7 діб · зовнішній шар: координати з джерела</p>
             <div className="space-y-2.5">
               {[
                 { id: 'strikes' as const, label: `Удари / BDA (${activityByType.strikes})`, color: 'bg-[#ff3333]', icon: Target },
                 { id: 'navy' as const, label: `Морські цілі (${activityByType.navy})`, color: 'bg-[#3399ff]', icon: Anchor },
                 { id: 'airbases' as const, label: `Авіабази РФ (${activityByType.airbases})`, color: 'bg-[#ffcc00]', icon: Plane },
                 { id: 'logistics' as const, label: `Логістика (${activityByType.logistics})`, color: 'bg-[#00ff66]', icon: Shield },
-                { id: 'strategic' as const, label: `Зовнішній Intel (${activityByType.strategic})`, color: 'bg-[#ff7a00]', icon: MapIcon },
+                { id: 'strategic' as const, label: `Зовнішні геошари (${activityByType.strategic})`, color: 'bg-[#ff7a00]', icon: MapIcon },
               ].map((f) => (
                 <button
                   key={f.id}
@@ -628,12 +591,18 @@ export default function MapService() {
                 </button>
               ))}
             </div>
+            <button
+              onClick={() => setShowOnlyExactEvents((value) => !value)}
+              className={`mt-4 w-full border px-3 py-2 text-left font-mono text-[9px] uppercase tracking-widest transition-colors ${showOnlyExactEvents ? 'border-green-400/60 bg-green-400/10 text-green-200' : 'border-white/10 text-white/45 hover:text-white/70'}`}
+            >
+              {showOnlyExactEvents ? 'Показано тільки точні події' : 'Показувати також центр населеного пункту'}
+            </button>
           </div>
 
           <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
             <div className="flex items-center gap-2 mb-3">
               <Clock className="w-3 h-3 text-green-400" />
-              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Останні Події</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Останні геоподії</span>
             </div>
             <div className="space-y-2 text-[9px] font-mono text-[#f4f4f4]/60">
               {filteredEvents.slice(0, 4).map((event) => (
@@ -642,6 +611,7 @@ export default function MapService() {
                     <span className="truncate text-white/85">{event.location}</span>
                     <span className={event.status === 'ПІДТВЕРДЖЕНО' ? 'text-green-400' : event.status === 'ЙМОВІРНО' ? 'text-amber-400' : 'text-sky-400'}>{event.status}</span>
                   </div>
+                  <div className="text-[8px] text-white/45">{precisionLabel(event.precision)} · {Math.round(event.confidence * 100)}%</div>
                   <div className="text-[8px] text-white/35 truncate">{event.title}</div>
                 </div>
               ))}
@@ -655,7 +625,7 @@ export default function MapService() {
                 </div>
               ))}
               {filteredEvents.length === 0 && sidebarStrategicItems.length === 0 && (
-                <div className="text-white/45 leading-relaxed">Немає релевантних гео-подій у поточному наборі даних.</div>
+                <div className="text-white/45 leading-relaxed">Немає подій із достатньо точним геотегом у поточному наборі даних.</div>
               )}
               {sidebarStrategicItems.length > 0 && (
                 <div className="pt-1 text-[8px] text-white/30">
@@ -668,10 +638,10 @@ export default function MapService() {
           <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
             <div className="flex items-center gap-2 mb-3">
               <MapIcon className="w-3 h-3 text-orange-300" />
-              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Зовнішній Шар</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Зовнішні геошари</span>
             </div>
             <p className="mb-3 font-mono text-[8px] uppercase tracking-widest text-white/35">
-              GOOGLE MY MAPS · {strategicItems.length} ЗОН
+              GOOGLE MY MAPS · {strategicItems.length} ТОЧОК / ЗОН
             </p>
             <div className="space-y-2.5 text-[9px] font-mono text-[#f4f4f4]/65">
               {strategicTopRegions.map(([region, count]) => (
@@ -689,7 +659,7 @@ export default function MapService() {
               ))}
             </div>
             <p className="mt-3 text-[8px] text-white/32 leading-relaxed">
-              Зони показують імпортований контекст окупації та зовнішніх обʼєктів. Точки шару трохи розведені візуально, щоб 400 вузлів не злипалися в одну пляму.
+              Показуємо тільки координати, які прийшли з джерела. Візуального зсуву маркерів більше немає: точка стоїть там, де вона вказана у шарі.
             </p>
           </div>
 
@@ -716,7 +686,7 @@ export default function MapService() {
         <div className="absolute bottom-6 left-6 z-[400] bg-[#111111]/90 text-[#f4f4f4] p-5 font-mono border border-[#f4f4f4]/10 backdrop-blur-md pointer-events-none shadow-2xl">
           <div className="flex items-center gap-3 mb-4 border-b border-[#f4f4f4]/10 pb-3">
             <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-            <span className="tracking-widest uppercase text-[10px] font-bold opacity-90">ТЕЛЕМЕТРІЯ_ЦІЛЕВКАЗАННЯ</span>
+            <span className="tracking-widest uppercase text-[10px] font-bold opacity-90">КООРДИНАТИ КУРСОРА</span>
           </div>
           <div className="space-y-2.5 text-[10px]">
             <div className="flex justify-between gap-12 border-b border-white/5 pb-1">
@@ -728,25 +698,29 @@ export default function MapService() {
               <span className="font-bold text-white/85 tracking-tighter">{telemetry.lng.toFixed(6)}° E</span>
             </div>
             <div className="flex justify-between gap-12 text-[9px] pt-1">
-              <span className="opacity-30 text-blue-400 font-bold">EVENTS</span>
-              <span className="text-blue-400/80">{filteredEvents.length + filteredStrategicItems.length} ACTIVE</span>
+              <span className="opacity-30 text-blue-400 font-bold">ПОДІЇ</span>
+              <span className="text-blue-400/80">{filteredEvents.length} ВИДИМО</span>
             </div>
             <div className="flex justify-between gap-12 text-[9px] pt-1">
-              <span className="opacity-30 text-orange-300 font-bold">STRAT</span>
-              <span className="text-orange-300/90">{filteredStrategicItems.length} VISIBLE / {strategicItems.length} LOADED</span>
+              <span className="opacity-30 text-green-300 font-bold">ТОЧНІ</span>
+              <span className="text-green-300/90">{exactEventCount} EXACT / {settlementEventCount} SETTLEMENT</span>
+            </div>
+            <div className="flex justify-between gap-12 text-[9px] pt-1">
+              <span className="opacity-30 text-orange-300 font-bold">ШАРИ</span>
+              <span className="text-orange-300/90">{filteredStrategicItems.length} / {strategicItems.length}</span>
             </div>
           </div>
         </div>
 
         {strategicItems.length === 0 && (
           <div className="absolute top-6 right-6 z-[500] bg-red-500/15 border border-red-400/40 text-red-200 px-4 py-3 font-mono text-[10px] uppercase tracking-widest shadow-2xl">
-            STRAT DATA NOT LOADED
+            ГЕОДАНІ НЕ ЗАВАНТАЖЕНІ
           </div>
         )}
 
         <div className="absolute bottom-6 right-6 z-[400] bg-[#111111]/90 text-[#f4f4f4] p-4 font-mono border border-[#f4f4f4]/10 backdrop-blur-md pointer-events-none shadow-2xl max-w-[220px]">
           <div className="mb-3 border-b border-[#f4f4f4]/10 pb-2">
-            <span className="tracking-widest uppercase text-[10px] font-bold opacity-90">ЛЕГЕНДА STRAT</span>
+            <span className="tracking-widest uppercase text-[10px] font-bold opacity-90">ЛЕГЕНДА ШАРІВ</span>
           </div>
           <div className="space-y-2 text-[9px]">
             {[
@@ -777,7 +751,7 @@ export default function MapService() {
                 attribution="&copy; CARTO"
               />
             </LayersControl.BaseLayer>
-            <LayersControl.BaseLayer checked name="Супутниковий Intel">
+            <LayersControl.BaseLayer checked name="Супутникова мапа">
               <TileLayer
                 url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                 attribution="&copy; ESRI"
@@ -834,6 +808,10 @@ export default function MapService() {
                         <span className="text-green-400 font-bold">{confidenceLabel(event.confidence)} · {Math.round(event.confidence * 100)}%</span>
                       </div>
                       <div className="flex justify-between">
+                        <span className="opacity-45 uppercase">Геотег:</span>
+                        <span className={event.precision === 'exact' ? 'text-green-300 font-bold' : 'text-amber-300 font-bold'}>{precisionLabel(event.precision)}</span>
+                      </div>
+                      <div className="flex justify-between">
                         <span className="opacity-45 uppercase">Джерело:</span>
                         <a href={event.sourceUrl} target="_blank" rel="noreferrer" className="text-blue-300 hover:text-blue-200">{event.sourceName}</a>
                       </div>
@@ -847,7 +825,6 @@ export default function MapService() {
           {filteredStrategicItems.map((item) => {
             const accent = strategicAccent(item);
             const year = strategicYear(item);
-            const markerPosition = strategicRenderPosition(item);
             return (
               <React.Fragment key={item.id}>
                 <Circle
@@ -862,7 +839,7 @@ export default function MapService() {
                   }}
                 />
                 <CircleMarker
-                  center={markerPosition}
+                  center={item.position}
                   radius={7}
                   pathOptions={{
                     color: '#ffffff',
@@ -899,8 +876,12 @@ export default function MapService() {
                           <span className="text-orange-300 font-bold">~ {Math.round(item.radiusMeters / 1000)} км</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="opacity-45 uppercase">Центр зони:</span>
+                          <span className="opacity-45 uppercase">Координати:</span>
                           <span className="text-white/75">{item.position[0].toFixed(2)}, {item.position[1].toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="opacity-45 uppercase">Точність:</span>
+                          <span className="text-green-300 font-bold">З ДЖЕРЕЛА, БЕЗ ЗСУВУ</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="opacity-45 uppercase">Колір шару:</span>
