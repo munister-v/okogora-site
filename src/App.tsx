@@ -54,7 +54,7 @@ type PechalStats = {
   };
 };
 
-const SECTION_IDS = ['map', 'brigades', 'analytics', 'investigations', 'rss', 'feed', 'contacts'] as const;
+const SECTION_IDS = ['map', 'brigades', 'analytics', 'sbs', 'deepstate', 'investigations', 'rss', 'feed', 'contacts'] as const;
 type SectionId = typeof SECTION_IDS[number];
 
 type BrigadeDashboardItem = {
@@ -411,6 +411,8 @@ export default function App() {
             <button type="button" onClick={() => openSection('map')} className="hover:text-white transition-colors">Карта</button>
             <button type="button" onClick={() => openSection('brigades')} className="hover:text-white transition-colors">Підрозділи</button>
             <button type="button" onClick={() => openSection('analytics')} className="hover:text-white transition-colors">Аналітика</button>
+            <button type="button" onClick={() => openSection('sbs')} className="hover:text-white transition-colors">SBS</button>
+            <button type="button" onClick={() => openSection('deepstate')} className="hover:text-white transition-colors">DeepState</button>
             <button type="button" onClick={() => openSection('investigations')} className="hover:text-white transition-colors">Розслідування</button>
             <button type="button" onClick={() => openSection('rss')} className="hover:text-white transition-colors">RSS</button>
             <button type="button" onClick={() => openSection('feed')} className="hover:text-white transition-colors">Стрічка</button>
@@ -440,6 +442,8 @@ export default function App() {
             <button type="button" onClick={() => openSection('map')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Карта</button>
             <button type="button" onClick={() => openSection('brigades')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Підрозділи</button>
             <button type="button" onClick={() => openSection('analytics')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Аналітика</button>
+            <button type="button" onClick={() => openSection('sbs')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">SBS</button>
+            <button type="button" onClick={() => openSection('deepstate')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">DeepState</button>
             <button type="button" onClick={() => openSection('investigations')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Розслідування</button>
             <button type="button" onClick={() => openSection('rss')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">RSS</button>
             <button type="button" onClick={() => openSection('feed')} className="text-left text-white/60 hover:text-[#c9a227] transition-colors py-1">Стрічка</button>
@@ -537,12 +541,12 @@ export default function App() {
             </div>
             <div className="mb-10 md:mb-14">
               <a
-                href="https://uk.wikipedia.org/wiki/%D0%9D%D0%B0%D1%80%D1%83%D0%BA%D0%B0%D0%B2%D0%BD%D1%96_%D0%B7%D0%BD%D0%B0%D0%BA%D0%B8_%D0%97%D0%B1%D1%80%D0%BE%D0%B9%D0%BD%D0%B8%D1%85_%D1%81%D0%B8%D0%BB_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B8"
+                href="https://t.me/oko_gora"
                 target="_blank"
                 rel="noreferrer"
                 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-white/45 hover:text-[#c9a227] transition-colors"
               >
-                Джерело символіки: Вікіпедія «Нарукавні знаки Збройних сил України» <ArrowUpRight className="inline w-3 h-3 mb-[2px]" />
+                Telegram-канал «Око Гора — новини та аналітика» <ArrowUpRight className="inline w-3 h-3 mb-[2px]" />
               </a>
             </div>
 
@@ -867,6 +871,44 @@ export default function App() {
             </div>
           </motion.section>
 
+          {/* SBS Stats */}
+          <motion.section id="sbs" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
+            <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
+              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ SBS STATS</span>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Аналітика СБС</h2>
+                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Окремий огляд статистики СБС у вбудованому форматі з прямим переходом на джерело.</p>
+                </div>
+                <a href="https://foosint.github.io/sbs-stats/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors">
+                  Відкрити джерело <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+              <div className="border border-[#c9a227]/25 bg-[#1c1c12] overflow-hidden">
+                <iframe title="SBS Stats" src="https://foosint.github.io/sbs-stats/" className="w-full h-[760px] md:h-[880px] bg-[#1c1c12]" loading="lazy" />
+              </div>
+            </div>
+          </motion.section>
+
+          {/* DeepState Table */}
+          <motion.section id="deepstate" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
+            <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
+              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ DEEPSTATE TABLE</span>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">DeepState Зведена Таблиця</h2>
+                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Окремий розділ зі зведеною таблицею DeepState з вбудованим переглядом.</p>
+                </div>
+                <a href="https://deepstat.xyz/table" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors">
+                  Відкрити DeepState <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+              <div className="border border-[#c9a227]/25 bg-[#1c1c12] overflow-hidden">
+                <iframe title="DeepState Table" src="https://deepstat.xyz/table" className="w-full h-[760px] md:h-[880px] bg-[#1c1c12]" loading="lazy" />
+              </div>
+            </div>
+          </motion.section>
+
           {/* Interactive Investigations */}
           <motion.section id="investigations" variants={fadeIn} className="mb-32 md:mb-48 scroll-mt-28">
             <div className="border-t border-[#c9a227]/30 pt-12 md:pt-16">
@@ -1072,6 +1114,8 @@ export default function App() {
                 <li><button type="button" onClick={() => openSection('map')} className="hover:text-[#c9a227] transition-colors text-left">КАРТА</button></li>
                 <li><button type="button" onClick={() => openSection('brigades')} className="hover:text-[#c9a227] transition-colors text-left">ПІДРОЗДІЛИ</button></li>
                 <li><button type="button" onClick={() => openSection('analytics')} className="hover:text-[#c9a227] transition-colors text-left">АНАЛІТИКА УДАРІВ</button></li>
+                <li><button type="button" onClick={() => openSection('sbs')} className="hover:text-[#c9a227] transition-colors text-left">SBS STATS</button></li>
+                <li><button type="button" onClick={() => openSection('deepstate')} className="hover:text-[#c9a227] transition-colors text-left">DEEPSTATE TABLE</button></li>
                 <li><button type="button" onClick={() => openSection('investigations')} className="hover:text-[#c9a227] transition-colors text-left">РОЗСЛІДУВАННЯ</button></li>
                 <li><button type="button" onClick={() => openSection('rss')} className="hover:text-[#c9a227] transition-colors text-left">RSS</button></li>
                 <li><button type="button" onClick={() => openSection('feed')} className="hover:text-[#c9a227] transition-colors text-left">СТРІЧКА</button></li>

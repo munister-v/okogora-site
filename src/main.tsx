@@ -22,6 +22,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/map" element={<App />} />
         <Route path="/brigades" element={<App />} />
         <Route path="/analytics" element={<App />} />
+        <Route path="/sbs" element={<App />} />
+        <Route path="/deepstate" element={<App />} />
         <Route path="/investigations" element={<App />} />
         <Route path="/rss" element={<App />} />
         <Route path="/feed" element={<App />} />
