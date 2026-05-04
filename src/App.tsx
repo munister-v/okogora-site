@@ -1384,58 +1384,112 @@ export default function App() {
       </main>
 
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
-      <footer id="contacts" className="border-t border-[#c9a227]/30 px-4 md:px-8 py-14 md:py-24 bg-[#1c1c12] text-white scroll-mt-28">
-        <div className="max-w-[1800px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-14 mb-16 md:mb-20">
-            <div className="lg:col-span-6">
-              <h3 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase mb-6 leading-[0.9] text-[#c9a227]">
-                Око Гора
-              </h3>
-              <p className="text-white/45 max-w-xl font-mono text-xs md:text-sm leading-relaxed">
-                Незалежний ресурс з моніторингу, аеророзвідки та стратегічної аналітики бойового простору. Побудовано для тих, хто бачить далі горизонту.
+      <footer id="contacts" className="relative overflow-hidden border-t border-[#c9a227]/30 px-4 md:px-8 py-12 md:py-20 bg-[#10110d] text-white scroll-mt-28">
+        <div className="absolute inset-0 pointer-events-none opacity-35" style={{ backgroundImage: 'linear-gradient(rgba(201,162,39,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(201,162,39,0.08) 1px, transparent 1px)', backgroundSize: '42px 42px' }} />
+        <div className="absolute -right-32 -bottom-32 w-[460px] h-[460px] rounded-full border border-[#c9a227]/15 pointer-events-none" />
+        <div className="max-w-[1800px] mx-auto relative">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 md:gap-8 mb-8 md:mb-12">
+            <div className="xl:col-span-5 border border-[#c9a227]/25 bg-[#1c1c12]/88 p-6 md:p-8">
+              <div className="flex items-start gap-4 mb-7">
+                <div className="w-12 h-12 md:w-14 md:h-14 border border-[#c9a227]/40 bg-[#c9a227]/10 flex items-center justify-center shrink-0">
+                  <img src="oko_logo.png" alt="" className="w-8 h-8 md:w-10 md:h-10 object-contain opacity-90" loading="lazy" />
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/75">/ ONLINE OSINT PLATFORM</p>
+                  <h3 className="mt-2 text-4xl md:text-6xl font-black tracking-tighter uppercase leading-[0.82] text-[#f3d97f]">
+                    Око Гора
+                  </h3>
+                </div>
+              </div>
+              <p className="text-white/72 max-w-2xl text-base md:text-lg font-bold leading-relaxed">
+                Платформа Telegram-каналу «Око Гора - новини та аналітика»: стрічка, карта цілей, моніторинг підрозділів, RSS-джерела, SBS та DeepState без зайвого шуму.
               </p>
+              <div className="grid grid-cols-2 gap-3 mt-7">
+                {[
+                  ['Оновлено SBS', sbsStats?.latestDate || 'очікується'],
+                  ['DeepState рядків', deepstateRows.length],
+                  ['RSS записів', rssItems.length + fbItems.length],
+                  ['Подій 7 днів', dashboard.total],
+                ].map(([label, value]) => (
+                  <div key={label as string} className="border border-[#c9a227]/16 bg-[#252519]/70 p-3 md:p-4">
+                    <p className="font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-white/38">{label}</p>
+                    <p className="mt-1 text-xl md:text-2xl font-black tracking-tighter text-white tabular-nums">{typeof value === 'number' ? formatNumber(value) : value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="lg:col-start-8 lg:col-span-2 space-y-3">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/60 block mb-4">/ НАВІГАЦІЯ</span>
-              <ul className="space-y-3 font-mono text-xs tracking-widest uppercase text-white/50">
-                <li><Link to="/targets" className="hover:text-[#c9a227] transition-colors flex items-center gap-2"><Target className="w-3 h-3" />БАЗА ЦІЛЕЙ</Link></li>
-                <li><button type="button" onClick={() => openSection('map')} className="hover:text-[#c9a227] transition-colors text-left">КАРТА</button></li>
-                <li><button type="button" onClick={() => openSection('brigades')} className="hover:text-[#c9a227] transition-colors text-left">ПІДРОЗДІЛИ</button></li>
-                <li><button type="button" onClick={() => openSection('analytics')} className="hover:text-[#c9a227] transition-colors text-left">АНАЛІТИКА УДАРІВ</button></li>
-                <li><button type="button" onClick={() => openSection('sbs')} className="hover:text-[#c9a227] transition-colors text-left">SBS STATS</button></li>
-                <li><button type="button" onClick={() => openSection('deepstate')} className="hover:text-[#c9a227] transition-colors text-left">DEEPSTATE TABLE</button></li>
-                <li><button type="button" onClick={() => openSection('investigations')} className="hover:text-[#c9a227] transition-colors text-left">РОЗСЛІДУВАННЯ</button></li>
-                <li><button type="button" onClick={() => openSection('rss')} className="hover:text-[#c9a227] transition-colors text-left">RSS</button></li>
-                <li><button type="button" onClick={() => openSection('feed')} className="hover:text-[#c9a227] transition-colors text-left">СТРІЧКА</button></li>
-                <li><button type="button" onClick={() => openSection('contacts')} className="hover:text-[#c9a227] transition-colors text-left">КОНТАКТИ</button></li>
-              </ul>
+            <div className="xl:col-span-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="border border-[#c9a227]/20 bg-[#1c1c12]/72 p-5 md:p-6">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/70 block mb-5">/ РОЗДІЛИ</span>
+                <div className="grid grid-cols-1 gap-2 font-mono text-[11px] md:text-xs tracking-widest uppercase">
+                  {[
+                    ['Карта', 'map'],
+                    ['Підрозділи', 'brigades'],
+                    ['Аналітика ударів', 'analytics'],
+                    ['SBS Stats', 'sbs'],
+                    ['DeepState', 'deepstate'],
+                    ['RSS', 'rss'],
+                    ['Стрічка', 'feed'],
+                  ].map(([label, id]) => (
+                    <button key={id} type="button" onClick={() => openSection(id as SectionId)} className="flex items-center justify-between gap-3 border-b border-white/10 py-2 text-left text-white/58 hover:text-[#f3d97f] hover:border-[#c9a227]/40 transition-colors">
+                      <span>{label}</span>
+                      <ArrowUpRight className="w-3 h-3 opacity-45" />
+                    </button>
+                  ))}
+                  <Link to="/targets" className="flex items-center justify-between gap-3 border-b border-white/10 py-2 text-left text-[#f3d97f] hover:border-[#c9a227]/40 transition-colors">
+                    <span>База цілей</span>
+                    <Target className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
+
+              <div className="border border-[#c9a227]/20 bg-[#1c1c12]/72 p-5 md:p-6">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/70 block mb-5">/ ДЖЕРЕЛА</span>
+                <div className="space-y-3 font-mono text-[11px] md:text-xs tracking-widest uppercase">
+                  {[
+                    ['Telegram канал', 'https://t.me/oko_gora'],
+                    ['X / Twitter', 'https://x.com/oko_gora_tg'],
+                    ['SBS Stats', 'https://foosint.github.io/sbs-stats/'],
+                    ['DeepState Table', 'https://deepstat.xyz/table'],
+                  ].map(([label, href]) => (
+                    <a key={href} href={href} target="_blank" rel="noreferrer" className="flex items-center justify-between gap-3 border-b border-white/10 py-2 text-white/58 hover:text-[#f3d97f] hover:border-[#c9a227]/40 transition-colors">
+                      <span>{label}</span>
+                      <ArrowUpRight className="w-3 h-3 opacity-55" />
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            <div className="lg:col-span-4 space-y-3 text-left lg:text-right">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/60 block mb-4">/ ПРИЄДНАТИСЬ</span>
-              <ul className="space-y-3 font-mono text-xs tracking-widest uppercase">
-                <li>
-                  <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
-                    className="flex items-center justify-start lg:justify-end gap-2 text-white/55 hover:text-[#c9a227] transition-colors">
-                    ТЕЛЕГРАМ КАНАЛ <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                </li>
-                <li>
-                  <a href="https://x.com/oko_gora_tg" target="_blank" rel="noreferrer"
-                    className="flex items-center justify-start lg:justify-end gap-2 text-white/55 hover:text-[#c9a227] transition-colors font-bold">
-                    X (TWITTER) РОЗВІДКА <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                </li>
-              </ul>
+            <div className="xl:col-span-3 border border-[#c9a227]/25 bg-[#c9a227]/10 p-5 md:p-6 flex flex-col justify-between gap-6">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#f3d97f]/80">/ CONTACT</p>
+                <h4 className="mt-3 text-2xl md:text-3xl font-black uppercase leading-none">Слідкувати за оновленнями</h4>
+                <p className="mt-4 text-sm md:text-base text-white/65 leading-relaxed font-medium">
+                  Найшвидше оновлення, пояснення до мапи та нові розбори публікуються у Telegram.
+                </p>
+              </div>
+              <div className="space-y-3">
+                <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer" className="flex items-center justify-between gap-3 bg-[#f3d97f] text-[#10110d] px-4 py-3 font-mono text-[11px] md:text-xs font-black uppercase tracking-widest hover:bg-white transition-colors">
+                  Відкрити Telegram
+                  <ArrowUpRight className="w-4 h-4" />
+                </a>
+                <button type="button" onClick={() => shareLink('footer-home', 'Око Гора', window.location.origin)} className="w-full flex items-center justify-between gap-3 border border-[#c9a227]/40 px-4 py-3 font-mono text-[11px] md:text-xs font-black uppercase tracking-widest text-[#f3d97f] hover:bg-[#c9a227]/12 transition-colors">
+                  {sharedItemId === 'footer-home' ? 'Посилання скопійовано' : 'Поділитися сайтом'}
+                  <ArrowUpRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
 
-          <div className="pt-6 border-t border-[#c9a227]/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-mono text-[9px] tracking-[0.25em] text-white/25 uppercase">
-            <div>© {new Date().getFullYear()} OKO GORA GROUP. ВСІ ДАНІ ЗАШИФРОВАНІ.</div>
-            <div className="flex gap-5 md:gap-8">
-              <span>СТАТУС: АКТИВНО</span>
-              <span>ВЕРСІЯ: 3.0.0-STABLE</span>
+          <div className="border-t border-[#c9a227]/12 pt-5 md:pt-6 flex flex-col lg:flex-row justify-between gap-4 font-mono text-[9px] md:text-[10px] tracking-[0.22em] text-white/34 uppercase">
+            <div className="leading-relaxed">© {new Date().getFullYear()} OKO GORA. ВІДКРИТІ ДЖЕРЕЛА, РУЧНА ВЕРИФІКАЦІЯ, ПРЯМІ ПОСИЛАННЯ.</div>
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              <span>STATUS: ACTIVE</span>
+              <span>SBS: {sbsStats?.latestDate || 'WAITING'}</span>
+              <span>DEEPSTATE: {deepstateTable?.latest?.day ? `ROW ${deepstateTable.latest.day}` : 'WAITING'}</span>
+              <span>VERSION: 3.1.0</span>
             </div>
           </div>
         </div>
