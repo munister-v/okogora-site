@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, type DragEvent, type ChangeEvent } from 'react';
 import { UploadCloud, Link, X, CheckCircle, AlertTriangle, Loader, Image as ImageIcon } from 'lucide-react';
 import { uploadToGitHub, fetchImageFromUrl, validateFile } from '../lib/imageUpload';
 
@@ -42,7 +42,7 @@ export default function ImageUploader({ token, value, onChange }: Props) {
     }
   }, [token, onChange]);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
+  const handleDrop = useCallback((e: DragEvent) => {
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files[0];
@@ -52,7 +52,7 @@ export default function ImageUploader({ token, value, onChange }: Props) {
     handleFile(file);
   }, [handleFile]);
 
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     const err = validateFile(file);

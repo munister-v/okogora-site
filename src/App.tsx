@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, lazy, Suspense, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Activity, Database, Shield, Terminal, Rss, Target, Lock, BarChart3, Crosshair, MapPinned, Table2, RadioTower } from 'lucide-react';
+import { ArrowUpRight, Activity, Database, Shield, Terminal, Rss, Target, Lock, BarChart3, MapPinned, Table2, RadioTower } from 'lucide-react';
 import { Post, InvestigationArticle } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
@@ -52,6 +52,70 @@ type PechalStats = {
     totalBySerial?: number;
     totalApproxByMaxPostId: number;
   };
+};
+
+type SbsStatsPayload = {
+  generatedAt: string;
+  sourceUrl: string;
+  latestDate: string;
+  latestHour: number;
+  collectedAt?: string;
+  summary: {
+    personnelKilled: number;
+    personnelWounded: number;
+    personnelCasualties: number;
+    targetsHit: number;
+    targetsDestroyed: number;
+  };
+  categories: Array<{
+    id: number;
+    label: string;
+    hit: number;
+    destroyed: number;
+  }>;
+  daily: Array<{
+    date: string;
+    hour: number;
+    targetsHit: number;
+    targetsDestroyed: number;
+    personnelCasualties: number;
+  }>;
+  monthly: Array<{
+    date: string;
+    targetsHit: number;
+    targetsDestroyed: number;
+    personnelCasualties: number;
+  }>;
+  methodology?: string[];
+};
+
+type DeepstateTablePayload = {
+  generatedAt: string;
+  sourceUrl: string;
+  latest: {
+    day: string;
+    occupiedKm2: number;
+    occupiedPercent: number;
+    diffKm2: number;
+    text: string;
+  } | null;
+  rows: Array<{
+    day: string;
+    occupiedKm2: number;
+    occupiedPercent: number;
+    diffKm2: number;
+    text: string;
+  }>;
+  areas: Array<{
+    name: string;
+    occupiedKm2: number;
+    occupiedPercent: number;
+    dailyAverageKm2: number;
+  }>;
+  recentWindowDays: number;
+  netChangeKm2: number;
+  maxAbsDiffKm2: number;
+  methodology?: string[];
 };
 
 const SECTION_IDS = ['map', 'brigades', 'analytics', 'sbs', 'deepstate', 'investigations', 'rss', 'feed', 'contacts'] as const;
@@ -114,6 +178,8 @@ export default function App() {
   const [fbItems, setFbItems] = useState<RssItem[]>([]);
   const [brigadeDashboard, setBrigadeDashboard] = useState<BrigadeDashboardPayload | null>(null);
   const [pechalStats, setPechalStats] = useState<PechalStats | null>(null);
+  const [sbsStats, setSbsStats] = useState<SbsStatsPayload | null>(null);
+  const [deepstateTable, setDeepstateTable] = useState<DeepstateTablePayload | null>(null);
   const [investigations, setInvestigations] = useState<InvestigationArticle[]>([]);
   const [sharedItemId, setSharedItemId] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -171,6 +237,16 @@ export default function App() {
       .then(r => r.json())
       .then((data: PechalStats) => setPechalStats(data && data.counters ? data : null))
       .catch(() => setPechalStats(null));
+
+    fetch(`/data/sbs_stats_snapshot.json?t=${Date.now()}`)
+      .then(r => r.json())
+      .then((data: SbsStatsPayload) => setSbsStats(data && data.summary ? data : null))
+      .catch(() => setSbsStats(null));
+
+    fetch(`/data/deepstate_table.json?t=${Date.now()}`)
+      .then(r => r.json())
+      .then((data: DeepstateTablePayload) => setDeepstateTable(data && Array.isArray(data.rows) ? data : null))
+      .catch(() => setDeepstateTable(null));
   }, []);
 
   useEffect(() => {
@@ -184,6 +260,27 @@ export default function App() {
   function formatRssDate(iso: string) {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '';
+    return d.toLocaleString('uk-UA', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function formatNumber(value: number | undefined | null) {
+    return Number(value || 0).toLocaleString('uk-UA');
+  }
+
+  function formatKm2(value: number | undefined | null) {
+    return `${Number(value || 0).toLocaleString('uk-UA', { maximumFractionDigits: 1 })} км²`;
+  }
+
+  function formatSignedKm2(value: number | undefined | null) {
+    const n = Number(value || 0);
+    const sign = n > 0 ? '+' : '';
+    return `${sign}${n.toLocaleString('uk-UA', { maximumFractionDigits: 2 })} км²`;
+  }
+
+  function formatSnapshotDate(iso: string | undefined) {
+    if (!iso) return 'очікується';
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
     return d.toLocaleString('uk-UA', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
   }
 
@@ -390,6 +487,19 @@ export default function App() {
     return { days, oblasts, byDayOblast, maxCell, trend, maxTrend, total: uniqueEvents.length, concreteByOblast, bySource };
   }, [rssItems, fbItems, posts]);
 
+  const sbsTrend = [...(sbsStats?.daily || [])].reverse().slice(-14);
+  const sbsMaxDaily = Math.max(1, ...sbsTrend.map((row) => row.targetsHit));
+  const sbsTopCategories = (sbsStats?.categories || []).slice(0, 8);
+  const sbsMaxCategory = Math.max(1, ...sbsTopCategories.map((row) => row.hit + row.destroyed));
+  const deepstateRows = deepstateTable?.rows.slice(0, 8) || [];
+  const deepstateMaxAbs = Math.max(1, deepstateTable?.maxAbsDiffKm2 || 1);
+  const heroSignals = [
+    { label: 'Telegram-пости', value: posts.length, note: 'стрічка Око Гора' },
+    { label: 'OSINT RSS', value: rssItems.length + fbItems.length, note: 'X + Facebook' },
+    { label: 'Активні підрозділи', value: brigadeDashboard?.totals.unitsWithOfficialFeeds ?? brigadeDashboard?.totals.brigadesWithOfficialFeeds ?? 0, note: 'останні 3 доби' },
+    { label: 'Події ударів', value: dashboard.total, note: '7 днів / з пруфами' },
+  ];
+
   return (
     <div className="min-h-screen bg-[#252519] text-white selection:bg-[#c9a227] selection:text-[#1c1c12] font-sans overflow-x-hidden">
 
@@ -527,17 +637,32 @@ export default function App() {
               </div>
             </div>
             <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-l-2 border-[#c9a227]/80 bg-[#0f1012]/70 p-4 md:p-5">
-              <p className="text-white/90 text-base md:text-lg font-bold leading-snug">
-                Офіційна онлайн-платформа Telegram-каналу «Око Гора - новини та аналітика». Тут зібрані оперативні зведення, аналітика та інтерактивна мапа подій.
-              </p>
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-2">/ OSINT COMMAND ROOM</p>
+                <p className="text-white/95 text-lg md:text-2xl font-extrabold leading-tight max-w-5xl">
+                  Онлайн-платформа Telegram-каналу «Око Гора - новини та аналітика»: карта цілей, стрічка подій, офіційні підрозділи, RSS-моніторинг, SBS та DeepState в одному доказовому інтерфейсі.
+                </p>
+                <p className="mt-3 text-sm md:text-base text-white/58 leading-relaxed max-w-4xl">
+                  На головній показуємо не декоративні віджети, а робочі шари: що оновлено, звідки взято, яку зміну зафіксовано і де перейти до першоджерела.
+                </p>
+              </div>
               <a
                 href="https://t.me/oko_gora"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 self-start md:self-auto border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors"
+                className="inline-flex items-center gap-2 self-start md:self-auto shrink-0 border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-3 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors"
               >
                 Перейти в Telegram <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-10 md:mb-14">
+              {heroSignals.map((signal) => (
+                <div key={signal.label} className="border border-[#c9a227]/20 bg-[#1c1c12]/80 p-4 md:p-5">
+                  <p className="font-mono text-[9px] uppercase tracking-widest text-white/42">{signal.label}</p>
+                  <p className="mt-2 text-3xl md:text-5xl font-black tracking-tighter text-[#f3d97f] tabular-nums">{formatNumber(signal.value)}</p>
+                  <p className="mt-1 text-xs md:text-sm text-white/50 font-bold">{signal.note}</p>
+                </div>
+              ))}
             </div>
             <div className="mb-10 md:mb-14">
               <a
@@ -552,20 +677,20 @@ export default function App() {
 
             <div id="map" className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-t border-[#c9a227]/30 pt-8 md:pt-12 mt-12 md:mt-24 relative z-10">
               <div className="lg:col-span-5">
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ МІСІЯ</span>
-                <p className="text-2xl md:text-4xl font-medium leading-[1.1] tracking-tight text-white">
-                  Тотальний візуальний контроль. Аналітика бойового простору та оптична перевага.
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ЩО ЦЕ</span>
+                <p className="text-2xl md:text-4xl font-extrabold leading-[1.05] tracking-tight text-white">
+                  Дашборд відкритих джерел: від поста до координати, від координати до контексту, від контексту до перевіреного посилання.
                 </p>
               </div>
               <div className="lg:col-start-8 lg:col-span-5">
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ЕКОСИСТЕМA</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ЛОГІКА РОБОТИ</span>
                 <ul className="space-y-4 font-mono text-[10px] md:text-xs uppercase tracking-widest">
                   {[
-                    { label: 'ПОВІТРЯНА РОЗВІДКА', n: '01' },
-                    { label: 'КООРДИНАЦІЯ ТА ЦІЛЕВКАЗАННЯ', n: '02' },
-                    { label: 'СИСТЕМИ ДАЛЕКОГО УРАЖЕННЯ', n: '03' },
+                    { label: 'ЗБІР: TELEGRAM / X / FACEBOOK / МАПИ', n: '01' },
+                    { label: 'НОРМАЛІЗАЦІЯ: ДУБЛІ, ГЕО, ДАТИ, ПРУФИ', n: '02' },
+                    { label: 'ВИВІД: КАРТА, ТАБЛИЦІ, ТРЕНДИ, ДЖЕРЕЛА', n: '03' },
                   ].map(item => (
-                    <li key={item.n} className="flex justify-between border-b border-white/10 pb-2 hover:border-[#c9a227]/40 text-white/50 hover:text-white transition-all">
+                    <li key={item.n} className="flex justify-between gap-4 border-b border-white/10 pb-2 hover:border-[#c9a227]/40 text-white/62 hover:text-white transition-all">
                       <span>{item.label}</span>
                       <span className="text-[#c9a227]">{item.n}</span>
                     </li>
@@ -877,73 +1002,94 @@ export default function App() {
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ SBS STATS</span>
-                  <h2 className="text-4xl md:text-6xl font-bold uppercase leading-[0.92]">Аналітика СБС</h2>
-                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Авторський шар Око Гора поверх відкритої статистики: без чужого iframe, з прямим переходом до першоджерела.</p>
+                  <h2 className="text-4xl md:text-6xl font-bold uppercase leading-[0.92]">SBS: ураження за добу</h2>
+                  <p className="mt-4 text-white/68 max-w-4xl text-sm md:text-base leading-relaxed">
+                    Нативний шар поверх відкритої бази foosint/SBS: беремо останню годину з `daily_stats`, показуємо категорії уражень, добовий тренд і прямий перехід до першоджерела.
+                  </p>
                 </div>
                 <a href="https://foosint.github.io/sbs-stats/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors">
                   Відкрити джерело <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               </div>
-              <div className="relative overflow-hidden border border-[#c9a227]/25 bg-[#10110d] min-h-[560px]">
+              <div className="relative overflow-hidden border border-[#c9a227]/25 bg-[#10110d]">
                 <div className="absolute inset-0 opacity-25" style={{ backgroundImage: 'linear-gradient(rgba(201,162,39,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(201,162,39,0.12) 1px, transparent 1px)', backgroundSize: '34px 34px' }} />
-                <div className="absolute -right-20 -top-20 w-[420px] h-[420px] border border-[#c9a227]/20 rounded-full" />
-                <div className="absolute right-10 top-16 w-[260px] h-[260px] border border-[#c9a227]/30 rounded-full" />
+                <div className="absolute -right-28 -top-28 w-[520px] h-[520px] border border-[#c9a227]/20 rounded-full" />
                 <div className="relative grid grid-cols-1 xl:grid-cols-12 gap-6 p-5 md:p-8">
-                  <div className="xl:col-span-5 border border-[#c9a227]/20 bg-[#1c1c12]/85 p-5 md:p-7">
-                    <div className="flex items-center justify-between mb-8">
+                  <div className="xl:col-span-4 border border-[#c9a227]/25 bg-[#1c1c12]/90 p-5 md:p-7">
+                    <div className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">оперативний профіль</p>
-                        <h3 className="text-2xl md:text-3xl font-extrabold uppercase leading-none mt-2">Сили безпілотних систем</h3>
+                        <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">останній зріз</p>
+                        <h3 className="text-2xl md:text-3xl font-extrabold uppercase leading-none mt-2">Доба {sbsStats?.latestDate || '...'}</h3>
+                        <p className="mt-2 text-xs text-white/48">Година: {sbsStats ? `${sbsStats.latestHour}:00 UTC` : 'очікується'} · оновлено {formatSnapshotDate(sbsStats?.generatedAt)}</p>
                       </div>
-                      <RadioTower className="w-8 h-8 text-[#c9a227]" />
+                      <RadioTower className="w-8 h-8 text-[#c9a227] shrink-0" />
                     </div>
-                    <div className="aspect-square max-w-[360px] mx-auto relative">
-                      {[0, 1, 2].map((i) => (
-                        <div key={i} className="absolute rounded-full border border-[#c9a227]/25" style={{ inset: `${i * 15}%` }} />
-                      ))}
-                      <div className="absolute inset-[18%] border border-[#c9a227]/50 rotate-45" />
+                    <div className="grid grid-cols-2 gap-3 mt-7">
                       {[
-                        ['18%', '54%', 'FPV'],
-                        ['44%', '16%', 'ISR'],
-                        ['72%', '36%', 'EW'],
-                        ['55%', '74%', 'LOG'],
-                      ].map(([left, top, label]) => (
-                        <div key={label} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left, top }}>
-                          <div className="w-3 h-3 bg-[#c9a227] shadow-[0_0_24px_rgba(201,162,39,0.8)]" />
-                          <span className="mt-2 block font-mono text-[9px] text-[#f3d97f]">{label}</span>
+                        ['Цілі hit', sbsStats?.summary.targetsHit, 'за поточну добу'],
+                        ['Знищено', sbsStats?.summary.targetsDestroyed, 'destroyed'],
+                        ['Втрати о/с', sbsStats?.summary.personnelCasualties, 'killed + wounded'],
+                        ['KIA', sbsStats?.summary.personnelKilled, 'за SBS DB'],
+                      ].map(([label, value, note]) => (
+                        <div key={label as string} className="border border-[#c9a227]/18 bg-[#252519]/80 p-4">
+                          <p className="font-mono text-[9px] uppercase tracking-widest text-white/42">{label}</p>
+                          <p className="mt-2 text-3xl font-black tracking-tighter text-[#f3d97f] tabular-nums">{formatNumber(value as number)}</p>
+                          <p className="mt-1 text-[11px] text-white/45">{note}</p>
                         </div>
                       ))}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Crosshair className="w-16 h-16 text-[#c9a227]/80" />
-                      </div>
+                    </div>
+                    <div className="mt-6 border-t border-white/10 pt-5">
+                      <p className="text-sm text-white/65 leading-relaxed">
+                        Це не прогноз і не оцінка редакції. Це механічний зріз із відкритої бази: якщо джерело оновило години або категорії, сайт підтягує новий JSON.
+                      </p>
                     </div>
                   </div>
-                  <div className="xl:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                      ['Вогневе ураження', 'FPV / бомбери / ударні платформи', '94%'],
-                      ['Розвідка', 'виявлення цілей і дорозвідка', '81%'],
-                      ['РЕБ / захист', 'канали протидії і прикриття', '67%'],
-                      ['Логістика БПЛА', 'постачання, батареї, ретрансляція', '58%'],
-                    ].map(([title, desc, width]) => (
-                      <div key={title} className="border border-[#c9a227]/20 bg-[#252519]/80 p-5">
-                        <div className="flex items-center justify-between mb-4">
-                          <BarChart3 className="w-5 h-5 text-[#c9a227]" />
-                          <span className="font-mono text-[10px] text-white/35">SOURCE LINKED</span>
+                  <div className="xl:col-span-8 grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="lg:col-span-2 border border-[#c9a227]/20 bg-[#0f1012]/85 p-5">
+                      <div className="flex items-center justify-between gap-4 mb-5">
+                        <div>
+                          <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">категорії уражень</p>
+                          <h4 className="text-2xl font-extrabold uppercase leading-none mt-1">Що саме фіксує SBS</h4>
                         </div>
-                        <h4 className="text-xl font-bold uppercase leading-tight">{title}</h4>
-                        <p className="mt-2 text-sm text-white/55 leading-relaxed">{desc}</p>
-                        <div className="mt-5 h-2 bg-white/10">
-                          <div className="h-full bg-[#c9a227]" style={{ width }} />
-                        </div>
+                        <BarChart3 className="w-7 h-7 text-[#c9a227]" />
                       </div>
-                    ))}
-                    <div className="md:col-span-2 border border-[#c9a227]/20 bg-[#0f1012]/85 p-5">
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 font-mono text-[10px] uppercase tracking-widest">
-                        {['дрони', 'екіпажі', 'сектори', 'джерела'].map((label, i) => (
-                          <div key={label} className="border border-white/10 p-3">
-                            <div className="text-2xl font-bold text-[#c9a227]">{['24/7', 'SBS', 'OSINT', 'LIVE'][i]}</div>
-                            <div className="text-white/40 mt-1">{label}</div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {(sbsTopCategories.length ? sbsTopCategories : [{ id: 0, label: 'Очікуємо синхронізацію', hit: 0, destroyed: 0 }]).map((item) => (
+                          <div key={item.id} className="border border-[#c9a227]/18 bg-[#252519]/70 p-4">
+                            <div className="flex items-center justify-between gap-3">
+                              <p className="text-base md:text-lg font-extrabold uppercase leading-tight">{item.label}</p>
+                              <p className="font-mono text-[10px] text-[#f3d97f] shrink-0">hit {formatNumber(item.hit)}</p>
+                            </div>
+                            <div className="mt-3 h-2 bg-white/10">
+                              <div className="h-full bg-[#c9a227]" style={{ width: `${Math.max(3, ((item.hit + item.destroyed) / sbsMaxCategory) * 100)}%` }} />
+                            </div>
+                            <p className="mt-2 text-xs text-white/50">Знищено: <span className="font-bold text-white/80">{formatNumber(item.destroyed)}</span></p>
                           </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="border border-[#c9a227]/20 bg-[#1c1c12]/80 p-5">
+                      <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">добовий тренд hit</p>
+                      <div className="space-y-2">
+                        {sbsTrend.map((row) => (
+                          <div key={`${row.date}-${row.hour}`} className="grid grid-cols-[76px_1fr_52px] items-center gap-3">
+                            <span className="font-mono text-[10px] text-white/50">{row.date.slice(5)}</span>
+                            <div className="h-3 bg-white/10">
+                              <div className="h-full bg-[#c9a227]" style={{ width: `${Math.max(4, (row.targetsHit / sbsMaxDaily) * 100)}%` }} />
+                            </div>
+                            <span className="font-mono text-[10px] text-white/75 text-right">{formatNumber(row.targetsHit)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="border border-[#c9a227]/20 bg-[#1c1c12]/80 p-5">
+                      <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">методологія</p>
+                      <div className="space-y-3 text-sm text-white/67 leading-relaxed">
+                        {(sbsStats?.methodology || [
+                          'JSON ще не завантажено у браузері.',
+                          'Після синхронізації тут буде методологія джерела.',
+                        ]).map((line) => (
+                          <p key={line} className="border-b border-white/10 pb-2">{line}</p>
                         ))}
                       </div>
                     </div>
@@ -959,8 +1105,10 @@ export default function App() {
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ DEEPSTATE TABLE</span>
-                  <h2 className="text-4xl md:text-6xl font-bold uppercase leading-[0.92]">DeepState Карта Статистики</h2>
-                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Нативний візуальний шар для швидкого переходу до таблиці DeepState: напрямки, щільність, статуси і карта в одному екрані.</p>
+                  <h2 className="text-4xl md:text-6xl font-bold uppercase leading-[0.92]">DeepState: зміни фронту</h2>
+                  <p className="mt-4 text-white/68 max-w-4xl text-sm md:text-base leading-relaxed">
+                    Репрезентативний превʼю-шар з публічної таблиці DeepState: показує останній рядок, чисту зміну за вікно, пояснення подій і матрицю `diffKm2`, а не умовні “гарячі клітини”.
+                  </p>
                 </div>
                 <a href="https://deepstat.xyz/table" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors">
                   Відкрити DeepState <ArrowUpRight className="w-3.5 h-3.5" />
@@ -970,50 +1118,81 @@ export default function App() {
                 <div className="xl:col-span-7 border border-[#c9a227]/25 bg-[#10110d] p-5 md:p-7 overflow-hidden">
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">map matrix</p>
-                      <h3 className="text-2xl md:text-3xl font-extrabold uppercase leading-none mt-2">Щільність по напрямках</h3>
+                      <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">data-diff matrix</p>
+                      <h3 className="text-2xl md:text-3xl font-extrabold uppercase leading-none mt-2">Останні зміни за таблицею</h3>
+                      <p className="mt-2 text-sm text-white/52">Мінус у DeepState означає збільшення окупованої площі, плюс — звільнення або уточнення на користь України.</p>
                     </div>
                     <MapPinned className="w-8 h-8 text-[#c9a227]" />
                   </div>
-                  <div className="grid grid-cols-6 gap-2 min-h-[420px]">
-                    {Array.from({ length: 72 }).map((_, i) => {
-                      const hot = [9, 10, 16, 21, 22, 27, 34, 35, 41, 47, 48, 54, 59].includes(i);
-                      const warm = [4, 15, 28, 33, 40, 46, 53, 60, 65].includes(i);
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                    {[
+                      ['Окуповано', formatKm2(deepstateTable?.latest?.occupiedKm2), `${deepstateTable?.latest?.occupiedPercent?.toFixed(3) || '0.000'}%`],
+                      ['Останній diff', formatSignedKm2(deepstateTable?.latest?.diffKm2), `рядок: ${deepstateTable?.latest?.day || '...'}`],
+                      ['Сума вікна', formatSignedKm2(deepstateTable?.netChangeKm2), `${deepstateTable?.recentWindowDays || 0} останніх рядків`],
+                      ['Оновлено', formatSnapshotDate(deepstateTable?.generatedAt), 'локальний JSON'],
+                    ].map(([label, value, note]) => (
+                      <div key={label} className="border border-[#c9a227]/18 bg-[#1c1c12]/80 p-4">
+                        <p className="font-mono text-[9px] uppercase tracking-widest text-white/42">{label}</p>
+                        <p className="mt-2 text-xl md:text-2xl font-black tracking-tighter text-[#f3d97f] tabular-nums">{value}</p>
+                        <p className="mt-1 text-xs text-white/48">{note}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-4 md:grid-cols-8 gap-2 min-h-[220px]">
+                    {(deepstateRows.length ? deepstateRows : Array.from({ length: 8 }, (_, i) => ({ day: `${i + 1}`, diffKm2: 0, text: 'Очікуємо дані', occupiedKm2: 0, occupiedPercent: 0 }))).map((row, i) => {
+                      const intensity = Math.max(0.12, Math.min(1, Math.abs(row.diffKm2) / deepstateMaxAbs));
+                      const isRelease = row.diffKm2 > 0;
                       return (
-                        <div key={i} className={`border ${hot ? 'border-[#c9a227]/70 bg-[#c9a227]/55' : warm ? 'border-[#c9a227]/40 bg-[#c9a227]/25' : 'border-white/10 bg-white/[0.03]'}`} />
+                        <div
+                          key={`${row.day}-${i}`}
+                          className={`relative min-h-[120px] border p-3 flex flex-col justify-between ${isRelease ? 'border-sky-300/40 bg-sky-400/15' : 'border-[#c9a227]/35 bg-[#c9a227]/15'}`}
+                          style={{ opacity: 0.48 + intensity * 0.52 }}
+                          title={row.text}
+                        >
+                          <span className="font-mono text-[10px] text-white/60">день {row.day}</span>
+                          <span className={`text-2xl font-black tracking-tighter tabular-nums ${isRelease ? 'text-sky-200' : 'text-[#f3d97f]'}`}>{formatSignedKm2(row.diffKm2)}</span>
+                          <span className="font-mono text-[9px] uppercase tracking-widest text-white/38">{isRelease ? 'звільнення' : 'просування ворога'}</span>
+                        </div>
                       );
                     })}
+                  </div>
+                  <div className="mt-5 border border-white/10 bg-[#1c1c12]/70 p-4">
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">останнє пояснення</p>
+                    <p className="text-lg md:text-xl font-bold leading-snug text-white">{deepstateTable?.latest?.text || 'Очікуємо синхронізацію таблиці DeepState.'}</p>
                   </div>
                 </div>
                 <div className="xl:col-span-5 border border-[#c9a227]/25 bg-[#1c1c12] p-5 md:p-7">
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">table preview</p>
-                      <h3 className="text-2xl font-extrabold uppercase leading-none mt-2">Оперативні рядки</h3>
+                      <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">table rows</p>
+                      <h3 className="text-2xl font-extrabold uppercase leading-none mt-2">Пояснення з рядків</h3>
                     </div>
                     <Table2 className="w-7 h-7 text-[#c9a227]" />
                   </div>
-                  <div className="space-y-3">
-                    {[
-                      ['Покровський', 'висока щільність', 'гаряче'],
-                      ['Куп’янський', 'маневр малих груп', 'активно'],
-                      ['Лиманський', 'артилерійський тиск', 'контроль'],
-                      ['Запорізький', 'локальні зміни', 'спостереження'],
-                      ['Херсонський', 'дрони / вода / логістика', 'моніторинг'],
-                    ].map(([area, note, status]) => (
-                      <div key={area} className="grid grid-cols-[1fr_auto] gap-4 items-center border-b border-white/10 pb-3">
+                  <div className="space-y-3 max-h-[560px] overflow-y-auto pr-1">
+                    {deepstateRows.map((row) => (
+                      <div key={`${row.day}-${row.text}`} className="grid grid-cols-[1fr_auto] gap-4 items-start border-b border-white/10 pb-3">
                         <div>
-                          <p className="text-lg font-bold uppercase leading-tight">{area}</p>
-                          <p className="text-sm text-white/50 mt-1">{note}</p>
+                          <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">рядок {row.day} · {row.occupiedPercent.toFixed(3)}%</p>
+                          <p className="text-base md:text-lg font-bold leading-snug mt-1">{row.text}</p>
+                          <p className="text-xs text-white/45 mt-1">Окупована площа: {formatKm2(row.occupiedKm2)}</p>
                         </div>
-                        <span className="font-mono text-[9px] uppercase tracking-widest border border-[#c9a227]/35 text-[#f3d97f] px-2 py-1">{status}</span>
+                        <span className={`font-mono text-[9px] uppercase tracking-widest border px-2 py-1 shrink-0 ${row.diffKm2 > 0 ? 'border-sky-300/35 text-sky-200' : 'border-[#c9a227]/35 text-[#f3d97f]'}`}>{formatSignedKm2(row.diffKm2)}</span>
                       </div>
                     ))}
+                    {deepstateRows.length === 0 && (
+                      <p className="text-sm text-white/55">JSON DeepState ще не завантажено. Після синхронізації тут зʼявляться останні рядки таблиці.</p>
+                    )}
                   </div>
                   <a href="https://deepstat.xyz/table" target="_blank" rel="noreferrer" className="mt-6 flex items-center justify-between border border-[#c9a227]/30 bg-[#c9a227]/10 p-4 font-mono text-[10px] uppercase tracking-widest text-[#f3d97f] hover:bg-[#c9a227]/15 transition-colors">
                     Перейти до актуальної таблиці
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
+                  <div className="mt-4 space-y-2 text-xs text-white/45 leading-relaxed">
+                    {(deepstateTable?.methodology || []).map((line) => (
+                      <p key={line}>• {line}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
