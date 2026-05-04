@@ -52,6 +52,13 @@ type PechalStats = {
     totalBySerial?: number;
     totalApproxByMaxPostId: number;
   };
+  latestProofs?: Array<{
+    id: number;
+    datetime: string;
+    url: string;
+    dayKyiv: string;
+    serial?: number | null;
+  }>;
 };
 
 type SbsStatsPayload = {
@@ -779,7 +786,7 @@ export default function App() {
                 <div className="bg-[#2e2d1e] border border-[#c9a227]/20 p-8 hover:border-[#c9a227]/60 hover:bg-[#363525] transition-all duration-500 group relative">
                   <Activity className="w-8 h-8 mb-6 text-[#c9a227]/40 group-hover:text-[#c9a227] transition-colors" />
                   <h4 className="text-2xl font-bold uppercase mb-2 tracking-tighter">Горюшко · щоденне оновлення</h4>
-                  <p className="text-sm text-white/50 leading-snug mb-6">Автоматичний лічильник нових записів у каналі за поточний день і за 7 днів. Оновлюється щодня із публічного веб-фіду Telegram.</p>
+                  <p className="text-sm text-white/50 leading-snug mb-6">Автоматичний лічильник нових записів у каналі за поточний день і за 7 днів. Сумарне значення беремо з останнього номера у тексті поста, не з ID Telegram.</p>
                   <div className="grid grid-cols-3 gap-2 mb-6 font-mono text-center">
                     <div className="border border-[#c9a227]/20 py-2">
                       <div className="text-lg font-bold text-[#c9a227]">{pechalStats?.counters.today ?? 0}</div>
@@ -794,9 +801,25 @@ export default function App() {
                       <div className="text-[8px] uppercase tracking-widest text-white/40">сумарно*</div>
                     </div>
                   </div>
+                  <div className="mb-5 border border-[#c9a227]/18 bg-[#1c1c12]/55 p-3 font-mono text-[9px] uppercase tracking-widest text-white/42">
+                    <div className="flex items-center justify-between gap-3">
+                      <span>Оновлено</span>
+                      <span className="text-white/75">{formatSnapshotDate(pechalStats?.generatedAt)}</span>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between gap-3">
+                      <span>Останній пост</span>
+                      {pechalStats?.latestProofs?.[0]?.url ? (
+                        <a href={pechalStats.latestProofs[0].url} target="_blank" rel="noreferrer" className="text-[#c9a227] hover:text-[#f1d98a] transition-colors">
+                          #{pechalStats.latestProofs[0].id}
+                        </a>
+                      ) : (
+                        <span className="text-white/45">н/д</span>
+                      )}
+                    </div>
+                  </div>
                   <div className="flex justify-between items-center font-mono text-[10px] tracking-widest pt-4 border-t border-white/10">
-                    <a href={pechalStats?.sourceUrl || 'https://t.me/s/pechalbeda200'} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[#c9a227] hover:text-[#f1d98a] transition-colors"><Shield className="w-3 h-3" /> PROOF FEED</a>
-                    <span className="text-white/30">*серійний номер</span>
+                    <a href={pechalStats?.sourceUrl || 'https://t.me/s/pechalbeda200'} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[#c9a227] hover:text-[#f1d98a] transition-colors"><Shield className="w-3 h-3" /> Відкрити канал</a>
+                    <span className="text-white/30">*номер у пості</span>
                   </div>
                 </div>
 

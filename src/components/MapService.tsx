@@ -390,7 +390,7 @@ function MapEvents({ onMouseMove, onClick }: { onMouseMove: (lat: number, lng: n
 }
 
 export default function MapService() {
-  const [activeFilters, setActiveFilters] = useState<FilterId[]>(['strikes', 'navy', 'airbases', 'logistics', 'strategic']);
+  const [activeFilters, setActiveFilters] = useState<FilterId[]>(['strikes', 'navy', 'airbases', 'logistics']);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [showOnlyExactEvents, setShowOnlyExactEvents] = useState(false);
   const [telemetry, setTelemetry] = useState({ lat: 45.0, lng: 35.0 });
@@ -419,7 +419,7 @@ export default function MapService() {
       .then(([postsData, rssData, fbData, strategicData]) => {
         if (!mounted) return;
         const mapped = buildEvents(
-          Array.isArray(postsData) ? postsData : [],
+          [],
           Array.isArray(rssData?.items) ? rssData.items : [],
           Array.isArray(fbData?.items) ? fbData.items : [],
           7,
@@ -545,7 +545,7 @@ export default function MapService() {
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
           <MapIcon className="w-4 h-4" />
-          <span className="font-bold">ТАКТИЧНИЙ МОНІТОР // ТІЛЬКИ ГЕОДАНІ З ДЖЕРЕЛ</span>
+          <span className="font-bold">ТАКТИЧНИЙ МОНІТОР // АКТУАЛЬНІ RSS-ПОДІЇ</span>
         </div>
         <div className="flex items-center gap-4 md:gap-6 text-[#111111]/55">
           <button
@@ -569,7 +569,7 @@ export default function MapService() {
               <Filter className="w-3 h-3 text-blue-400" />
               <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Фільтри карти</span>
             </div>
-            <p className="mb-3 font-mono text-[8px] uppercase tracking-widest text-white/35">Події: 7 діб · зовнішній шар: координати з джерела</p>
+            <p className="mb-3 font-mono text-[8px] uppercase tracking-widest text-white/35">За замовчуванням: тільки RSS/Facebook за 7 діб. Зовнішні геошари вимкнені.</p>
             <div className="space-y-2.5">
               {[
                 { id: 'strikes' as const, label: `Удари / BDA (${activityByType.strikes})`, color: 'bg-[#ff3333]', icon: Target },
@@ -629,7 +629,7 @@ export default function MapService() {
               )}
               {sidebarStrategicItems.length > 0 && (
                 <div className="pt-1 text-[8px] text-white/30">
-                  Зовнішній шар оновлено: {strategicUpdatedLabel || 'н/д'}
+                  Зовнішній шар прихований за замовчуванням. Оновлено: {strategicUpdatedLabel || 'н/д'}
                 </div>
               )}
             </div>
@@ -659,7 +659,7 @@ export default function MapService() {
               ))}
             </div>
             <p className="mt-3 text-[8px] text-white/32 leading-relaxed">
-              Показуємо тільки координати, які прийшли з джерела. Візуального зсуву маркерів більше немає: точка стоїть там, де вона вказана у шарі.
+              Це довідковий шар, не поточні події. Він вимкнений при відкритті карти, щоб не змішувати архівні зони з актуальною стрічкою.
             </p>
           </div>
 

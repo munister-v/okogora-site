@@ -3,7 +3,7 @@ import { writeFile } from 'node:fs/promises';
 const CHANNEL = 'pechalbeda200';
 const BASE_URL = `https://t.me/s/${CHANNEL}`;
 const OUT_PATH = 'public/data/pechalbeda_stats.json';
-const MAX_PAGES = 50;
+const MAX_PAGES = 120;
 const WINDOW_DAYS = 30;
 
 function extractEntries(html) {
@@ -112,7 +112,7 @@ async function main() {
     sourceUrl: BASE_URL,
     methodology: {
       windowDays: WINDOW_DAYS,
-      note: 'Counts are based on public posts in Telegram web channel view. totalBySerial uses the numeric index at the start of entry text; fallback totalApproxByMaxPostId uses maximum observed channel post ID.',
+      note: 'Counts are based on public posts in Telegram web channel view. totalBySerial uses the numeric index at the start of entry text; fallback totalApproxByMaxPostId uses maximum observed channel post ID. This job should run often because the channel updates many times per day.',
     },
     counters: {
       today: dayCounts.get(todayKey) || 0,
@@ -129,6 +129,7 @@ async function main() {
       datetime: e.datetime,
       url: e.url,
       dayKyiv: toKyivDayKey(e.ts),
+      serial: e.serial,
     })),
   };
 

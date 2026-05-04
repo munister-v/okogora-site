@@ -3,7 +3,7 @@ name: Sync Pechalbeda Stats
 on:
   workflow_dispatch:
   schedule:
-    - cron: '13 2 * * *'
+    - cron: '13 */2 * * *'
 
 permissions:
   contents: write
