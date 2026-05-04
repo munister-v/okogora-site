@@ -500,7 +500,7 @@ export default function App() {
     { label: 'Telegram-пости', value: posts.length, note: 'стрічка Око Гора' },
     { label: 'OSINT RSS', value: rssItems.length + fbItems.length, note: 'X + Facebook' },
     { label: 'Активні підрозділи', value: brigadeDashboard?.totals.unitsWithOfficialFeeds ?? brigadeDashboard?.totals.brigadesWithOfficialFeeds ?? 0, note: 'останні 3 доби' },
-    { label: 'Події ударів', value: dashboard.total, note: '7 днів / з пруфами' },
+    { label: 'Події ударів', value: dashboard.total, note: '7 днів / з посиланнями' },
   ];
   const rssFeed = useMemo(() => {
     const normalized = [
@@ -672,17 +672,17 @@ export default function App() {
                 </div>
               ))}
               <div className="ml-auto hidden md:block font-mono text-[9px] text-white/20 uppercase tracking-widest">
-                СЛАВА_УКРАЇНІ // ГЕРОЯМ_СЛАВА
+                Telegram-канал і сайт працюють як одна платформа
               </div>
             </div>
             <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-l-2 border-[#c9a227]/80 bg-[#0f1012]/70 p-4 md:p-5">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-2">/ OSINT COMMAND ROOM</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-2">/ ЦИФРОВА ПЛАТФОРМА КАНАЛУ</p>
                 <p className="text-white/95 text-lg md:text-2xl font-extrabold leading-tight max-w-5xl">
-                  Онлайн-платформа Telegram-каналу «Око Гора - новини та аналітика»: карта цілей, стрічка подій, офіційні підрозділи, RSS-моніторинг, SBS та DeepState в одному доказовому інтерфейсі.
+                  Це сайт Telegram-каналу «Око Гора - новини та аналітика». Тут зібрані пости каналу, мапа, RSS-стрічка, офіційні джерела підрозділів, статистика SBS і таблиця DeepState.
                 </p>
                 <p className="mt-3 text-sm md:text-base text-white/58 leading-relaxed max-w-4xl">
-                  На головній показуємо не декоративні віджети, а робочі шари: що оновлено, звідки взято, яку зміну зафіксовано і де перейти до першоджерела.
+                  Завдання просте: швидко показати, що оновилося, звідки взята інформація і куди перейти, щоб перевірити першоджерело.
                 </p>
               </div>
               <a
@@ -716,18 +716,18 @@ export default function App() {
 
             <div id="map" className="grid grid-cols-1 lg:grid-cols-12 gap-8 border-t border-[#c9a227]/30 pt-8 md:pt-12 mt-12 md:mt-24 relative z-10">
               <div className="lg:col-span-5">
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ЩО ЦЕ</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ЩО ТУТ Є</span>
                 <p className="text-2xl md:text-4xl font-extrabold leading-[1.05] tracking-tight text-white">
-                  Дашборд відкритих джерел: від поста до координати, від координати до контексту, від контексту до перевіреного посилання.
+                  Пости, карта, джерела, таблиці й короткі пояснення в одному місці, щоб не стрибати між десятком вкладок.
                 </p>
               </div>
               <div className="lg:col-start-8 lg:col-span-5">
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ЛОГІКА РОБОТИ</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ ЯК КОРИСТУВАТИСЬ</span>
                 <ul className="space-y-4 font-mono text-[10px] md:text-xs uppercase tracking-widest">
                   {[
-                    { label: 'ЗБІР: TELEGRAM / X / FACEBOOK / МАПИ', n: '01' },
-                    { label: 'НОРМАЛІЗАЦІЯ: ДУБЛІ, ГЕО, ДАТИ, ПРУФИ', n: '02' },
-                    { label: 'ВИВІД: КАРТА, ТАБЛИЦІ, ТРЕНДИ, ДЖЕРЕЛА', n: '03' },
+                    { label: 'ДИВИСЬ СТРІЧКУ ТА RSS, ЩОБ БАЧИТИ НОВЕ', n: '01' },
+                    { label: 'ВІДКРИВАЙ МАПУ, ЯКЩО ПОТРІБЕН КОНТЕКСТ МІСЦЯ', n: '02' },
+                    { label: 'ПЕРЕХОДЬ У ДЖЕРЕЛО, ЯКЩО ТРЕБА ПЕРЕВІРИТИ ДЕТАЛІ', n: '03' },
                   ].map(item => (
                     <li key={item.n} className="flex justify-between gap-4 border-b border-white/10 pb-2 hover:border-[#c9a227]/40 text-white/62 hover:text-white transition-all">
                       <span>{item.label}</span>
@@ -761,16 +761,16 @@ export default function App() {
                   <span className="ml-auto animate-pulse">●</span>
                 </div>
                 <div className="space-y-1 opacity-80 h-[120px] overflow-hidden text-white/70">
-                  <p>[09:41:22] INCOMING SATELLITE PACKET: SENTINEL-2B</p>
-                  <p>[09:41:25] DECRYPTING_GEOSPATIAL_LAYER...</p>
-                  <p>[09:41:30] <span className="text-[#c9a227]">ANOMALY DETECTED: SECTOR G-14</span></p>
-                  <p>[09:41:42] THERMAL_SIGNATURE_MATCH: T-90M</p>
-                  <p>[09:41:55] BROADCASTING TO UNIT_7...</p>
+                  <p>[оновлено] Telegram-стрічка каналу підтягується з posts.json</p>
+                  <p>[оновлено] RSS з X/Facebook очищається від HTML і дублів</p>
+                  <p>[мапа] Показуємо цілі, події з постів і відкриті стратегічні обʼєкти</p>
+                  <p>[джерела] SBS та DeepState мають окремі посилання на оригінали</p>
+                  <p>[важливо] Кожну важливу цифру краще перевіряти за джерелом</p>
                   <p className="animate-pulse text-[#c9a227]">_</p>
                 </div>
                 <div className="mt-8 pt-4 border-t border-[#c9a227]/10 flex justify-between opacity-30 text-[8px] uppercase tracking-widest">
-                  <span>ШИФРУВАННЯ: AES-GCM</span>
-                  <span>ВУЗОЛ: LVIV_PRIME</span>
+                  <span>ДАНІ: ВІДКРИТІ ДЖЕРЕЛА</span>
+                  <span>ОНОВЛЕННЯ: АВТОМАТИЧНІ</span>
                 </div>
               </div>
 
@@ -822,7 +822,7 @@ export default function App() {
               <div className="absolute inset-0 bg-gradient-to-r from-[#1c1c12] via-transparent to-[#1c1c12]" />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="text-[#c9a227]/30 font-mono text-[10px] tracking-[0.5em] uppercase">
-                  ЦІЛІСНІСТЬ_СИСТЕМИ_СТАБІЛЬНА // СИНХРОНІЗАЦІЯ_ХМАРИ_АКТИВНА
+                  Сайт збирає відкриті дані та дає швидкі переходи до джерел
                 </div>
               </div>
             </div>
@@ -925,7 +925,7 @@ export default function App() {
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ OSINT DASHBOARD</span>
                   <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Інтенсивність ударів (7 днів)</h2>
-                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Це оперативна карта щільності ударних згадок по областях. Дані проходять фільтр на ключові ознаки удару, геоприв’язку та виводяться тільки з пруф-посиланнями.</p>
+                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Це підрахунок згадок про удари за останні 7 днів. Ми беремо пости з Telegram, X і Facebook, шукаємо слова про удар або влучання, визначаємо область і лишаємо посилання на джерело.</p>
                 </div>
                 <div className="bg-[#1c1c12] border border-[#c9a227]/20 px-6 py-5">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Ударних подій (7 днів)</p>
@@ -1029,7 +1029,7 @@ export default function App() {
                   <li>Враховуємо лише пости з маркерами удару: `удар`, `влуч`, `strike`, `missile`, `бпла` тощо.</li>
                   <li>Визначаємо область через словник гео-аліасів у тексті.</li>
                   <li>Видаляємо дублікати подій за ключем: день + область + джерело + заголовок.</li>
-                  <li>Виводимо тільки події з пруфами: кожен пункт має пряме посилання на першоджерело.</li>
+                  <li>Кожен пункт має пряме посилання на пост або сторінку, звідки взята інформація.</li>
                 </ol>
               </div>
             </div>
@@ -1043,7 +1043,7 @@ export default function App() {
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ SBS STATS</span>
                   <h2 className="text-4xl md:text-6xl font-bold uppercase leading-[0.92]">SBS: ураження за добу</h2>
                   <p className="mt-4 text-white/68 max-w-4xl text-sm md:text-base leading-relaxed">
-                    Нативний шар поверх відкритої бази foosint/SBS: беремо останню годину з `daily_stats`, показуємо категорії уражень, добовий тренд і прямий перехід до першоджерела.
+                    Тут показана відкрита статистика SBS у зручному вигляді. Беремо останній доступний запис за добу, показуємо кількість уражених і знищених цілей, категорії техніки та посилання на оригінальну сторінку.
                   </p>
                 </div>
                 <a href="https://foosint.github.io/sbs-stats/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors">
@@ -1079,7 +1079,7 @@ export default function App() {
                     </div>
                     <div className="mt-6 border-t border-white/10 pt-5">
                       <p className="text-sm text-white/65 leading-relaxed">
-                        Це не прогноз і не оцінка редакції. Це механічний зріз із відкритої бази: якщо джерело оновило години або категорії, сайт підтягує новий JSON.
+                    Це не прогноз і не оцінка редакції. Це зріз із відкритої бази: якщо джерело оновило дані, сайт підтягує новий JSON.
                       </p>
                     </div>
                   </div>
@@ -1146,7 +1146,7 @@ export default function App() {
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ DEEPSTATE TABLE</span>
                   <h2 className="text-4xl md:text-6xl font-bold uppercase leading-[0.92]">DeepState: зміни фронту</h2>
                   <p className="mt-4 text-white/68 max-w-4xl text-sm md:text-base leading-relaxed">
-                    Репрезентативний превʼю-шар з публічної таблиці DeepState: показує останній рядок, чисту зміну за вікно, пояснення подій і матрицю `diffKm2`, а не умовні “гарячі клітини”.
+                    Тут коротко показані останні рядки з таблиці DeepState: скільки змінилося, який текст пояснення і де відкрити повну таблицю.
                   </p>
                 </div>
                 <a href="https://deepstat.xyz/table" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#c9a227]/60 bg-[#c9a227]/12 px-4 py-2 font-mono text-[11px] md:text-xs tracking-widest uppercase text-[#f3d97f] hover:bg-[#c9a227]/20 hover:border-[#c9a227] transition-colors">
@@ -1247,7 +1247,7 @@ export default function App() {
                 </div>
                 <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
                   className="font-mono text-xs uppercase tracking-widest text-white/30 hover:text-[#c9a227] transition-colors">
-                  Публічний фід доказів <ArrowUpRight className="inline w-3 h-3 ml-1" />
+                  Telegram-канал <ArrowUpRight className="inline w-3 h-3 ml-1" />
                 </a>
               </div>
 
@@ -1257,18 +1257,18 @@ export default function App() {
                     <Lock className="w-5 h-5 text-[#c9a227]" />
                   </div>
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/80">Службова заглушка</p>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/80">Розділ у роботі</p>
                     <p className="text-lg md:text-xl font-bold text-white">Скоро буде. Очікуйте.</p>
-                    <p className="text-sm text-white/55 mt-1">Готуємо повноцінний модуль інтерактивних кейсів з таймлайном, картами та доказами.</p>
+                    <p className="text-sm text-white/55 mt-1">Тут будуть окремі матеріали з хронологією, мапою, джерелами і коротким поясненням, що саме сталося.</p>
                   </div>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {(investigations.length ? investigations.filter(i => (i.status || 'published') === 'published') : [
-                  { id: 'fallback-1', title: 'Ланцюг подій', summary: "Покрокова реконструкція інцидентів за часом, географією та джерелами.", code: 'CASEFLOW', tags: [], publishedAt: '', status: 'published' as const },
-                  { id: 'fallback-2', title: 'Гео-докази', summary: "Прив’язка кадрів до координат, об’єктів інфраструктури та супутникових шарів.", code: 'GEO-TRACE', tags: [], publishedAt: '', status: 'published' as const },
-                  { id: 'fallback-3', title: 'Порівняння версій', summary: "Зіставлення заяв, медіа та фактичних змін на місцевості з маркерами довіри.", code: 'EVIDENCE-DELTA', tags: [], publishedAt: '', status: 'published' as const },
+                  { id: 'fallback-1', title: 'Хронологія події', summary: "Що сталося, коли зʼявилися перші повідомлення і які джерела це підтверджують.", code: 'TIMELINE', tags: [], publishedAt: '', status: 'published' as const },
+                  { id: 'fallback-2', title: 'Місце на карті', summary: "Координати, найближчі обʼєкти, фото або відео, якщо вони є у відкритому доступі.", code: 'MAP', tags: [], publishedAt: '', status: 'published' as const },
+                  { id: 'fallback-3', title: 'Що відомо зараз', summary: "Короткий висновок без перебільшень: що підтверджено, що потребує перевірки, де читати далі.", code: 'SUMMARY', tags: [], publishedAt: '', status: 'published' as const },
                 ]).slice(0, 6).map(item => (
                   <article key={item.code} className="bg-[#2e2d1e] border border-[#c9a227]/20 p-6 md:p-8 hover:border-[#c9a227]/50 transition-colors">
                     <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c9a227] mb-4">{item.code}</p>
@@ -1298,7 +1298,7 @@ export default function App() {
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ LIVE RSS</span>
                   <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">RSS OSINT-стрічка</h2>
                   <p className="mt-4 text-white/70 max-w-4xl text-sm md:text-base leading-relaxed font-medium">
-                    Вибірка за останні 3 дні з X/Facebook по темах України, OSINT/HUMINT, ударів, підрозділів та реорганізації. Текст очищається від HTML-вставок, картки сортуються за часом, а фільтри допомагають швидко знайти потрібний сигнал.
+                    Пости з X і Facebook за останні 3 дні про Україну, війну, підрозділи, удари та відкриті джерела. Текст очищається від HTML-вставок, картки сортуються за часом, а фільтри допомагають швидко знайти потрібну тему.
                   </p>
                 </div>
                 <a href="https://x.com" target="_blank" rel="noreferrer"
@@ -1517,14 +1517,14 @@ export default function App() {
                   <img src="oko_logo.png" alt="" className="w-8 h-8 md:w-10 md:h-10 object-contain opacity-90" loading="lazy" />
                 </div>
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/75">/ ONLINE OSINT PLATFORM</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227]/75">/ ЦИФРОВА ПЛАТФОРМА КАНАЛУ</p>
                   <h3 className="mt-2 text-4xl md:text-6xl font-black tracking-tighter uppercase leading-[0.82] text-[#f3d97f]">
                     Око Гора
                   </h3>
                 </div>
               </div>
               <p className="text-white/72 max-w-2xl text-base md:text-lg font-bold leading-relaxed">
-                Платформа Telegram-каналу «Око Гора - новини та аналітика»: стрічка, карта цілей, моніторинг підрозділів, RSS-джерела, SBS та DeepState без зайвого шуму.
+                Це сайт Telegram-каналу «Око Гора - новини та аналітика». Тут зібрані пости, карта, RSS-джерела, статистика SBS, таблиця DeepState і посилання для перевірки.
               </p>
               <div className="grid grid-cols-2 gap-3 mt-7">
                 {[
@@ -1606,7 +1606,7 @@ export default function App() {
           </div>
 
           <div className="border-t border-[#c9a227]/12 pt-5 md:pt-6 flex flex-col lg:flex-row justify-between gap-4 font-mono text-[9px] md:text-[10px] tracking-[0.22em] text-white/34 uppercase">
-            <div className="leading-relaxed">© {new Date().getFullYear()} OKO GORA. ВІДКРИТІ ДЖЕРЕЛА, РУЧНА ВЕРИФІКАЦІЯ, ПРЯМІ ПОСИЛАННЯ.</div>
+            <div className="leading-relaxed">© {new Date().getFullYear()} OKO GORA. ЦИФРОВА ПЛАТФОРМА TELEGRAM-КАНАЛУ. ДАНІ З ВІДКРИТИХ ДЖЕРЕЛ.</div>
             <div className="flex flex-wrap gap-x-5 gap-y-2">
               <span>STATUS: ACTIVE</span>
               <span>SBS: {sbsStats?.latestDate || 'WAITING'}</span>
