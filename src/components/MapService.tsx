@@ -1,7 +1,40 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Circle, CircleMarker, LayersControl, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle, CircleMarker, GeoJSON, LayersControl, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import type { PathOptions } from 'leaflet';
+import type { GeoJsonObject, Feature } from 'geojson';
+
+
+function territoryStyle(feature?: Feature): PathOptions {
+  const props = feature?.properties ?? {};
+  return {
+    color: (props['stroke'] as string) ?? '#c9a227',
+    fillColor: (props['fill'] as string) ?? 'transparent',
+    opacity: (props['stroke-opacity'] as number) ?? 1,
+    fillOpacity: (props['fill-opacity'] as number) ?? 0.35,
+    weight: props['stroke-width'] != null ? (props['stroke-width'] as number) * 1.05 : 1.5,
+  };
+}
+
+function TerritoryLayer({ geojson }: { geojson: GeoJsonObject }) {
+  return (
+    <GeoJSON
+      key="territory-layer"
+      data={geojson}
+      style={territoryStyle}
+      onEachFeature={(feature, layer) => {
+        const name = feature.properties?.name;
+        const desc = feature.properties?.description;
+        if (name || desc) {
+          layer.bindPopup(
+            `<div style="font-family:monospace;font-size:11px"><b>${name ?? ''}</b>${desc ? `<br>${desc}` : ''}</div>`
+          );
+        }
+      }}
+    />
+  );
+}
 import { Map as MapIcon, Shield, Target, Anchor, Plane, Filter, Menu, X as CloseIcon, Ruler, Activity, Clock } from 'lucide-react';
 import type { Post, StrategicTarget } from '../types';
 import { postTelegramUrl } from '../lib/posts';
@@ -399,6 +432,8 @@ export default function MapService() {
   const [events, setEvents] = useState<FeedEvent[]>([]);
   const [strategicItems, setStrategicItems] = useState<StrategicTarget[]>([]);
   const [strategicGeneratedAt, setStrategicGeneratedAt] = useState('');
+  const [territoryGeojson, setTerritoryGeojson] = useState<GeoJsonObject | null>(null);
+  const [territoryStatus, setTerritoryStatus] = useState<'loading' | 'ready' | 'error'>('loading');
 
   const icons = useMemo(() => ({
     strikes: createTacticalIcon('#ff3333', 'Подія з геотегом'),
@@ -410,37 +445,53 @@ export default function MapService() {
 
   useEffect(() => {
     let mounted = true;
-    Promise.all([
-      fetch('/data/posts.json').then((r) => (r.ok ? r.json() : [])),
-      fetch('/data/rss_twitter.json').then((r) => (r.ok ? r.json() : { items: [] })),
-      fetch('/data/rss_facebook.json').then((r) => (r.ok ? r.json() : { items: [] })),
-      fetch('/data/strategic_targets.json').then((r) => (r.ok ? r.json() : { items: [] })),
-    ])
-      .then(([postsData, rssData, fbData, strategicData]) => {
-        if (!mounted) return;
-        const mapped = buildEvents(
-          [],
-          Array.isArray(rssData?.items) ? rssData.items : [],
-          Array.isArray(fbData?.items) ? fbData.items : [],
-          7,
-        );
-        setEvents(mapped);
-        const strategicFeed = strategicData as StrategicFeed;
-        const items = Array.isArray(strategicFeed?.items) ? strategicFeed.items : [];
-        setStrategicItems(items);
-        setStrategicGeneratedAt(strategicFeed?.generatedAt || '');
-      })
-      .catch(() => {
-        if (mounted) {
-          setEvents([]);
-          setStrategicItems([]);
-          setStrategicGeneratedAt('');
-        }
-      });
+
+    function loadData() {
+      const t = Date.now();
+      Promise.all([
+        fetch(`/data/rss_twitter.json?_t=${t}`).then((r) => (r.ok ? r.json() : { items: [] })),
+        fetch(`/data/rss_facebook.json?_t=${t}`).then((r) => (r.ok ? r.json() : { items: [] })),
+        fetch(`/data/strategic_targets.json?_t=${t}`).then((r) => (r.ok ? r.json() : { items: [] })),
+      ])
+        .then(([rssData, fbData, strategicData]) => {
+          if (!mounted) return;
+          const mapped = buildEvents(
+            [],
+            Array.isArray(rssData?.items) ? rssData.items : [],
+            Array.isArray(fbData?.items) ? fbData.items : [],
+            7,
+          );
+          setEvents(mapped);
+          const strategicFeed = strategicData as StrategicFeed;
+          const items = Array.isArray(strategicFeed?.items) ? strategicFeed.items : [];
+          setStrategicItems(items);
+          setStrategicGeneratedAt(strategicFeed?.generatedAt || '');
+        })
+        .catch(() => {});
+    }
+
+    loadData();
+    const interval = setInterval(loadData, 5 * 60 * 1000);
 
     return () => {
       mounted = false;
+      clearInterval(interval);
     };
+  }, []);
+
+  useEffect(() => {
+    const worker = new Worker(new URL('../workers/kmzWorker.ts', import.meta.url), { type: 'module' });
+    worker.onmessage = (e: MessageEvent<{ type: 'success'; geojson: GeoJsonObject } | { type: 'error' }>) => {
+      if (e.data.type === 'success') {
+        setTerritoryGeojson(e.data.geojson);
+        setTerritoryStatus('ready');
+      } else {
+        setTerritoryStatus('error');
+      }
+      worker.terminate();
+    };
+    worker.onerror = () => { setTerritoryStatus('error'); worker.terminate(); };
+    return () => worker.terminate();
   }, []);
 
   const filteredEvents = useMemo(
@@ -757,6 +808,13 @@ export default function MapService() {
                 attribution="&copy; ESRI"
               />
             </LayersControl.BaseLayer>
+            <LayersControl.Overlay checked name={`Контроль території (owlmaps)${territoryStatus === 'loading' ? ' ⟳' : territoryStatus === 'error' ? ' ✕' : ''}`}>
+              {territoryGeojson ? (
+                <TerritoryLayer geojson={territoryGeojson} />
+              ) : (
+                <GeoJSON data={{ type: 'FeatureCollection', features: [] } as GeoJsonObject} />
+              )}
+            </LayersControl.Overlay>
           </LayersControl>
 
           <MapEvents

@@ -6,7 +6,7 @@ import { Post, InvestigationArticle } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
 
-const OwlControlMap = lazy(() => import('./components/OwlControlMap'));
+const MapService = lazy(() => import('./components/MapService'));
 
 // ── Color tokens ──────────────────────────────────────────────────────────────
 // bg:    #252519  (dark military olive)
@@ -217,46 +217,55 @@ export default function App() {
       path: '/',
       type: 'website',
     });
+  }, []);
 
-    fetch('/data/posts.json')
-      .then(r => r.json())
-      .then((data: Post[]) => setPosts(normalizePosts(data)))
-      .catch(() => setPosts([]));
+  useEffect(() => {
+    function loadData() {
+      const t = Date.now();
+      fetch(`/data/posts.json?_t=${t}`)
+        .then(r => r.json())
+        .then((data: Post[]) => setPosts(normalizePosts(data)))
+        .catch(() => {});
 
-    fetch(`/data/rss_twitter.json?t=${Date.now()}`)
-      .then(r => r.json())
-      .then(data => setRssItems(Array.isArray(data?.items) ? data.items : []))
-      .catch(() => setRssItems([]));
+      fetch(`/data/rss_twitter.json?_t=${t}`)
+        .then(r => r.json())
+        .then(data => setRssItems(Array.isArray(data?.items) ? data.items : []))
+        .catch(() => {});
 
-    fetch(`/data/rss_facebook.json?t=${Date.now()}`)
-      .then(r => r.json())
-      .then(data => setFbItems(Array.isArray(data?.items) ? data.items : []))
-      .catch(() => setFbItems([]));
+      fetch(`/data/rss_facebook.json?_t=${t}`)
+        .then(r => r.json())
+        .then(data => setFbItems(Array.isArray(data?.items) ? data.items : []))
+        .catch(() => {});
 
-    fetch(`/data/investigations.json?t=${Date.now()}`)
-      .then(r => r.json())
-      .then((data: InvestigationArticle[]) => setInvestigations(Array.isArray(data) ? data : []))
-      .catch(() => setInvestigations([]));
+      fetch(`/data/investigations.json?_t=${t}`)
+        .then(r => r.json())
+        .then((data: InvestigationArticle[]) => setInvestigations(Array.isArray(data) ? data : []))
+        .catch(() => {});
 
-    fetch(`/data/brigades_dashboard.json?t=${Date.now()}`)
-      .then(r => r.json())
-      .then((data: BrigadeDashboardPayload) => setBrigadeDashboard(data && Array.isArray(data.brigades) ? data : null))
-      .catch(() => setBrigadeDashboard(null));
+      fetch(`/data/brigades_dashboard.json?_t=${t}`)
+        .then(r => r.json())
+        .then((data: BrigadeDashboardPayload) => setBrigadeDashboard(data && Array.isArray(data.brigades) ? data : null))
+        .catch(() => {});
 
-    fetch(`/data/pechalbeda_stats.json?t=${Date.now()}`)
-      .then(r => r.json())
-      .then((data: PechalStats) => setPechalStats(data && data.counters ? data : null))
-      .catch(() => setPechalStats(null));
+      fetch(`/data/pechalbeda_stats.json?_t=${t}`)
+        .then(r => r.json())
+        .then((data: PechalStats) => setPechalStats(data && data.counters ? data : null))
+        .catch(() => {});
 
-    fetch(`/data/sbs_stats_snapshot.json?t=${Date.now()}`)
-      .then(r => r.json())
-      .then((data: SbsStatsPayload) => setSbsStats(data && data.summary ? data : null))
-      .catch(() => setSbsStats(null));
+      fetch(`/data/sbs_stats_snapshot.json?_t=${t}`)
+        .then(r => r.json())
+        .then((data: SbsStatsPayload) => setSbsStats(data && data.summary ? data : null))
+        .catch(() => {});
 
-    fetch(`/data/deepstate_table.json?t=${Date.now()}`)
-      .then(r => r.json())
-      .then((data: DeepstateTablePayload) => setDeepstateTable(data && Array.isArray(data.rows) ? data : null))
-      .catch(() => setDeepstateTable(null));
+      fetch(`/data/deepstate_table.json?_t=${t}`)
+        .then(r => r.json())
+        .then((data: DeepstateTablePayload) => setDeepstateTable(data && Array.isArray(data.rows) ? data : null))
+        .catch(() => {});
+    }
+
+    loadData();
+    const interval = setInterval(loadData, 5 * 60 * 1000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -774,7 +783,7 @@ export default function App() {
                 <span className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/40 animate-pulse">ЗАВАНТАЖЕННЯ_МАПИ...</span>
               </div>
             }>
-              <OwlControlMap />
+              <MapService />
             </Suspense>
           </motion.div>
 

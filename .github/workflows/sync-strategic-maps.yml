@@ -3,7 +3,7 @@ name: Sync Strategic Maps
 on:
   workflow_dispatch:
   schedule:
-    - cron: '41 4 * * *'
+    - cron: '41 */6 * * *'
 
 permissions:
   contents: write

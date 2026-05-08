@@ -3,7 +3,7 @@ name: Sync Brigades Dashboard
 on:
   workflow_dispatch:
   schedule:
-    - cron: '23 */6 * * *'
+    - cron: '23 */3 * * *'
 
 permissions:
   contents: write
