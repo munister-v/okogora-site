@@ -1,4 +1,4 @@
-import { unzip } from 'fflate';
+import { unzip, deflateSync, strToU8 } from 'fflate';
 import { kml } from '@tmcw/togeojson';
 
 const KMZ_URL = 'https://raw.githubusercontent.com/owlmaps/UAControlMapBackups/latest/latest.kmz';
@@ -20,7 +20,9 @@ async function run() {
     const xmlDoc = new DOMParser().parseFromString(kmlText, 'text/xml');
     const geojson = kml(xmlDoc);
 
-    self.postMessage({ type: 'success', geojson });
+    // Compress for caching — transfer buffer to avoid copy
+    const compressed = deflateSync(strToU8(JSON.stringify(geojson)));
+    self.postMessage({ type: 'success', geojson, compressed }, [compressed.buffer]);
   } catch (e) {
     self.postMessage({ type: 'error', message: String(e) });
   }

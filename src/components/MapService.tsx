@@ -2,9 +2,33 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, CircleMarker, GeoJSON, LayersControl, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { inflateSync, strFromU8 } from 'fflate';
 import type { PathOptions } from 'leaflet';
 import type { GeoJsonObject, Feature } from 'geojson';
 
+const TERRITORY_CACHE_KEY = 'owlmaps_territory_v1';
+const TERRITORY_CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours
+
+function tryLoadTerritoryCache(): GeoJsonObject | null {
+  try {
+    const raw = localStorage.getItem(TERRITORY_CACHE_KEY);
+    if (!raw) return null;
+    const { b64, ts } = JSON.parse(raw) as { b64: string; ts: number };
+    if (Date.now() - ts > TERRITORY_CACHE_TTL) { localStorage.removeItem(TERRITORY_CACHE_KEY); return null; }
+    const bin = atob(b64);
+    const u8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return JSON.parse(strFromU8(inflateSync(u8))) as GeoJsonObject;
+  } catch { return null; }
+}
+
+function saveTerritoryCache(compressed: Uint8Array) {
+  try {
+    let bin = '';
+    for (let i = 0; i < compressed.length; i++) bin += String.fromCharCode(compressed[i]);
+    localStorage.setItem(TERRITORY_CACHE_KEY, JSON.stringify({ b64: btoa(bin), ts: Date.now() }));
+  } catch { /* quota exceeded — skip */ }
+}
 
 function territoryStyle(feature?: Feature): PathOptions {
   const props = feature?.properties ?? {};
@@ -480,11 +504,18 @@ export default function MapService() {
   }, []);
 
   useEffect(() => {
+    const cached = tryLoadTerritoryCache();
+    if (cached) {
+      setTerritoryGeojson(cached);
+      setTerritoryStatus('ready');
+      return;
+    }
     const worker = new Worker(new URL('../workers/kmzWorker.ts', import.meta.url), { type: 'module' });
-    worker.onmessage = (e: MessageEvent<{ type: 'success'; geojson: GeoJsonObject } | { type: 'error' }>) => {
+    worker.onmessage = (e: MessageEvent<{ type: 'success'; geojson: GeoJsonObject; compressed: Uint8Array } | { type: 'error' }>) => {
       if (e.data.type === 'success') {
         setTerritoryGeojson(e.data.geojson);
         setTerritoryStatus('ready');
+        saveTerritoryCache(e.data.compressed);
       } else {
         setTerritoryStatus('error');
       }
