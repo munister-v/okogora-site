@@ -620,7 +620,7 @@ export default function MapService() {
               <Filter className="w-3 h-3 text-blue-400" />
               <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Фільтри карти</span>
             </div>
-            <p className="mb-3 font-mono text-[8px] uppercase tracking-widest text-white/35">За замовчуванням: тільки RSS/Facebook за 7 діб. Зовнішні геошари вимкнені.</p>
+            <p className="mb-3 font-mono text-[8px] uppercase tracking-widest text-white/35">RSS/Facebook за 14 діб. Зовнішні геошари увімкнені.</p>
             <div className="space-y-2.5">
               {[
                 { id: 'strikes' as const, label: `Удари / BDA (${activityByType.strikes})`, color: 'bg-[#ff3333]', icon: Target },
@@ -680,7 +680,7 @@ export default function MapService() {
               )}
               {sidebarStrategicItems.length > 0 && (
                 <div className="pt-1 text-[8px] text-white/30">
-                  Зовнішній шар прихований за замовчуванням. Оновлено: {strategicUpdatedLabel || 'н/д'}
+                  Оновлено: {strategicUpdatedLabel || 'н/д'}
                 </div>
               )}
             </div>
