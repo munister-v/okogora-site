@@ -120,7 +120,7 @@ const KEYWORDS: Record<OperationalFilterId, RegExp[]> = {
 
 const CONFIRMED_RE = /(підтвердж|confirmed|destroyed|знищен|уражен|successful hit|occupied)/i;
 const PROBABLE_RE = /(ймовір|likely|assess|reportedly|можливо|claimed)/i;
-const MIN_EVENT_CONFIDENCE = 0.72;
+const MIN_EVENT_CONFIDENCE = 0.55;
 const UKR_MONTHS: Record<string, number> = {
   січ: 0,
   фев: 1,
@@ -323,7 +323,7 @@ function strategicCategoryColor(category: StrategicTarget['category']) {
   }
 }
 
-function buildEvents(posts: Post[], rss: RssItem[], facebook: RssItem[], windowDays = 7) {
+function buildEvents(posts: Post[], rss: RssItem[], facebook: RssItem[], windowDays = 14) {
   const events: FeedEvent[] = [];
   const dedup = new Set<string>();
 
@@ -406,7 +406,7 @@ function buildEvents(posts: Post[], rss: RssItem[], facebook: RssItem[], windowD
       if (dt !== 0) return dt;
       return b.confidence - a.confidence;
     })
-    .slice(0, 24);
+    .slice(0, 60);
 }
 
 function MapEvents({ onMouseMove, onClick }: { onMouseMove: (lat: number, lng: number) => void; onClick: (lat: number, lng: number) => void }) {
@@ -422,7 +422,7 @@ function MapEvents({ onMouseMove, onClick }: { onMouseMove: (lat: number, lng: n
 }
 
 export default function MapService() {
-  const [activeFilters, setActiveFilters] = useState<FilterId[]>(['strikes', 'navy', 'airbases', 'logistics']);
+  const [activeFilters, setActiveFilters] = useState<FilterId[]>(['strikes', 'navy', 'airbases', 'logistics', 'strategic']);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [showOnlyExactEvents, setShowOnlyExactEvents] = useState(false);
   const [telemetry, setTelemetry] = useState({ lat: 45.0, lng: 35.0 });
