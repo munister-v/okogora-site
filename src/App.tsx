@@ -6,7 +6,7 @@ import { Post, InvestigationArticle } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
 
-const MapService = lazy(() => import('./components/MapService'));
+const OwlControlMap = lazy(() => import('./components/OwlControlMap'));
 
 // ── Color tokens ──────────────────────────────────────────────────────────────
 // bg:    #252519  (dark military olive)
@@ -774,7 +774,7 @@ export default function App() {
                 <span className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/40 animate-pulse">ЗАВАНТАЖЕННЯ_МАПИ...</span>
               </div>
             }>
-              <MapService />
+              <OwlControlMap />
             </Suspense>
           </motion.div>
 
