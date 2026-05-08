@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://okogora.com.ua",
   "scripts": {
-    "dev": "vite --port=3000 --host=0.0.0.0",
+    "dev": "vite --port=5173 --host=0.0.0.0",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "build": "vite build",
@@ -41,6 +41,7 @@
     "@types/express": "^4.17.21",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^22.14.0",
+    "@xmldom/xmldom": "^0.9.10",
     "autoprefixer": "^10.4.21",
     "gh-pages": "^6.3.0",
     "tailwindcss": "^4.1.14",
