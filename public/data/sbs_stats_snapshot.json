@@ -1,71 +1,29 @@
 {
-  "generatedAt": "2026-05-09T20:58:59.746Z",
+  "generatedAt": "2026-05-09T21:58:00.196Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
-  "latestDate": "2026-05-09",
-  "latestHour": 6,
-  "collectedAt": "2026-05-09T03:57:54.995Z",
+  "latestDate": "2026-05-10",
+  "latestHour": 0,
+  "collectedAt": "2026-05-09T21:46:00.011Z",
   "summary": {
-    "personnelKilled": 24,
-    "personnelWounded": 33,
-    "personnelCasualties": 57,
-    "targetsHit": 295,
-    "targetsDestroyed": 105
+    "personnelKilled": 0,
+    "personnelWounded": 0,
+    "personnelCasualties": 0,
+    "targetsHit": 0,
+    "targetsDestroyed": 0
   },
-  "categories": [
-    {
-      "id": 21,
-      "label": "Укриття",
-      "hit": 60,
-      "destroyed": 4
-    },
-    {
-      "id": 22,
-      "label": "Бліндажі",
-      "hit": 59,
-      "destroyed": 1
-    },
-    {
-      "id": 25,
-      "label": "Крила противника",
-      "hit": 26,
-      "destroyed": 25
-    },
-    {
-      "id": 7,
-      "label": "Легка / важка техніка",
-      "hit": 17,
-      "destroyed": 3
-    },
-    {
-      "id": 3,
-      "label": "Гармати / гаубиці",
-      "hit": 5,
-      "destroyed": 0
-    },
-    {
-      "id": 18,
-      "label": "Мотоцикли / багі",
-      "hit": 4,
-      "destroyed": 1
-    },
-    {
-      "id": 30,
-      "label": "Shahed",
-      "hit": 1,
-      "destroyed": 1
-    },
-    {
-      "id": 2,
-      "label": "ББМ / БМП / БТР",
-      "hit": 1,
-      "destroyed": 0
-    }
-  ],
+  "categories": [],
   "daily": [
     {
+      "date": "2026-05-10",
+      "hour": 0,
+      "targetsHit": 0,
+      "targetsDestroyed": 0,
+      "personnelCasualties": 0
+    },
+    {
       "date": "2026-05-09",
-      "hour": 6,
+      "hour": 23,
       "targetsHit": 295,
       "targetsDestroyed": 105,
       "personnelCasualties": 57
