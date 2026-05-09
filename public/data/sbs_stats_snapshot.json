@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-05-09T03:53:15.765Z",
+  "generatedAt": "2026-05-09T06:25:20.490Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-05-09",
   "latestHour": 6,
-  "collectedAt": "2026-05-09T03:46:00.011Z",
+  "collectedAt": "2026-05-09T03:57:54.995Z",
   "summary": {
-    "personnelKilled": 21,
-    "personnelWounded": 27,
-    "personnelCasualties": 48,
-    "targetsHit": 278,
-    "targetsDestroyed": 98
+    "personnelKilled": 24,
+    "personnelWounded": 33,
+    "personnelCasualties": 57,
+    "targetsHit": 295,
+    "targetsDestroyed": 105
   },
   "categories": [
     {
@@ -28,14 +28,14 @@
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 25,
-      "destroyed": 24
+      "hit": 26,
+      "destroyed": 25
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 14,
-      "destroyed": 2
+      "hit": 17,
+      "destroyed": 3
     },
     {
       "id": 3,
@@ -46,7 +46,7 @@
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 3,
+      "hit": 4,
       "destroyed": 1
     },
     {
@@ -66,9 +66,9 @@
     {
       "date": "2026-05-09",
       "hour": 6,
-      "targetsHit": 278,
-      "targetsDestroyed": 98,
-      "personnelCasualties": 48
+      "targetsHit": 295,
+      "targetsDestroyed": 105,
+      "personnelCasualties": 57
     },
     {
       "date": "2026-05-08",
@@ -137,9 +137,9 @@
   "monthly": [
     {
       "date": "2026-05-01",
-      "targetsHit": 12352,
-      "targetsDestroyed": 4871,
-      "personnelCasualties": 2549
+      "targetsHit": 12369,
+      "targetsDestroyed": 4878,
+      "personnelCasualties": 2558
     },
     {
       "date": "2026-04-01",
