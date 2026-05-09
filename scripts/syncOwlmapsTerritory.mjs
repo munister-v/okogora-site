@@ -11,7 +11,7 @@ const OUTPUT_PATH = 'public/data/territory_geojson.json';
 
 // Round all coordinates to 4 decimal places (~11m precision — enough for map display)
 function roundCoord(n) {
-  return Math.round(n * 10000) / 10000;
+  return Math.round(n * 1000) / 1000;
 }
 
 function simplifyCoords(coords) {

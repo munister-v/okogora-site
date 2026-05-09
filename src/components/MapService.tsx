@@ -16,12 +16,15 @@ function territoryStyle(feature?: Feature): PathOptions {
   };
 }
 
+const canvasRenderer = L.canvas({ padding: 0.5 });
+
 function TerritoryLayer({ geojson }: { geojson: GeoJsonObject }) {
   return (
     <GeoJSON
       key="territory-layer"
       data={geojson}
       style={territoryStyle}
+      renderer={canvasRenderer}
       onEachFeature={(feature, layer) => {
         const name = feature.properties?.name;
         const desc = feature.properties?.description;
