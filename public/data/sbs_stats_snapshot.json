@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-09T21:58:00.196Z",
+  "generatedAt": "2026-05-09T23:00:55.737Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-05-10",
-  "latestHour": 0,
-  "collectedAt": "2026-05-09T21:46:00.011Z",
+  "latestHour": 1,
+  "collectedAt": "2026-05-09T22:56:00.009Z",
   "summary": {
     "personnelKilled": 0,
     "personnelWounded": 0,
@@ -16,7 +16,7 @@
   "daily": [
     {
       "date": "2026-05-10",
-      "hour": 0,
+      "hour": 1,
       "targetsHit": 0,
       "targetsDestroyed": 0,
       "personnelCasualties": 0
