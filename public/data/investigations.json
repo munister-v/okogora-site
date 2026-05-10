@@ -1,5 +1,20 @@
 [
   {
+    "id": "INV-004",
+    "title": "Довгі колони",
+    "summary": "Як великогабаритне обладнання, ремонтні черги та санкції впливають на простої російських НПЗ.",
+    "code": "REFINERY-LAG",
+    "url": "",
+    "tags": [
+      "OSINT",
+      "ENERGY",
+      "SANCTIONS"
+    ],
+    "publishedAt": "2026-05-10T00:00:00.000Z",
+    "status": "published",
+    "contentPath": "/data/investigations/refinery-heavy-equipment.md"
+  },
+  {
     "id": "INV-001",
     "title": "Ланцюг подій",
     "summary": "Покрокова реконструкція інцидентів за часом, географією та джерелами.",

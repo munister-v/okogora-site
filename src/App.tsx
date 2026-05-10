@@ -743,9 +743,9 @@ export default function App() {
                     <Lock className="w-5 h-5 text-[#c9a227]" />
                   </div>
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/80">Розділ у роботі</p>
-                    <p className="text-lg md:text-xl font-bold text-white">Скоро буде. Очікуйте.</p>
-                    <p className="text-sm text-white/55 mt-1">Тут будуть окремі матеріали з хронологією, мапою, джерелами і коротким поясненням, що саме сталося.</p>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/80">Розділ відкрито</p>
+                    <p className="text-lg md:text-xl font-bold text-white">Перші розслідування вже доступні.</p>
+                    <p className="text-sm text-white/55 mt-1">Матеріали виходять окремими кейсами з хронологією, таблицями, джерелами та короткими висновками.</p>
                   </div>
                 </div>
               </div>

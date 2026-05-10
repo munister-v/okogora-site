@@ -2,6 +2,9 @@ import { unzip, deflateSync, strToU8 } from 'fflate';
 import { kml } from '@tmcw/togeojson';
 
 const KMZ_URL = 'https://raw.githubusercontent.com/owlmaps/UAControlMapBackups/latest/latest.kmz';
+const workerScope = self as unknown as {
+  postMessage(message: unknown, transfer?: Transferable[]): void;
+};
 
 async function run() {
   try {
@@ -22,9 +25,9 @@ async function run() {
 
     // Compress for caching — transfer buffer to avoid copy
     const compressed = deflateSync(strToU8(JSON.stringify(geojson)));
-    self.postMessage({ type: 'success', geojson, compressed }, [compressed.buffer]);
+    workerScope.postMessage({ type: 'success', geojson, compressed }, [compressed.buffer as ArrayBuffer]);
   } catch (e) {
-    self.postMessage({ type: 'error', message: String(e) });
+    workerScope.postMessage({ type: 'error', message: String(e) });
   }
 }
 

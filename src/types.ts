@@ -25,6 +25,7 @@ export interface InvestigationArticle {
   publishedAt: string;
   status?: 'draft' | 'published';
   contentMarkdown?: string;
+  contentPath?: string;
 }
 
 export interface StrategicTarget {
