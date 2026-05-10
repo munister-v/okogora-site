@@ -271,9 +271,31 @@ function formatArticleDate(value: string) {
   }
 }
 
+function StatusBadge({ status }: { status?: string }) {
+  const value = (status || 'published').toLowerCase();
+  const isPublished = value === 'published';
+  return (
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium tracking-wide ${isPublished ? 'border-emerald-400/35 bg-emerald-400/10 text-emerald-200' : 'border-amber-400/35 bg-amber-400/10 text-amber-200'}`}>
+      {isPublished ? 'Published' : value}
+    </span>
+  );
+}
+
+function RiskBadge({ tags }: { tags?: string[] }) {
+  const joined = (tags || []).join(' ').toLowerCase();
+  const level = joined.includes('critical') ? 'Critical' : joined.includes('high') ? 'High' : 'Medium';
+  const cls = level === 'Critical'
+    ? 'border-red-400/35 bg-red-400/10 text-red-200'
+    : level === 'High'
+      ? 'border-orange-400/35 bg-orange-400/10 text-orange-200'
+      : 'border-sky-400/35 bg-sky-400/10 text-sky-200';
+  return <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-medium tracking-wide ${cls}`}>Risk: {level}</span>;
+}
+
 export default function InvestigationPage() {
   const { id } = useParams<{ id: string }>();
   const [item, setItem] = useState<InvestigationArticle | null>(null);
+  const [allItems, setAllItems] = useState<InvestigationArticle[]>([]);
   const [markdown, setMarkdown] = useState('');
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -292,6 +314,7 @@ export default function InvestigationPage() {
       .then((r) => r.json())
       .then(async (data: InvestigationArticle[]) => {
         const arr = Array.isArray(data) ? data : [];
+        setAllItems(arr);
         const found = arr.find((x) => x.id === id) || null;
         setItem(found);
         if (found?.contentPath) {
@@ -320,45 +343,49 @@ export default function InvestigationPage() {
   const headings = useMemo(() => extractHeadings(markdown), [markdown]);
   const wordCount = useMemo(() => markdown.split(/\s+/).filter(Boolean).length, [markdown]);
   const readMinutes = Math.max(3, Math.round(wordCount / 180));
+  const related = useMemo(() => allItems.filter((x) => x.id !== item?.id && (x.status || 'published') === 'published').slice(0, 2), [allItems, item?.id]);
+  const category = item?.tags?.[0] || 'OSINT';
 
   if (loading) return <div className="min-h-screen bg-[#252519] text-white flex items-center justify-center">Loading...</div>;
   if (!item) return <div className="min-h-screen bg-[#252519] text-white flex items-center justify-center">Not found</div>;
 
   return (
-    <div className="min-h-screen bg-[#171914] text-white">
-      <div className="relative overflow-hidden border-b border-[#c9a227]/25 bg-[#202116]">
-        <div className="absolute inset-x-0 top-0 h-px bg-[#c9a227]/55" />
-        <div className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-8">
-          <Link to="/#investigations" className="inline-flex min-h-11 items-center gap-2 font-mono text-[11px] uppercase text-white/58 transition-colors hover:text-[#c9a227]">
+    <div className="min-h-screen bg-[#0c0f0b] text-white">
+      <div className="relative overflow-hidden border-b border-[#c9a227]/20 bg-[#141812]">
+        <div className="mx-auto max-w-[1280px] px-4 py-6 md:px-8 md:py-8">
+          <Link to="/#investigations" className="inline-flex min-h-11 items-center gap-2 text-[12px] text-white/68 transition-colors hover:text-[#e4c76d]">
             <ArrowLeft className="h-3.5 w-3.5" /> До розслідувань
           </Link>
         </div>
 
-        <section className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 pb-10 md:px-8 md:pb-16 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-8">
-            <div className="mb-5 flex flex-wrap items-center gap-2">
-              <span className="border border-[#c9a227]/45 bg-[#c9a227]/10 px-3 py-1.5 font-mono text-[10px] uppercase text-[#f3d97f]">{item.code}</span>
-              {(item.tags || []).map((tag) => (
-                <span key={tag} className="border border-white/10 bg-white/[0.04] px-3 py-1.5 font-mono text-[10px] uppercase text-white/55">{tag}</span>
-              ))}
+        <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-4 pb-10 md:px-8 md:pb-14 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-8 xl:col-span-9">
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center rounded-full border border-[#c9a227]/45 bg-[#c9a227]/10 px-3 py-1 text-[11px] font-medium tracking-wide text-[#f3d97f]">{item.code}</span>
+              <StatusBadge status={item.status} />
+              <RiskBadge tags={item.tags} />
             </div>
-            <h1 className="max-w-5xl text-4xl font-black uppercase leading-[0.95] text-white md:text-6xl lg:text-7xl">{item.title}</h1>
-            <p className="mt-6 max-w-3xl text-lg font-semibold leading-8 text-white/70 md:text-xl">{item.summary}</p>
+            <h1 className="max-w-5xl text-balance text-[2rem] font-semibold leading-[1.03] text-white md:text-[3rem] lg:text-[3.5rem]">{item.title}</h1>
+            <p className="mt-5 max-w-3xl text-pretty text-base leading-7 text-white/72 md:text-lg">{item.summary}</p>
           </div>
 
-          <aside className="lg:col-span-4">
-            <div className="border border-[#c9a227]/25 bg-[#11120d]/75 p-5 md:p-6">
-              <p className="mb-4 font-mono text-[10px] uppercase text-[#c9a227]/75">Паспорт матеріалу</p>
-              <div className="space-y-3 text-sm text-white/70">
-                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2">
+          <aside className="lg:col-span-4 xl:col-span-3">
+            <div className="rounded-xl border border-[#c9a227]/20 bg-[#0e120d]/85 p-5 md:p-6">
+              <p className="mb-4 text-[11px] uppercase tracking-[0.08em] text-[#c9a227]/80">Article Meta</p>
+              <div className="space-y-3 text-sm text-white/72">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2.5">
                   <span className="inline-flex items-center gap-2"><CalendarDays className="h-4 w-4 text-[#c9a227]" /> Опубліковано</span>
                   <span className="text-right">{formatArticleDate(item.publishedAt)}</span>
                 </div>
-                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2.5">
+                  <span className="inline-flex items-center gap-2"><FileText className="h-4 w-4 text-[#c9a227]" /> Категорія</span>
+                  <span>{category}</span>
+                </div>
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2.5">
                   <span className="inline-flex items-center gap-2"><BookOpen className="h-4 w-4 text-[#c9a227]" /> Читання</span>
                   <span>{readMinutes} хв</span>
                 </div>
-                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2">
+                <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2.5">
                   <span className="inline-flex items-center gap-2"><Database className="h-4 w-4 text-[#c9a227]" /> Формат</span>
                   <span>OSINT</span>
                 </div>
@@ -368,7 +395,7 @@ export default function InvestigationPage() {
                 </div>
               </div>
               {item.url && (
-                <a href={item.url} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-11 items-center gap-1.5 border border-[#c9a227]/40 px-4 py-3 font-mono text-[11px] uppercase text-[#f3d97f] transition-colors hover:bg-[#c9a227]/10">
+                <a href={item.url} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-[#c9a227]/40 px-4 py-3 text-[12px] text-[#f3d97f] transition-colors hover:bg-[#c9a227]/10">
                   Зовнішнє джерело <ArrowUpRight className="h-3 w-3" />
                 </a>
               )}
@@ -377,26 +404,36 @@ export default function InvestigationPage() {
         </section>
       </div>
 
-      <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-8 px-4 py-8 md:px-8 md:py-12 lg:grid-cols-12 lg:gap-10">
-        <aside className="lg:col-span-2">
-          <div className="lg:sticky lg:top-24">
-            <div className="border border-[#c9a227]/25 bg-[#1c1f14] p-5">
-              <div className="mb-4 flex items-center gap-2 font-mono text-[10px] uppercase text-[#c9a227]/80">
+      <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-4 py-8 md:px-8 md:py-12 lg:grid-cols-12 lg:gap-10">
+        <aside className="lg:col-span-3 xl:col-span-3">
+          <div className="lg:sticky lg:top-24 space-y-4">
+            <div className="rounded-xl border border-white/12 bg-[#111611] p-5">
+              <div className="mb-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.08em] text-[#c9a227]/80">
                 <FileText className="h-3.5 w-3.5" /> Навігація
               </div>
               <nav className="space-y-1">
                 {headings.slice(0, 10).map((heading) => (
-                  <a key={heading.id} href={`#${heading.id}`} className="block border-l border-white/15 px-3 py-2 text-[15px] leading-snug text-white/72 transition-colors hover:border-[#c9a227] hover:text-white">
+                  <a key={heading.id} href={`#${heading.id}`} className="block border-l border-white/12 px-3 py-2 text-sm leading-snug text-white/70 transition-colors hover:border-[#c9a227] hover:text-white">
                     {heading.label}
                   </a>
                 ))}
               </nav>
             </div>
+            {(item.tags || []).length > 0 && (
+              <div className="rounded-xl border border-white/12 bg-[#111611] p-5">
+                <p className="mb-3 text-[11px] uppercase tracking-[0.08em] text-[#c9a227]/80">Tags</p>
+                <div className="flex flex-wrap gap-2">
+                  {(item.tags || []).map((tag) => (
+                    <span key={tag} className="rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-1 text-[12px] text-white/75">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </aside>
 
-        <main className="lg:col-span-10">
-          <article className="article-shell">
+        <main className="lg:col-span-9 xl:col-span-9">
+          <article className="article-shell rounded-xl border border-white/12 bg-[#0f130f] p-5 md:p-8 lg:p-10">
             {markdown ? (
               <div className="article-body" dangerouslySetInnerHTML={{ __html: html }} />
             ) : (
@@ -412,6 +449,19 @@ export default function InvestigationPage() {
                 )}
               </button>
             </div>
+            {related.length > 0 && (
+              <section className="mt-8 border-t border-white/12 pt-6">
+                <h3 className="mb-3 text-lg font-semibold text-white">Пов’язані матеріали</h3>
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  {related.map((r) => (
+                    <Link key={r.id} to={`/investigation/${r.id}`} className="rounded-lg border border-white/12 bg-white/[0.02] p-4 transition-colors hover:border-[#c9a227]/45 hover:bg-white/[0.04]">
+                      <p className="text-[11px] uppercase tracking-[0.08em] text-[#c9a227]/78">{r.id}</p>
+                      <p className="mt-1 text-sm font-medium text-white">{r.title}</p>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
           </article>
         </main>
       </div>
@@ -455,18 +505,13 @@ export default function InvestigationPage() {
           background: rgba(255,255,255,0.07);
           border-color: rgba(255,255,255,0.5);
         }
-        .article-shell {
-          border-top: 1px solid rgba(255, 255, 255, 0.15);
-          background: #111111;
-          padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
-        }
         .article-body {
-          max-width: 920px;
+          max-width: 800px;
           margin: 0 auto;
-          color: rgba(255, 255, 255, 0.92);
+          color: rgba(255, 255, 255, 0.9);
           font-family: "Inter", "Segoe UI", "Noto Sans", Arial, sans-serif;
-          font-size: 1.06rem;
-          line-height: 1.68;
+          font-size: 1.03rem;
+          line-height: 1.75;
           text-align: left;
           hyphens: none;
           text-wrap: pretty;
@@ -486,10 +531,10 @@ export default function InvestigationPage() {
           hyphens: none;
         }
         .article-body h2 {
-          margin: 2.8rem 0 0.85rem;
-          padding-top: 1.45rem;
+          margin: 2.5rem 0 0.8rem;
+          padding-top: 1.3rem;
           border-top: 1px solid rgba(255, 255, 255, 0.12);
-          font-size: clamp(1.24rem, 2.2vw, 1.65rem);
+          font-size: clamp(1.22rem, 2vw, 1.58rem);
           scroll-margin-top: 7rem;
         }
         .article-body h3 {
@@ -500,7 +545,7 @@ export default function InvestigationPage() {
           text-align: left;
         }
         .article-body p {
-          margin: 0 0 0.82rem;
+          margin: 0 0 0.95rem;
           text-align: left;
           text-indent: 0;
         }
@@ -583,11 +628,11 @@ export default function InvestigationPage() {
           color: #fff;
         }
         .visual-block {
-          margin: 3rem 0;
+          margin: 2.2rem 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           border: 1px solid rgba(255,255,255,0.14);
-          border-radius: 14px;
-          padding: 1.25rem;
+          border-radius: 12px;
+          padding: 1rem;
           background: linear-gradient(165deg, rgba(24,24,24,0.98), rgba(14,14,14,0.98));
           box-shadow: 0 14px 28px rgba(0,0,0,0.25);
         }
@@ -862,7 +907,7 @@ export default function InvestigationPage() {
         }
         .article-table-wrap {
           overflow-x: auto;
-          margin: 2.5rem 0;
+          margin: 2rem 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           border: 1px solid rgba(255,255,255,0.14);
           border-radius: 12px;
@@ -897,7 +942,7 @@ export default function InvestigationPage() {
           font-size: 0.86rem;
         }
         figure {
-          margin: 2.5rem 0;
+          margin: 2rem 0;
           overflow: hidden;
           border: 1px solid rgba(255,255,255,0.08);
         }
@@ -918,12 +963,9 @@ export default function InvestigationPage() {
           text-align: left;
         }
         @media (max-width: 720px) {
-          .article-shell {
-            padding: 2rem 0;
-          }
           .article-body {
-            font-size: 0.98rem;
-            line-height: 1.56;
+            font-size: 0.96rem;
+            line-height: 1.62;
           }
           .share-bar {
             margin-top: 2.2rem;
