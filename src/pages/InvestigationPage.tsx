@@ -40,31 +40,38 @@ function renderMarkdown(md: string) {
     .split('|')
     .map((cell) => cell.trim());
   const attr = (text: string) => text.replace(/"/g, '&quot;');
+  const figureLabel = (alt: string) => {
+    const lower = alt.toLowerCase();
+    if (lower.includes('схема') && lower.includes('колони')) return 'Схема / атмосферна колона';
+    if (lower.includes('схема')) return 'Схема / технічний контекст';
+    if (lower.includes('osint')) return 'Доказ / візуальна верифікація';
+    return 'Доказ / ілюстративний матеріал';
+  };
   const renderScheme = (type: string) => {
     if (type === 'delay-chain') {
       return `
         <section class="visual-block visual-chain" aria-label="Схема затримки ремонту НПЗ">
-          <div class="visual-kicker">Схема простою</div>
+          <div class="visual-kicker">Контекст / як простій перетворюється на довгу проблему</div>
           <div class="chain-list">
             <div class="chain-row">
               <span class="chain-index">01</span>
-              <div class="chain-copy"><strong>Установка ловить пошкодження</strong><p>Дим видно всім, але це лише верхній шар історії.</p></div>
+              <div class="chain-copy"><strong>Видиме пошкодження</strong><p>Дим і пожежа потрапляють у новини одразу, але це лише поверхня проблеми.</p></div>
             </div>
             <div class="chain-row">
               <span class="chain-index">02</span>
-              <div class="chain-copy"><strong>Аварійний ремонт</strong><p>Кабелі, обвʼязка, насоси й автоматика часто повертаються швидше.</p></div>
+              <div class="chain-copy"><strong>Аварійний ремонт</strong><p>Кабелі, обвʼязка, насоси й автоматика часто повертаються швидше за все інше.</p></div>
             </div>
             <div class="chain-row">
               <span class="chain-index">03</span>
-              <div class="chain-copy"><strong>Великий апарат вибито</strong><p>Колону або реактор неможливо повноцінно закрити за два тижні.</p></div>
+              <div class="chain-copy"><strong>Вибуття великого апарата</strong><p>Якщо зачеплено колону або реактор, швидкого повернення до нормального режиму вже не буде.</p></div>
             </div>
             <div class="chain-row">
               <span class="chain-index">04</span>
-              <div class="chain-copy"><strong>Черга на заводі</strong><p>Метал, зварювання, контроль, термообробка, приймання.</p></div>
+              <div class="chain-copy"><strong>Черга на виробництві</strong><p>Далі все впирається в метал, зварювання, термообробку, контроль і приймання.</p></div>
             </div>
             <div class="chain-row is-hot">
               <span class="chain-index">05</span>
-              <div class="chain-copy"><strong>Простій розтягується</strong><p>Проблема переходить із НПЗ у важке машинобудування.</p></div>
+              <div class="chain-copy"><strong>Довгий промисловий простій</strong><p>У цей момент проблема вже живе не на НПЗ, а в контурі важкого машинобудування.</p></div>
             </div>
           </div>
         </section>
@@ -185,7 +192,7 @@ function renderMarkdown(md: string) {
         break;
       }
       if (skipNext) i += skipNext;
-      out.push(`<figure><img src="${imageMatch[2]}" alt="${imageMatch[1]}" loading="lazy" />${captionHtml ? `<figcaption>${captionHtml}</figcaption>` : ''}</figure>`);
+      out.push(`<figure class="editorial-figure"><div class="figure-label">${figureLabel(imageMatch[1])}</div><img src="${imageMatch[2]}" alt="${imageMatch[1]}" loading="lazy" />${captionHtml ? `<figcaption>${captionHtml}</figcaption>` : ''}</figure>`);
       continue;
     }
 
@@ -538,6 +545,7 @@ export default function InvestigationPage() {
           text-align: left;
           hyphens: none;
           text-wrap: pretty;
+          counter-reset: section-counter;
         }
         .article-body > *:first-child {
           margin-top: 0;
@@ -559,6 +567,17 @@ export default function InvestigationPage() {
           border-top: 1px solid rgba(255, 255, 255, 0.08);
           font-size: clamp(1.22rem, 2vw, 1.58rem);
           scroll-margin-top: 7rem;
+          counter-increment: section-counter;
+          position: relative;
+        }
+        .article-body h2::before {
+          content: "0" counter(section-counter);
+          display: block;
+          margin-bottom: 0.4rem;
+          color: rgba(201,162,39,0.78);
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.1em;
         }
         .article-body h3 {
           margin: 2rem 0 0.7rem;
@@ -571,6 +590,13 @@ export default function InvestigationPage() {
           margin: 0 0 1.2rem;
           text-align: left;
           text-indent: 0;
+        }
+        .article-body > .visual-block,
+        .article-body > .editorial-figure,
+        .article-body > .article-table-wrap {
+          width: min(920px, calc(100vw - 4rem));
+          margin-left: 50%;
+          transform: translateX(-50%);
         }
         /* No indent after headings, blockquotes, figures, lists */
         .article-body h2 + p,
@@ -636,17 +662,29 @@ export default function InvestigationPage() {
           border-radius: 3px;
         }
         .article-body blockquote {
-          margin: 2rem 0;
-          padding: 0.4rem 0 0.4rem 1.35rem;
-          border-left: 2px solid rgba(201,162,39,0.55);
+          position: relative;
+          margin: 2.4rem 0;
+          padding: 0.9rem 0 0.9rem 1.9rem;
+          border-left: 1px solid rgba(201,162,39,0.45);
           color: rgba(255, 255, 255, 0.94);
-          font-size: 1.16rem;
+          font-size: 1.3rem;
           font-style: normal;
           font-weight: 500;
-          line-height: 1.48;
+          line-height: 1.42;
           background: transparent;
           border-radius: 0;
           text-align: left;
+          text-wrap: balance;
+        }
+        .article-body blockquote::before {
+          content: "“";
+          position: absolute;
+          left: -0.05rem;
+          top: -0.15rem;
+          color: rgba(201,162,39,0.72);
+          font-size: 2.6rem;
+          line-height: 1;
+          font-weight: 500;
         }
         .article-body blockquote p {
           margin: 0;
@@ -673,37 +711,37 @@ export default function InvestigationPage() {
           color: #fff;
         }
         .visual-block {
-          margin: 2.5rem 0;
+          margin: 2.8rem 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           border: 0;
           border-radius: 0;
-          padding: 0.25rem 0;
+          padding: 0.15rem 0;
           background: transparent;
           box-shadow: none;
         }
         .visual-kicker {
-          margin-bottom: 0.75rem;
-          color: #888;
+          margin-bottom: 1rem;
+          color: rgba(201,162,39,0.82);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           font-size: 0.68rem;
           font-weight: 700;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.09em;
         }
         .chain-list {
           position: relative;
           display: grid;
-          gap: 0.85rem;
-          padding-left: 0.35rem;
+          gap: 1rem;
+          padding-left: 0.5rem;
         }
         .chain-list::before {
           content: "";
           position: absolute;
-          left: 1.05rem;
-          top: 0.2rem;
-          bottom: 0.2rem;
+          left: 1.12rem;
+          top: 0.35rem;
+          bottom: 0.35rem;
           width: 1px;
-          background: rgba(255,255,255,0.12);
+          background: linear-gradient(180deg, rgba(201,162,39,0.12), rgba(255,255,255,0.06));
         }
         .chain-row {
           position: relative;
@@ -721,16 +759,16 @@ export default function InvestigationPage() {
           width: 2rem;
           height: 2rem;
           border-radius: 999px;
-          border: 1px solid rgba(255,255,255,0.18);
-          background: #121511;
-          color: rgba(255,255,255,0.74);
+          border: 1px solid rgba(201,162,39,0.22);
+          background: #10140f;
+          color: rgba(255,255,255,0.82);
           font-size: 0.72rem;
           font-weight: 600;
           letter-spacing: 0.04em;
         }
         .chain-copy {
-          padding: 0.15rem 0 0.9rem;
-          border-bottom: 1px solid rgba(255,255,255,0.08);
+          padding: 0.15rem 0 1rem;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .chain-row:last-child .chain-copy {
           border-bottom: 0;
@@ -743,15 +781,15 @@ export default function InvestigationPage() {
         .chain-copy strong {
           display: block;
           color: #fff;
-          font-size: 0.98rem;
-          line-height: 1.32;
-          font-weight: 600;
+          font-size: 1rem;
+          line-height: 1.28;
+          font-weight: 700;
         }
         .chain-copy p {
-          margin: 0.32rem 0 0;
-          color: rgba(255,255,255,0.74);
-          font-size: 0.94rem;
-          line-height: 1.54;
+          margin: 0.4rem 0 0;
+          color: rgba(255,255,255,0.72);
+          font-size: 0.96rem;
+          line-height: 1.58;
         }
         .clock-grid > div,
         .factory-grid > div {
@@ -976,7 +1014,7 @@ export default function InvestigationPage() {
           bottom: -30px;
         }
         .article-body hr {
-          margin: 2.2rem 0;
+          margin: 2.4rem 0;
           border: 0;
           border-top: 1px solid rgba(255,255,255,0.08);
         }
@@ -1039,9 +1077,21 @@ export default function InvestigationPage() {
           font-size: 0.86rem;
         }
         figure {
-          margin: 2rem 0;
+          margin: 2.4rem 0;
           overflow: hidden;
           border: 1px solid rgba(255,255,255,0.08);
+          background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        }
+        .editorial-figure {
+          padding: 0.7rem;
+        }
+        .figure-label {
+          margin: 0 0 0.65rem;
+          color: rgba(201,162,39,0.8);
+          font-size: 0.7rem;
+          font-weight: 700;
+          letter-spacing: 0.09em;
+          text-transform: uppercase;
         }
         figure img {
           width: 100%;
@@ -1051,11 +1101,11 @@ export default function InvestigationPage() {
           background: #000;
         }
         figcaption {
-          padding: 0.85rem 1rem;
-          color: rgba(255, 255, 255, 0.4);
+          padding: 0.9rem 1rem 0.95rem;
+          color: rgba(255, 255, 255, 0.62);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 0.78rem;
-          line-height: 1.5;
+          font-size: 0.83rem;
+          line-height: 1.55;
           border-top: 1px solid rgba(255,255,255,0.08);
           text-align: left;
         }
@@ -1063,6 +1113,13 @@ export default function InvestigationPage() {
           .article-body {
             font-size: 0.96rem;
             line-height: 1.66;
+          }
+          .article-body > .visual-block,
+          .article-body > .editorial-figure,
+          .article-body > .article-table-wrap {
+            width: 100%;
+            margin-left: 0;
+            transform: none;
           }
           .article-body p {
             margin-bottom: 1rem;
@@ -1081,6 +1138,14 @@ export default function InvestigationPage() {
           .chain-row {
             grid-template-columns: 2.1rem minmax(0, 1fr);
             gap: 0.8rem;
+          }
+          .article-body blockquote {
+            font-size: 1.08rem;
+            padding-left: 1.35rem;
+          }
+          .article-body blockquote::before {
+            font-size: 2rem;
+            top: -0.05rem;
           }
           .radar-layout {
             min-height: auto;
