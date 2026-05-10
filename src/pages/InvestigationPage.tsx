@@ -588,9 +588,12 @@ export default function InvestigationPage() {
           text-align: left;
         }
         .article-body p {
-          margin: 0 0 1.3rem;
+          margin: 0;
           text-align: left;
           text-indent: 0;
+        }
+        .article-body p + p {
+          margin-top: 0;
         }
         .article-body > .visual-block,
         .article-body > .editorial-figure,
@@ -616,7 +619,7 @@ export default function InvestigationPage() {
           line-height: 1.65;
           color: rgba(255, 255, 255, 0.92);
           font-weight: 450;
-          margin-bottom: 1rem;
+          margin-bottom: 0;
           text-align: left;
           text-indent: 0;
         }
@@ -664,7 +667,7 @@ export default function InvestigationPage() {
         }
         .article-body blockquote {
           position: relative;
-          margin: 2.4rem 0;
+          margin: 1.6rem 0;
           padding: 0.9rem 0 0.9rem 1.9rem;
           border-left: 1px solid rgba(201,162,39,0.45);
           color: rgba(255, 255, 255, 0.94);
@@ -697,7 +700,7 @@ export default function InvestigationPage() {
           font-weight: 400;
           color: rgba(255,255,255,0.6);
           font-style: italic;
-          margin: 0 0 1.6rem;
+          margin: 0;
           line-height: 1.6;
           text-align: left;
         }
@@ -1015,7 +1018,7 @@ export default function InvestigationPage() {
           bottom: -30px;
         }
         .article-body hr {
-          margin: 2.4rem 0;
+          margin: 1.5rem 0;
           border: 0;
           border-top: 1px solid rgba(255,255,255,0.08);
         }
@@ -1123,7 +1126,7 @@ export default function InvestigationPage() {
             transform: none;
           }
           .article-body p {
-            margin-bottom: 1rem;
+            margin-bottom: 0;
           }
           .share-bar {
             margin-top: 2.2rem;
