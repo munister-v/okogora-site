@@ -256,6 +256,14 @@ export default function InvestigationPage() {
   const [item, setItem] = useState<InvestigationArticle | null>(null);
   const [markdown, setMarkdown] = useState('');
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -374,12 +382,58 @@ export default function InvestigationPage() {
             ) : (
               <p className="text-white/60">Контент ще готується.</p>
             )}
+            <div className="share-bar">
+              <span className="share-label">Поділитися розслідуванням</span>
+              <button onClick={handleCopyLink} className="share-btn">
+                {copied ? (
+                  <><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg> Скопійовано!</>
+                ) : (
+                  <><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Копіювати посилання</>
+                )}
+              </button>
+            </div>
           </article>
         </main>
       </div>
       <style>{`
         html {
           scroll-behavior: smooth;
+        }
+        .share-bar {
+          margin-top: 3rem;
+          padding-top: 2rem;
+          border-top: 1px solid rgba(255,255,255,0.1);
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+        .share-label {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          color: rgba(255,255,255,0.4);
+          font-weight: 600;
+        }
+        .share-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.6rem 1.2rem;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          font-size: 0.82rem;
+          font-weight: 600;
+          color: #fff;
+          background: transparent;
+          border: 1px solid rgba(255,255,255,0.25);
+          cursor: pointer;
+          transition: background 0.15s, border-color 0.15s;
+          letter-spacing: 0.02em;
+        }
+        .share-btn:hover {
+          background: rgba(255,255,255,0.07);
+          border-color: rgba(255,255,255,0.5);
         }
         .article-shell {
           border-top: 1px solid rgba(255, 255, 255, 0.15);
