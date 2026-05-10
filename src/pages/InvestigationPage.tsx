@@ -594,7 +594,7 @@ export default function InvestigationPage() {
         .article-body > .visual-block,
         .article-body > .editorial-figure,
         .article-body > .article-table-wrap {
-          width: min(920px, calc(100vw - 4rem));
+          width: min(880px, calc(100vw - 4rem));
           margin-left: 50%;
           transform: translateX(-50%);
         }
@@ -667,10 +667,10 @@ export default function InvestigationPage() {
           padding: 0.9rem 0 0.9rem 1.9rem;
           border-left: 1px solid rgba(201,162,39,0.45);
           color: rgba(255, 255, 255, 0.94);
-          font-size: 1.3rem;
+          font-size: 1.18rem;
           font-style: normal;
           font-weight: 500;
-          line-height: 1.42;
+          line-height: 1.46;
           background: transparent;
           border-radius: 0;
           text-align: left;
@@ -682,7 +682,7 @@ export default function InvestigationPage() {
           left: -0.05rem;
           top: -0.15rem;
           color: rgba(201,162,39,0.72);
-          font-size: 2.6rem;
+          font-size: 2.15rem;
           line-height: 1;
           font-weight: 500;
         }
@@ -731,7 +731,7 @@ export default function InvestigationPage() {
         .chain-list {
           position: relative;
           display: grid;
-          gap: 1rem;
+          gap: 0.75rem;
           padding-left: 0.5rem;
         }
         .chain-list::before {
@@ -767,7 +767,7 @@ export default function InvestigationPage() {
           letter-spacing: 0.04em;
         }
         .chain-copy {
-          padding: 0.15rem 0 1rem;
+          padding: 0.1rem 0 0.8rem;
           border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .chain-row:last-child .chain-copy {
@@ -781,15 +781,15 @@ export default function InvestigationPage() {
         .chain-copy strong {
           display: block;
           color: #fff;
-          font-size: 1rem;
+          font-size: 0.94rem;
           line-height: 1.28;
           font-weight: 700;
         }
         .chain-copy p {
           margin: 0.4rem 0 0;
           color: rgba(255,255,255,0.72);
-          font-size: 0.96rem;
-          line-height: 1.58;
+          font-size: 0.9rem;
+          line-height: 1.52;
         }
         .clock-grid > div,
         .factory-grid > div {
@@ -1083,29 +1083,29 @@ export default function InvestigationPage() {
           background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
         }
         .editorial-figure {
-          padding: 0.7rem;
+          padding: 0.6rem;
         }
         .figure-label {
           margin: 0 0 0.65rem;
           color: rgba(201,162,39,0.8);
-          font-size: 0.7rem;
+          font-size: 0.66rem;
           font-weight: 700;
           letter-spacing: 0.09em;
           text-transform: uppercase;
         }
         figure img {
           width: 100%;
-          height: 420px;
+          height: 360px;
           object-fit: cover;
           display: block;
           background: #000;
         }
         figcaption {
-          padding: 0.9rem 1rem 0.95rem;
-          color: rgba(255, 255, 255, 0.62);
+          padding: 0.8rem 0.9rem 0.9rem;
+          color: rgba(255, 255, 255, 0.66);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 0.83rem;
-          line-height: 1.55;
+          font-size: 0.8rem;
+          line-height: 1.5;
           border-top: 1px solid rgba(255,255,255,0.08);
           text-align: left;
         }
@@ -1146,6 +1146,9 @@ export default function InvestigationPage() {
           .article-body blockquote::before {
             font-size: 2rem;
             top: -0.05rem;
+          }
+          figure img {
+            height: 240px;
           }
           .radar-layout {
             min-height: auto;
