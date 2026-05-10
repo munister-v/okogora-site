@@ -977,23 +977,28 @@ export default function App() {
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10">
                 <div>
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4 block">/ OSINT DASHBOARD</span>
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Інтенсивність ударів (7 днів)</h2>
-                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Це підрахунок згадок про удари за останні 7 днів. Ми беремо пости з Telegram, X і Facebook, шукаємо слова про удар або влучання, визначаємо область і лишаємо посилання на джерело.</p>
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">Карта згадок про удари (7 днів)</h2>
+                  <p className="mt-4 text-white/60 max-w-3xl text-sm">Цей блок показує не підтверджену кількість реальних влучань, а інтенсивність згадок про удари у відкритих джерелах за останні 7 днів. Ми беремо пости з Telegram, X і Facebook, шукаємо маркери удару, визначаємо область за текстом і лишаємо посилання на першоджерело.</p>
                 </div>
                 <div className="bg-[#1c1c12] border border-[#c9a227]/20 px-6 py-5">
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Ударних подій (7 днів)</p>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70">Унікальних згадок (7 днів)</p>
                   <p className="text-5xl font-bold tracking-tighter text-white">{dashboard.total}</p>
+                  <p className="mt-2 text-xs text-white/45">Після дедуплікації за днем, областю, джерелом і заголовком.</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div className="border border-[#c9a227]/20 bg-[#1c1c12] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">Що це за метрика</p>
+                  <p className="text-sm text-white/70 leading-relaxed">Це індикатор інформаційної активності: скільки окремих згадок про удари зʼявилося у стрічці, а не офіційний BDA.</p>
+                </div>
                 <div className="border border-[#c9a227]/20 bg-[#1c1c12] p-4">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">Що показує heatmap</p>
-                  <p className="text-sm text-white/70 leading-relaxed">Кожна клітинка: кількість зафіксованих ударних згадок для конкретної області у конкретний день.</p>
+                  <p className="text-sm text-white/70 leading-relaxed">Кожна клітинка: скільки унікальних згадок про удари привʼязалося до конкретної області у конкретний день.</p>
                 </div>
                 <div className="border border-[#c9a227]/20 bg-[#1c1c12] p-4">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">Що показує тренд</p>
-                  <p className="text-sm text-white/70 leading-relaxed">Горизонтальна шкала праворуч: сумарна кількість подій за добу по всіх областях, що ввійшли в топ.</p>
+                  <p className="text-sm text-white/70 leading-relaxed">Горизонтальна шкала праворуч: сумарна кількість згадок за добу по всіх областях, що увійшли в поточний топ.</p>
                 </div>
                 <div className="border border-[#c9a227]/20 bg-[#1c1c12] p-4">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">Що таке “Конкретика”</p>
@@ -1001,9 +1006,29 @@ export default function App() {
                 </div>
               </div>
 
+              <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+                <div className="border border-white/10 bg-[#0f1012] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-white/35 mb-2">Областей у топі</p>
+                  <p className="text-3xl font-bold tracking-tighter text-white">{dashboard.oblasts.length}</p>
+                </div>
+                <div className="border border-white/10 bg-[#0f1012] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-white/35 mb-2">Середнє за добу</p>
+                  <p className="text-3xl font-bold tracking-tighter text-white">{dashboard.days.length ? (dashboard.total / dashboard.days.length).toFixed(1) : '0.0'}</p>
+                </div>
+                <div className="border border-white/10 bg-[#0f1012] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-white/35 mb-2">Пік за добу</p>
+                  <p className="text-3xl font-bold tracking-tighter text-white">{dashboard.maxTrend}</p>
+                </div>
+                <div className="border border-white/10 bg-[#0f1012] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-white/35 mb-2">Макс. клітинка</p>
+                  <p className="text-3xl font-bold tracking-tighter text-white">{dashboard.maxCell}</p>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
                 <div className="xl:col-span-7 bg-[#1c1c12] border border-[#c9a227]/20 p-6 md:p-8">
-                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Heatmap · День × Область</h3>
+                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">Heatmap · День × Область</h3>
+                  <p className="text-xs text-white/45 mb-4">Темніша клітинка означає більше згадок у межах цього дня та цієї області відносно інших клітинок у 7-денному вікні.</p>
                   <div className="space-y-2">
                     {dashboard.days.map((day) => (
                       <div key={day} className="grid gap-2 items-center" style={{ gridTemplateColumns: `70px repeat(${Math.max(1, dashboard.oblasts.length)}, minmax(0, 1fr))` }}>
@@ -1024,7 +1049,8 @@ export default function App() {
                 </div>
 
                 <div className="xl:col-span-5 bg-[#2e2d1e] border border-[#c9a227]/20 p-6 md:p-8">
-                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Тренд · День</h3>
+                  <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-2">Тренд · День</h3>
+                  <p className="text-xs text-white/45 mb-4">Кожен рядок показує загальну кількість згадок про удари за добу по областях, що потрапили у топ цього блоку.</p>
                   <div className="space-y-2">
                     {dashboard.trend.map((t) => (
                       <div key={t.day} className="flex items-center gap-3">
@@ -1077,6 +1103,7 @@ export default function App() {
               </div>
               <div className="mt-6 bg-[#0f1012] border border-[#c9a227]/20 p-6 md:p-8">
                 <h3 className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/70 mb-4">Методологія підрахунку</h3>
+                <p className="text-sm text-white/55 leading-relaxed mb-4">Блок варто читати як моніторинг інформаційного навантаження по темі ударів. Один і той самий реальний епізод може дати кілька окремих згадок у різних джерелах, а окремі згадки можуть описувати наслідки, а не момент удару.</p>
                 <ol className="list-decimal pl-5 space-y-2 text-sm text-white/75 leading-relaxed">
                   <li>Збираємо пости за останні 7 діб із Telegram, X і Facebook.</li>
                   <li>Враховуємо лише пости з маркерами удару: `удар`, `влуч`, `strike`, `missile`, `бпла` тощо.</li>
