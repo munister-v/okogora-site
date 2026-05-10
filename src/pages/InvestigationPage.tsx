@@ -19,9 +19,10 @@ function renderMarkdown(md: string) {
   let h2Index = 0;
   let skippedFirstH1 = false;
 
-  const inline = (text: string) => text
+  const inline = (text: string) =>
+    text
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/\*([^*]+?)\*/g, '<em>$1</em>')
     .replace(/`(.+?)`/g, '<code>$1</code>')
     .replace(/\[(.+?)\]\((https?:\/\/[^\s]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>');
 
@@ -135,7 +136,21 @@ function renderMarkdown(md: string) {
     const imageMatch = line.match(/^!\[(.*?)\]\((https?:\/\/[^\s)]+)\)$/);
     if (imageMatch) {
       closeList();
-      out.push(`<figure><img src="${imageMatch[2]}" alt="${imageMatch[1]}" loading="lazy" /><figcaption>${imageMatch[1]}</figcaption></figure>`);
+      // peek at next non-empty line to see if it's an italic caption
+      let captionHtml = '';
+      let skipNext = 0;
+      for (let j = i + 1; j < lines.length; j++) {
+        const peek = lines[j].trim();
+        if (!peek) { skipNext = j - i; continue; }
+        // italic-only line used as caption: *text* or _text_
+        if (/^\*[^*].+[^*]\*$/.test(peek) || /^_[^_].+[^_]_$/.test(peek)) {
+          captionHtml = inline(peek.replace(/^[*_]/, '').replace(/[*_]$/, ''));
+          skipNext = j - i;
+        }
+        break;
+      }
+      if (skipNext) i += skipNext;
+      out.push(`<figure><img src="${imageMatch[2]}" alt="${imageMatch[1]}" loading="lazy" />${captionHtml ? `<figcaption>${captionHtml}</figcaption>` : ''}</figure>`);
       continue;
     }
 
@@ -188,6 +203,20 @@ function renderMarkdown(md: string) {
         inList = true;
       }
       out.push(`<li>${inline(line.replace(/^[-*]\s+/, ''))}</li>`);
+      continue;
+    }
+
+    // Numbered list: 1. item
+    if (/^\d+\.\s+/.test(line)) {
+      closeList();
+      out.push(`<p class="numbered-item">${inline(line)}</p>`);
+      continue;
+    }
+
+    // Bold-only line = lead/kicker paragraph
+    if (/^\*\*[^*]+\*\*$/.test(line)) {
+      closeList();
+      out.push(`<p class="article-lead">${inline(line)}</p>`);
       continue;
     }
 
@@ -424,12 +453,31 @@ export default function InvestigationPage() {
         }
         .article-body blockquote {
           margin: 2.5rem 0;
-          padding: 0 0 0 1.5rem;
-          border-left: 2px solid #fff;
-          color: rgba(255, 255, 255, 0.9);
-          font-size: 1.3rem;
+          padding: 1.25rem 0 1.25rem 1.5rem;
+          border-left: 3px solid rgba(255,255,255,0.6);
+          color: rgba(255, 255, 255, 0.88);
+          font-size: 1.2rem;
           font-style: italic;
-          line-height: 1.5;
+          line-height: 1.55;
+          background: rgba(255,255,255,0.03);
+        }
+        .article-lead {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          font-size: 1.1rem;
+          font-weight: 400;
+          color: rgba(255,255,255,0.7);
+          font-style: italic;
+          margin: 0.5rem 0 2.5rem;
+          line-height: 1.6;
+        }
+        .numbered-item {
+          padding-left: 0;
+          position: relative;
+          margin: 0.8rem 0;
+          color: rgba(255,255,255,0.88);
+        }
+        .numbered-item strong {
+          color: #fff;
         }
         .visual-block {
           margin: 3rem 0;
@@ -626,22 +674,26 @@ export default function InvestigationPage() {
           line-height: 1.5;
         }
         figure {
-          margin: 3rem 0;
+          margin: 3rem -2rem;
+          overflow: hidden;
         }
         figure img {
           width: 100%;
-          height: auto;
-          max-height: 600px;
-          object-fit: contain;
-          background: #000;
+          height: 480px;
+          object-fit: cover;
           display: block;
+          background: #000;
         }
         figcaption {
-          margin-top: 0.75rem;
-          color: rgba(255, 255, 255, 0.5);
+          margin-top: 0;
+          padding: 0.85rem 2rem;
+          color: rgba(255, 255, 255, 0.45);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           font-size: 0.8rem;
-          line-height: 1.4;
+          line-height: 1.5;
+          border-left: 2px solid rgba(255,255,255,0.12);
+          margin-left: 2rem;
+          margin-right: 2rem;
         }
         @media (max-width: 720px) {
           .article-shell {
