@@ -377,8 +377,8 @@ export default function InvestigationPage() {
         </section>
       </div>
 
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-8 md:px-8 md:py-12 lg:grid-cols-12 lg:gap-10">
-        <aside className="lg:col-span-3">
+      <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-8 px-4 py-8 md:px-8 md:py-12 lg:grid-cols-12 lg:gap-10">
+        <aside className="lg:col-span-2">
           <div className="lg:sticky lg:top-24">
             <div className="border border-white/10 bg-[#202116] p-5">
               <div className="mb-4 flex items-center gap-2 font-mono text-[10px] uppercase text-[#c9a227]/80">
@@ -395,7 +395,7 @@ export default function InvestigationPage() {
           </div>
         </aside>
 
-        <main className="lg:col-span-9">
+        <main className="lg:col-span-10">
           <article className="article-shell">
             {markdown ? (
               <div className="article-body" dangerouslySetInnerHTML={{ __html: html }} />
@@ -461,12 +461,12 @@ export default function InvestigationPage() {
           padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
         }
         .article-body {
-          max-width: 780px;
+          max-width: 920px;
           margin: 0 auto;
           color: rgba(255, 255, 255, 0.9);
           font-family: "Georgia", "Times New Roman", serif;
-          font-size: 1.08rem;
-          line-height: 1.76;
+          font-size: 1.1rem;
+          line-height: 1.78;
           text-align: left;
           hyphens: none;
           text-wrap: pretty;
@@ -927,6 +927,10 @@ export default function InvestigationPage() {
           .article-body {
             font-size: 1rem;
             line-height: 1.62;
+          }
+          .share-bar {
+            margin-top: 2.2rem;
+            padding-top: 1.5rem;
           }
           .article-body p {
             text-indent: 1em;
