@@ -396,14 +396,14 @@ export default function InvestigationPage() {
   const related = useMemo(() => allItems.filter((x) => x.id !== item?.id && (x.status || 'published') === 'published').slice(0, 2), [allItems, item?.id]);
   const category = item?.tags?.[0] || 'OSINT';
 
-  if (loading) return <div className="min-h-screen bg-[#252519] text-white flex items-center justify-center">Loading...</div>;
-  if (!item) return <div className="min-h-screen bg-[#252519] text-white flex items-center justify-center">Not found</div>;
+  if (loading) return <div className="min-h-screen bg-[#050517] text-white flex items-center justify-center">Loading...</div>;
+  if (!item) return <div className="min-h-screen bg-[#050517] text-white flex items-center justify-center">Not found</div>;
 
   return (
-    <div className="min-h-screen bg-[#0c0f0b] text-white">
-      <div className="relative overflow-hidden border-b border-[#c9a227]/20 bg-[#141812]">
+    <div className="min-h-screen bg-[#050517] text-white">
+      <div className="relative overflow-hidden border-b border-[#FF4E00]/20 bg-[#0a0a2e]">
         <div className="mx-auto max-w-[1280px] px-4 py-6 md:px-8 md:py-8">
-          <Link to="/#investigations" className="inline-flex min-h-11 items-center gap-2 text-[12px] text-white/68 transition-colors hover:text-[#e4c76d]">
+          <Link to="/#investigations" className="inline-flex min-h-11 items-center gap-2 text-[12px] text-white/68 transition-colors hover:text-[#FF7A3D]">
             <ArrowLeft className="h-3.5 w-3.5" /> До розслідувань
           </Link>
         </div>
@@ -411,7 +411,7 @@ export default function InvestigationPage() {
         <section className="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-4 pb-10 md:px-8 md:pb-14 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-8 xl:col-span-9">
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center rounded-full border border-[#c9a227]/45 bg-[#c9a227]/10 px-3 py-1 text-[11px] font-medium tracking-wide text-[#f3d97f]">{item.code}</span>
+              <span className="inline-flex items-center rounded-full border border-[#FF4E00]/45 bg-[#FF4E00]/10 px-3 py-1 text-[11px] font-medium tracking-wide text-[#FF7A3D]">{item.code}</span>
               <StatusBadge status={item.status} />
               <RiskBadge tags={item.tags} />
             </div>
@@ -420,32 +420,32 @@ export default function InvestigationPage() {
           </div>
 
           <aside className="lg:col-span-4 xl:col-span-3">
-            <div className="rounded-xl border border-[#c9a227]/20 bg-[#0e120d]/85 p-5 md:p-6">
-              <p className="mb-4 text-[11px] uppercase tracking-[0.08em] text-[#c9a227]/80">Article Meta</p>
+            <div className="rounded-xl border border-[#FF4E00]/20 bg-[#050517]/85 p-5 md:p-6">
+              <p className="mb-4 text-[11px] uppercase tracking-[0.08em] text-[#FF4E00]/80">Article Meta</p>
               <div className="space-y-3 text-sm text-white/72">
                 <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2.5">
-                  <span className="inline-flex items-center gap-2"><CalendarDays className="h-4 w-4 text-[#c9a227]" /> Опубліковано</span>
+                  <span className="inline-flex items-center gap-2"><CalendarDays className="h-4 w-4 text-[#FF4E00]" /> Опубліковано</span>
                   <span className="text-right">{formatArticleDate(item.publishedAt)}</span>
                 </div>
                 <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2.5">
-                  <span className="inline-flex items-center gap-2"><FileText className="h-4 w-4 text-[#c9a227]" /> Категорія</span>
+                  <span className="inline-flex items-center gap-2"><FileText className="h-4 w-4 text-[#FF4E00]" /> Категорія</span>
                   <span>{category}</span>
                 </div>
                 <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2.5">
-                  <span className="inline-flex items-center gap-2"><BookOpen className="h-4 w-4 text-[#c9a227]" /> Читання</span>
+                  <span className="inline-flex items-center gap-2"><BookOpen className="h-4 w-4 text-[#FF4E00]" /> Читання</span>
                   <span>{readMinutes} хв</span>
                 </div>
                 <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-2.5">
-                  <span className="inline-flex items-center gap-2"><Database className="h-4 w-4 text-[#c9a227]" /> Формат</span>
+                  <span className="inline-flex items-center gap-2"><Database className="h-4 w-4 text-[#FF4E00]" /> Формат</span>
                   <span>OSINT</span>
                 </div>
                 <div className="flex items-center justify-between gap-4">
-                  <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-[#c9a227]" /> Точність</span>
+                  <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-[#FF4E00]" /> Точність</span>
                   <span>відкриті джерела</span>
                 </div>
               </div>
               {item.url && (
-                <a href={item.url} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-[#c9a227]/40 px-4 py-3 text-[12px] text-[#f3d97f] transition-colors hover:bg-[#c9a227]/10">
+                <a href={item.url} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-[#FF4E00]/40 px-4 py-3 text-[12px] text-[#FF7A3D] transition-colors hover:bg-[#FF4E00]/10">
                   Зовнішнє джерело <ArrowUpRight className="h-3 w-3" />
                 </a>
               )}
@@ -457,21 +457,21 @@ export default function InvestigationPage() {
       <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-8 px-4 py-8 md:px-8 md:py-12 lg:grid-cols-12 lg:gap-10">
         <aside className="lg:col-span-3 xl:col-span-3">
           <div className="lg:sticky lg:top-24 space-y-4">
-            <div className="rounded-xl border border-white/12 bg-[#111611] p-5">
-              <div className="mb-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.08em] text-[#c9a227]/80">
+            <div className="rounded-xl border border-white/12 bg-[#0a0a2e] p-5">
+              <div className="mb-4 flex items-center gap-2 text-[11px] uppercase tracking-[0.08em] text-[#FF4E00]/80">
                 <FileText className="h-3.5 w-3.5" /> Навігація
               </div>
               <nav className="space-y-1">
                 {headings.slice(0, 10).map((heading) => (
-                  <a key={heading.id} href={`#${heading.id}`} className="block border-l border-white/10 px-3 py-2 text-[13px] leading-snug text-white/56 transition-colors hover:border-[#c9a227]/70 hover:text-white/82">
+                  <a key={heading.id} href={`#${heading.id}`} className="block border-l border-white/10 px-3 py-2 text-[13px] leading-snug text-white/56 transition-colors hover:border-[#FF4E00]/70 hover:text-white/82">
                     {heading.label}
                   </a>
                 ))}
               </nav>
             </div>
             {(item.tags || []).length > 0 && (
-              <div className="rounded-xl border border-white/12 bg-[#111611] p-5">
-                <p className="mb-3 text-[11px] uppercase tracking-[0.08em] text-[#c9a227]/80">Tags</p>
+              <div className="rounded-xl border border-white/12 bg-[#0a0a2e] p-5">
+                <p className="mb-3 text-[11px] uppercase tracking-[0.08em] text-[#FF4E00]/80">Tags</p>
                 <div className="flex flex-wrap gap-2">
                   {(item.tags || []).map((tag) => (
                     <span key={tag} className="rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-1 text-[12px] text-white/75">{tag}</span>
@@ -483,7 +483,7 @@ export default function InvestigationPage() {
         </aside>
 
         <main className="lg:col-span-9 xl:col-span-9">
-          <article className="article-shell rounded-xl border border-white/12 bg-[#0f130f] p-5 md:p-8 lg:p-10">
+          <article className="article-shell rounded-xl border border-white/12 bg-[#050517] p-5 md:p-8 lg:p-10">
             {markdown ? (
               <div className="article-body" dangerouslySetInnerHTML={{ __html: html }} />
             ) : (
@@ -504,8 +504,8 @@ export default function InvestigationPage() {
                 <h3 className="mb-3 text-lg font-semibold text-white">Пов’язані матеріали</h3>
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   {related.map((r) => (
-                    <Link key={r.id} to={`/investigation/${r.id}`} className="rounded-lg border border-white/12 bg-white/[0.02] p-4 transition-colors hover:border-[#c9a227]/45 hover:bg-white/[0.04]">
-                      <p className="text-[11px] uppercase tracking-[0.08em] text-[#c9a227]/78">{r.id}</p>
+                    <Link key={r.id} to={`/investigation/${r.id}`} className="rounded-lg border border-white/12 bg-white/[0.02] p-4 transition-colors hover:border-[#FF4E00]/45 hover:bg-white/[0.04]">
+                      <p className="text-[11px] uppercase tracking-[0.08em] text-[#FF4E00]/78">{r.id}</p>
                       <p className="mt-1 text-sm font-medium text-white">{r.title}</p>
                     </Link>
                   ))}
@@ -595,7 +595,7 @@ export default function InvestigationPage() {
           content: "0" counter(section-counter);
           display: block;
           margin-bottom: 0.4rem;
-          color: rgba(201,162,39,0.78);
+          color: rgba(255,78,0,0.78);
           font-size: 0.72rem;
           font-weight: 700;
           letter-spacing: 0.1em;
@@ -660,14 +660,14 @@ export default function InvestigationPage() {
         .evidence-row {
           margin: 1.35rem 0;
           border: 1px solid rgba(255,255,255,0.08);
-          border-left: 2px solid rgba(201,162,39,0.55);
+          border-left: 2px solid rgba(255,78,0,0.55);
           border-radius: 10px;
           background: rgba(255,255,255,0.018);
           padding: 0.85rem 0.95rem;
         }
         .evidence-key {
           margin: 0 0 0.35rem;
-          color: #f3d97f;
+          color: #FF7A3D;
           font-size: 0.8rem;
           font-weight: 600;
           letter-spacing: 0.01em;
@@ -689,7 +689,7 @@ export default function InvestigationPage() {
           position: relative;
           margin: 1.6rem 0;
           padding: 0.9rem 0 0.9rem 1.9rem;
-          border-left: 1px solid rgba(201,162,39,0.45);
+          border-left: 1px solid rgba(255,78,0,0.45);
           color: rgba(255, 255, 255, 0.94);
           font-size: 1.1rem;
           font-style: normal;
@@ -705,7 +705,7 @@ export default function InvestigationPage() {
           position: absolute;
           left: -0.05rem;
           top: -0.15rem;
-          color: rgba(201,162,39,0.72);
+          color: rgba(255,78,0,0.72);
           font-size: 2.15rem;
           line-height: 1;
           font-weight: 500;
@@ -745,7 +745,7 @@ export default function InvestigationPage() {
         }
         .visual-kicker {
           margin-bottom: 1rem;
-          color: rgba(201,162,39,0.82);
+          color: rgba(255,78,0,0.82);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           font-size: 0.68rem;
           font-weight: 700;
@@ -765,7 +765,7 @@ export default function InvestigationPage() {
           top: 0.35rem;
           bottom: 0.35rem;
           width: 1px;
-          background: linear-gradient(180deg, rgba(201,162,39,0.12), rgba(255,255,255,0.06));
+          background: linear-gradient(180deg, rgba(255,78,0,0.12), rgba(255,255,255,0.06));
         }
         .chain-row {
           position: relative;
@@ -783,7 +783,7 @@ export default function InvestigationPage() {
           width: 2rem;
           height: 2rem;
           border-radius: 999px;
-          border: 1px solid rgba(201,162,39,0.22);
+          border: 1px solid rgba(255,78,0,0.22);
           background: #10140f;
           color: rgba(255,255,255,0.82);
           font-size: 0.72rem;
@@ -799,8 +799,8 @@ export default function InvestigationPage() {
           padding-bottom: 0;
         }
         .chain-row.is-hot .chain-index {
-          border-color: rgba(201,162,39,0.4);
-          color: #f3d97f;
+          border-color: rgba(255,78,0,0.4);
+          color: #FF7A3D;
         }
         .chain-copy strong {
           display: block;
@@ -1111,7 +1111,7 @@ export default function InvestigationPage() {
         }
         .figure-label {
           margin: 0 0 0.65rem;
-          color: rgba(201,162,39,0.8);
+          color: rgba(255,78,0,0.8);
           font-size: 0.66rem;
           font-weight: 700;
           letter-spacing: 0.09em;

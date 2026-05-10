@@ -131,7 +131,7 @@ export default function TargetMap({ targets, selected, onSelect }: Props) {
         .leaflet-tooltip-top:before { display: none; }
       `}</style>
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-[400] bg-[#1c1c12]/90 border border-white/10 p-3 backdrop-blur-sm">
+      <div className="absolute bottom-4 left-4 z-[400] bg-[#050517]/90 border border-white/10 p-3 backdrop-blur-sm">
         <div className="font-mono text-[9px] uppercase tracking-widest text-white/40 mb-2">Статус</div>
         {Object.entries(STATUS_COLORS).map(([s, c]) => (
           <div key={s} className="flex items-center gap-2 mb-1">

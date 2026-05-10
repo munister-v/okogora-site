@@ -9,7 +9,7 @@ import { Anchor, Map as MapIcon, Menu, Plane, RadioTower, X as CloseIcon, Ruler,
 function territoryStyle(feature?: Feature): PathOptions {
   const props = feature?.properties ?? {};
   return {
-    color: (props['stroke'] as string) ?? '#c9a227',
+    color: (props['stroke'] as string) ?? '#FF4E00',
     fillColor: (props['fill'] as string) ?? 'transparent',
     opacity: (props['stroke-opacity'] as number) ?? 1,
     fillOpacity: (props['fill-opacity'] as number) ?? 0.35,
@@ -305,7 +305,7 @@ export default function MapService() {
 
   return (
     <div className="w-full flex flex-col font-sans">
-      <div className="flex justify-between items-center mb-4 md:mb-6 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] border-b border-[#111111] pb-3">
+      <div className="flex justify-between items-center mb-4 md:mb-6 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] border-b border-[#050517] pb-3">
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
           <MapIcon className="w-4 h-4" />
@@ -313,16 +313,16 @@ export default function MapService() {
         </div>
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="flex items-center gap-2 bg-[#111111] text-white px-3 py-1 text-[9px] hover:bg-zinc-800 transition-colors font-semibold"
+          className="flex items-center gap-2 bg-[#050517] text-white px-3 py-1 text-[9px] hover:bg-zinc-800 transition-colors font-semibold"
         >
           {isSidebarOpen ? <CloseIcon className="w-3 h-3" /> : <Menu className="w-3 h-3" />}
           {isSidebarOpen ? 'ПРИХОВАТИ ПАНЕЛЬ' : 'ПОКАЗАТИ ПАНЕЛЬ'}
         </button>
       </div>
 
-      <div className="relative w-full h-[520px] md:h-[800px] bg-[#0a0a0a] border border-[#111111]/20 overflow-hidden group shadow-2xl">
+      <div className="relative w-full h-[520px] md:h-[800px] bg-[#0a0a0a] border border-[#050517]/20 overflow-hidden group shadow-2xl">
         <div className={`absolute top-4 md:top-6 left-4 md:left-6 z-[400] w-64 md:w-72 space-y-4 transition-all duration-700 ease-in-out ${isSidebarOpen ? 'translate-x-0 opacity-100' : '-translate-x-[120%] opacity-0 pointer-events-none'}`}>
-          <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
+          <div className="bg-[#050517]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
             <div className="flex items-center gap-2 mb-3 border-b border-[#f4f4f4]/10 pb-3">
               <Activity className="w-3 h-3 text-red-400" />
               <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Статус карти</span>
@@ -335,7 +335,7 @@ export default function MapService() {
             </div>
           </div>
 
-          <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
+          <div className="bg-[#050517]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
             <div className="flex items-center gap-2 mb-3">
               <RadioTower className="w-3 h-3 text-red-300" />
               <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Удари по РФ · 7 днів</span>
@@ -353,7 +353,7 @@ export default function MapService() {
             </div>
           </div>
 
-          <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
+          <div className="bg-[#050517]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
             <div className="flex items-center gap-2 mb-3">
               <Plane className="w-3 h-3 text-[#facc15]" />
               <Anchor className="w-3 h-3 text-sky-300" />
@@ -374,9 +374,9 @@ export default function MapService() {
             </div>
           </div>
 
-          <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
+          <div className="bg-[#050517]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
             <div className="flex items-center gap-2 mb-3">
-              <MapIcon className="w-3 h-3 text-[#c9a227]" />
+              <MapIcon className="w-3 h-3 text-[#FF4E00]" />
               <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Шар території</span>
             </div>
             <div className="space-y-2 font-mono text-[9px] text-white/60">
@@ -392,7 +392,7 @@ export default function MapService() {
             </div>
           </div>
 
-          <div className="bg-[#111111]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
+          <div className="bg-[#050517]/95 backdrop-blur-xl border border-[#f4f4f4]/10 p-5 shadow-2xl">
             <div className="flex items-center gap-2 mb-3">
               <Ruler className="w-3 h-3 text-orange-400" />
               <span className="font-mono text-[10px] uppercase tracking-widest text-white/80">Дистанційна лінійка</span>
@@ -417,7 +417,7 @@ export default function MapService() {
           </div>
         </div>
 
-        <div className="absolute bottom-6 left-6 z-[400] bg-[#111111]/90 text-[#f4f4f4] p-5 font-mono border border-[#f4f4f4]/10 backdrop-blur-md pointer-events-none shadow-2xl">
+        <div className="absolute bottom-6 left-6 z-[400] bg-[#050517]/90 text-[#f4f4f4] p-5 font-mono border border-[#f4f4f4]/10 backdrop-blur-md pointer-events-none shadow-2xl">
           <div className="flex items-center gap-3 mb-4 border-b border-[#f4f4f4]/10 pb-3">
             <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
             <span className="tracking-widest uppercase text-[10px] font-bold opacity-90">КООРДИНАТИ КУРСОРА</span>
@@ -432,8 +432,8 @@ export default function MapService() {
               <span className="font-bold text-white/85 tracking-tighter">{telemetry.lng.toFixed(6)}° E</span>
             </div>
             <div className="flex justify-between gap-12 text-[9px] pt-1">
-              <span className="opacity-30 text-[#c9a227] font-bold">ТЕРИТОРІЯ</span>
-              <span className="text-[#c9a227]/90">{territoryStatusLabel(territoryStatus)}</span>
+              <span className="opacity-30 text-[#FF4E00] font-bold">ТЕРИТОРІЯ</span>
+              <span className="text-[#FF4E00]/90">{territoryStatusLabel(territoryStatus)}</span>
             </div>
             <div className="flex justify-between gap-12 text-[9px] pt-1">
               <span className="opacity-30 text-red-300 font-bold">УДАРИ РФ</span>
@@ -505,7 +505,7 @@ export default function MapService() {
                   </span>
                 </Tooltip>
                 <Popup className="tactical-popup">
-                  <div className="font-mono p-3 bg-[#111111] text-white border border-white/10 min-w-[250px]">
+                  <div className="font-mono p-3 bg-[#050517] text-white border border-white/10 min-w-[250px]">
                     <div className="flex justify-between items-start mb-2 border-b border-white/15 pb-2 gap-2">
                       <h5 className="font-bold text-white uppercase text-xs tracking-tight leading-tight">{point.label}</h5>
                       <span className="text-[8px] px-1.5 py-0.5 bg-white/10" style={{ color }}>
@@ -539,7 +539,7 @@ export default function MapService() {
                   </span>
                 </Tooltip>
                 <Popup className="tactical-popup">
-                  <div className="font-mono p-3 bg-[#111111] text-white border border-white/10 min-w-[270px]">
+                  <div className="font-mono p-3 bg-[#050517] text-white border border-white/10 min-w-[270px]">
                     <div className="flex justify-between items-start mb-2 border-b border-white/15 pb-2 gap-2">
                       <h5 className="font-bold text-white uppercase text-xs tracking-tight leading-tight">{region.label}</h5>
                       <span className="text-[8px] px-1.5 py-0.5 bg-red-500/15 text-red-200">{region.count} / 7 ДНІВ</span>

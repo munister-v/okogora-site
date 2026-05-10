@@ -9,7 +9,7 @@ const KMZ_URL = 'https://raw.githubusercontent.com/owlmaps/UAControlMapBackups/l
 function featureStyle(feature?: Feature): PathOptions {
   const props = feature?.properties ?? {};
   return {
-    color: (props['stroke'] as string) ?? '#c9a227',
+    color: (props['stroke'] as string) ?? '#FF4E00',
     fillColor: (props['fill'] as string) ?? 'transparent',
     opacity: (props['stroke-opacity'] as number) ?? 1,
     fillOpacity: (props['fill-opacity'] as number) ?? 0.35,
@@ -67,11 +67,11 @@ export default function OwlControlMap() {
     <div className="w-full flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF4E00]">
             КАРТА_КОНТРОЛЮ_TERRITORY
           </span>
           {status === 'loading' && (
-            <span className="font-mono text-[9px] text-[#c9a227]/50 animate-pulse">● ЗАВАНТАЖЕННЯ</span>
+            <span className="font-mono text-[9px] text-[#FF4E00]/50 animate-pulse">● ЗАВАНТАЖЕННЯ</span>
           )}
           {status === 'ready' && (
             <span className="font-mono text-[9px] text-green-500/70">● ОНЛАЙН</span>
@@ -84,17 +84,17 @@ export default function OwlControlMap() {
           href="https://uacontrolmap.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-mono text-[8px] uppercase tracking-widest text-[#c9a227]/40 hover:text-[#c9a227] transition-colors"
+          className="font-mono text-[8px] uppercase tracking-widest text-[#FF4E00]/40 hover:text-[#FF4E00] transition-colors"
         >
           SOURCE: UACONTROLMAP.COM ↗
         </a>
       </div>
 
-      <div className="relative w-full h-[500px] md:h-[700px] border border-[#c9a227]/20 overflow-hidden">
+      <div className="relative w-full h-[500px] md:h-[700px] border border-[#FF4E00]/20 overflow-hidden">
         {status === 'loading' && (
-          <div className="absolute inset-0 z-[1000] flex items-center justify-center bg-[#1c1c12]/80 pointer-events-none">
+          <div className="absolute inset-0 z-[1000] flex items-center justify-center bg-[#050517]/80 pointer-events-none">
             <div className="text-center">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/60 animate-pulse block">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF4E00]/60 animate-pulse block">
                 ЗАВАНТАЖЕННЯ_КМZ...
               </span>
               <span className="font-mono text-[8px] text-white/20 block mt-1">
@@ -104,7 +104,7 @@ export default function OwlControlMap() {
           </div>
         )}
         {status === 'error' && (
-          <div className="absolute inset-0 z-[1000] flex items-center justify-center bg-[#1c1c12]/90 pointer-events-none">
+          <div className="absolute inset-0 z-[1000] flex items-center justify-center bg-[#050517]/90 pointer-events-none">
             <span className="font-mono text-[10px] uppercase tracking-widest text-red-400/70">
               ПОМИЛКА_ЗАВАНТАЖЕННЯ
             </span>
@@ -158,7 +158,7 @@ export default function OwlControlMap() {
           <span className="inline-block w-3 h-1.5 bg-[#f9a825] opacity-70 rounded-sm" />
           Лінія фронту
         </span>
-        <span className="ml-auto text-[#c9a227]/20">
+        <span className="ml-auto text-[#FF4E00]/20">
           Дані: Project Owl · uacontrolmap.com · оновлення щодня
         </span>
       </div>

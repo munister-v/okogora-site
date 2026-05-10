@@ -475,7 +475,7 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen bg-[radial-gradient(circle_at_top,#1a1a1a_0%,#0a0a0a_45%,#070707_100%)] flex items-center justify-center p-4 sm:p-6">
         <div className="w-full max-w-md">
-          <div className="border border-[#f4f4f4]/10 bg-[#111111]/95 backdrop-blur-sm p-6 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_30px_70px_rgba(0,0,0,0.45)]">
+          <div className="border border-[#f4f4f4]/10 bg-[#050517]/95 backdrop-blur-sm p-6 sm:p-10 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_30px_70px_rgba(0,0,0,0.45)]">
             <div className="flex items-center gap-3 mb-10 pb-6 border-b border-[#f4f4f4]/10">
               <Shield className="w-5 h-5 text-[#f4f4f4]/40" />
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#f4f4f4]/80">ОКО ГОРА // АДМІН</span>
@@ -515,7 +515,7 @@ export default function AdminPage() {
               <button
                 onClick={handleLogin}
                 disabled={!tokenInput || authLoading}
-                className="w-full bg-white text-[#111111] font-mono font-extrabold text-xs uppercase tracking-widest py-3 hover:bg-[#f4f4f4] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-white text-[#050517] font-mono font-extrabold text-xs uppercase tracking-widest py-3 hover:bg-[#f4f4f4] disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
               >
                 {authLoading ? <Loader className="w-4 h-4 animate-spin" /> : <Shield className="w-4 h-4" />}
                 {authLoading ? 'ПЕРЕВІРКА...' : 'УВІЙТИ'}
@@ -649,7 +649,7 @@ export default function AdminPage() {
                 }
               }}
               disabled={saving || !editingInvestigation.title}
-              className="flex items-center justify-center gap-2 bg-white text-[#111111] font-mono font-extrabold text-xs uppercase tracking-widest px-8 py-3 hover:bg-[#f4f4f4] disabled:opacity-30"
+              className="flex items-center justify-center gap-2 bg-white text-[#050517] font-mono font-extrabold text-xs uppercase tracking-widest px-8 py-3 hover:bg-[#f4f4f4] disabled:opacity-30"
             >
               {saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
               Зберегти розслідування
@@ -774,7 +774,7 @@ export default function AdminPage() {
             <button
               onClick={handleSave}
               disabled={saving || !editing.title}
-              className="flex items-center justify-center gap-2 bg-white text-[#111111] font-mono font-extrabold text-xs uppercase tracking-widest px-8 py-3 hover:bg-[#f4f4f4] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center justify-center gap-2 bg-white text-[#050517] font-mono font-extrabold text-xs uppercase tracking-widest px-8 py-3 hover:bg-[#f4f4f4] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               {saving ? <Loader className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
               {saving ? 'ЗБЕРЕЖЕННЯ...' : 'ЗБЕРЕГТИ І ДЕПЛОЇТИ'}
@@ -810,7 +810,7 @@ export default function AdminPage() {
         <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => { setEditing(emptyPost()); setIsNew(true); }}
-            className="flex items-center justify-center gap-1.5 bg-white text-[#111111] font-mono font-extrabold text-[10px] uppercase tracking-widest px-3 py-2.5 hover:bg-[#f4f4f4] transition-colors"
+            className="flex items-center justify-center gap-1.5 bg-white text-[#050517] font-mono font-extrabold text-[10px] uppercase tracking-widest px-3 py-2.5 hover:bg-[#f4f4f4] transition-colors"
           >
             <Plus className="w-3.5 h-3.5" /> Нова стаття
           </button>
@@ -936,7 +936,7 @@ export default function AdminPage() {
 
             <button
               onClick={() => { setEditing(emptyPost()); setIsNew(true); }}
-              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-extrabold text-xs uppercase tracking-widest px-5 py-2.5 sm:px-6 sm:py-3 hover:bg-[#f4f4f4] transition-colors"
+              className="flex items-center gap-2 bg-white text-[#050517] font-mono font-extrabold text-xs uppercase tracking-widest px-5 py-2.5 sm:px-6 sm:py-3 hover:bg-[#f4f4f4] transition-colors"
             >
               <Plus className="w-4 h-4" /> НОВА СТАТТЯ
             </button>
@@ -955,7 +955,7 @@ export default function AdminPage() {
                 });
                 setIsNewInvestigation(true);
               }}
-              className="flex items-center gap-2 bg-[#c9a227] text-[#111111] font-mono font-extrabold text-xs uppercase tracking-widest px-5 py-2.5 sm:px-6 sm:py-3 hover:brightness-105 transition-colors"
+              className="flex items-center gap-2 bg-[#FF4E00] text-[#050517] font-mono font-extrabold text-xs uppercase tracking-widest px-5 py-2.5 sm:px-6 sm:py-3 hover:brightness-105 transition-colors"
             >
               <Sparkles className="w-4 h-4" /> НОВЕ РОЗСЛІДУВАННЯ
             </button>
@@ -1113,7 +1113,7 @@ export default function AdminPage() {
             <button
               onClick={handleXRssSync}
               disabled={xRssLoading}
-              className="flex items-center gap-2 bg-white text-[#111111] font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 hover:bg-[#f4f4f4] disabled:opacity-30 transition-colors"
+              className="flex items-center gap-2 bg-white text-[#050517] font-mono font-bold text-xs uppercase tracking-widest px-4 py-2.5 hover:bg-[#f4f4f4] disabled:opacity-30 transition-colors"
             >
               {xRssLoading ? <Loader className="w-3 h-3 animate-spin" /> : <RefreshCw className="w-3 h-3" />}
               RUN X RSS SYNC
@@ -1255,7 +1255,7 @@ export default function AdminPage() {
             {filteredPosts.map((post) => (
               <div
                 key={post.id}
-                className="flex flex-col md:flex-row md:items-center gap-4 bg-[#111111] border border-[#f4f4f4]/8 px-4 sm:px-5 py-4 hover:border-[#f4f4f4]/25 transition-colors group"
+                className="flex flex-col md:flex-row md:items-center gap-4 bg-[#050517] border border-[#f4f4f4]/8 px-4 sm:px-5 py-4 hover:border-[#f4f4f4]/25 transition-colors group"
               >
                 {/* Order controls */}
                 <div className="flex md:flex-col gap-1 shrink-0">
