@@ -472,25 +472,40 @@ export default function InvestigationPage() {
           scroll-margin-top: 7rem;
         }
         .article-body h3 {
-          margin: 2.5rem 0 0.9rem;
+          margin: 2.8rem 0 1rem;
           font-size: 1.15rem;
           font-weight: 700;
           text-transform: none;
           text-align: left;
         }
         .article-body p {
-          margin: 0 0 1.4rem;
+          margin: 0 0 1.75rem;
           text-align: justify;
+          text-indent: 1.8em;
         }
-        /* Bold lead paragraph */
+        .article-body p + p {
+          margin-top: 0;
+        }
+        /* No indent after headings, blockquotes, figures, lists */
+        .article-body h2 + p,
+        .article-body h3 + p,
+        .article-body blockquote + p,
+        .article-body figure + p,
+        .article-body ul + p,
+        .article-body hr + p,
+        .article-body .visual-block + p {
+          text-indent: 0;
+        }
+        /* Lead paragraph */
         .article-body p:first-of-type {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           font-size: 1.18rem;
-          line-height: 1.65;
+          line-height: 1.7;
           color: rgba(255, 255, 255, 0.92);
           font-weight: 400;
-          margin-bottom: 2rem;
+          margin-bottom: 2.2rem;
           text-align: left;
+          text-indent: 0;
         }
         .article-body a {
           color: #fff;
