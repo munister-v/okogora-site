@@ -133,7 +133,7 @@ function renderMarkdown(md: string) {
       continue;
     }
 
-    const imageMatch = line.match(/^!\[(.*?)\]\((https?:\/\/[^\s)]+)\)$/);
+    const imageMatch = line.match(/^!\[(.*?)\]\(((?:https?:\/\/|\/)[^\s)]+)\)$/);
     if (imageMatch) {
       closeList();
       // peek at next non-empty line to see if it's an italic caption
@@ -443,10 +443,12 @@ export default function InvestigationPage() {
         .article-body {
           max-width: 740px;
           margin: 0 auto;
-          color: rgba(255, 255, 255, 0.9);
+          color: rgba(255, 255, 255, 0.88);
           font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-          font-size: 1.15rem;
-          line-height: 1.7;
+          font-size: 1.12rem;
+          line-height: 1.85;
+          text-align: justify;
+          hyphens: auto;
         }
         .article-body > *:first-child {
           margin-top: 0;
@@ -459,30 +461,36 @@ export default function InvestigationPage() {
           font-weight: 700;
           line-height: 1.2;
           letter-spacing: -0.02em;
+          text-align: left;
+          hyphens: none;
         }
         .article-body h2 {
-          margin: 3.5rem 0 1.5rem;
+          margin: 3.5rem 0 1.2rem;
           padding-top: 2rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.15);
-          font-size: clamp(1.5rem, 3vw, 2.25rem);
+          border-top: 1px solid rgba(255, 255, 255, 0.12);
+          font-size: clamp(1.35rem, 2.8vw, 2rem);
           scroll-margin-top: 7rem;
         }
         .article-body h3 {
-          margin: 2.5rem 0 1rem;
-          font-size: 1.25rem;
+          margin: 2.5rem 0 0.9rem;
+          font-size: 1.15rem;
+          font-weight: 700;
           text-transform: none;
+          text-align: left;
         }
         .article-body p {
-          margin: 1.2rem 0;
+          margin: 0 0 1.4rem;
+          text-align: justify;
         }
-        /* Intro paragraph NYT style */
+        /* Bold lead paragraph */
         .article-body p:first-of-type {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 1.25rem;
-          line-height: 1.6;
-          color: rgba(255, 255, 255, 0.95);
-          font-weight: 300;
-          margin-bottom: 2.5rem;
+          font-size: 1.18rem;
+          line-height: 1.65;
+          color: rgba(255, 255, 255, 0.92);
+          font-weight: 400;
+          margin-bottom: 2rem;
+          text-align: left;
         }
         .article-body a {
           color: #fff;
@@ -508,27 +516,30 @@ export default function InvestigationPage() {
         .article-body blockquote {
           margin: 2.5rem 0;
           padding: 1.25rem 0 1.25rem 1.5rem;
-          border-left: 3px solid rgba(255,255,255,0.6);
+          border-left: 3px solid rgba(255,255,255,0.55);
           color: rgba(255, 255, 255, 0.88);
-          font-size: 1.2rem;
+          font-size: 1.15rem;
           font-style: italic;
-          line-height: 1.55;
+          line-height: 1.65;
           background: rgba(255,255,255,0.03);
+          text-align: left;
         }
         .article-lead {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 1.1rem;
+          font-size: 1.08rem;
           font-weight: 400;
-          color: rgba(255,255,255,0.7);
+          color: rgba(255,255,255,0.65);
           font-style: italic;
-          margin: 0.5rem 0 2.5rem;
-          line-height: 1.6;
+          margin: 0 0 2rem;
+          line-height: 1.65;
+          text-align: left;
         }
         .numbered-item {
           padding-left: 0;
           position: relative;
-          margin: 0.8rem 0;
+          margin: 0 0 0.75rem;
           color: rgba(255,255,255,0.88);
+          text-align: left;
         }
         .numbered-item strong {
           color: #fff;
@@ -678,22 +689,25 @@ export default function InvestigationPage() {
           border-top: 1px solid #333;
         }
         .article-body ul {
-          margin: 1.5rem 0;
+          margin: 0 0 1.5rem 1rem;
           padding: 0;
           list-style: none;
+          text-align: left;
         }
         .article-body li {
           position: relative;
-          margin: 0.75rem 0;
-          padding-left: 1.5rem;
-          color: rgba(255, 255, 255, 0.9);
+          margin: 0 0 0.65rem;
+          padding-left: 1.35rem;
+          color: rgba(255, 255, 255, 0.88);
+          line-height: 1.7;
+          text-align: left;
         }
         .article-body li::before {
           content: "—";
           position: absolute;
           left: 0;
           top: 0;
-          color: #666;
+          color: rgba(255,255,255,0.3);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         .article-table-wrap {
@@ -728,26 +742,25 @@ export default function InvestigationPage() {
           line-height: 1.5;
         }
         figure {
-          margin: 3rem -2rem;
+          margin: 2.5rem 0;
           overflow: hidden;
+          border: 1px solid rgba(255,255,255,0.08);
         }
         figure img {
           width: 100%;
-          height: 480px;
+          height: 420px;
           object-fit: cover;
           display: block;
           background: #000;
         }
         figcaption {
-          margin-top: 0;
-          padding: 0.85rem 2rem;
-          color: rgba(255, 255, 255, 0.45);
+          padding: 0.85rem 1rem;
+          color: rgba(255, 255, 255, 0.4);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 0.8rem;
+          font-size: 0.78rem;
           line-height: 1.5;
-          border-left: 2px solid rgba(255,255,255,0.12);
-          margin-left: 2rem;
-          margin-right: 2rem;
+          border-top: 1px solid rgba(255,255,255,0.08);
+          text-align: left;
         }
         @media (max-width: 720px) {
           .article-shell {
