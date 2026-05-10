@@ -380,13 +380,13 @@ export default function InvestigationPage() {
       <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-8 px-4 py-8 md:px-8 md:py-12 lg:grid-cols-12 lg:gap-10">
         <aside className="lg:col-span-2">
           <div className="lg:sticky lg:top-24">
-            <div className="border border-white/10 bg-[#202116] p-5">
+            <div className="border border-[#c9a227]/25 bg-[#1c1f14] p-5">
               <div className="mb-4 flex items-center gap-2 font-mono text-[10px] uppercase text-[#c9a227]/80">
                 <FileText className="h-3.5 w-3.5" /> Навігація
               </div>
               <nav className="space-y-1">
                 {headings.slice(0, 10).map((heading) => (
-                  <a key={heading.id} href={`#${heading.id}`} className="block border-l border-white/10 px-3 py-2 text-sm leading-snug text-white/54 transition-colors hover:border-[#c9a227] hover:text-white">
+                  <a key={heading.id} href={`#${heading.id}`} className="block border-l border-white/15 px-3 py-2 text-[15px] leading-snug text-white/72 transition-colors hover:border-[#c9a227] hover:text-white">
                     {heading.label}
                   </a>
                 ))}
@@ -463,10 +463,10 @@ export default function InvestigationPage() {
         .article-body {
           max-width: 920px;
           margin: 0 auto;
-          color: rgba(255, 255, 255, 0.9);
-          font-family: "Georgia", "Times New Roman", serif;
-          font-size: 1.1rem;
-          line-height: 1.78;
+          color: rgba(255, 255, 255, 0.92);
+          font-family: "Inter", "Segoe UI", "Noto Sans", Arial, sans-serif;
+          font-size: 1.06rem;
+          line-height: 1.68;
           text-align: left;
           hyphens: none;
           text-wrap: pretty;
@@ -477,35 +477,32 @@ export default function InvestigationPage() {
         .article-body h1,
         .article-body h2,
         .article-body h3 {
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          font-family: "Inter", "Segoe UI", "Noto Sans", Arial, sans-serif;
           color: #ffffff;
-          font-weight: 600;
-          line-height: 1.2;
-          letter-spacing: -0.02em;
+          font-weight: 700;
+          line-height: 1.16;
+          letter-spacing: -0.015em;
           text-align: left;
           hyphens: none;
         }
         .article-body h2 {
-          margin: 3.6rem 0 1.1rem;
-          padding-top: 2rem;
+          margin: 2.8rem 0 0.85rem;
+          padding-top: 1.45rem;
           border-top: 1px solid rgba(255, 255, 255, 0.12);
-          font-size: clamp(1.32rem, 2.6vw, 1.92rem);
+          font-size: clamp(1.24rem, 2.2vw, 1.65rem);
           scroll-margin-top: 7rem;
         }
         .article-body h3 {
-          margin: 2.8rem 0 1rem;
-          font-size: 1.15rem;
-          font-weight: 600;
+          margin: 2rem 0 0.7rem;
+          font-size: 1.03rem;
+          font-weight: 700;
           text-transform: none;
           text-align: left;
         }
         .article-body p {
-          margin: 0;
+          margin: 0 0 0.82rem;
           text-align: left;
-          text-indent: 1.5em;
-        }
-        .article-body p + p {
-          margin-top: 0;
+          text-indent: 0;
         }
         /* No indent after headings, blockquotes, figures, lists */
         .article-body h2 + p,
@@ -520,11 +517,11 @@ export default function InvestigationPage() {
         /* Lead paragraph */
         .article-body p:first-of-type {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 1.14rem;
-          line-height: 1.66;
+          font-size: 1.08rem;
+          line-height: 1.6;
           color: rgba(255, 255, 255, 0.92);
-          font-weight: 400;
-          margin-bottom: 1.2rem;
+          font-weight: 500;
+          margin-bottom: 0.95rem;
           text-align: left;
           text-indent: 0;
         }
@@ -550,13 +547,13 @@ export default function InvestigationPage() {
           border-radius: 3px;
         }
         .article-body blockquote {
-          margin: 2rem 0;
-          padding: 1.15rem 1.2rem 1.15rem 1.25rem;
+          margin: 1.6rem 0;
+          padding: 0.95rem 1rem 0.95rem 1rem;
           border-left: 2px solid rgba(255,255,255,0.5);
           color: rgba(255, 255, 255, 0.88);
-          font-size: 1.08rem;
+          font-size: 1rem;
           font-style: italic;
-          line-height: 1.58;
+          line-height: 1.5;
           background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
           border-radius: 0 10px 10px 0;
           text-align: left;
@@ -595,10 +592,10 @@ export default function InvestigationPage() {
           box-shadow: 0 14px 28px rgba(0,0,0,0.25);
         }
         .visual-kicker {
-          margin-bottom: 1.5rem;
+          margin-bottom: 0.95rem;
           color: #888;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 0.75rem;
+          font-size: 0.68rem;
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.05em;
@@ -633,17 +630,17 @@ export default function InvestigationPage() {
         .factory-grid strong {
           display: block;
           color: #fff;
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           line-height: 1.3;
           font-weight: 600;
         }
         .chain-node p,
         .clock-grid p,
         .visual-factories p {
-          margin: 0.62rem 0 0;
+          margin: 0.5rem 0 0;
           color: rgba(255, 255, 255, 0.7);
-          font-size: 0.86rem;
-          line-height: 1.45;
+          font-size: 0.8rem;
+          line-height: 1.4;
         }
         .chain-node.hot,
         .clock-grid .hot {
@@ -896,8 +893,8 @@ export default function InvestigationPage() {
         }
         .article-table-wrap td {
           color: rgba(255, 255, 255, 0.8);
-          line-height: 1.46;
-          font-size: 0.9rem;
+          line-height: 1.4;
+          font-size: 0.86rem;
         }
         figure {
           margin: 2.5rem 0;
@@ -925,15 +922,12 @@ export default function InvestigationPage() {
             padding: 2rem 0;
           }
           .article-body {
-            font-size: 1rem;
-            line-height: 1.62;
+            font-size: 0.98rem;
+            line-height: 1.56;
           }
           .share-bar {
             margin-top: 2.2rem;
             padding-top: 1.5rem;
-          }
-          .article-body p {
-            text-indent: 1em;
           }
           .chain-grid,
           .clock-grid,
