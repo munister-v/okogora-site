@@ -773,12 +773,9 @@ export default function App() {
                 </article>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {(investigationCards.length ? investigationCards : [
-                  { id: 'fallback-1', title: 'Хронологія події', summary: "Що сталося, коли зʼявилися перші повідомлення і які джерела це підтверджують.", code: 'TIMELINE', tags: [], publishedAt: '', status: 'published' as const },
-                  { id: 'fallback-2', title: 'Місце на карті', summary: "Координати, найближчі обʼєкти, фото або відео, якщо вони є у відкритому доступі.", code: 'MAP', tags: [], publishedAt: '', status: 'published' as const },
-                  { id: 'fallback-3', title: 'Що відомо зараз', summary: "Короткий висновок без перебільшень: що підтверджено, що потребує перевірки, де читати далі.", code: 'SUMMARY', tags: [], publishedAt: '', status: 'published' as const },
-                ]).slice(0, 6).map(item => (
+              {investigationCards.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {investigationCards.slice(0, 6).map(item => (
                   <article key={item.code} className="bg-[#2e2d1e] border border-[#c9a227]/20 p-6 md:p-8 hover:border-[#c9a227]/50 transition-colors">
                     <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#c9a227] mb-4">{item.code}</p>
                     <h3 className="text-2xl font-bold tracking-tight uppercase mb-4 text-white">{item.title}</h3>
@@ -794,8 +791,9 @@ export default function App() {
                       )}
                     </div>
                   </article>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </motion.section>
 
