@@ -353,16 +353,17 @@ export default function InvestigationPage() {
           scroll-behavior: smooth;
         }
         .article-shell {
-          border: 1px solid rgba(201, 162, 39, 0.22);
-          background:
-            linear-gradient(180deg, rgba(46, 45, 30, 0.98), rgba(24, 25, 18, 0.98));
-          padding: clamp(1.25rem, 3vw, 3rem);
+          border-top: 1px solid rgba(255, 255, 255, 0.15);
+          background: #111111;
+          padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
         }
         .article-body {
-          max-width: 880px;
-          color: rgba(255, 255, 255, 0.84);
-          font-size: 1rem;
-          line-height: 1.8;
+          max-width: 740px;
+          margin: 0 auto;
+          color: rgba(255, 255, 255, 0.9);
+          font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+          font-size: 1.15rem;
+          line-height: 1.7;
         }
         .article-body > *:first-child {
           margin-top: 0;
@@ -370,90 +371,104 @@ export default function InvestigationPage() {
         .article-body h1,
         .article-body h2,
         .article-body h3 {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           color: #ffffff;
-          font-weight: 900;
-          line-height: 1.05;
-          text-transform: uppercase;
+          font-weight: 700;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
         }
         .article-body h2 {
-          margin: 3rem 0 1rem;
-          padding-top: 1.5rem;
-          border-top: 1px solid rgba(201, 162, 39, 0.28);
-          font-size: clamp(1.75rem, 4vw, 2.7rem);
+          margin: 3.5rem 0 1.5rem;
+          padding-top: 2rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.15);
+          font-size: clamp(1.5rem, 3vw, 2.25rem);
           scroll-margin-top: 7rem;
         }
         .article-body h3 {
-          margin: 2rem 0 0.8rem;
-          font-size: 1.35rem;
+          margin: 2.5rem 0 1rem;
+          font-size: 1.25rem;
+          text-transform: none;
         }
         .article-body p {
-          margin: 1.1rem 0;
+          margin: 1.2rem 0;
         }
+        /* Intro paragraph NYT style */
         .article-body p:first-of-type {
-          font-size: 1.08rem;
-          line-height: 1.85;
-          color: rgba(255, 255, 255, 0.9);
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          font-size: 1.25rem;
+          line-height: 1.6;
+          color: rgba(255, 255, 255, 0.95);
+          font-weight: 300;
+          margin-bottom: 2.5rem;
         }
         .article-body a {
-          color: #f3d97f;
+          color: #fff;
           text-decoration: underline;
-          text-decoration-color: rgba(243, 217, 127, 0.35);
+          text-decoration-color: rgba(255, 255, 255, 0.4);
           text-underline-offset: 0.25em;
+          transition: text-decoration-color 0.2s;
+        }
+        .article-body a:hover {
+          text-decoration-color: #fff;
         }
         .article-body strong {
           color: #ffffff;
+          font-weight: 700;
         }
         .article-body code {
-          border: 1px solid rgba(201, 162, 39, 0.25);
-          background: rgba(201, 162, 39, 0.08);
-          color: #f3d97f;
-          padding: 0.1rem 0.32rem;
-          font-size: 0.9em;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+          background: rgba(255, 255, 255, 0.1);
+          padding: 0.2rem 0.4rem;
+          font-size: 0.85em;
+          border-radius: 3px;
         }
         .article-body blockquote {
-          margin: 1.5rem 0;
-          border-left: 3px solid #c9a227;
-          background: rgba(201, 162, 39, 0.09);
-          padding: 1rem 1.15rem;
-          color: rgba(255, 255, 255, 0.82);
-          font-weight: 600;
+          margin: 2.5rem 0;
+          padding: 0 0 0 1.5rem;
+          border-left: 2px solid #fff;
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 1.3rem;
+          font-style: italic;
+          line-height: 1.5;
         }
         .visual-block {
-          margin: 2.2rem 0;
-          border: 1px solid rgba(201, 162, 39, 0.28);
-          background:
-            linear-gradient(135deg, rgba(201, 162, 39, 0.1), rgba(255, 255, 255, 0.035)),
-            rgba(12, 13, 10, 0.72);
-          padding: clamp(1rem, 2.6vw, 1.6rem);
+          margin: 3rem 0;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          border-top: 2px solid #333;
+          border-bottom: 1px solid #333;
+          padding: 2rem 0;
+          background: #111;
         }
         .visual-kicker {
-          margin-bottom: 0.9rem;
-          color: #f3d97f;
-          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-          font-size: 0.7rem;
+          margin-bottom: 1.5rem;
+          color: #888;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          font-size: 0.75rem;
+          font-weight: 700;
           text-transform: uppercase;
+          letter-spacing: 0.05em;
         }
         .chain-grid {
           display: grid;
           grid-template-columns: repeat(5, minmax(0, 1fr));
-          gap: 0.65rem;
+          gap: 1px;
+          background: #333;
         }
         .chain-node,
         .clock-grid > div,
         .factory-grid > div {
           min-height: 100%;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          background: rgba(255, 255, 255, 0.045);
-          padding: 1rem;
+          background: #111;
+          padding: 1.25rem;
         }
         .chain-node span,
         .clock-grid span,
         .factory-grid span {
           display: block;
-          margin-bottom: 0.7rem;
-          color: #c9a227;
-          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-          font-size: 0.72rem;
+          margin-bottom: 0.5rem;
+          color: #888;
+          font-size: 0.75rem;
+          font-weight: 600;
           text-transform: uppercase;
         }
         .chain-node strong,
@@ -461,62 +476,60 @@ export default function InvestigationPage() {
         .factory-grid strong {
           display: block;
           color: #fff;
-          font-size: 0.98rem;
-          line-height: 1.25;
+          font-size: 1rem;
+          line-height: 1.3;
+          font-weight: 600;
         }
         .chain-node p,
         .clock-grid p,
         .visual-factories p {
-          margin: 0.65rem 0 0;
-          color: rgba(255, 255, 255, 0.58);
-          font-size: 0.88rem;
-          line-height: 1.55;
+          margin: 0.75rem 0 0;
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.9rem;
+          line-height: 1.5;
         }
         .chain-node.hot,
         .clock-grid .hot {
-          border-color: rgba(239, 68, 68, 0.48);
-          background: rgba(239, 68, 68, 0.11);
+          background: rgba(255, 255, 255, 0.05);
         }
         .visual-factories {
           display: grid;
-          grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-          gap: 1rem;
+          grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+          gap: 2rem;
           align-items: stretch;
         }
         .visual-factories h3 {
           margin: 0;
           color: #fff;
-          font-size: clamp(1.4rem, 3vw, 2rem);
-          line-height: 1.05;
-          text-transform: uppercase;
+          font-size: 1.5rem;
+          line-height: 1.2;
+          font-weight: 600;
         }
         .factory-grid {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 0.65rem;
+          gap: 1px;
+          background: #333;
         }
         .factory-grid em {
           display: block;
-          margin-top: 0.6rem;
-          color: rgba(255, 255, 255, 0.55);
-          font-size: 0.82rem;
+          margin-top: 0.75rem;
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 0.85rem;
           font-style: normal;
-          line-height: 1.45;
+          line-height: 1.4;
         }
         .clock-grid {
           display: grid;
           grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 0.65rem;
+          gap: 1px;
+          background: #333;
         }
         .radar-layout {
           position: relative;
-          min-height: 360px;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          background:
-            radial-gradient(circle at center, rgba(201, 162, 39, 0.18), transparent 16%),
-            radial-gradient(circle at center, transparent 0 31%, rgba(201, 162, 39, 0.14) 31% 31.5%, transparent 31.5%),
-            radial-gradient(circle at center, transparent 0 49%, rgba(201, 162, 39, 0.1) 49% 49.5%, transparent 49.5%),
-            rgba(0, 0, 0, 0.22);
+          min-height: 400px;
+          border: 1px solid #333;
+          background: #111;
           overflow: hidden;
         }
         .radar-core,
@@ -526,126 +539,117 @@ export default function InvestigationPage() {
           align-items: center;
           justify-content: center;
           text-align: center;
-          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-          text-transform: uppercase;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          font-weight: 500;
         }
         .radar-core {
           left: 50%;
           top: 50%;
-          width: 8rem;
-          height: 8rem;
+          width: 7rem;
+          height: 7rem;
           transform: translate(-50%, -50%);
-          border: 1px solid rgba(201, 162, 39, 0.65);
-          background: rgba(201, 162, 39, 0.16);
-          color: #f3d97f;
-          font-size: 0.82rem;
-          line-height: 1.35;
+          border: 1px solid #666;
+          border-radius: 50%;
+          background: #1a1a1a;
+          color: #fff;
+          font-size: 0.9rem;
+          line-height: 1.2;
         }
         .radar-item {
           width: 10rem;
-          min-height: 3.4rem;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          background: rgba(17, 18, 13, 0.9);
-          padding: 0.65rem;
-          color: rgba(255, 255, 255, 0.72);
-          font-size: 0.7rem;
-          line-height: 1.3;
+          min-height: 3.5rem;
+          border: 1px solid #333;
+          background: #111;
+          padding: 0.75rem;
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 0.8rem;
+          line-height: 1.4;
         }
-        .r1 { left: 8%; top: 15%; }
-        .r2 { right: 8%; top: 18%; }
-        .r3 { left: 7%; bottom: 16%; }
-        .r4 { right: 8%; bottom: 14%; }
+        .r1 { left: 5%; top: 15%; }
+        .r2 { right: 5%; top: 18%; }
+        .r3 { left: 5%; bottom: 16%; }
+        .r4 { right: 5%; bottom: 14%; }
         .r5 { left: 50%; top: 5%; transform: translateX(-50%); }
         .article-body hr {
-          margin: 2.2rem 0;
+          margin: 3rem 0;
           border: 0;
-          border-top: 1px solid rgba(255, 255, 255, 0.12);
+          border-top: 1px solid #333;
         }
         .article-body ul {
-          margin: 1.2rem 0;
+          margin: 1.5rem 0;
           padding: 0;
           list-style: none;
         }
         .article-body li {
           position: relative;
-          margin: 0.7rem 0;
-          padding-left: 1.35rem;
-          color: rgba(255, 255, 255, 0.78);
+          margin: 0.75rem 0;
+          padding-left: 1.5rem;
+          color: rgba(255, 255, 255, 0.9);
         }
         .article-body li::before {
-          content: "";
+          content: "—";
           position: absolute;
           left: 0;
-          top: 0.82em;
-          width: 0.45rem;
-          height: 0.45rem;
-          transform: translateY(-50%);
-          background: #c9a227;
+          top: 0;
+          color: #666;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         .article-table-wrap {
           overflow-x: auto;
-          margin: 1.8rem 0 2.4rem;
-          border: 1px solid rgba(201, 162, 39, 0.3);
-          background: rgba(17, 18, 13, 0.85);
+          margin: 2.5rem 0;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         .article-table-wrap table {
           width: 100%;
           border-collapse: collapse;
           min-width: 760px;
-          font-size: 0.92rem;
+          font-size: 0.9rem;
         }
         .article-table-wrap th,
         .article-table-wrap td {
-          border-right: 1px solid rgba(255, 255, 255, 0.07);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-          padding: 1rem;
+          border-bottom: 1px solid #333;
+          padding: 1rem 0.5rem;
           vertical-align: top;
-        }
-        .article-table-wrap tr:last-child td {
-          border-bottom: 0;
-        }
-        .article-table-wrap th:last-child,
-        .article-table-wrap td:last-child {
-          border-right: 0;
+          text-align: left;
         }
         .article-table-wrap th {
-          background: rgba(201, 162, 39, 0.12);
-          color: #c9a227;
-          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-          font-size: 0.72rem;
+          border-top: 1px solid #666;
+          border-bottom: 2px solid #666;
+          color: #fff;
+          font-weight: 600;
           text-transform: uppercase;
+          font-size: 0.75rem;
+          letter-spacing: 0.05em;
         }
         .article-table-wrap td {
-          color: rgba(255, 255, 255, 0.76);
+          color: rgba(255, 255, 255, 0.8);
+          line-height: 1.5;
         }
         figure {
-          margin: 2rem 0 2.6rem;
-          border: 1px solid rgba(201, 162, 39, 0.24);
-          background: rgba(0, 0, 0, 0.22);
+          margin: 3rem 0;
         }
         figure img {
           width: 100%;
-          aspect-ratio: 16 / 9;
-          max-height: 560px;
-          object-fit: cover;
+          height: auto;
+          max-height: 600px;
+          object-fit: contain;
+          background: #000;
           display: block;
         }
         figcaption {
-          padding: 0.8rem 1rem 1rem;
-          color: rgba(255, 255, 255, 0.46);
-          font-size: 0.78rem;
-          line-height: 1.55;
+          margin-top: 0.75rem;
+          color: rgba(255, 255, 255, 0.5);
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          font-size: 0.8rem;
+          line-height: 1.4;
         }
         @media (max-width: 720px) {
           .article-shell {
-            border-left: 0;
-            border-right: 0;
-            margin-left: -1rem;
-            margin-right: -1rem;
+            padding: 2rem 0;
           }
           .article-body {
-            font-size: 0.98rem;
-            line-height: 1.75;
+            font-size: 1.05rem;
+            line-height: 1.6;
           }
           .chain-grid,
           .clock-grid,
@@ -656,9 +660,9 @@ export default function InvestigationPage() {
           .radar-layout {
             min-height: auto;
             display: grid;
-            gap: 0.65rem;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.22);
+            gap: 1px;
+            background: #333;
+            border: 0;
           }
           .radar-core,
           .radar-item {
@@ -666,14 +670,16 @@ export default function InvestigationPage() {
             width: auto;
             min-height: 0;
             transform: none;
+            border: 0;
+            background: #111;
           }
           .radar-core {
+            border-radius: 0;
+            padding: 1.5rem;
             height: auto;
-            padding: 1rem;
           }
           .article-table-wrap {
-            border: 0;
-            background: transparent;
+            border-top: 1px solid #333;
           }
           .article-table-wrap table,
           .article-table-wrap thead,
@@ -689,25 +695,22 @@ export default function InvestigationPage() {
             display: none;
           }
           .article-table-wrap tr {
-            margin-bottom: 0.85rem;
-            border: 1px solid rgba(201, 162, 39, 0.22);
-            background: rgba(17, 18, 13, 0.82);
+            margin-bottom: 1rem;
+            background: #111;
           }
           .article-table-wrap td {
-            border-right: 0;
-            padding: 0.85rem 1rem;
+            border-bottom: 1px solid #222;
+            padding: 1rem;
           }
           .article-table-wrap td::before {
             content: attr(data-label);
             display: block;
-            margin-bottom: 0.35rem;
-            color: #c9a227;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-            font-size: 0.68rem;
+            margin-bottom: 0.5rem;
+            color: #888;
+            font-size: 0.7rem;
+            font-weight: 600;
             text-transform: uppercase;
-          }
-          figure img {
-            aspect-ratio: 4 / 3;
+            letter-spacing: 0.05em;
           }
         }
       `}</style>
