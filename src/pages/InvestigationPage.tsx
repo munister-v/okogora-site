@@ -103,6 +103,19 @@ function renderMarkdown(md: string) {
         </section>
       `;
     }
+    if (type === 'risk-matrix') {
+      return `
+        <section class="visual-block visual-risk" aria-label="Матриця імпортного ризику">
+          <div class="visual-kicker">Import Risk Matrix</div>
+          <div class="risk-grid">
+            <div class="risk-card risk-critical"><span>Критичний</span><strong>DCS/ESD + КВПіА</strong><p>Без стабільної автоматики установка працює "на нервах", а не в проєкті.</p></div>
+            <div class="risk-card risk-high"><span>Високий</span><strong>Каталізатор + ліцензія</strong><p>Формальний запуск можливий, але глибина та якість переробки просідає.</p></div>
+            <div class="risk-card risk-high"><span>Високий</span><strong>Внутрішні пристрої колон</strong><p>Корпус є, але сепарація фракцій уже не тримає паспортний режим.</p></div>
+            <div class="risk-card risk-mid"><span>Середній</span><strong>Корпусні апарати</strong><p>РФ може варити "важкий метал", але не закриває всю систему вузлів навколо.</p></div>
+          </div>
+        </section>
+      `;
+    }
 
     return '';
   };
@@ -444,11 +457,11 @@ export default function InvestigationPage() {
           max-width: 740px;
           margin: 0 auto;
           color: rgba(255, 255, 255, 0.88);
-          font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-          font-size: 1.12rem;
-          line-height: 1.85;
-          text-align: justify;
-          hyphens: auto;
+          font-family: "Segoe UI", "Inter", "Noto Sans", Arial, sans-serif;
+          font-size: 1.05rem;
+          line-height: 1.72;
+          text-align: left;
+          hyphens: none;
         }
         .article-body > *:first-child {
           margin-top: 0;
@@ -479,12 +492,9 @@ export default function InvestigationPage() {
           text-align: left;
         }
         .article-body p {
-          margin: 0 0 1.75rem;
-          text-align: justify;
-          text-indent: 1.8em;
-        }
-        .article-body p + p {
-          margin-top: 0;
+          margin: 0.62rem 0;
+          text-align: left;
+          text-indent: 0;
         }
         /* No indent after headings, blockquotes, figures, lists */
         .article-body h2 + p,
@@ -653,6 +663,47 @@ export default function InvestigationPage() {
           gap: 1px;
           background: #333;
         }
+        .risk-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.7rem;
+        }
+        .risk-card {
+          border: 1px solid rgba(255,255,255,0.16);
+          background: #151515;
+          padding: 1rem;
+        }
+        .risk-card span {
+          display: inline-block;
+          margin-bottom: 0.55rem;
+          padding: 0.18rem 0.5rem;
+          border: 1px solid currentColor;
+          font-size: 0.64rem;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          font-weight: 700;
+        }
+        .risk-card strong {
+          display: block;
+          color: #fff;
+          font-size: 0.95rem;
+          line-height: 1.32;
+        }
+        .risk-card p {
+          margin: 0.55rem 0 0;
+          color: rgba(255,255,255,0.74);
+          font-size: 0.86rem;
+          line-height: 1.5;
+        }
+        .risk-mid { border-color: rgba(245, 158, 11, 0.4); }
+        .risk-mid span { color: #f59e0b; }
+        .risk-high { border-color: rgba(249, 115, 22, 0.45); }
+        .risk-high span { color: #f97316; }
+        .risk-critical {
+          border-color: rgba(239, 68, 68, 0.5);
+          background: linear-gradient(180deg, rgba(84, 22, 22, 0.3), #151515);
+        }
+        .risk-critical span { color: #ef4444; }
         .radar-layout {
           position: relative;
           min-height: 400px;
@@ -787,6 +838,7 @@ export default function InvestigationPage() {
           }
           .chain-grid,
           .clock-grid,
+          .risk-grid,
           .factory-grid,
           .visual-factories {
             grid-template-columns: 1fr;
