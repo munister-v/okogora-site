@@ -45,12 +45,27 @@ function renderMarkdown(md: string) {
       return `
         <section class="visual-block visual-chain" aria-label="Схема затримки ремонту НПЗ">
           <div class="visual-kicker">Схема простою</div>
-          <div class="chain-grid">
-            <div class="chain-node"><span>01</span><strong>Установка ловить пошкодження</strong><p>Дим видно всім, але це тільки верхній шар історії.</p></div>
-            <div class="chain-node"><span>02</span><strong>Аварійний ремонт</strong><p>Кабелі, обвʼязка, насоси й автоматика часто повертаються швидше.</p></div>
-            <div class="chain-node"><span>03</span><strong>Великий апарат вибито</strong><p>Колону або реактор не звариш на коліні за два тижні.</p></div>
-            <div class="chain-node"><span>04</span><strong>Черга на заводі</strong><p>Метал, зварювання, контроль, термообробка, приймання.</p></div>
-            <div class="chain-node hot"><span>05</span><strong>Простій розтягується</strong><p>Проблема переїжджає з НПЗ у важке машинобудування.</p></div>
+          <div class="chain-list">
+            <div class="chain-row">
+              <span class="chain-index">01</span>
+              <div class="chain-copy"><strong>Установка ловить пошкодження</strong><p>Дим видно всім, але це лише верхній шар історії.</p></div>
+            </div>
+            <div class="chain-row">
+              <span class="chain-index">02</span>
+              <div class="chain-copy"><strong>Аварійний ремонт</strong><p>Кабелі, обвʼязка, насоси й автоматика часто повертаються швидше.</p></div>
+            </div>
+            <div class="chain-row">
+              <span class="chain-index">03</span>
+              <div class="chain-copy"><strong>Великий апарат вибито</strong><p>Колону або реактор неможливо повноцінно закрити за два тижні.</p></div>
+            </div>
+            <div class="chain-row">
+              <span class="chain-index">04</span>
+              <div class="chain-copy"><strong>Черга на заводі</strong><p>Метал, зварювання, контроль, термообробка, приймання.</p></div>
+            </div>
+            <div class="chain-row is-hot">
+              <span class="chain-index">05</span>
+              <div class="chain-copy"><strong>Простій розтягується</strong><p>Проблема переходить із НПЗ у важке машинобудування.</p></div>
+            </div>
           </div>
         </section>
       `;
@@ -540,8 +555,8 @@ export default function InvestigationPage() {
         }
         .article-body h2 {
           margin: 3rem 0 1rem;
-          padding-top: 1.3rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.12);
+          padding-top: 1rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.08);
           font-size: clamp(1.22rem, 2vw, 1.58rem);
           scroll-margin-top: 7rem;
         }
@@ -594,10 +609,10 @@ export default function InvestigationPage() {
         }
         .evidence-row {
           margin: 1.35rem 0;
-          border: 1px solid rgba(255,255,255,0.12);
+          border: 1px solid rgba(255,255,255,0.08);
           border-left: 2px solid rgba(201,162,39,0.55);
           border-radius: 10px;
-          background: rgba(255,255,255,0.02);
+          background: rgba(255,255,255,0.018);
           padding: 0.85rem 0.95rem;
         }
         .evidence-key {
@@ -621,15 +636,16 @@ export default function InvestigationPage() {
           border-radius: 3px;
         }
         .article-body blockquote {
-          margin: 1.6rem 0;
-          padding: 0.95rem 1rem 0.95rem 1rem;
-          border-left: 2px solid rgba(255,255,255,0.5);
-          color: rgba(255, 255, 255, 0.88);
-          font-size: 1rem;
-          font-style: italic;
-          line-height: 1.5;
-          background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-          border-radius: 0 10px 10px 0;
+          margin: 2rem 0;
+          padding: 0.4rem 0 0.4rem 1.35rem;
+          border-left: 2px solid rgba(201,162,39,0.55);
+          color: rgba(255, 255, 255, 0.94);
+          font-size: 1.16rem;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 1.48;
+          background: transparent;
+          border-radius: 0;
           text-align: left;
         }
         .article-body blockquote p {
@@ -659,14 +675,14 @@ export default function InvestigationPage() {
         .visual-block {
           margin: 2.5rem 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          border: 1px solid rgba(255,255,255,0.14);
-          border-radius: 12px;
-          padding: 0.95rem;
-          background: linear-gradient(165deg, rgba(24,24,24,0.98), rgba(14,14,14,0.98));
-          box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+          border: 0;
+          border-radius: 0;
+          padding: 0.25rem 0;
+          background: transparent;
+          box-shadow: none;
         }
         .visual-kicker {
-          margin-bottom: 0.95rem;
+          margin-bottom: 0.75rem;
           color: #888;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           font-size: 0.68rem;
@@ -674,22 +690,77 @@ export default function InvestigationPage() {
           text-transform: uppercase;
           letter-spacing: 0.05em;
         }
-        .chain-grid {
+        .chain-list {
+          position: relative;
           display: grid;
-          grid-template-columns: repeat(5, minmax(0, 1fr));
-          gap: 0.6rem;
-          background: transparent;
+          gap: 0.85rem;
+          padding-left: 0.35rem;
         }
-        .chain-node,
+        .chain-list::before {
+          content: "";
+          position: absolute;
+          left: 1.05rem;
+          top: 0.2rem;
+          bottom: 0.2rem;
+          width: 1px;
+          background: rgba(255,255,255,0.12);
+        }
+        .chain-row {
+          position: relative;
+          display: grid;
+          grid-template-columns: 2.4rem minmax(0, 1fr);
+          gap: 1rem;
+          align-items: start;
+        }
+        .chain-index {
+          position: relative;
+          z-index: 1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 2rem;
+          height: 2rem;
+          border-radius: 999px;
+          border: 1px solid rgba(255,255,255,0.18);
+          background: #121511;
+          color: rgba(255,255,255,0.74);
+          font-size: 0.72rem;
+          font-weight: 600;
+          letter-spacing: 0.04em;
+        }
+        .chain-copy {
+          padding: 0.15rem 0 0.9rem;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .chain-row:last-child .chain-copy {
+          border-bottom: 0;
+          padding-bottom: 0;
+        }
+        .chain-row.is-hot .chain-index {
+          border-color: rgba(201,162,39,0.4);
+          color: #f3d97f;
+        }
+        .chain-copy strong {
+          display: block;
+          color: #fff;
+          font-size: 0.98rem;
+          line-height: 1.32;
+          font-weight: 600;
+        }
+        .chain-copy p {
+          margin: 0.32rem 0 0;
+          color: rgba(255,255,255,0.74);
+          font-size: 0.94rem;
+          line-height: 1.54;
+        }
         .clock-grid > div,
         .factory-grid > div {
           min-height: 100%;
-          background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
-          border: 1px solid rgba(255,255,255,0.1);
+          background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+          border: 1px solid rgba(255,255,255,0.08);
           border-radius: 10px;
           padding: 1.25rem;
         }
-        .chain-node span,
         .clock-grid span,
         .factory-grid span {
           display: block;
@@ -699,7 +770,6 @@ export default function InvestigationPage() {
           font-weight: 600;
           text-transform: uppercase;
         }
-        .chain-node strong,
         .clock-grid strong,
         .factory-grid strong {
           display: block;
@@ -708,7 +778,6 @@ export default function InvestigationPage() {
           line-height: 1.3;
           font-weight: 600;
         }
-        .chain-node p,
         .clock-grid p,
         .visual-factories p {
           margin: 0.5rem 0 0;
@@ -716,7 +785,6 @@ export default function InvestigationPage() {
           font-size: 0.8rem;
           line-height: 1.4;
         }
-        .chain-node.hot,
         .clock-grid .hot {
           background: rgba(255, 255, 255, 0.05);
         }
@@ -759,8 +827,8 @@ export default function InvestigationPage() {
           gap: 0.7rem;
         }
         .risk-card {
-          border: 1px solid rgba(255,255,255,0.16);
-          background: #151515;
+          border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255,255,255,0.02);
           padding: 1rem;
         }
         .risk-card span {
@@ -910,7 +978,7 @@ export default function InvestigationPage() {
         .article-body hr {
           margin: 2.2rem 0;
           border: 0;
-          border-top: 1px solid rgba(255,255,255,0.14);
+          border-top: 1px solid rgba(255,255,255,0.08);
         }
         .article-body ul {
           margin: 0 0 1.5rem 1rem;
@@ -938,10 +1006,10 @@ export default function InvestigationPage() {
           overflow-x: auto;
           margin: 2.2rem 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          border: 1px solid rgba(255,255,255,0.14);
+          border: 1px solid rgba(255,255,255,0.08);
           border-radius: 12px;
           padding: 0 0.85rem;
-          background: rgba(255,255,255,0.01);
+          background: rgba(255,255,255,0.015);
         }
         .article-table-wrap table {
           width: 100%;
@@ -1009,6 +1077,10 @@ export default function InvestigationPage() {
           .factory-grid,
           .visual-factories {
             grid-template-columns: 1fr;
+          }
+          .chain-row {
+            grid-template-columns: 2.1rem minmax(0, 1fr);
+            gap: 0.8rem;
           }
           .radar-layout {
             min-height: auto;
