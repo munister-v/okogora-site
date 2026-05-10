@@ -461,14 +461,15 @@ export default function InvestigationPage() {
           padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
         }
         .article-body {
-          max-width: 740px;
+          max-width: 780px;
           margin: 0 auto;
-          color: rgba(255, 255, 255, 0.88);
-          font-family: "Segoe UI", "Inter", "Noto Sans", Arial, sans-serif;
-          font-size: 1.05rem;
-          line-height: 1.72;
+          color: rgba(255, 255, 255, 0.9);
+          font-family: "Georgia", "Times New Roman", serif;
+          font-size: 1.08rem;
+          line-height: 1.76;
           text-align: left;
           hyphens: none;
+          text-wrap: pretty;
         }
         .article-body > *:first-child {
           margin-top: 0;
@@ -485,10 +486,10 @@ export default function InvestigationPage() {
           hyphens: none;
         }
         .article-body h2 {
-          margin: 3.5rem 0 1.2rem;
+          margin: 3.6rem 0 1.1rem;
           padding-top: 2rem;
           border-top: 1px solid rgba(255, 255, 255, 0.12);
-          font-size: clamp(1.35rem, 2.8vw, 2rem);
+          font-size: clamp(1.32rem, 2.6vw, 1.92rem);
           scroll-margin-top: 7rem;
         }
         .article-body h3 {
@@ -501,7 +502,7 @@ export default function InvestigationPage() {
         .article-body p {
           margin: 0;
           text-align: left;
-          text-indent: 1.6em;
+          text-indent: 1.5em;
         }
         .article-body p + p {
           margin-top: 0;
@@ -519,11 +520,11 @@ export default function InvestigationPage() {
         /* Lead paragraph */
         .article-body p:first-of-type {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 1.18rem;
-          line-height: 1.7;
+          font-size: 1.14rem;
+          line-height: 1.66;
           color: rgba(255, 255, 255, 0.92);
           font-weight: 400;
-          margin-bottom: 2.2rem;
+          margin-bottom: 1.2rem;
           text-align: left;
           text-indent: 0;
         }
@@ -549,14 +550,15 @@ export default function InvestigationPage() {
           border-radius: 3px;
         }
         .article-body blockquote {
-          margin: 2.5rem 0;
-          padding: 1.25rem 0 1.25rem 1.5rem;
-          border-left: 3px solid rgba(255,255,255,0.55);
+          margin: 2rem 0;
+          padding: 1.15rem 1.2rem 1.15rem 1.25rem;
+          border-left: 2px solid rgba(255,255,255,0.5);
           color: rgba(255, 255, 255, 0.88);
-          font-size: 1.15rem;
+          font-size: 1.08rem;
           font-style: italic;
-          line-height: 1.65;
-          background: rgba(255,255,255,0.03);
+          line-height: 1.58;
+          background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+          border-radius: 0 10px 10px 0;
           text-align: left;
         }
         .article-body blockquote p {
@@ -588,8 +590,8 @@ export default function InvestigationPage() {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           border: 1px solid rgba(255,255,255,0.14);
           border-radius: 14px;
-          padding: 1.3rem;
-          background: linear-gradient(180deg, #131313, #101010);
+          padding: 1.25rem;
+          background: linear-gradient(165deg, rgba(24,24,24,0.98), rgba(14,14,14,0.98));
           box-shadow: 0 14px 28px rgba(0,0,0,0.25);
         }
         .visual-kicker {
@@ -611,7 +613,7 @@ export default function InvestigationPage() {
         .clock-grid > div,
         .factory-grid > div {
           min-height: 100%;
-          background: rgba(255,255,255,0.03);
+          background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
           border: 1px solid rgba(255,255,255,0.1);
           border-radius: 10px;
           padding: 1.25rem;
@@ -631,17 +633,17 @@ export default function InvestigationPage() {
         .factory-grid strong {
           display: block;
           color: #fff;
-          font-size: 1rem;
+          font-size: 0.95rem;
           line-height: 1.3;
           font-weight: 600;
         }
         .chain-node p,
         .clock-grid p,
         .visual-factories p {
-          margin: 0.75rem 0 0;
+          margin: 0.62rem 0 0;
           color: rgba(255, 255, 255, 0.7);
-          font-size: 0.9rem;
-          line-height: 1.5;
+          font-size: 0.86rem;
+          line-height: 1.45;
         }
         .chain-node.hot,
         .clock-grid .hot {
@@ -723,7 +725,7 @@ export default function InvestigationPage() {
         .risk-critical span { color: #ef4444; }
         .radar-layout {
           position: relative;
-          min-height: 400px;
+          min-height: 430px;
           border: 1px solid rgba(255,255,255,0.18);
           border-radius: 14px;
           background: radial-gradient(circle at center, rgba(60, 60, 60, 0.32), #0f0f0f 64%);
@@ -765,21 +767,23 @@ export default function InvestigationPage() {
           border-radius: 50%;
           background: #1a1a1a;
           color: #fff;
-          font-size: 0.9rem;
+          font-size: 0.82rem;
           line-height: 1.2;
+          z-index: 2;
         }
         .radar-item {
-          width: 10rem;
+          width: 11rem;
           min-height: 3.5rem;
           border: 1px solid rgba(255,255,255,0.22);
           border-radius: 10px;
           background: rgba(18,18,18,0.92);
           padding: 0.75rem;
           color: rgba(255, 255, 255, 0.8);
-          font-size: 0.8rem;
-          line-height: 1.4;
+          font-size: 0.76rem;
+          line-height: 1.34;
           text-align: left;
           justify-content: flex-start;
+          z-index: 2;
         }
         .radar-tag {
           display: inline-block;
@@ -811,6 +815,27 @@ export default function InvestigationPage() {
         .r3 { left: 5%; bottom: 16%; }
         .r4 { right: 5%; bottom: 14%; }
         .r5 { left: 50%; top: 5%; transform: translateX(-50%); }
+        .r1::after,
+        .r2::after,
+        .r3::after,
+        .r4::after,
+        .r5::after {
+          content: "";
+          position: absolute;
+          width: 36px;
+          height: 1px;
+          background: rgba(255,255,255,0.26);
+          top: 50%;
+        }
+        .r1::after, .r3::after { right: -30px; }
+        .r2::after, .r4::after { left: -30px; }
+        .r5::after {
+          width: 1px;
+          height: 30px;
+          left: 50%;
+          top: auto;
+          bottom: -30px;
+        }
         .article-body hr {
           margin: 3rem 0;
           border: 0;
@@ -842,6 +867,10 @@ export default function InvestigationPage() {
           overflow-x: auto;
           margin: 2.5rem 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          border: 1px solid rgba(255,255,255,0.14);
+          border-radius: 12px;
+          padding: 0 0.85rem;
+          background: rgba(255,255,255,0.01);
         }
         .article-table-wrap table {
           width: 100%;
@@ -852,7 +881,7 @@ export default function InvestigationPage() {
         .article-table-wrap th,
         .article-table-wrap td {
           border-bottom: 1px solid #333;
-          padding: 1rem 0.5rem;
+          padding: 0.92rem 0.6rem;
           vertical-align: top;
           text-align: left;
         }
@@ -862,12 +891,13 @@ export default function InvestigationPage() {
           color: #fff;
           font-weight: 500;
           text-transform: uppercase;
-          font-size: 0.75rem;
+          font-size: 0.72rem;
           letter-spacing: 0.05em;
         }
         .article-table-wrap td {
           color: rgba(255, 255, 255, 0.8);
-          line-height: 1.5;
+          line-height: 1.46;
+          font-size: 0.9rem;
         }
         figure {
           margin: 2.5rem 0;
@@ -895,11 +925,11 @@ export default function InvestigationPage() {
             padding: 2rem 0;
           }
           .article-body {
-            font-size: 1.05rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            line-height: 1.62;
           }
           .article-body p {
-            text-indent: 1.2em;
+            text-indent: 1em;
           }
           .chain-grid,
           .clock-grid,
@@ -914,6 +944,13 @@ export default function InvestigationPage() {
             gap: 0.45rem;
             background: #111;
             border: 1px solid rgba(255,255,255,0.12);
+          }
+          .r1::after,
+          .r2::after,
+          .r3::after,
+          .r4::after,
+          .r5::after {
+            display: none;
           }
           .radar-core,
           .radar-item {
