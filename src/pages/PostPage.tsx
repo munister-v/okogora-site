@@ -13,7 +13,7 @@ function renderInlineLinks(text: string) {
   return parts.map((part, idx) => {
     if (/^https?:\/\//.test(part)) {
       return (
-        <a key={`l-${idx}`} href={part} target="_blank" rel="noreferrer" className="underline decoration-[#FF4E00]/30 hover:decoration-[#FF4E00] break-all">
+        <a key={`l-${idx}`} href={part} target="_blank" rel="noreferrer" className="underline decoration-[#c9a227]/30 hover:decoration-[#c9a227] break-all">
           {part}
         </a>
       );
@@ -54,7 +54,7 @@ export default function PostPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#050517] flex items-center justify-center">
+      <div className="min-h-screen bg-[#252519] flex items-center justify-center">
         <div className="font-mono text-[10px] uppercase tracking-widest text-white/30 animate-pulse">
           Завантаження...
         </div>
@@ -64,7 +64,7 @@ export default function PostPage() {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-[#050517] flex flex-col items-center justify-center gap-6">
+      <div className="min-h-screen bg-[#252519] flex flex-col items-center justify-center gap-6">
         <p className="font-mono text-[10px] uppercase tracking-widest text-white/40">
           Статтю не знайдено
         </p>
@@ -76,22 +76,22 @@ export default function PostPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050517] text-white selection:bg-[#FF4E00] selection:text-[#050517]">
+    <div className="min-h-screen bg-[#252519] text-white selection:bg-[#c9a227] selection:text-[#1c1c12]">
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-[1000] border-b border-[#FF4E00]/20 bg-[#050517]/95 backdrop-blur-md">
+      <nav className="fixed top-0 left-0 right-0 z-[1000] border-b border-[#c9a227]/20 bg-[#252519]/95 backdrop-blur-md">
         <div className="grid grid-cols-2 md:grid-cols-4 px-4 md:px-8 py-3 md:py-4 text-[10px] md:text-xs font-mono uppercase tracking-widest items-center">
           <div className="col-span-1 flex items-center gap-2">
-            <div className="w-4 h-4 bg-[#FF4E00] rounded-sm flex items-center justify-center">
-              <div className="w-1.5 h-1.5 bg-[#050517] rounded-sm animate-pulse" />
+            <div className="w-4 h-4 bg-[#c9a227] rounded-sm flex items-center justify-center">
+              <div className="w-1.5 h-1.5 bg-[#252519] rounded-sm animate-pulse" />
             </div>
-            <Link to="/" className="font-bold tracking-tighter hover:text-[#FF4E00] transition-colors">ОКО ГОРА</Link>
+            <Link to="/" className="font-bold tracking-tighter hover:text-[#c9a227] transition-colors">ОКО ГОРА</Link>
           </div>
           <div className="hidden md:block col-span-2 text-center text-white/30">
             СТРАТЕГІЧНИЙ_OSINT_МОНІТОР_V3.0_UA
           </div>
           <div className="col-span-1 flex justify-end">
             <a href="https://t.me/oko_gora" target="_blank" rel="noreferrer"
-              className="hover:text-[#FF4E00] transition-colors flex items-center gap-1 font-bold">
+              className="hover:text-[#c9a227] transition-colors flex items-center gap-1 font-bold">
               ТЕЛЕГРАМ <ArrowUpRight className="w-3 h-3" />
             </a>
           </div>
@@ -103,7 +103,7 @@ export default function PostPage() {
         <div className="px-4 md:px-8 mb-8 md:mb-12 max-w-[1000px] mx-auto">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-[#FF4E00] transition-colors"
+            className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-[#c9a227] transition-colors"
           >
             <ArrowLeft className="w-3 h-3" /> Назад
           </Link>
@@ -130,7 +130,7 @@ export default function PostPage() {
 
           {/* Hero image */}
           {post.image && (
-            <div className="w-full aspect-video overflow-hidden bg-[#0a0a2e] mb-10 md:mb-16 relative">
+            <div className="w-full aspect-video overflow-hidden bg-[#2e2d1e] mb-10 md:mb-16 relative">
               <img
                 src={resolveImageUrl(post.image)}
                 alt={post.title}
@@ -151,7 +151,7 @@ export default function PostPage() {
             <div className="space-y-5 text-lg md:text-xl leading-relaxed text-white/75 mb-10">
               {splitParagraphs(post.text).map((paragraph, idx) => (
                 /^[\-\u2022]\s/m.test(paragraph) ? (
-                  <ul key={`${post.id}-p-${idx}`} className="space-y-2 pl-5 list-disc marker:text-[#FF4E00]/60">
+                  <ul key={`${post.id}-p-${idx}`} className="space-y-2 pl-5 list-disc marker:text-[#c9a227]/60">
                     {paragraph
                       .split('\n')
                       .map(line => line.trim())
@@ -171,7 +171,7 @@ export default function PostPage() {
                 href={postTelegramUrl(post)}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-[#FF4E00] transition-colors"
+                className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-[#c9a227] transition-colors"
               >
                 Джерело в Telegram <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
@@ -206,7 +206,7 @@ export default function PostPage() {
               {related.map(p => (
                 <Link key={p.id} to={`/post/${p.id}`} className="group">
                   {p.image && (
-                    <div className="aspect-video w-full overflow-hidden bg-[#0a0a2e] mb-5">
+                    <div className="aspect-video w-full overflow-hidden bg-[#2e2d1e] mb-5">
                       <img
                         src={resolveImageUrl(p.image)}
                         alt={p.title}
@@ -228,7 +228,7 @@ export default function PostPage() {
         )}
       </main>
 
-      <footer className="border-t border-[#FF4E00]/30 px-4 md:px-8 py-16 bg-[#050517] text-white">
+      <footer className="border-t border-[#c9a227]/30 px-4 md:px-8 py-16 bg-[#1c1c12] text-white">
         <div className="max-w-[1000px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <Link to="/" className="text-3xl font-bold tracking-tighter uppercase hover:opacity-60 transition-opacity">
             Око Гора
