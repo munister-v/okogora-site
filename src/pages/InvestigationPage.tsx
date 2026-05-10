@@ -18,6 +18,7 @@ function renderMarkdown(md: string) {
   let inList = false;
   let h2Index = 0;
   let skippedFirstH1 = false;
+  let paragraphBuffer: string[] = [];
 
   const inline = (text: string) =>
     text
@@ -31,6 +32,11 @@ function renderMarkdown(md: string) {
       out.push('</ul>');
       inList = false;
     }
+  };
+  const flushParagraph = () => {
+    if (!paragraphBuffer.length) return;
+    out.push(`<p>${inline(paragraphBuffer.join(' '))}</p>`);
+    paragraphBuffer = [];
   };
 
   const isTableSeparator = (line: string) => /^\|?[\s:-]+\|[\s|:-]+$/.test(line);
@@ -153,23 +159,27 @@ function renderMarkdown(md: string) {
     const raw = lines[i];
     const line = raw.trim();
     if (!line) {
+      flushParagraph();
       closeList();
       continue;
     }
 
     if (/^::scheme\s+/.test(line)) {
+      flushParagraph();
       closeList();
       out.push(renderScheme(line.replace(/^::scheme\s+/, '').trim()));
       continue;
     }
 
     if (/^(&gt;|>)\s+/.test(line)) {
+      flushParagraph();
       closeList();
       out.push(`<blockquote>${inline(line.replace(/^(&gt;|>)\s+/, ''))}</blockquote>`);
       continue;
     }
 
     if (/^---+$/.test(line)) {
+      flushParagraph();
       closeList();
       out.push('<hr />');
       continue;
@@ -177,6 +187,7 @@ function renderMarkdown(md: string) {
 
     const imageMatch = line.match(/^!\[(.*?)\]\(((?:https?:\/\/|\/)[^\s)]+)\)$/);
     if (imageMatch) {
+      flushParagraph();
       closeList();
       // peek at next non-empty line to see if it's an italic caption
       let captionHtml = '';
@@ -197,6 +208,7 @@ function renderMarkdown(md: string) {
     }
 
     if (line.includes('|') && lines[i + 1] && isTableSeparator(lines[i + 1].trim())) {
+      flushParagraph();
       closeList();
       const headers = splitTableRow(line);
       const rows: string[][] = [];
@@ -219,17 +231,20 @@ function renderMarkdown(md: string) {
     }
 
     if (/^###\s+/.test(line)) {
+      flushParagraph();
       closeList();
       out.push(`<h3>${inline(line.replace(/^###\s+/, ''))}</h3>`);
       continue;
     }
     if (/^##\s+/.test(line)) {
+      flushParagraph();
       closeList();
       h2Index += 1;
       out.push(`<h2 id="section-${h2Index}">${inline(line.replace(/^##\s+/, ''))}</h2>`);
       continue;
     }
     if (/^#\s+/.test(line)) {
+      flushParagraph();
       closeList();
       if (!skippedFirstH1) {
         skippedFirstH1 = true;
@@ -240,6 +255,7 @@ function renderMarkdown(md: string) {
     }
 
     if (/^[-*]\s+/.test(line)) {
+      flushParagraph();
       if (!inList) {
         out.push('<ul>');
         inList = true;
@@ -250,6 +266,7 @@ function renderMarkdown(md: string) {
 
     // Numbered list: 1. item
     if (/^\d+\.\s+/.test(line)) {
+      flushParagraph();
       closeList();
       out.push(`<p class="numbered-item">${inline(line)}</p>`);
       continue;
@@ -258,6 +275,7 @@ function renderMarkdown(md: string) {
     // Bold label + text: convert to compact evidence row for entities/dates/plants
     const evidenceMatch = line.match(/^\*\*([^*]+)\*\*\s*(.+)$/);
     if (evidenceMatch) {
+      flushParagraph();
       closeList();
       out.push(`<div class="evidence-row"><div class="evidence-key">${inline(evidenceMatch[1])}</div><p class="evidence-value">${inline(evidenceMatch[2])}</p></div>`);
       continue;
@@ -265,14 +283,16 @@ function renderMarkdown(md: string) {
 
     // Bold-only line = lead/kicker paragraph
     if (/^\*\*[^*]+\*\*$/.test(line)) {
+      flushParagraph();
       closeList();
       out.push(`<p class="article-lead">${inline(line)}</p>`);
       continue;
     }
 
     closeList();
-    out.push(`<p>${inline(line)}</p>`);
+    paragraphBuffer.push(line);
   }
+  flushParagraph();
   closeList();
 
   return out.join('\n');
