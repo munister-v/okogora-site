@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useState, useEffect, lazy, Suspense, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Activity, Database, Shield, Terminal, Rss, Target, Lock, BarChart3, MapPinned, Table2, RadioTower } from 'lucide-react';
+import { ArrowUpRight, Activity, Database, Shield, Terminal, Rss, Target, BarChart3, MapPinned, Table2, RadioTower } from 'lucide-react';
 import { Post, InvestigationArticle } from './types';
 import { formatPreview, normalizePosts, postTelegramUrl, resolveImageUrl } from './lib/posts';
 import { setSeo } from './lib/seo';
@@ -554,6 +554,12 @@ export default function App() {
       .slice(0, 8)
       .map(([tag, count]) => ({ tag, count }));
   }, [rssItems, fbItems]);
+  const publishedInvestigations = useMemo(
+    () => investigations.filter((item) => (item.status || 'published') === 'published'),
+    [investigations],
+  );
+  const featuredInvestigation = publishedInvestigations.find((item) => item.id === 'INV-004') || publishedInvestigations[0];
+  const investigationCards = publishedInvestigations.filter((item) => item.id !== featuredInvestigation?.id).slice(0, 5);
 
   return (
     <div className="min-h-screen bg-[#252519] text-white selection:bg-[#c9a227] selection:text-[#1c1c12] font-sans overflow-x-hidden">
@@ -740,7 +746,7 @@ export default function App() {
               <div className="mb-6 border border-[#c9a227]/30 bg-[#11120d] p-5 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 border border-[#c9a227]/40 bg-[#c9a227]/10 flex items-center justify-center shrink-0">
-                    <Lock className="w-5 h-5 text-[#c9a227]" />
+                    <Database className="w-5 h-5 text-[#c9a227]" />
                   </div>
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-widest text-[#c9a227]/80">Розділ відкрито</p>
@@ -750,8 +756,25 @@ export default function App() {
                 </div>
               </div>
 
+              {featuredInvestigation && (
+                <article className="mb-5 bg-[#11120d] border border-[#c9a227]/45 p-6 md:p-8 lg:p-10">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-end">
+                    <div className="lg:col-span-8">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#c9a227] mb-4">{featuredInvestigation.code}</p>
+                      <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-tight leading-[0.95] text-white">{featuredInvestigation.title}</h3>
+                      <p className="mt-4 text-base md:text-lg text-white/60 max-w-3xl leading-relaxed">{featuredInvestigation.summary}</p>
+                    </div>
+                    <div className="lg:col-span-4 flex lg:justify-end">
+                      <Link to={`/investigation/${featuredInvestigation.id}`} className="inline-flex items-center gap-2 border border-[#c9a227]/50 bg-[#c9a227]/10 px-5 py-4 font-mono text-[10px] uppercase tracking-widest text-[#f3d97f] hover:bg-[#c9a227]/20 transition-colors">
+                        Читати розслідування <ArrowUpRight className="w-3 h-3" />
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              )}
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {(investigations.length ? investigations.filter(i => (i.status || 'published') === 'published') : [
+                {(investigationCards.length ? investigationCards : [
                   { id: 'fallback-1', title: 'Хронологія події', summary: "Що сталося, коли зʼявилися перші повідомлення і які джерела це підтверджують.", code: 'TIMELINE', tags: [], publishedAt: '', status: 'published' as const },
                   { id: 'fallback-2', title: 'Місце на карті', summary: "Координати, найближчі обʼєкти, фото або відео, якщо вони є у відкритому доступі.", code: 'MAP', tags: [], publishedAt: '', status: 'published' as const },
                   { id: 'fallback-3', title: 'Що відомо зараз', summary: "Короткий висновок без перебільшень: що підтверджено, що потребує перевірки, де читати далі.", code: 'SUMMARY', tags: [], publishedAt: '', status: 'published' as const },
