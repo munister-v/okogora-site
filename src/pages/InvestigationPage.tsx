@@ -93,12 +93,19 @@ function renderMarkdown(md: string) {
         <section class="visual-block visual-radar" aria-label="OSINT радар">
           <div class="visual-kicker">OSINT-радар</div>
           <div class="radar-layout">
+            <div class="radar-rings"></div>
+            <div class="radar-sweep"></div>
             <div class="radar-core">НПЗ<br />простій</div>
-            <div class="radar-item r1">відвантаження колон</div>
-            <div class="radar-item r2">тендери на внутрішні пристрої</div>
-            <div class="radar-item r3">нестандартні перевезення</div>
-            <div class="radar-item r4">спецсталі й поковки</div>
-            <div class="radar-item r5">позапланові ремонти</div>
+            <div class="radar-item r1"><span class="radar-tag high">HIGH</span>відвантаження колон</div>
+            <div class="radar-item r2"><span class="radar-tag med">MED</span>тендери на внутрішні пристрої</div>
+            <div class="radar-item r3"><span class="radar-tag med">MED</span>нестандартні перевезення</div>
+            <div class="radar-item r4"><span class="radar-tag high">HIGH</span>спецсталі й поковки</div>
+            <div class="radar-item r5"><span class="radar-tag crit">CRIT</span>позапланові ремонти</div>
+          </div>
+          <div class="radar-notes">
+            <div><strong>CRIT:</strong> сигнал, який часто передує довгому простою.</div>
+            <div><strong>HIGH:</strong> висока ймовірність вузького місця в ремонті.</div>
+            <div><strong>MED:</strong> підтверджує картину лише в комбінації з іншими даними.</div>
           </div>
         </section>
       `;
@@ -471,7 +478,7 @@ export default function InvestigationPage() {
         .article-body h3 {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           color: #ffffff;
-          font-weight: 700;
+          font-weight: 600;
           line-height: 1.2;
           letter-spacing: -0.02em;
           text-align: left;
@@ -487,14 +494,17 @@ export default function InvestigationPage() {
         .article-body h3 {
           margin: 2.8rem 0 1rem;
           font-size: 1.15rem;
-          font-weight: 700;
+          font-weight: 600;
           text-transform: none;
           text-align: left;
         }
         .article-body p {
-          margin: 0.62rem 0;
+          margin: 0;
           text-align: left;
-          text-indent: 0;
+          text-indent: 1.6em;
+        }
+        .article-body p + p {
+          margin-top: 0;
         }
         /* No indent after headings, blockquotes, figures, lists */
         .article-body h2 + p,
@@ -528,8 +538,8 @@ export default function InvestigationPage() {
           text-decoration-color: #fff;
         }
         .article-body strong {
-          color: #ffffff;
-          font-weight: 700;
+          color: rgba(255, 255, 255, 0.95);
+          font-weight: 600;
         }
         .article-body code {
           font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -548,6 +558,10 @@ export default function InvestigationPage() {
           line-height: 1.65;
           background: rgba(255,255,255,0.03);
           text-align: left;
+        }
+        .article-body blockquote p {
+          margin: 0;
+          text-indent: 0;
         }
         .article-lead {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -572,10 +586,11 @@ export default function InvestigationPage() {
         .visual-block {
           margin: 3rem 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          border-top: 2px solid #333;
-          border-bottom: 1px solid #333;
-          padding: 2rem 0;
-          background: #111;
+          border: 1px solid rgba(255,255,255,0.14);
+          border-radius: 14px;
+          padding: 1.3rem;
+          background: linear-gradient(180deg, #131313, #101010);
+          box-shadow: 0 14px 28px rgba(0,0,0,0.25);
         }
         .visual-kicker {
           margin-bottom: 1.5rem;
@@ -589,14 +604,16 @@ export default function InvestigationPage() {
         .chain-grid {
           display: grid;
           grid-template-columns: repeat(5, minmax(0, 1fr));
-          gap: 1px;
-          background: #333;
+          gap: 0.6rem;
+          background: transparent;
         }
         .chain-node,
         .clock-grid > div,
         .factory-grid > div {
           min-height: 100%;
-          background: #111;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 10px;
           padding: 1.25rem;
         }
         .chain-node span,
@@ -646,8 +663,8 @@ export default function InvestigationPage() {
         .factory-grid {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 1px;
-          background: #333;
+          gap: 0.6rem;
+          background: transparent;
         }
         .factory-grid em {
           display: block;
@@ -660,8 +677,8 @@ export default function InvestigationPage() {
         .clock-grid {
           display: grid;
           grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 1px;
-          background: #333;
+          gap: 0.6rem;
+          background: transparent;
         }
         .risk-grid {
           display: grid;
@@ -707,9 +724,26 @@ export default function InvestigationPage() {
         .radar-layout {
           position: relative;
           min-height: 400px;
-          border: 1px solid #333;
-          background: #111;
+          border: 1px solid rgba(255,255,255,0.18);
+          border-radius: 14px;
+          background: radial-gradient(circle at center, rgba(60, 60, 60, 0.32), #0f0f0f 64%);
           overflow: hidden;
+        }
+        .radar-rings {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(circle, transparent 16%, rgba(255,255,255,0.1) 16.4% 16.8%, transparent 17%),
+            radial-gradient(circle, transparent 33%, rgba(255,255,255,0.08) 33.4% 33.8%, transparent 34%),
+            radial-gradient(circle, transparent 50%, rgba(255,255,255,0.07) 50.4% 50.8%, transparent 51%);
+        }
+        .radar-sweep {
+          position: absolute;
+          inset: -20% -20%;
+          background: conic-gradient(from 0deg, transparent 0deg, rgba(140, 255, 140, 0.16) 34deg, transparent 76deg);
+          animation: radarSpin 7.2s linear infinite;
+          transform-origin: center;
+          pointer-events: none;
         }
         .radar-core,
         .radar-item {
@@ -727,7 +761,7 @@ export default function InvestigationPage() {
           width: 7rem;
           height: 7rem;
           transform: translate(-50%, -50%);
-          border: 1px solid #666;
+          border: 1px solid rgba(255,255,255,0.5);
           border-radius: 50%;
           background: #1a1a1a;
           color: #fff;
@@ -737,12 +771,40 @@ export default function InvestigationPage() {
         .radar-item {
           width: 10rem;
           min-height: 3.5rem;
-          border: 1px solid #333;
-          background: #111;
+          border: 1px solid rgba(255,255,255,0.22);
+          border-radius: 10px;
+          background: rgba(18,18,18,0.92);
           padding: 0.75rem;
           color: rgba(255, 255, 255, 0.8);
           font-size: 0.8rem;
           line-height: 1.4;
+          text-align: left;
+          justify-content: flex-start;
+        }
+        .radar-tag {
+          display: inline-block;
+          margin-bottom: 0.35rem;
+          padding: 0.12rem 0.35rem;
+          font-size: 0.6rem;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          border: 1px solid currentColor;
+          border-radius: 3px;
+        }
+        .radar-tag.med { color: #fbbf24; }
+        .radar-tag.high { color: #fb923c; }
+        .radar-tag.crit { color: #f87171; }
+        .radar-notes {
+          margin-top: 0.75rem;
+          display: grid;
+          gap: 0.4rem;
+          color: rgba(255,255,255,0.72);
+          font-size: 0.8rem;
+          line-height: 1.45;
+        }
+        .radar-notes strong {
+          font-weight: 600;
+          color: rgba(255,255,255,0.92);
         }
         .r1 { left: 5%; top: 15%; }
         .r2 { right: 5%; top: 18%; }
@@ -798,7 +860,7 @@ export default function InvestigationPage() {
           border-top: 1px solid #666;
           border-bottom: 2px solid #666;
           color: #fff;
-          font-weight: 600;
+          font-weight: 500;
           text-transform: uppercase;
           font-size: 0.75rem;
           letter-spacing: 0.05em;
@@ -836,6 +898,9 @@ export default function InvestigationPage() {
             font-size: 1.05rem;
             line-height: 1.6;
           }
+          .article-body p {
+            text-indent: 1.2em;
+          }
           .chain-grid,
           .clock-grid,
           .risk-grid,
@@ -846,9 +911,9 @@ export default function InvestigationPage() {
           .radar-layout {
             min-height: auto;
             display: grid;
-            gap: 1px;
-            background: #333;
-            border: 0;
+            gap: 0.45rem;
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.12);
           }
           .radar-core,
           .radar-item {
@@ -856,8 +921,7 @@ export default function InvestigationPage() {
             width: auto;
             min-height: 0;
             transform: none;
-            border: 0;
-            background: #111;
+            background: rgba(18,18,18,0.95);
           }
           .radar-core {
             border-radius: 0;
@@ -898,6 +962,10 @@ export default function InvestigationPage() {
             text-transform: uppercase;
             letter-spacing: 0.05em;
           }
+        }
+        @keyframes radarSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
       `}</style>
     </div>
