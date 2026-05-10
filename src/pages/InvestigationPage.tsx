@@ -120,9 +120,9 @@ function renderMarkdown(md: string) {
       continue;
     }
 
-    if (/^>\s+/.test(line)) {
+    if (/^(&gt;|>)\s+/.test(line)) {
       closeList();
-      out.push(`<blockquote>${inline(line.replace(/^>\s+/, ''))}</blockquote>`);
+      out.push(`<blockquote>${inline(line.replace(/^(&gt;|>)\s+/, ''))}</blockquote>`);
       continue;
     }
 
@@ -231,7 +231,7 @@ export default function InvestigationPage() {
   useEffect(() => {
     setLoading(true);
     setMarkdown('');
-    fetch('/data/investigations.json')
+    fetch(`/data/investigations.json?_t=${Date.now()}`)
       .then((r) => r.json())
       .then(async (data: InvestigationArticle[]) => {
         const arr = Array.isArray(data) ? data : [];
