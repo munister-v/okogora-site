@@ -233,6 +233,14 @@ function renderMarkdown(md: string) {
       continue;
     }
 
+    // Bold label + text: convert to compact evidence row for entities/dates/plants
+    const evidenceMatch = line.match(/^\*\*([^*]+)\*\*\s*(.+)$/);
+    if (evidenceMatch) {
+      closeList();
+      out.push(`<div class="evidence-row"><div class="evidence-key">${inline(evidenceMatch[1])}</div><p class="evidence-value">${inline(evidenceMatch[2])}</p></div>`);
+      continue;
+    }
+
     // Bold-only line = lead/kicker paragraph
     if (/^\*\*[^*]+\*\*$/.test(line)) {
       closeList();
@@ -413,7 +421,7 @@ export default function InvestigationPage() {
               </div>
               <nav className="space-y-1">
                 {headings.slice(0, 10).map((heading) => (
-                  <a key={heading.id} href={`#${heading.id}`} className="block border-l border-white/12 px-3 py-2 text-sm leading-snug text-white/70 transition-colors hover:border-[#c9a227] hover:text-white">
+                  <a key={heading.id} href={`#${heading.id}`} className="block border-l border-white/10 px-3 py-2 text-[13px] leading-snug text-white/56 transition-colors hover:border-[#c9a227]/70 hover:text-white/82">
                     {heading.label}
                   </a>
                 ))}
@@ -506,12 +514,12 @@ export default function InvestigationPage() {
           border-color: rgba(255,255,255,0.5);
         }
         .article-body {
-          max-width: 800px;
+          max-width: 740px;
           margin: 0 auto;
-          color: rgba(255, 255, 255, 0.9);
+          color: rgba(255, 255, 255, 0.82);
           font-family: "Inter", "Segoe UI", "Noto Sans", Arial, sans-serif;
           font-size: 1.03rem;
-          line-height: 1.75;
+          line-height: 1.78;
           text-align: left;
           hyphens: none;
           text-wrap: pretty;
@@ -531,7 +539,7 @@ export default function InvestigationPage() {
           hyphens: none;
         }
         .article-body h2 {
-          margin: 2.5rem 0 0.8rem;
+          margin: 3rem 0 1rem;
           padding-top: 1.3rem;
           border-top: 1px solid rgba(255, 255, 255, 0.12);
           font-size: clamp(1.22rem, 2vw, 1.58rem);
@@ -545,7 +553,7 @@ export default function InvestigationPage() {
           text-align: left;
         }
         .article-body p {
-          margin: 0 0 0.95rem;
+          margin: 0 0 1.2rem;
           text-align: left;
           text-indent: 0;
         }
@@ -566,7 +574,7 @@ export default function InvestigationPage() {
           line-height: 1.6;
           color: rgba(255, 255, 255, 0.92);
           font-weight: 500;
-          margin-bottom: 0.95rem;
+          margin-bottom: 1.2rem;
           text-align: left;
           text-indent: 0;
         }
@@ -583,6 +591,27 @@ export default function InvestigationPage() {
         .article-body strong {
           color: rgba(255, 255, 255, 0.95);
           font-weight: 600;
+        }
+        .evidence-row {
+          margin: 1.35rem 0;
+          border: 1px solid rgba(255,255,255,0.12);
+          border-left: 2px solid rgba(201,162,39,0.55);
+          border-radius: 10px;
+          background: rgba(255,255,255,0.02);
+          padding: 0.85rem 0.95rem;
+        }
+        .evidence-key {
+          margin: 0 0 0.35rem;
+          color: #f3d97f;
+          font-size: 0.8rem;
+          font-weight: 600;
+          letter-spacing: 0.01em;
+        }
+        .evidence-value {
+          margin: 0 !important;
+          color: rgba(255,255,255,0.84);
+          line-height: 1.58;
+          font-size: 0.95rem;
         }
         .article-body code {
           font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -628,11 +657,11 @@ export default function InvestigationPage() {
           color: #fff;
         }
         .visual-block {
-          margin: 2.2rem 0;
+          margin: 2.5rem 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           border: 1px solid rgba(255,255,255,0.14);
           border-radius: 12px;
-          padding: 1rem;
+          padding: 0.95rem;
           background: linear-gradient(165deg, rgba(24,24,24,0.98), rgba(14,14,14,0.98));
           box-shadow: 0 14px 28px rgba(0,0,0,0.25);
         }
@@ -879,9 +908,9 @@ export default function InvestigationPage() {
           bottom: -30px;
         }
         .article-body hr {
-          margin: 3rem 0;
+          margin: 2.2rem 0;
           border: 0;
-          border-top: 1px solid #333;
+          border-top: 1px solid rgba(255,255,255,0.14);
         }
         .article-body ul {
           margin: 0 0 1.5rem 1rem;
@@ -907,7 +936,7 @@ export default function InvestigationPage() {
         }
         .article-table-wrap {
           overflow-x: auto;
-          margin: 2rem 0;
+          margin: 2.2rem 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
           border: 1px solid rgba(255,255,255,0.14);
           border-radius: 12px;
@@ -965,7 +994,10 @@ export default function InvestigationPage() {
         @media (max-width: 720px) {
           .article-body {
             font-size: 0.96rem;
-            line-height: 1.62;
+            line-height: 1.66;
+          }
+          .article-body p {
+            margin-bottom: 1rem;
           }
           .share-bar {
             margin-top: 2.2rem;
