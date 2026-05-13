@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-05-13T11:38:36.424Z",
+  "generatedAt": "2026-05-13T15:17:30.915Z",
   "windowDays": 3,
   "totals": {
-    "units": 8,
-    "unitsWithOfficialFeeds": 8,
+    "units": 7,
+    "unitsWithOfficialFeeds": 7,
     "autoDiscoveredUnits": 0,
-    "brigades": 8,
-    "brigadesWithOfficialFeeds": 8,
-    "officialItems": 58,
+    "brigades": 7,
+    "brigadesWithOfficialFeeds": 7,
+    "officialItems": 42,
     "mentionItems": 0,
-    "significantItems": 24,
-    "strikeItems": 19,
-    "reorgItems": 6
+    "significantItems": 20,
+    "strikeItems": 16,
+    "reorgItems": 5
   },
   "brigades": [
     {
@@ -176,167 +176,6 @@
       ]
     },
     {
-      "id": "stratcom-afu",
-      "name": "СтратКом ЗСУ",
-      "aliases": [
-        "СтратКом ЗСУ",
-        "стратком зсу",
-        "stratcom afu"
-      ],
-      "sources": [
-        {
-          "platform": "x",
-          "handle": "StratCom_AFU",
-          "trusted": true
-        }
-      ],
-      "autoDiscovered": false,
-      "officialItems": 15,
-      "mentionItems": 0,
-      "significantItems": 4,
-      "strikeItems": 4,
-      "reorgItems": 0,
-      "hasOfficialFeed": true,
-      "items": [
-        {
-          "id": "x-StratCom_AFU-912faf1e6b4e1c",
-          "title": "Як наземні дрони рятують піхоту?",
-          "summary": "Як наземні дрони рятують піхоту?",
-          "url": "https://x.com/StratCom_AFU/status/2053846626226118750",
-          "publishedAt": "2026-05-11T14:36:08.000Z",
-          "source": "x",
-          "sourceLabel": "StratCom_AFU",
-          "origin": "official",
-          "score": 4,
-          "strikeScore": 1,
-          "reorgScore": 0,
-          "isStrike": true,
-          "isReorg": false,
-          "titleUk": "Як наземні дрони рятують піхоту?",
-          "summaryUk": "Як наземні дрони рятують піхоту?"
-        },
-        {
-          "id": "x-StratCom_AFU-1857f01f86d7e3",
-          "title": "«Кожен крок і кожна дія — це вже історія України, і саме вони її пишуть», — каже ком...",
-          "summary": "«Кожен крок і кожна дія — це вже історія України, і саме вони її пишуть», — каже командир 25 ОШБ Андрій про своїх бійців. За цими хвилинами відео — долі сотень воїнів. Це не просто штурмовики, оператори дронів чи НРК. https://www.youtube.com/watch?v=A3piBIR0ALY",
-          "url": "https://x.com/StratCom_AFU/status/2053778348946403381",
-          "publishedAt": "2026-05-11T10:04:50.000Z",
-          "source": "x",
-          "sourceLabel": "StratCom_AFU",
-          "origin": "official",
-          "score": 4,
-          "strikeScore": 1,
-          "reorgScore": 0,
-          "isStrike": true,
-          "isReorg": false,
-          "titleUk": "«Кожен крок і кожна дія — це вже історія України, і саме вони її пишуть», — каже ком...",
-          "summaryUk": "«Кожен крок і кожна дія — це вже історія України, і саме вони її пишуть», — каже командир 25 ОШБ Андрій про своїх бійців. За цими хвилинами відео — долі сотень воїнів. Це не просто штурмовики, оператори дронів чи НРК. https://www.youtube.com/watch?v=A3piBIR0ALY"
-        },
-        {
-          "id": "x-StratCom_AFU-34b734994a9c46",
-          "title": "RT Генеральний штаб ЗСУ: 💥ПІДТВЕРДЖЕНО! Підбірка уражень ворога підрозділами Сил ...",
-          "summary": "RT Генеральний штаб ЗСУ 💥ПІДТВЕРДЖЕНО! Підбірка уражень ворога підрозділами Сил оборони України за минулий тиждень. Відео - Сили безпілотних систем ЗСУ Слава Україні!🇺🇦",
-          "url": "https://x.com/StratCom_AFU/status/2053723069705814169",
-          "publishedAt": "2026-05-11T06:18:17.000Z",
-          "source": "x",
-          "sourceLabel": "StratCom_AFU",
-          "origin": "official",
-          "score": 3,
-          "strikeScore": 1,
-          "reorgScore": 0,
-          "isStrike": true,
-          "isReorg": false,
-          "titleUk": "RT Генеральний штаб ЗСУ: 💥ПІДТВЕРДЖЕНО! Підбірка уражень ворога підрозділами Сил ...",
-          "summaryUk": "RT Генеральний штаб ЗСУ 💥ПІДТВЕРДЖЕНО! Підбірка уражень ворога підрозділами Сил оборони України за минулий тиждень. Відео - Сили безпілотних систем ЗСУ Слава Україні!🇺🇦"
-        },
-        {
-          "id": "x-StratCom_AFU-fa2f2d1cd52244",
-          "title": "Коли не знаєш, що обрати, обирай майбутнє! Підписуй Контракт 18-24 Дрони: https://18-24.army.gov...",
-          "summary": "Коли не знаєш, що обрати, обирай майбутнє! Підписуй Контракт 18-24 Дрони: https://18-24.army.gov.ua/drones/",
-          "url": "https://x.com/StratCom_AFU/status/2053494781267869721",
-          "publishedAt": "2026-05-10T15:18:02.000Z",
-          "source": "x",
-          "sourceLabel": "StratCom_AFU",
-          "origin": "official",
-          "score": 3,
-          "strikeScore": 1,
-          "reorgScore": 0,
-          "isStrike": true,
-          "isReorg": false,
-          "titleUk": "Коли не знаєш, що обрати, обирай майбутнє! Підписуй Контракт 18-24 Дрони: https://18-24.army.gov...",
-          "summaryUk": "Коли не знаєш, що обрати, обирай майбутнє! Підписуй Контракт 18-24 Дрони: https://18-24.army.gov.ua/drones/"
-        },
-        {
-          "id": "x-StratCom_AFU-3a9e46c1165833",
-          "title": "Загальні бойові втрати противника з 24.02.22 по 13.05.26 орієнтовно склали / The estimated total comb...",
-          "summary": "Загальні бойові втрати противника з 24.02.22 по 13.05.26 орієнтовно склали / The estimated total combat losses of the enemy from 24.02.22 to 13.05.26",
-          "url": "https://x.com/StratCom_AFU/status/2054449934103986616",
-          "publishedAt": "2026-05-13T06:33:28.000Z",
-          "source": "x",
-          "sourceLabel": "StratCom_AFU",
-          "origin": "official",
-          "score": 1,
-          "strikeScore": 0,
-          "reorgScore": 0,
-          "isStrike": false,
-          "isReorg": false,
-          "titleUk": "Загальні бойові втрати противника з 24.02.22 по 13.05.26 орієнтовно склали / The estimated total comb...",
-          "summaryUk": "Загальні бойові втрати противника з 24.02.22 по 13.05.26 орієнтовно склали / The estimated total combat losses of the enemy from 24.02.22 to 13.05.26"
-        },
-        {
-          "id": "x-StratCom_AFU-457b75e257a060",
-          "title": "Правда про піхоту!",
-          "summary": "Правда про піхоту!",
-          "url": "https://x.com/StratCom_AFU/status/2054114241548861630",
-          "publishedAt": "2026-05-12T08:19:33.000Z",
-          "source": "x",
-          "sourceLabel": "StratCom_AFU",
-          "origin": "official",
-          "score": 1,
-          "strikeScore": 0,
-          "reorgScore": 0,
-          "isStrike": false,
-          "isReorg": false,
-          "titleUk": "Правда про піхоту!",
-          "summaryUk": "Правда про піхоту!"
-        },
-        {
-          "id": "x-StratCom_AFU-f81d0785ec65b3",
-          "title": "Загальні бойові втрати противника з 24.02.22 по 12.05.26 орієнтовно склали / The estimated total comb...",
-          "summary": "Загальні бойові втрати противника з 24.02.22 по 12.05.26 орієнтовно склали / The estimated total combat losses of the enemy from 24.02.22 to 12.05.26",
-          "url": "https://x.com/StratCom_AFU/status/2054094788475994272",
-          "publishedAt": "2026-05-12T07:02:15.000Z",
-          "source": "x",
-          "sourceLabel": "StratCom_AFU",
-          "origin": "official",
-          "score": 1,
-          "strikeScore": 0,
-          "reorgScore": 0,
-          "isStrike": false,
-          "isReorg": false,
-          "titleUk": "Загальні бойові втрати противника з 24.02.22 по 12.05.26 орієнтовно склали / The estimated total comb...",
-          "summaryUk": "Загальні бойові втрати противника з 24.02.22 по 12.05.26 орієнтовно склали / The estimated total combat losses of the enemy from 24.02.22 to 12.05.26"
-        },
-        {
-          "id": "x-StratCom_AFU-98b80a220d0061",
-          "title": "Загальні бойові втрати противника з 24.02.22 по 11.05.26 орієнтовно склали / The estimated total comb...",
-          "summary": "Загальні бойові втрати противника з 24.02.22 по 11.05.26 орієнтовно склали / The estimated total combat losses of the enemy from 24.02.22 to 11.05.26",
-          "url": "https://x.com/StratCom_AFU/status/2053723159489077534",
-          "publishedAt": "2026-05-11T06:25:32.000Z",
-          "source": "x",
-          "sourceLabel": "StratCom_AFU",
-          "origin": "official",
-          "score": 1,
-          "strikeScore": 0,
-          "reorgScore": 0,
-          "isStrike": false,
-          "isReorg": false,
-          "titleUk": "Загальні бойові втрати противника з 24.02.22 по 11.05.26 орієнтовно склали / The estimated total comb...",
-          "summaryUk": "Загальні бойові втрати противника з 24.02.22 по 11.05.26 орієнтовно склали / The estimated total combat losses of the enemy from 24.02.22 to 11.05.26"
-        }
-      ]
-    },
-    {
       "id": "3-assault",
       "name": "3 ОШБр / 3-й Армійський Корпус",
       "aliases": [
@@ -354,11 +193,11 @@
         }
       ],
       "autoDiscovered": false,
-      "officialItems": 6,
+      "officialItems": 5,
       "mentionItems": 0,
-      "significantItems": 6,
+      "significantItems": 5,
       "strikeItems": 2,
-      "reorgItems": 6,
+      "reorgItems": 5,
       "hasOfficialFeed": true,
       "items": [
         {
@@ -445,23 +284,6 @@
           "isReorg": true,
           "titleUk": "Тут у всіх своя двіжуха — і кожен на своєму місці Бо Трійка — місце розвитку для вс...",
           "summaryUk": "Тут у всіх своя двіжуха — і кожен на своєму місці Бо Трійка — місце розвитку для всіх своїх підрозділів. Навіть якщо стартуєш з нуля. Друг Сайко вперше дізнався про НРК у Третій штурмовій. І за традицією корпусу — вже масштабує цей досвід у 60-й ОМБр, де очолив сетап роти безпілотних наземних систем «CERBERUS». Як в епіцентрі розширення корпусу бійці знаходять своє — розповідаємо у відео. Знайти й проявити себе — це дух Трійки. Долучайся: http://ab3.army!"
-        },
-        {
-          "id": "x-ab3army-75a8a0f75ea48c",
-          "title": "«На наше покоління падає історична відповідальність» Так молодь Центурії перехо...",
-          "summary": "«На наше покоління падає історична відповідальність» Так молодь Центурії переходить на новий етап національної свідомості — службу в Третьому армійському корпусі. Про свій вибір долучитися до Третьої штурмової розповідає друг Топор, бойовий медик розвідбату «Hatred». Прийшов за контрактом «18-24», щоб боротися за країну — і бути серед своїх. Як завдяки духу братерства та постійному навчанню став одним з Медиків Трійки — дивися у відео з героями корпусу! Рік нових досвідів — зроблено для тебе. Долучайся за контрактом https://18-24.ab3.army",
-          "url": "https://x.com/ab3army/status/2053488574733910036",
-          "publishedAt": "2026-05-10T14:53:22.000Z",
-          "source": "x",
-          "sourceLabel": "ab3army",
-          "origin": "official",
-          "score": 3,
-          "strikeScore": 0,
-          "reorgScore": 1,
-          "isStrike": false,
-          "isReorg": true,
-          "titleUk": "«На наше покоління падає історична відповідальність» Так молодь Центурії перехо...",
-          "summaryUk": "«На наше покоління падає історична відповідальність» Так молодь Центурії переходить на новий етап національної свідомості — службу в Третьому армійському корпусі. Про свій вибір долучитися до Третьої штурмової розповідає друг Топор, бойовий медик розвідбату «Hatred». Прийшов за контрактом «18-24», щоб боротися за країну — і бути серед своїх. Як завдяки духу братерства та постійному навчанню став одним з Медиків Трійки — дивися у відео з героями корпусу! Рік нових досвідів — зроблено для тебе. Долучайся за контрактом https://18-24.ab3.army"
         }
       ]
     },
@@ -482,7 +304,7 @@
         }
       ],
       "autoDiscovered": false,
-      "officialItems": 8,
+      "officialItems": 7,
       "mentionItems": 0,
       "significantItems": 2,
       "strikeItems": 2,
@@ -607,23 +429,6 @@
           "isReorg": false,
           "titleUk": "🇺🇦⚓Запрошуємо на службу до Військово-Морських Сил ЗС України! Захистимо Україн...",
           "summaryUk": "🇺🇦⚓Запрошуємо на службу до Військово-Морських Сил ЗС України! Захистимо Україну разом! https://uanavy.com.ua 097-041-1755"
-        },
-        {
-          "id": "x-UA_NAVY-6525117027b30c",
-          "title": "🔎Ми шукаємо командирів взводів. Тих, хто тримає темп, задає ритм, знає можливості ...",
-          "summary": "🔎Ми шукаємо командирів взводів. Тих, хто тримає темп, задає ритм, знає можливості свого взводу й приймає рішення тоді, коли час іде на секунди. 📲Звертайся за порадою до Центру рекрутингу ВМС ЗС України. 📩 Пиши в дірект 📞 +38(097)-041-1755",
-          "url": "https://x.com/UA_NAVY/status/2053484142759669968",
-          "publishedAt": "2026-05-10T14:35:46.000Z",
-          "source": "x",
-          "sourceLabel": "UA_NAVY",
-          "origin": "official",
-          "score": 0,
-          "strikeScore": 0,
-          "reorgScore": 0,
-          "isStrike": false,
-          "isReorg": false,
-          "titleUk": "🔎Ми шукаємо командирів взводів. Тих, хто тримає темп, задає ритм, знає можливості ...",
-          "summaryUk": "🔎Ми шукаємо командирів взводів. Тих, хто тримає темп, задає ритм, знає можливості свого взводу й приймає рішення тоді, коли час іде на секунди. 📲Звертайся за порадою до Центру рекрутингу ВМС ЗС України. 📩 Пиши в дірект 📞 +38(097)-041-1755"
         }
       ]
     },
@@ -833,10 +638,10 @@
         }
       ],
       "autoDiscovered": false,
-      "officialItems": 1,
+      "officialItems": 2,
       "mentionItems": 0,
-      "significantItems": 1,
-      "strikeItems": 1,
+      "significantItems": 2,
+      "strikeItems": 2,
       "reorgItems": 0,
       "hasOfficialFeed": true,
       "items": [
@@ -856,6 +661,23 @@
           "isReorg": false,
           "titleUk": "Кожен хартієць мусить вміти протидіяти дронам. І вогонь зі стрілецької зброї – од...",
           "summaryUk": "Кожен хартієць мусить вміти протидіяти дронам. І вогонь зі стрілецької зброї – один з основних методів, які бійці опановують під час тренувань. Злагодженість дій, чітка координація, знання базової балістики та доведені до автоматизму рухи – запорука боротьби проти ворожих БпЛА."
+        },
+        {
+          "id": "x-khartiiabrygada-fa51ab9c06f867",
+          "title": "На недобитків ворога на Куп’янщині полюють хартійські «Вампіри» – це наші дронар...",
+          "summary": "На недобитків ворога на Куп’янщині полюють хартійські «Вампіри» – це наші дронарі женуть загарбника з української землі.",
+          "url": "https://x.com/khartiiabrygada/status/2054571058473185773",
+          "publishedAt": "2026-05-13T14:34:47.000Z",
+          "source": "x",
+          "sourceLabel": "khartiiabrygada",
+          "origin": "official",
+          "score": 3,
+          "strikeScore": 1,
+          "reorgScore": 0,
+          "isStrike": true,
+          "isReorg": false,
+          "titleUk": "На недобитків ворога на Куп’янщині полюють хартійські «Вампіри» – це наші дронар...",
+          "summaryUk": "На недобитків ворога на Куп’янщині полюють хартійські «Вампіри» – це наші дронарі женуть загарбника з української землі."
         }
       ]
     },
