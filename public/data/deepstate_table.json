@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-05-19T04:35:29.543Z",
+  "generatedAt": "2026-05-19T10:09:43.661Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "17",
-    "occupiedKm2": 116859.353,
-    "occupiedPercent": 19.357,
-    "diffKm2": -3.893263699254,
-    "text": "22:35:19 Ворог просунувся поблизу Чарівного ."
+    "day": "18",
+    "occupiedKm2": 116864.451,
+    "occupiedPercent": 19.358,
+    "diffKm2": -5.098697916299,
+    "text": "21:34:45 Ворог просунувся поблизу Покровська ."
   },
   "rows": [
+    {
+      "day": "18",
+      "occupiedKm2": 116864.451,
+      "occupiedPercent": 19.358,
+      "diffKm2": -5.098697916299,
+      "text": "21:34:45 Ворог просунувся поблизу Покровська ."
+    },
     {
       "day": "17",
       "occupiedKm2": 116859.353,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.344,
       "diffKm2": -11.426308237511,
       "text": "13:29:11 Ворог просунувся поблизу Новодмитрівки та Степка ."
-    },
-    {
-      "day": "15",
-      "occupiedKm2": 116770.557,
-      "occupiedPercent": 19.342,
-      "diffKm2": -3.1964608465496,
-      "text": "22:17:44 Ворог просунувся поблизу Зеленого та у Гуляйполі ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": 1.3027721117830797,
+  "netChangeKm2": 5.510108811402279,
   "maxAbsDiffKm2": 19.69272057178,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
