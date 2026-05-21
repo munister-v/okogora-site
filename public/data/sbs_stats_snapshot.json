@@ -1,40 +1,40 @@
 {
-  "generatedAt": "2026-05-21T19:09:29.505Z",
+  "generatedAt": "2026-05-21T20:56:45.320Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-05-21",
-  "latestHour": 22,
-  "collectedAt": "2026-05-21T19:06:00.008Z",
+  "latestHour": 23,
+  "collectedAt": "2026-05-21T20:46:00.006Z",
   "summary": {
-    "personnelKilled": 132,
-    "personnelWounded": 101,
-    "personnelCasualties": 233,
-    "targetsHit": 1009,
-    "targetsDestroyed": 420
+    "personnelKilled": 133,
+    "personnelWounded": 105,
+    "personnelCasualties": 238,
+    "targetsHit": 1167,
+    "targetsDestroyed": 511
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 152,
-      "destroyed": 151
+      "hit": 234,
+      "destroyed": 231
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 229,
-      "destroyed": 5
+      "hit": 246,
+      "destroyed": 7
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 136,
+      "hit": 152,
       "destroyed": 1
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 28,
+      "hit": 35,
       "destroyed": 4
     },
     {
@@ -58,7 +58,7 @@
     {
       "id": 3,
       "label": "Гармати / гаубиці",
-      "hit": 9,
+      "hit": 10,
       "destroyed": 0
     },
     {
@@ -77,10 +77,10 @@
   "daily": [
     {
       "date": "2026-05-21",
-      "hour": 22,
-      "targetsHit": 1009,
-      "targetsDestroyed": 420,
-      "personnelCasualties": 233
+      "hour": 23,
+      "targetsHit": 1167,
+      "targetsDestroyed": 511,
+      "personnelCasualties": 238
     },
     {
       "date": "2026-05-20",
@@ -149,9 +149,9 @@
   "monthly": [
     {
       "date": "2026-05-01",
-      "targetsHit": 29664,
-      "targetsDestroyed": 12064,
-      "personnelCasualties": 6346
+      "targetsHit": 29822,
+      "targetsDestroyed": 12155,
+      "personnelCasualties": 6351
     },
     {
       "date": "2026-04-01",
