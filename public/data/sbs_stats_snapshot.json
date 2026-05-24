@@ -1,65 +1,71 @@
 {
-  "generatedAt": "2026-05-24T17:13:54.392Z",
+  "generatedAt": "2026-05-24T19:38:08.760Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-05-24",
-  "latestHour": 20,
-  "collectedAt": "2026-05-24T17:06:00.007Z",
+  "latestHour": 22,
+  "collectedAt": "2026-05-24T19:26:00.009Z",
   "summary": {
-    "personnelKilled": 133,
-    "personnelWounded": 135,
-    "personnelCasualties": 268,
-    "targetsHit": 1313,
-    "targetsDestroyed": 569
+    "personnelKilled": 146,
+    "personnelWounded": 151,
+    "personnelCasualties": 297,
+    "targetsHit": 1477,
+    "targetsDestroyed": 660
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 180,
-      "destroyed": 173
+      "hit": 230,
+      "destroyed": 219
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 252,
+      "hit": 265,
       "destroyed": 8
-    },
-    {
-      "id": 7,
-      "label": "Легка / важка техніка",
-      "hit": 93,
-      "destroyed": 33
-    },
-    {
-      "id": 30,
-      "label": "Shahed",
-      "hit": 63,
-      "destroyed": 63
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 123,
-      "destroyed": 2
+      "hit": 144,
+      "destroyed": 3
+    },
+    {
+      "id": 30,
+      "label": "Shahed",
+      "hit": 68,
+      "destroyed": 67
+    },
+    {
+      "id": 7,
+      "label": "Легка / важка техніка",
+      "hit": 96,
+      "destroyed": 34
     },
     {
       "id": 31,
       "label": "Gerbera",
-      "hit": 49,
-      "destroyed": 45
+      "hit": 51,
+      "destroyed": 47
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 46,
-      "destroyed": 10
+      "hit": 53,
+      "destroyed": 13
     },
     {
       "id": 3,
       "label": "Гармати / гаубиці",
-      "hit": 12,
+      "hit": 14,
       "destroyed": 0
+    },
+    {
+      "id": 5,
+      "label": "РСЗВ",
+      "hit": 1,
+      "destroyed": 1
     },
     {
       "id": 1,
@@ -77,10 +83,10 @@
   "daily": [
     {
       "date": "2026-05-24",
-      "hour": 20,
-      "targetsHit": 1313,
-      "targetsDestroyed": 569,
-      "personnelCasualties": 268
+      "hour": 22,
+      "targetsHit": 1477,
+      "targetsDestroyed": 660,
+      "personnelCasualties": 297
     },
     {
       "date": "2026-05-23",
@@ -149,9 +155,9 @@
   "monthly": [
     {
       "date": "2026-05-01",
-      "targetsHit": 34144,
-      "targetsDestroyed": 13920,
-      "personnelCasualties": 7289
+      "targetsHit": 34308,
+      "targetsDestroyed": 14011,
+      "personnelCasualties": 7318
     },
     {
       "date": "2026-04-01",
