@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-05-30T15:21:15.520Z",
+  "generatedAt": "2026-05-30T17:19:10.474Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-05-30",
-  "latestHour": 18,
-  "collectedAt": "2026-05-30T15:16:00.010Z",
+  "latestHour": 20,
+  "collectedAt": "2026-05-30T17:16:00.014Z",
   "summary": {
-    "personnelKilled": 126,
-    "personnelWounded": 150,
-    "personnelCasualties": 276,
-    "targetsHit": 1313,
-    "targetsDestroyed": 508
+    "personnelKilled": 143,
+    "personnelWounded": 172,
+    "personnelCasualties": 315,
+    "targetsHit": 1462,
+    "targetsDestroyed": 577
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 156,
-      "destroyed": 156
+      "hit": 190,
+      "destroyed": 190
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 257,
+      "hit": 284,
       "destroyed": 11
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 131,
-      "destroyed": 2
+      "hit": 143,
+      "destroyed": 3
     },
     {
       "id": 30,
@@ -40,20 +40,20 @@
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 88,
-      "destroyed": 23
+      "hit": 92,
+      "destroyed": 25
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 45,
-      "destroyed": 11
+      "hit": 47,
+      "destroyed": 12
     },
     {
       "id": 31,
       "label": "Gerbera",
-      "hit": 17,
-      "destroyed": 17
+      "hit": 18,
+      "destroyed": 18
     },
     {
       "id": 3,
@@ -68,6 +68,12 @@
       "destroyed": 5
     },
     {
+      "id": 4,
+      "label": "Самохідна артилерія",
+      "hit": 2,
+      "destroyed": 0
+    },
+    {
       "id": 5,
       "label": "РСЗВ",
       "hit": 1,
@@ -78,21 +84,15 @@
       "label": "Танки",
       "hit": 1,
       "destroyed": 0
-    },
-    {
-      "id": 4,
-      "label": "Самохідна артилерія",
-      "hit": 1,
-      "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-05-30",
-      "hour": 18,
-      "targetsHit": 1313,
-      "targetsDestroyed": 508,
-      "personnelCasualties": 276
+      "hour": 20,
+      "targetsHit": 1462,
+      "targetsDestroyed": 577,
+      "personnelCasualties": 315
     },
     {
       "date": "2026-05-29",
@@ -161,9 +161,9 @@
   "monthly": [
     {
       "date": "2026-05-01",
-      "targetsHit": 43216,
-      "targetsDestroyed": 17346,
-      "personnelCasualties": 9144
+      "targetsHit": 43365,
+      "targetsDestroyed": 17415,
+      "personnelCasualties": 9183
     },
     {
       "date": "2026-04-01",
