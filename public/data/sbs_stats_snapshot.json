@@ -1,57 +1,69 @@
 {
-  "generatedAt": "2026-05-31T22:11:31.397Z",
+  "generatedAt": "2026-06-01T00:14:29.159Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-06-01",
   "latestHour": 1,
-  "collectedAt": "2026-05-31T22:06:00.016Z",
+  "collectedAt": "2026-05-31T22:16:00.010Z",
   "summary": {
     "personnelKilled": 2,
     "personnelWounded": 0,
     "personnelCasualties": 2,
-    "targetsHit": 28,
-    "targetsDestroyed": 7
+    "targetsHit": 39,
+    "targetsDestroyed": 11
   },
   "categories": [
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 14,
+      "hit": 17,
+      "destroyed": 1
+    },
+    {
+      "id": 7,
+      "label": "Легка / важка техніка",
+      "hit": 5,
       "destroyed": 1
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 4,
-      "destroyed": 0
-    },
-    {
-      "id": 7,
-      "label": "Легка / важка техніка",
-      "hit": 3,
+      "hit": 6,
       "destroyed": 0
     },
     {
       "id": 31,
       "label": "Gerbera",
+      "hit": 2,
+      "destroyed": 2
+    },
+    {
+      "id": 25,
+      "label": "Крила противника",
       "hit": 1,
       "destroyed": 1
+    },
+    {
+      "id": 3,
+      "label": "Гармати / гаубиці",
+      "hit": 1,
+      "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-06-01",
       "hour": 1,
-      "targetsHit": 28,
-      "targetsDestroyed": 7,
+      "targetsHit": 39,
+      "targetsDestroyed": 11,
       "personnelCasualties": 2
     },
     {
       "date": "2026-05-31",
       "hour": 23,
-      "targetsHit": 1545,
+      "targetsHit": 1543,
       "targetsDestroyed": 584,
-      "personnelCasualties": 381
+      "personnelCasualties": 380
     },
     {
       "date": "2026-05-30",
