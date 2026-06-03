@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-06-03T05:19:53.298Z",
+  "generatedAt": "2026-06-03T11:24:15.771Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "1",
-    "occupiedKm2": 116853.924,
+    "day": "2",
+    "occupiedKm2": 116855.757,
     "occupiedPercent": 19.356,
-    "diffKm2": -2.4687678549817,
-    "text": "22:55:43 Ворог просунувся поблизу Іллінівки ."
+    "diffKm2": -1.8329530113115,
+    "text": "23:44:03 Ворог просунувся поблизу Привілля ."
   },
   "rows": [
+    {
+      "day": "2",
+      "occupiedKm2": 116855.757,
+      "occupiedPercent": 19.356,
+      "diffKm2": -1.8329530113115,
+      "text": "23:44:03 Ворог просунувся поблизу Привілля ."
+    },
     {
       "day": "1",
       "occupiedKm2": 116853.924,
@@ -215,7 +222,7 @@
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": 19.058952464896237,
+  "netChangeKm2": 24.081388416132036,
   "maxAbsDiffKm2": 46.387942584173,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
