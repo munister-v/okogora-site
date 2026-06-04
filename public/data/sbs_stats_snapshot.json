@@ -1,33 +1,45 @@
 {
-  "generatedAt": "2026-06-04T21:51:48.565Z",
+  "generatedAt": "2026-06-04T23:20:58.259Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-06-05",
-  "latestHour": 0,
-  "collectedAt": "2026-06-04T21:46:00.011Z",
+  "latestHour": 2,
+  "collectedAt": "2026-06-04T23:16:00.009Z",
   "summary": {
-    "personnelKilled": 1,
-    "personnelWounded": 1,
-    "personnelCasualties": 2,
-    "targetsHit": 25,
-    "targetsDestroyed": 6
+    "personnelKilled": 13,
+    "personnelWounded": 4,
+    "personnelCasualties": 17,
+    "targetsHit": 111,
+    "targetsDestroyed": 27
   },
   "categories": [
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 12,
+      "hit": 41,
       "destroyed": 0
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 5,
-      "destroyed": 1
+      "hit": 32,
+      "destroyed": 3
     },
     {
       "id": 31,
       "label": "Gerbera",
+      "hit": 2,
+      "destroyed": 2
+    },
+    {
+      "id": 7,
+      "label": "Легка / важка техніка",
+      "hit": 2,
+      "destroyed": 0
+    },
+    {
+      "id": 30,
+      "label": "Shahed",
       "hit": 1,
       "destroyed": 1
     }
@@ -35,16 +47,16 @@
   "daily": [
     {
       "date": "2026-06-05",
-      "hour": 0,
-      "targetsHit": 25,
-      "targetsDestroyed": 6,
-      "personnelCasualties": 2
+      "hour": 2,
+      "targetsHit": 111,
+      "targetsDestroyed": 27,
+      "personnelCasualties": 17
     },
     {
       "date": "2026-06-04",
       "hour": 23,
-      "targetsHit": 1507,
-      "targetsDestroyed": 586,
+      "targetsHit": 1539,
+      "targetsDestroyed": 611,
       "personnelCasualties": 382
     },
     {
@@ -114,9 +126,9 @@
   "monthly": [
     {
       "date": "2026-06-01",
-      "targetsHit": 6486,
-      "targetsDestroyed": 2620,
-      "personnelCasualties": 1350
+      "targetsHit": 6604,
+      "targetsDestroyed": 2666,
+      "personnelCasualties": 1365
     },
     {
       "date": "2026-05-01",
