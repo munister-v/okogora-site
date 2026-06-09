@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-06-09T10:04:21.806Z",
+  "generatedAt": "2026-06-09T13:18:29.459Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "7",
-    "occupiedKm2": 116866.035,
-    "occupiedPercent": 19.358,
-    "diffKm2": -5.5212309033086,
-    "text": "23:24:21 Ворог просунувся поблизу Кривої Луки ."
+    "day": "8",
+    "occupiedKm2": 116871.301,
+    "occupiedPercent": 19.359,
+    "diffKm2": -5.265541601053,
+    "text": "23:58:22 Ворог просунувся поблизу Зеленого та Гуляйполя ."
   },
   "rows": [
+    {
+      "day": "8",
+      "occupiedKm2": 116871.301,
+      "occupiedPercent": 19.359,
+      "diffKm2": -5.265541601053,
+      "text": "23:58:22 Ворог просунувся поблизу Зеленого та Гуляйполя ."
+    },
     {
       "day": "7",
       "occupiedKm2": 116866.035,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.357,
       "diffKm2": -1.4802154421195,
       "text": "23:43:45 Ворог просунувся поблизу Василівки ."
-    },
-    {
-      "day": "8",
-      "occupiedKm2": 116857.346,
-      "occupiedPercent": 19.357,
-      "diffKm2": -1.5418070399901,
-      "text": "22:33:12 Ворог просунувся поблизу Голубівки та Діброви ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": -14.580263576193868,
+  "netChangeKm2": -17.37703732226517,
   "maxAbsDiffKm2": 5.5212309033086,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
