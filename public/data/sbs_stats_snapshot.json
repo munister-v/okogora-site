@@ -1,98 +1,45 @@
 {
-  "generatedAt": "2026-06-14T19:54:13.096Z",
+  "generatedAt": "2026-06-14T21:36:11.060Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
-  "latestDate": "2026-06-14",
-  "latestHour": 22,
-  "collectedAt": "2026-06-14T19:46:00.008Z",
+  "latestDate": "2026-06-15",
+  "latestHour": 0,
+  "collectedAt": "2026-06-14T21:26:00.009Z",
   "summary": {
-    "personnelKilled": 139,
-    "personnelWounded": 165,
-    "personnelCasualties": 304,
-    "targetsHit": 1677,
-    "targetsDestroyed": 676
+    "personnelKilled": 0,
+    "personnelWounded": 0,
+    "personnelCasualties": 0,
+    "targetsHit": 9,
+    "targetsDestroyed": 0
   },
   "categories": [
     {
-      "id": 25,
-      "label": "Крила противника",
-      "hit": 307,
-      "destroyed": 298
+      "id": 22,
+      "label": "Бліндажі",
+      "hit": 6,
+      "destroyed": 0
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 324,
-      "destroyed": 8
-    },
-    {
-      "id": 7,
-      "label": "Легка / важка техніка",
-      "hit": 130,
-      "destroyed": 26
-    },
-    {
-      "id": 22,
-      "label": "Бліндажі",
-      "hit": 152,
-      "destroyed": 2
-    },
-    {
-      "id": 18,
-      "label": "Мотоцикли / багі",
-      "hit": 55,
-      "destroyed": 20
-    },
-    {
-      "id": 30,
-      "label": "Shahed",
-      "hit": 15,
-      "destroyed": 14
-    },
-    {
-      "id": 3,
-      "label": "Гармати / гаубиці",
-      "hit": 14,
-      "destroyed": 3
-    },
-    {
-      "id": 31,
-      "label": "Gerbera",
-      "hit": 7,
-      "destroyed": 7
-    },
-    {
-      "id": 2,
-      "label": "ББМ / БМП / БТР",
       "hit": 3,
-      "destroyed": 1
-    },
-    {
-      "id": 4,
-      "label": "Самохідна артилерія",
-      "hit": 3,
-      "destroyed": 0
-    },
-    {
-      "id": 1,
-      "label": "Танки",
-      "hit": 1,
-      "destroyed": 0
-    },
-    {
-      "id": 32,
-      "label": "ЗРК / ППО",
-      "hit": 1,
       "destroyed": 0
     }
   ],
   "daily": [
     {
+      "date": "2026-06-15",
+      "hour": 0,
+      "targetsHit": 9,
+      "targetsDestroyed": 0,
+      "personnelCasualties": 0
+    },
+    {
       "date": "2026-06-14",
-      "hour": 22,
-      "targetsHit": 1677,
-      "targetsDestroyed": 676,
-      "personnelCasualties": 304
+      "hour": 23,
+      "targetsHit": 1801,
+      "targetsDestroyed": 743,
+      "personnelCasualties": 331
     },
     {
       "date": "2026-06-13",
@@ -161,9 +108,9 @@
   "monthly": [
     {
       "date": "2026-06-01",
-      "targetsHit": 22465,
-      "targetsDestroyed": 9233,
-      "personnelCasualties": 4368
+      "targetsHit": 22598,
+      "targetsDestroyed": 9300,
+      "personnelCasualties": 4395
     },
     {
       "date": "2026-05-01",
