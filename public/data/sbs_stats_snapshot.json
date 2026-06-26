@@ -1,44 +1,62 @@
 {
-  "generatedAt": "2026-06-26T21:37:46.751Z",
+  "generatedAt": "2026-06-26T23:20:25.146Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-06-27",
-  "latestHour": 0,
-  "collectedAt": "2026-06-26T21:26:00.007Z",
+  "latestHour": 2,
+  "collectedAt": "2026-06-26T23:16:00.005Z",
   "summary": {
     "personnelKilled": 0,
-    "personnelWounded": 0,
-    "personnelCasualties": 0,
-    "targetsHit": 6,
-    "targetsDestroyed": 2
+    "personnelWounded": 2,
+    "personnelCasualties": 2,
+    "targetsHit": 72,
+    "targetsDestroyed": 8
   },
   "categories": [
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 4,
+      "hit": 39,
       "destroyed": 1
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 2,
+      "hit": 16,
       "destroyed": 1
+    },
+    {
+      "id": 7,
+      "label": "Легка / важка техніка",
+      "hit": 3,
+      "destroyed": 1
+    },
+    {
+      "id": 30,
+      "label": "Shahed",
+      "hit": 2,
+      "destroyed": 2
+    },
+    {
+      "id": 3,
+      "label": "Гармати / гаубиці",
+      "hit": 1,
+      "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-06-27",
-      "hour": 0,
-      "targetsHit": 6,
-      "targetsDestroyed": 2,
-      "personnelCasualties": 0
+      "hour": 2,
+      "targetsHit": 72,
+      "targetsDestroyed": 8,
+      "personnelCasualties": 2
     },
     {
       "date": "2026-06-26",
       "hour": 23,
-      "targetsHit": 1744,
-      "targetsDestroyed": 666,
+      "targetsHit": 1766,
+      "targetsDestroyed": 682,
       "personnelCasualties": 372
     },
     {
@@ -108,9 +126,9 @@
   "monthly": [
     {
       "date": "2026-06-01",
-      "targetsHit": 43182,
-      "targetsDestroyed": 17556,
-      "personnelCasualties": 8362
+      "targetsHit": 43270,
+      "targetsDestroyed": 17578,
+      "personnelCasualties": 8364
     },
     {
       "date": "2026-05-01",
