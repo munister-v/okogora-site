@@ -1,86 +1,63 @@
 {
-  "generatedAt": "2026-07-03T20:20:56.021Z",
+  "generatedAt": "2026-07-03T22:13:47.247Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
-  "latestDate": "2026-07-03",
-  "latestHour": 23,
-  "collectedAt": "2026-07-03T20:06:00.010Z",
+  "latestDate": "2026-07-04",
+  "latestHour": 1,
+  "collectedAt": "2026-07-03T22:06:00.008Z",
   "summary": {
-    "personnelKilled": 133,
-    "personnelWounded": 164,
-    "personnelCasualties": 297,
-    "targetsHit": 1480,
-    "targetsDestroyed": 513
+    "personnelKilled": 4,
+    "personnelWounded": 0,
+    "personnelCasualties": 4,
+    "targetsHit": 29,
+    "targetsDestroyed": 9
   },
   "categories": [
     {
-      "id": 21,
-      "label": "Укриття",
-      "hit": 354,
-      "destroyed": 12
+      "id": 22,
+      "label": "Бліндажі",
+      "hit": 8,
+      "destroyed": 0
     },
     {
-      "id": 25,
-      "label": "Крила противника",
-      "hit": 169,
-      "destroyed": 165
+      "id": 21,
+      "label": "Укриття",
+      "hit": 6,
+      "destroyed": 0
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 99,
-      "destroyed": 27
-    },
-    {
-      "id": 22,
-      "label": "Бліндажі",
-      "hit": 117,
+      "hit": 1,
       "destroyed": 1
     },
     {
-      "id": 18,
-      "label": "Мотоцикли / багі",
-      "hit": 44,
-      "destroyed": 12
+      "id": 25,
+      "label": "Крила противника",
+      "hit": 1,
+      "destroyed": 1
     },
     {
       "id": 30,
       "label": "Shahed",
-      "hit": 14,
-      "destroyed": 14
-    },
-    {
-      "id": 3,
-      "label": "Гармати / гаубиці",
-      "hit": 17,
-      "destroyed": 6
-    },
-    {
-      "id": 31,
-      "label": "Gerbera",
-      "hit": 5,
-      "destroyed": 4
-    },
-    {
-      "id": 2,
-      "label": "ББМ / БМП / БТР",
-      "hit": 3,
-      "destroyed": 0
-    },
-    {
-      "id": 4,
-      "label": "Самохідна артилерія",
       "hit": 1,
       "destroyed": 0
     }
   ],
   "daily": [
     {
+      "date": "2026-07-04",
+      "hour": 1,
+      "targetsHit": 29,
+      "targetsDestroyed": 9,
+      "personnelCasualties": 4
+    },
+    {
       "date": "2026-07-03",
       "hour": 23,
-      "targetsHit": 1480,
-      "targetsDestroyed": 513,
-      "personnelCasualties": 297
+      "targetsHit": 1562,
+      "targetsDestroyed": 545,
+      "personnelCasualties": 304
     },
     {
       "date": "2026-07-02",
@@ -149,9 +126,9 @@
   "monthly": [
     {
       "date": "2026-07-01",
-      "targetsHit": 4742,
-      "targetsDestroyed": 1755,
-      "personnelCasualties": 939
+      "targetsHit": 4853,
+      "targetsDestroyed": 1796,
+      "personnelCasualties": 950
     },
     {
       "date": "2026-06-01",
