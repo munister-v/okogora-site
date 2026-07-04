@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-07-04T21:14:39.586Z",
+  "generatedAt": "2026-07-04T23:15:20.333Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "3",
-    "occupiedKm2": 116937.629,
+    "day": "4-5",
+    "occupiedKm2": 116938.559,
     "occupiedPercent": 19.37,
-    "diffKm2": -2.0004512794694,
-    "text": "15:16:50 Ворог просунувся поблизу Кривої Луки ."
+    "diffKm2": -0.93010781284829,
+    "text": "00:47:28 Ворог просунувся у Родинському ."
   },
   "rows": [
+    {
+      "day": "4-5",
+      "occupiedKm2": 116938.559,
+      "occupiedPercent": 19.37,
+      "diffKm2": -0.93010781284829,
+      "text": "00:47:28 Ворог просунувся у Родинському ."
+    },
     {
       "day": "3",
       "occupiedKm2": 116937.629,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.356,
       "diffKm2": -0.15290195241687,
       "text": "23:29:12 Ворог просунувся у Родинському ."
-    },
-    {
-      "day": "3",
-      "occupiedKm2": 116856.901,
-      "occupiedPercent": 19.356,
-      "diffKm2": -1.1443851331424,
-      "text": "22:57:38 Ворог просунувся поблизу Іллінівки ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": -23.0194791233517,
+  "netChangeKm2": -20.020860561242493,
   "maxAbsDiffKm2": 11.643887191167,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
