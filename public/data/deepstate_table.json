@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-07-08T14:42:08.681Z",
+  "generatedAt": "2026-07-08T17:52:44.564Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "6",
-    "occupiedKm2": 116944.585,
-    "occupiedPercent": 19.371,
-    "diffKm2": -6.0258398220903,
-    "text": "23:23:33 Ворог просунувся поблизу Пазено ."
+    "day": "7",
+    "occupiedKm2": 116950.665,
+    "occupiedPercent": 19.372,
+    "diffKm2": -6.0797156049375,
+    "text": "23:32:54 Ворог просунувся поблизу Предтечиного ."
   },
   "rows": [
+    {
+      "day": "7",
+      "occupiedKm2": 116950.665,
+      "occupiedPercent": 19.372,
+      "diffKm2": -6.0797156049375,
+      "text": "23:32:54 Ворог просунувся поблизу Предтечиного ."
+    },
     {
       "day": "6",
       "occupiedKm2": 116944.585,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.357,
       "diffKm2": -1.9957187715918,
       "text": "23:52:30 Ворог просунувся поблизу Предтечиного ."
-    },
-    {
-      "day": "5",
-      "occupiedKm2": 116858.518,
-      "occupiedPercent": 19.357,
-      "diffKm2": -1.464305949441,
-      "text": "23:42:25 Ворог просунувся поблизу Маркового ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": -22.899725295603293,
+  "netChangeKm2": -26.837881625382593,
   "maxAbsDiffKm2": 11.643887191167,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
