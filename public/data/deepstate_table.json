@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-07-10T15:03:58.124Z",
+  "generatedAt": "2026-07-10T18:02:28.847Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "9",
-    "occupiedKm2": 116956.469,
+    "day": "10",
+    "occupiedKm2": 116959.141,
     "occupiedPercent": 19.373,
-    "diffKm2": -2.0673596114211,
-    "text": "23:12:00 Ворог просунувся поблизу Бочкового ."
+    "diffKm2": -2.6728336591186,
+    "text": "20:09:04 Ворог просунувся поблизу Міньківки ."
   },
   "rows": [
+    {
+      "day": "10",
+      "occupiedKm2": 116959.141,
+      "occupiedPercent": 19.373,
+      "diffKm2": -2.6728336591186,
+      "text": "20:09:04 Ворог просунувся поблизу Міньківки ."
+    },
     {
       "day": "9",
       "occupiedKm2": 116956.469,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.359,
       "diffKm2": -0.11398790747626,
       "text": "22:35:11 Ворог просунувся у Родинському ."
-    },
-    {
-      "day": "8",
-      "occupiedKm2": 116871.301,
-      "occupiedPercent": 19.359,
-      "diffKm2": -5.265541601053,
-      "text": "23:58:22 Ворог просунувся поблизу Зеленого та Гуляйполя ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": -18.96796035095749,
+  "netChangeKm2": -23.512596300628392,
   "maxAbsDiffKm2": 6.0797156049375,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
