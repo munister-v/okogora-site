@@ -1,92 +1,57 @@
 {
-  "generatedAt": "2026-07-11T21:01:34.474Z",
+  "generatedAt": "2026-07-11T22:02:20.511Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
-  "latestDate": "2026-07-11",
-  "latestHour": 23,
-  "collectedAt": "2026-07-11T20:56:00.006Z",
+  "latestDate": "2026-07-12",
+  "latestHour": 0,
+  "collectedAt": "2026-07-11T21:56:00.013Z",
   "summary": {
-    "personnelKilled": 160,
-    "personnelWounded": 166,
-    "personnelCasualties": 326,
-    "targetsHit": 1635,
-    "targetsDestroyed": 635
+    "personnelKilled": 3,
+    "personnelWounded": 2,
+    "personnelCasualties": 5,
+    "targetsHit": 21,
+    "targetsDestroyed": 6
   },
   "categories": [
     {
-      "id": 25,
-      "label": "Крила противника",
-      "hit": 221,
-      "destroyed": 213
+      "id": 22,
+      "label": "Бліндажі",
+      "hit": 7,
+      "destroyed": 0
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 321,
-      "destroyed": 12
-    },
-    {
-      "id": 7,
-      "label": "Легка / важка техніка",
-      "hit": 127,
-      "destroyed": 27
-    },
-    {
-      "id": 22,
-      "label": "Бліндажі",
-      "hit": 129,
-      "destroyed": 2
-    },
-    {
-      "id": 30,
-      "label": "Shahed",
-      "hit": 31,
-      "destroyed": 30
-    },
-    {
-      "id": 18,
-      "label": "Мотоцикли / багі",
-      "hit": 43,
-      "destroyed": 16
-    },
-    {
-      "id": 31,
-      "label": "Gerbera",
-      "hit": 18,
-      "destroyed": 17
-    },
-    {
-      "id": 3,
-      "label": "Гармати / гаубиці",
-      "hit": 11,
-      "destroyed": 2
-    },
-    {
-      "id": 2,
-      "label": "ББМ / БМП / БТР",
       "hit": 2,
       "destroyed": 0
     },
     {
-      "id": 1,
-      "label": "Танки",
+      "id": 3,
+      "label": "Гармати / гаубиці",
       "hit": 1,
       "destroyed": 0
     },
     {
-      "id": 4,
-      "label": "Самохідна артилерія",
+      "id": 7,
+      "label": "Легка / важка техніка",
       "hit": 1,
       "destroyed": 0
     }
   ],
   "daily": [
     {
+      "date": "2026-07-12",
+      "hour": 0,
+      "targetsHit": 21,
+      "targetsDestroyed": 6,
+      "personnelCasualties": 5
+    },
+    {
       "date": "2026-07-11",
       "hour": 23,
-      "targetsHit": 1635,
-      "targetsDestroyed": 635,
-      "personnelCasualties": 326
+      "targetsHit": 1605,
+      "targetsDestroyed": 601,
+      "personnelCasualties": 335
     },
     {
       "date": "2026-07-10",
@@ -155,9 +120,9 @@
   "monthly": [
     {
       "date": "2026-07-01",
-      "targetsHit": 18016,
-      "targetsDestroyed": 7125,
-      "personnelCasualties": 3759
+      "targetsHit": 18007,
+      "targetsDestroyed": 7097,
+      "personnelCasualties": 3773
     },
     {
       "date": "2026-06-01",
