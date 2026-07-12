@@ -1,28 +1,40 @@
 {
-  "generatedAt": "2026-07-12T22:04:13.010Z",
+  "generatedAt": "2026-07-12T23:04:16.040Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-07-13",
-  "latestHour": 0,
-  "collectedAt": "2026-07-12T21:56:00.006Z",
+  "latestHour": 1,
+  "collectedAt": "2026-07-12T22:56:00.015Z",
   "summary": {
-    "personnelKilled": 1,
-    "personnelWounded": 1,
-    "personnelCasualties": 2,
-    "targetsHit": 20,
-    "targetsDestroyed": 3
+    "personnelKilled": 6,
+    "personnelWounded": 2,
+    "personnelCasualties": 8,
+    "targetsHit": 51,
+    "targetsDestroyed": 14
   },
   "categories": [
     {
-      "id": 21,
-      "label": "Укриття",
-      "hit": 5,
-      "destroyed": 1
-    },
-    {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 6,
+      "hit": 14,
+      "destroyed": 0
+    },
+    {
+      "id": 21,
+      "label": "Укриття",
+      "hit": 10,
+      "destroyed": 2
+    },
+    {
+      "id": 1,
+      "label": "Танки",
+      "hit": 1,
+      "destroyed": 0
+    },
+    {
+      "id": 3,
+      "label": "Гармати / гаубиці",
+      "hit": 1,
       "destroyed": 0
     },
     {
@@ -35,16 +47,16 @@
   "daily": [
     {
       "date": "2026-07-13",
-      "hour": 0,
-      "targetsHit": 20,
-      "targetsDestroyed": 3,
-      "personnelCasualties": 2
+      "hour": 1,
+      "targetsHit": 51,
+      "targetsDestroyed": 14,
+      "personnelCasualties": 8
     },
     {
       "date": "2026-07-12",
       "hour": 23,
-      "targetsHit": 1676,
-      "targetsDestroyed": 673,
+      "targetsHit": 1685,
+      "targetsDestroyed": 679,
       "personnelCasualties": 417
     },
     {
@@ -114,9 +126,9 @@
   "monthly": [
     {
       "date": "2026-07-01",
-      "targetsHit": 19731,
-      "targetsDestroyed": 7806,
-      "personnelCasualties": 4182
+      "targetsHit": 19771,
+      "targetsDestroyed": 7823,
+      "personnelCasualties": 4188
     },
     {
       "date": "2026-06-01",
