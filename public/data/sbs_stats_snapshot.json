@@ -1,47 +1,59 @@
 {
-  "generatedAt": "2026-07-16T06:28:15.373Z",
+  "generatedAt": "2026-07-16T09:23:49.246Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-07-16",
-  "latestHour": 9,
-  "collectedAt": "2026-07-16T06:16:00.010Z",
+  "latestHour": 12,
+  "collectedAt": "2026-07-16T09:16:00.056Z",
   "summary": {
-    "personnelKilled": 56,
-    "personnelWounded": 67,
-    "personnelCasualties": 123,
-    "targetsHit": 537,
-    "targetsDestroyed": 193
+    "personnelKilled": 81,
+    "personnelWounded": 112,
+    "personnelCasualties": 193,
+    "targetsHit": 773,
+    "targetsDestroyed": 267
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 103,
-      "destroyed": 2
+      "hit": 151,
+      "destroyed": 3
     },
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 40,
-      "destroyed": 37
-    },
-    {
-      "id": 22,
-      "label": "Бліндажі",
-      "hit": 54,
-      "destroyed": 1
+      "hit": 53,
+      "destroyed": 48
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 45,
-      "destroyed": 6
+      "hit": 62,
+      "destroyed": 8
+    },
+    {
+      "id": 22,
+      "label": "Бліндажі",
+      "hit": 67,
+      "destroyed": 2
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 18,
-      "destroyed": 5
+      "hit": 31,
+      "destroyed": 9
+    },
+    {
+      "id": 31,
+      "label": "Gerbera",
+      "hit": 5,
+      "destroyed": 4
+    },
+    {
+      "id": 3,
+      "label": "Гармати / гаубиці",
+      "hit": 8,
+      "destroyed": 0
     },
     {
       "id": 30,
@@ -56,20 +68,14 @@
       "destroyed": 1
     },
     {
-      "id": 3,
-      "label": "Гармати / гаубиці",
-      "hit": 3,
+      "id": 4,
+      "label": "Самохідна артилерія",
+      "hit": 1,
       "destroyed": 0
     },
     {
-      "id": 31,
-      "label": "Gerbera",
-      "hit": 2,
-      "destroyed": 1
-    },
-    {
-      "id": 4,
-      "label": "Самохідна артилерія",
+      "id": 32,
+      "label": "ЗРК / ППО",
       "hit": 1,
       "destroyed": 0
     }
@@ -77,10 +83,10 @@
   "daily": [
     {
       "date": "2026-07-16",
-      "hour": 9,
-      "targetsHit": 537,
-      "targetsDestroyed": 193,
-      "personnelCasualties": 123
+      "hour": 12,
+      "targetsHit": 773,
+      "targetsDestroyed": 267,
+      "personnelCasualties": 193
     },
     {
       "date": "2026-07-15",
@@ -149,9 +155,9 @@
   "monthly": [
     {
       "date": "2026-07-01",
-      "targetsHit": 25291,
-      "targetsDestroyed": 10041,
-      "personnelCasualties": 5376
+      "targetsHit": 25527,
+      "targetsDestroyed": 10115,
+      "personnelCasualties": 5446
     },
     {
       "date": "2026-06-01",
