@@ -1,47 +1,47 @@
 {
-  "generatedAt": "2026-07-21T16:38:51.695Z",
+  "generatedAt": "2026-07-21T18:23:50.526Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-07-21",
-  "latestHour": 19,
-  "collectedAt": "2026-07-21T16:26:00.006Z",
+  "latestHour": 21,
+  "collectedAt": "2026-07-21T18:16:00.008Z",
   "summary": {
-    "personnelKilled": 146,
-    "personnelWounded": 197,
-    "personnelCasualties": 343,
-    "targetsHit": 1528,
-    "targetsDestroyed": 540
+    "personnelKilled": 161,
+    "personnelWounded": 214,
+    "personnelCasualties": 375,
+    "targetsHit": 1668,
+    "targetsDestroyed": 602
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 384,
+      "hit": 418,
       "destroyed": 13
     },
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 181,
-      "destroyed": 170
+      "hit": 210,
+      "destroyed": 199
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 121,
+      "hit": 130,
       "destroyed": 0
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 82,
+      "hit": 86,
       "destroyed": 21
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 48,
-      "destroyed": 10
+      "hit": 51,
+      "destroyed": 14
     },
     {
       "id": 30,
@@ -71,10 +71,10 @@
   "daily": [
     {
       "date": "2026-07-21",
-      "hour": 19,
-      "targetsHit": 1528,
-      "targetsDestroyed": 540,
-      "personnelCasualties": 343
+      "hour": 21,
+      "targetsHit": 1668,
+      "targetsDestroyed": 602,
+      "personnelCasualties": 375
     },
     {
       "date": "2026-07-20",
@@ -143,9 +143,9 @@
   "monthly": [
     {
       "date": "2026-07-01",
-      "targetsHit": 35696,
-      "targetsDestroyed": 14095,
-      "personnelCasualties": 7557
+      "targetsHit": 35836,
+      "targetsDestroyed": 14157,
+      "personnelCasualties": 7589
     },
     {
       "date": "2026-06-01",
