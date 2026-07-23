@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-07-23T10:35:21.913Z",
+  "generatedAt": "2026-07-23T14:34:54.246Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "22",
-    "occupiedKm2": 116954.164,
-    "occupiedPercent": 19.373,
-    "diffKm2": -0.56909206751152,
-    "text": "14:07:19 Ворог просунувся поблизу Никанорівки ."
+    "day": "23",
+    "occupiedKm2": 116947.475,
+    "occupiedPercent": 19.371,
+    "diffKm2": 6.6894454589201,
+    "text": "16:40:04 Сили Оборони України відкинули ворога поблизу Філії ."
   },
   "rows": [
+    {
+      "day": "23",
+      "occupiedKm2": 116947.475,
+      "occupiedPercent": 19.371,
+      "diffKm2": 6.6894454589201,
+      "text": "16:40:04 Сили Оборони України відкинули ворога поблизу Філії ."
+    },
     {
       "day": "22",
       "occupiedKm2": 116954.164,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.365,
       "diffKm2": -3.4451620336768,
       "text": "17:01:48 Ворог просунувся поблизу Рясного ."
-    },
-    {
-      "day": "21",
-      "occupiedKm2": 116906.051,
-      "occupiedPercent": 19.365,
-      "diffKm2": -1.4761865024484,
-      "text": "20:56:47 Ворог просунувся поблизу Новодмитрівки ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": -25.7097606819733,
+  "netChangeKm2": -18.19204190254082,
   "maxAbsDiffKm2": 7.3027281607065,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
