@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-24T14:24:11.862Z",
-  "itemCount": 12,
+  "generatedAt": "2026-07-24T20:01:11.597Z",
+  "itemCount": 77,
   "sources": [
     {
       "id": "stormap365-russo-ukrainian-war",
@@ -35,7 +35,7 @@
       ],
       "radiusMeters": 160000,
       "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 160 км. Назва з джерела: Moscow oblast/Russia.",
-      "importedAt": "2026-07-24T14:24:11.727Z",
+      "importedAt": "2026-07-24T20:01:11.452Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -67,7 +67,7 @@
       ],
       "radiusMeters": 160000,
       "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 160 км. Назва з джерела: Russian occupation of Belarus.",
-      "importedAt": "2026-07-24T14:24:11.727Z",
+      "importedAt": "2026-07-24T20:01:11.452Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -99,7 +99,7 @@
       ],
       "radiusMeters": 122288,
       "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 122 км. Назва з джерела: Russian occupation entity on the territory of Georgia: Abkhazia.",
-      "importedAt": "2026-07-24T14:24:11.727Z",
+      "importedAt": "2026-07-24T20:01:11.452Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -131,7 +131,7 @@
       ],
       "radiusMeters": 66080,
       "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 66 км. Назва з джерела: Russian occupation entity on the territory of Georgia: South Osetia.",
-      "importedAt": "2026-07-24T14:24:11.727Z",
+      "importedAt": "2026-07-24T20:01:11.452Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -141,29 +141,29 @@
       ]
     },
     {
-      "id": "strat-stormap365-russo-ukrainian-war-5c99e94edc000014",
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00021c",
       "sourceId": "stormap365-russo-ukrainian-war",
       "sourceName": "StorMap365 / Russo-Ukrainian war",
       "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
       "mapTitle": "World on fire / StorMap365",
-      "title": "Donetsk",
-      "titleUk": "Donetsk",
+      "title": "Russian occupation entity on the territory of Moldova: Transnistria",
+      "titleUk": "Russian occupation entity on the territory of Moldova: Transnistria",
       "category": "occupation",
       "region": "",
       "layerLabel": "StorMap365 / Russo-Ukrainian war",
       "position": [
-        47.98311477901814,
-        37.78013387157868
+        47.356951263008625,
+        29.31489002929182
       ],
       "bbox": [
-        37.525537,
-        48.092113,
-        37.992383,
-        47.88752
+        28.491267,
+        48.182221,
+        29.979734000000004,
+        46.618285
       ],
-      "radiusMeters": 23282,
-      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 23 км. Назва з джерела: Donetsk.",
-      "importedAt": "2026-07-24T14:24:11.744Z",
+      "radiusMeters": 115974,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 116 км. Назва з джерела: Russian occupation entity on the territory of Moldova: Transnistria.",
+      "importedAt": "2026-07-24T20:01:11.468Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -173,29 +173,29 @@
       ]
     },
     {
-      "id": "strat-stormap365-russo-ukrainian-war-5c99e94edc000039",
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000226",
       "sourceId": "stormap365-russo-ukrainian-war",
       "sourceName": "StorMap365 / Russo-Ukrainian war",
       "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
       "mapTitle": "World on fire / StorMap365",
-      "title": "Sieverodonetsk",
-      "titleUk": "Sieverodonetsk",
+      "title": "Liberated territory of Russia from PMC Wagner",
+      "titleUk": "Liberated territory of Russia from PMC Wagner",
       "category": "occupation",
       "region": "",
       "layerLabel": "StorMap365 / Russo-Ukrainian war",
       "position": [
-        48.945226120044524,
-        38.4769365040221
+        51.21415171081346,
+        39.676126856357115
       ],
       "bbox": [
-        38.422341,
-        48.995309,
-        38.545725,
-        48.912493
+        38.31548000000001,
+        52.888082,
+        40.616928,
+        47.180455
       ],
-      "radiusMeters": 7222,
-      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 7 км. Назва з джерела: Sieverodonetsk.",
-      "importedAt": "2026-07-24T14:24:11.744Z",
+      "radiusMeters": 160000,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 160 км. Назва з джерела: Liberated territory of Russia from PMC Wagner.",
+      "importedAt": "2026-07-24T20:01:11.468Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -205,29 +205,413 @@
       ]
     },
     {
-      "id": "strat-stormap365-russo-ukrainian-war-5c99e94edc00007e",
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000238",
       "sourceId": "stormap365-russo-ukrainian-war",
       "sourceName": "StorMap365 / Russo-Ukrainian war",
       "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
       "mapTitle": "World on fire / StorMap365",
-      "title": "Mykolaivka",
-      "titleUk": "Mykolaivka",
+      "title": "Captured part of the Kherson region in 2024",
+      "titleUk": "Окупована частина Херсонської області (2024)",
       "category": "occupation",
-      "region": "",
+      "region": "Kherson",
       "layerLabel": "StorMap365 / Russo-Ukrainian war",
       "position": [
-        48.24945519300576,
-        37.32637505526772
+        46.51462519635066,
+        32.3696212953599
       ],
       "bbox": [
-        37.312836,
-        48.25278,
-        37.339542,
-        48.245491
+        32.285858,
+        46.743324,
+        33.098782,
+        46.472489
+      ],
+      "radiusMeters": 38692,
+      "note": "Зона зафіксована у шарі 2024 року. Воєнний контекст: контроль лівобережжя та вогневий вплив на дельту Дніпра. Інфраструктурний контекст: логістика через прибережні траси, переправи та вузли постачання до Криму. Оціночний радіус покриття: близько 39 км. Назва з джерела: Окупована частина Херсонської області (2024).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000239",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Zaporizhye region in 2024",
+      "titleUk": "Окупована частина Запорізької області (2024)",
+      "category": "occupation",
+      "region": "Zaporizhye",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        47.44988097441975,
+        35.877564806405516
+      ],
+      "bbox": [
+        35.350333,
+        47.784076000000006,
+        36.683881,
+        47.414428
+      ],
+      "radiusMeters": 60609,
+      "note": "Зона зафіксована у шарі 2024 року. Воєнний контекст: тиск на південному фронті та формування опорних рубежів. Інфраструктурний контекст: вплив на сухопутний коридор, траси постачання і тилові склади. Оціночний радіус покриття: близько 61 км. Назва з джерела: Окупована частина Запорізької області (2024).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00023a",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2025",
+      "titleUk": "Окупована частина Донецької області (2025)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.04688671548568,
+        37.896127345601826
+      ],
+      "bbox": [
+        37.65773,
+        49.212694,
+        38.099136,
+        48.897363
+      ],
+      "radiusMeters": 26676,
+      "note": "Зона зафіксована у шарі 2025 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 27 км. Назва з джерела: Окупована частина Донецької області (2025).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00023b",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Sumy region in 2025",
+      "titleUk": "Окупована частина Сумської області (2025)",
+      "category": "occupation",
+      "region": "Sumy",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        51.17147886166934,
+        34.98272268720781
+      ],
+      "bbox": [
+        34.735986,
+        51.235574,
+        35.471969,
+        50.686091
+      ],
+      "radiusMeters": 44816,
+      "note": "Зона зафіксована у шарі 2025 року. Воєнний контекст: активність у прикордонній зоні з ризиком диверсійного проникнення. Інфраструктурний контекст: тиск на прикордонні траси, пункти накопичення та транспортні вузли. Оціночний радіус покриття: близько 45 км. Назва з джерела: Окупована частина Сумської області (2025).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00023c",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2024",
+      "titleUk": "Окупована частина Донецької області (2024)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.34890512275898,
+        37.8709308862404
+      ],
+      "bbox": [
+        37.783442,
+        48.457141,
+        37.969585,
+        48.272862
+      ],
+      "radiusMeters": 13835,
+      "note": "Зона зафіксована у шарі 2024 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 14 км. Назва з джерела: Окупована частина Донецької області (2024).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00023d",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2024",
+      "titleUk": "Окупована частина Донецької області (2024)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.56315202668277,
+        37.912698223880525
+      ],
+      "bbox": [
+        37.81935,
+        48.693067,
+        37.989926,
+        48.472699
+      ],
+      "radiusMeters": 15434,
+      "note": "Зона зафіксована у шарі 2024 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 15 км. Назва з джерела: Окупована частина Донецької області (2024).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00023e",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2024",
+      "titleUk": "Окупована частина Донецької області (2024)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.779798458563405,
+        38.17231418736238
+      ],
+      "bbox": [
+        38.002085,
+        48.842258,
+        38.260338,
+        48.72192
+      ],
+      "radiusMeters": 12993,
+      "note": "Зона зафіксована у шарі 2024 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 13 км. Назва з джерела: Окупована частина Донецької області (2024).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00023f",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2024",
+      "titleUk": "Окупована частина Донецької області (2024)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.1096251067448,
+        38.014423113708055
+      ],
+      "bbox": [
+        37.94783100000001,
+        49.149141,
+        38.092668,
+        48.998758
+      ],
+      "radiusMeters": 11085,
+      "note": "Зона зафіксована у шарі 2024 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 11 км. Назва з джерела: Окупована частина Донецької області (2024).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000240",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2024",
+      "titleUk": "Окупована частина Харківської області (2024)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.30211833136791,
+        36.87199044993932
+      ],
+      "bbox": [
+        36.37398,
+        50.350247,
+        37.951754,
+        49.376802000000005
+      ],
+      "radiusMeters": 87763,
+      "note": "Зона зафіксована у шарі 2024 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 88 км. Назва з джерела: Окупована частина Харківської області (2024).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000241",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Luhansk region in 2024",
+      "titleUk": "Окупована частина Луганської області (2024)",
+      "category": "occupation",
+      "region": "Luhansk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.47793373725291,
+        37.90547506809204
+      ],
+      "bbox": [
+        37.835685,
+        49.573212,
+        38.259045,
+        48.861866
+      ],
+      "radiusMeters": 47578,
+      "note": "Зона зафіксована у шарі 2024 року. Воєнний контекст: закріплення рубежів і маневр резервами на східній ділянці. Інфраструктурний контекст: використання дорожньої та залізничної мережі для перекидання сил. Оціночний радіус покриття: близько 48 км. Назва з джерела: Окупована частина Луганської області (2024).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000242",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Luhansk region in 2025",
+      "titleUk": "Окупована частина Луганської області (2025)",
+      "category": "occupation",
+      "region": "Luhansk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.1809577972069,
+        37.94328874640893
+      ],
+      "bbox": [
+        37.893871,
+        49.386667,
+        38.27409,
+        48.839658
+      ],
+      "radiusMeters": 37464,
+      "note": "Зона зафіксована у шарі 2025 року. Воєнний контекст: закріплення рубежів і маневр резервами на східній ділянці. Інфраструктурний контекст: використання дорожньої та залізничної мережі для перекидання сил. Оціночний радіус покриття: близько 37 км. Назва з джерела: Окупована частина Луганської області (2025).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000244",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region, Terny",
+      "titleUk": "Окупована частина Донецької області",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.049281466147754,
+        38.04261034718126
+      ],
+      "bbox": [
+        38.00066,
+        49.147814,
+        38.098301,
+        48.998758
+      ],
+      "radiusMeters": 10111,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 10 км. Назва з джерела: Окупована частина Донецької області.",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000245",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region",
+      "titleUk": "Окупована частина Донецької області",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.360728640456365,
+        37.93982423600075
+      ],
+      "bbox": [
+        37.933771,
+        48.363829,
+        37.944727,
+        48.357775000000004
       ],
       "radiusMeters": 4000,
-      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 4 км. Назва з джерела: Mykolaivka.",
-      "importedAt": "2026-07-24T14:24:11.746Z",
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області.",
+      "importedAt": "2026-07-24T20:01:11.468Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -237,29 +621,29 @@
       ]
     },
     {
-      "id": "strat-stormap365-russo-ukrainian-war-5c99e94edc000089",
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000246",
       "sourceId": "stormap365-russo-ukrainian-war",
       "sourceName": "StorMap365 / Russo-Ukrainian war",
       "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
       "mapTitle": "World on fire / StorMap365",
-      "title": "Mykolaivka",
-      "titleUk": "Mykolaivka",
+      "title": "Captured part of the Kharkiv region",
+      "titleUk": "Окупована частина Харківської області",
       "category": "occupation",
-      "region": "",
+      "region": "Kharkiv",
       "layerLabel": "StorMap365 / Russo-Ukrainian war",
       "position": [
-        48.32084652680764,
-        37.346036788400596
+        49.8303199317865,
+        37.89441525421358
       ],
       "bbox": [
-        37.340674,
-        48.326214,
-        37.353167,
-        48.316668
+        37.6745,
+        50.015452,
+        38.095304,
+        49.594222
       ],
-      "radiusMeters": 4000,
-      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 4 км. Назва з джерела: Mykolaivka.",
-      "importedAt": "2026-07-24T14:24:11.746Z",
+      "radiusMeters": 31244,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 31 км. Назва з джерела: Окупована частина Харківської області.",
+      "importedAt": "2026-07-24T20:01:11.468Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -269,29 +653,29 @@
       ]
     },
     {
-      "id": "strat-stormap365-russo-ukrainian-war-5c99e94edc0000ee",
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000247",
       "sourceId": "stormap365-russo-ukrainian-war",
       "sourceName": "StorMap365 / Russo-Ukrainian war",
       "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
       "mapTitle": "World on fire / StorMap365",
-      "title": "Stara Mykolaivka",
-      "titleUk": "Stara Mykolaivka",
+      "title": "Captured part of the Zaporizhye region in 2025",
+      "titleUk": "Окупована частина Запорізької області (2025)",
       "category": "occupation",
-      "region": "",
+      "region": "Zaporizhye",
       "layerLabel": "StorMap365 / Russo-Ukrainian war",
       "position": [
-        48.32913294303962,
-        37.6807600186803
+        47.72627174721966,
+        36.41671638883361
       ],
       "bbox": [
-        37.671564,
-        48.337383,
-        37.693237,
-        48.322689
+        36.199687,
+        47.850644,
+        36.673973,
+        47.593303
       ],
-      "radiusMeters": 4000,
-      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 4 км. Назва з джерела: Stara Mykolaivka.",
-      "importedAt": "2026-07-24T14:24:11.748Z",
+      "radiusMeters": 25554,
+      "note": "Зона зафіксована у шарі 2025 року. Воєнний контекст: тиск на південному фронті та формування опорних рубежів. Інфраструктурний контекст: вплив на сухопутний коридор, траси постачання і тилові склади. Оціночний радіус покриття: близько 26 км. Назва з джерела: Окупована частина Запорізької області (2025).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -301,29 +685,29 @@
       ]
     },
     {
-      "id": "strat-stormap365-russo-ukrainian-war-5c99e94edc0000fa",
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000248",
       "sourceId": "stormap365-russo-ukrainian-war",
       "sourceName": "StorMap365 / Russo-Ukrainian war",
       "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
       "mapTitle": "World on fire / StorMap365",
-      "title": "Mykolaivka",
-      "titleUk": "Mykolaivka",
+      "title": "Captured part of the Zaporizhye region in 2025",
+      "titleUk": "Окупована частина Запорізької області (2025)",
       "category": "occupation",
-      "region": "",
+      "region": "Zaporizhye",
       "layerLabel": "StorMap365 / Russo-Ukrainian war",
       "position": [
-        48.8591089787165,
-        37.77404124942439
+        47.53204303548914,
+        35.461125504061044
       ],
       "bbox": [
-        37.741442,
-        48.879866,
-        37.801425,
-        48.834733
+        35.3297181,
+        47.5787881,
+        35.985242,
+        47.454305
       ],
-      "radiusMeters": 4000,
-      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 4 км. Назва з джерела: Mykolaivka.",
-      "importedAt": "2026-07-24T14:24:11.748Z",
+      "radiusMeters": 28669,
+      "note": "Зона зафіксована у шарі 2025 року. Воєнний контекст: тиск на південному фронті та формування опорних рубежів. Інфраструктурний контекст: вплив на сухопутний коридор, траси постачання і тилові склади. Оціночний радіус покриття: близько 29 км. Назва з джерела: Окупована частина Запорізької області (2025).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -333,29 +717,29 @@
       ]
     },
     {
-      "id": "strat-stormap365-russo-ukrainian-war-5c99e94edc0000fb",
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00024b",
       "sourceId": "stormap365-russo-ukrainian-war",
       "sourceName": "StorMap365 / Russo-Ukrainian war",
       "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
       "mapTitle": "World on fire / StorMap365",
-      "title": "Novodonetske",
-      "titleUk": "Novodonetske",
+      "title": "Captured part of the Mykolaiv region in 2022",
+      "titleUk": "Окупована частина Миколаївської області (2022)",
       "category": "occupation",
-      "region": "",
+      "region": "Mykolaiv",
       "layerLabel": "StorMap365 / Russo-Ukrainian war",
       "position": [
-        48.635612033370776,
-        36.975970087771934
+        46.50407963574381,
+        31.70865027452494
       ],
       "bbox": [
-        36.941004,
-        48.65363200000001,
-        36.998647,
-        48.617509
+        31.511981000000002,
+        46.580028,
+        31.860316,
+        46.372304
       ],
-      "radiusMeters": 4000,
-      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 4 км. Назва з джерела: Novodonetske.",
-      "importedAt": "2026-07-24T14:24:11.748Z",
+      "radiusMeters": 19782,
+      "note": "Зона зафіксована у шарі 2022 року. Воєнний контекст: вплив на оборону півдня та підходи до чорноморського узбережжя. Інфраструктурний контекст: контроль прибережної інфраструктури, доріг та тилового забезпечення. Оціночний радіус покриття: близько 20 км. Назва з джерела: Окупована частина Миколаївської області (2022).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
@@ -365,29 +749,1725 @@
       ]
     },
     {
-      "id": "strat-stormap365-russo-ukrainian-war-5c99e94edc00010f",
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000252",
       "sourceId": "stormap365-russo-ukrainian-war",
       "sourceName": "StorMap365 / Russo-Ukrainian war",
       "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
       "mapTitle": "World on fire / StorMap365",
-      "title": "Mykolaivka",
-      "titleUk": "Mykolaivka",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.45048416246452,
+        37.266369016315764
+      ],
+      "bbox": [
+        37.225191,
+        48.466796,
+        37.335114,
+        48.425351
+      ],
+      "radiusMeters": 5228,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 5 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000253",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Zaporizhye region in 2026",
+      "titleUk": "Окупована частина Запорізької області (2026)",
+      "category": "occupation",
+      "region": "Zaporizhye",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        47.751185868108095,
+        36.23821810094042
+      ],
+      "bbox": [
+        36.191866,
+        47.818875,
+        36.35934600000001,
+        47.723913
+      ],
+      "radiusMeters": 9181,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на південному фронті та формування опорних рубежів. Інфраструктурний контекст: вплив на сухопутний коридор, траси постачання і тилові склади. Оціночний радіус покриття: близько 9 км. Назва з джерела: Окупована частина Запорізької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000254",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Zaporizhye region in 2026",
+      "titleUk": "Окупована частина Запорізької області (2026)",
+      "category": "occupation",
+      "region": "Zaporizhye",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        47.55101254074849,
+        35.496734523255974
+      ],
+      "bbox": [
+        35.486008,
+        47.558151,
+        35.506565,
+        47.542956
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на південному фронті та формування опорних рубежів. Інфраструктурний контекст: вплив на сухопутний коридор, траси постачання і тилові склади. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Запорізької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000255",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.48538587691399,
+        37.776526359479156
+      ],
+      "bbox": [
+        37.742355,
+        49.506195,
+        37.81219,
+        49.45897
+      ],
+      "radiusMeters": 4082,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.468Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000256",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Zaporizhye region in 2026",
+      "titleUk": "Окупована частина Запорізької області (2026)",
+      "category": "occupation",
+      "region": "Zaporizhye",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        47.6226020455475,
+        36.17950610636567
+      ],
+      "bbox": [
+        36.058845,
+        47.723913,
+        36.288773000000006,
+        47.532589
+      ],
+      "radiusMeters": 15348,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на південному фронті та формування опорних рубежів. Інфраструктурний контекст: вплив на сухопутний коридор, траси постачання і тилові склади. Оціночний радіус покриття: близько 15 км. Назва з джерела: Окупована частина Запорізької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000257",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.48681841559472,
+        37.38707893370189
+      ],
+      "bbox": [
+        37.362972,
+        48.49965,
+        37.416579,
+        48.468717
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000258",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.00240537034782,
+        37.93803540668894
+      ],
+      "bbox": [
+        37.91902,
+        49.0098,
+        37.961193,
+        48.993526
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000259",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.437818001671396,
+        37.44874327155891
+      ],
+      "bbox": [
+        37.375938,
+        50.4595,
+        37.490766,
+        50.420723
+      ],
+      "radiusMeters": 5160,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 5 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00025a",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.31472719868876,
+        37.27587345331951
+      ],
+      "bbox": [
+        37.252632,
+        48.321147,
+        37.296171,
+        48.306506
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00025b",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.86063451616291,
+        37.626884622962976
+      ],
+      "bbox": [
+        37.5939,
+        49.875712,
+        37.657855,
+        49.840513
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00025c",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Sumy region in 2026",
+      "titleUk": "Окупована частина Сумської області (2026)",
+      "category": "occupation",
+      "region": "Sumy",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.751516638519846,
+        35.429257428389505
+      ],
+      "bbox": [
+        35.368056,
+        50.86706900000001,
+        35.496974,
+        50.655402
+      ],
+      "radiusMeters": 14141,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активність у прикордонній зоні з ризиком диверсійного проникнення. Інфраструктурний контекст: тиск на прикордонні траси, пункти накопичення та транспортні вузли. Оціночний радіус покриття: близько 14 км. Назва з джерела: Окупована частина Сумської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00025d",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.25249546719821,
+        36.9891256104325
+      ],
+      "bbox": [
+        36.97130200000001,
+        48.263204,
+        37.00431,
+        48.240506
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00025e",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.32653485740094,
+        37.13716825688698
+      ],
+      "bbox": [
+        37.035307,
+        48.368000800000004,
+        37.218847,
+        48.285267
+      ],
+      "radiusMeters": 9191,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 9 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00025f",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.38845040578601,
+        37.24691433959192
+      ],
+      "bbox": [
+        37.21849,
+        48.419854,
+        37.274801,
+        48.362143
+      ],
+      "radiusMeters": 4287,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000260",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.21347003222765,
+        36.9392497923451
+      ],
+      "bbox": [
+        36.927002,
+        48.237077,
+        36.95280000000001,
+        48.181411
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000261",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.56568242961959,
+        37.83355807006498
+      ],
+      "bbox": [
+        37.828102,
+        48.57252,
+        37.837376,
+        48.55963
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000262",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Sumy region in 2026",
+      "titleUk": "Окупована частина Сумської області (2026)",
+      "category": "occupation",
+      "region": "Sumy",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        51.8469752123314,
+        34.36200806812272
+      ],
+      "bbox": [
+        34.29281,
+        51.861826,
+        34.387017,
+        51.707045
+      ],
+      "radiusMeters": 10310,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активність у прикордонній зоні з ризиком диверсійного проникнення. Інфраструктурний контекст: тиск на прикордонні траси, пункти накопичення та транспортні вузли. Оціночний радіус покриття: близько 10 км. Назва з джерела: Окупована частина Сумської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000263",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Sumy region in 2026",
+      "titleUk": "Окупована частина Сумської області (2026)",
+      "category": "occupation",
+      "region": "Sumy",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        51.26625154458899,
+        34.38605338086683
+      ],
+      "bbox": [
+        34.366687,
+        51.27353500000001,
+        34.400848,
+        51.2586641
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активність у прикордонній зоні з ризиком диверсійного проникнення. Інфраструктурний контекст: тиск на прикордонні траси, пункти накопичення та транспортні вузли. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Сумської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000264",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.671785640380925,
+        37.80212781799452
+      ],
+      "bbox": [
+        37.7196012,
+        49.741582,
+        37.860297,
+        49.606848
+      ],
+      "radiusMeters": 10137,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 10 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000265",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.47758656207895,
+        37.453088739058366
+      ],
+      "bbox": [
+        37.437908,
+        48.491579,
+        37.464503,
+        48.464389
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000266",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.37882928468855,
+        36.20993626769572
+      ],
+      "bbox": [
+        36.185996,
+        50.400458,
+        36.232957,
+        50.3603917
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000267",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Sumy region in 2026",
+      "titleUk": "Окупована частина Сумської області (2026)",
+      "category": "occupation",
+      "region": "Sumy",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.95908233400203,
+        35.34934876799617
+      ],
+      "bbox": [
+        35.300076,
+        51.019851,
+        35.404245,
+        50.896227
+      ],
+      "radiusMeters": 8725,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активність у прикордонній зоні з ризиком диверсійного проникнення. Інфраструктурний контекст: тиск на прикордонні траси, пункти накопичення та транспортні вузли. Оціночний радіус покриття: близько 9 км. Назва з джерела: Окупована частина Сумської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000268",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.753845355696086,
+        37.69516060583513
+      ],
+      "bbox": [
+        37.661654,
+        49.765977,
+        37.717048,
+        49.733927
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000269",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.33729726199544,
+        37.07969307147601
+      ],
+      "bbox": [
+        37.073958,
+        50.348275,
+        37.083356,
+        50.332663
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00026a",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.25413236534212,
+        36.90181028868762
+      ],
+      "bbox": [
+        36.894518,
+        50.2573243,
+        36.9095022,
+        50.251848
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00026b",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.354397062175764,
+        37.15499254908233
+      ],
+      "bbox": [
+        37.138561,
+        50.362837,
+        37.18016,
+        50.3458396
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00026d",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2025",
+      "titleUk": "Окупована частина Донецької області (2025)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.02227283505399,
+        36.93232474626864
+      ],
+      "bbox": [
+        36.576919,
+        48.323638,
+        37.309794,
+        47.783622
+      ],
+      "radiusMeters": 45452,
+      "note": "Зона зафіксована у шарі 2025 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 45 км. Назва з джерела: Окупована частина Донецької області (2025).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00026e",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2025",
+      "titleUk": "Окупована частина Донецької області (2025)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.84625343566703,
+        38.10937881294709
+      ],
+      "bbox": [
+        37.965867,
+        48.939884,
+        38.229396,
+        48.708156
+      ],
+      "radiusMeters": 18046,
+      "note": "Зона зафіксована у шарі 2025 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 18 км. Назва з джерела: Окупована частина Донецької області (2025).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00026f",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Lugansk region from 2014",
+      "titleUk": "Окупована частина Луганської області (2014)",
+      "category": "occupation",
+      "region": "Lugansk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.309873496217506,
+        39.21942953455574
+      ],
+      "bbox": [
+        38.416383,
+        48.7758927,
+        40.020584,
+        47.824896
+      ],
+      "radiusMeters": 89108,
+      "note": "Зона зафіксована у шарі 2014 року. Воєнний контекст: закріплення рубежів і маневр резервами на східній ділянці. Інфраструктурний контекст: використання дорожньої та залізничної мережі для перекидання сил. Оціночний радіус покриття: близько 89 км. Назва з джерела: Окупована частина Луганської області (2014).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000270",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Luhansk region",
+      "titleUk": "Окупована частина Луганської області",
+      "category": "occupation",
+      "region": "Luhansk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.28560325958474,
+        38.95114294858568
+      ],
+      "bbox": [
+        37.927876,
+        50.088337,
+        40.22779,
+        48.429294
+      ],
+      "radiusMeters": 139471,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: закріплення рубежів і маневр резервами на східній ділянці. Інфраструктурний контекст: використання дорожньої та залізничної мережі для перекидання сил. Оціночний радіус покриття: близько 139 км. Назва з джерела: Окупована частина Луганської області.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000271",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kherson region",
+      "titleUk": "Окупована частина Херсонської області",
+      "category": "occupation",
+      "region": "Kherson",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        46.56303400670868,
+        32.538849993050356
+      ],
+      "bbox": [
+        32.493359,
+        46.571901,
+        32.568176,
+        46.537935
+      ],
+      "radiusMeters": 4000,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: контроль лівобережжя та вогневий вплив на дельту Дніпра. Інфраструктурний контекст: логістика через прибережні траси, переправи та вузли постачання до Криму. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Херсонської області.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000272",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Zaporizhzhia region",
+      "titleUk": "Окупована частина Запорізької області",
+      "category": "occupation",
+      "region": "Zaporizhzhia",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        47.07742782723878,
+        35.76282611135078
+      ],
+      "bbox": [
+        34.245521,
+        47.74008,
+        37.244984,
+        46.263035
+      ],
+      "radiusMeters": 157288,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: тиск на південному фронті та формування опорних рубежів. Інфраструктурний контекст: вплив на сухопутний коридор, траси постачання і тилові склади. Оціночний радіус покриття: близько 157 км. Назва з джерела: Окупована частина Запорізької області.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000273",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Сaptured Crimea and Sevastopol",
+      "titleUk": "Окупований Крим",
+      "category": "naval",
+      "region": "Crimea",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        45.30893275178615,
+        34.3478291729129
+      ],
+      "bbox": [
+        32.477741,
+        46.22924,
+        36.64254,
+        44.388471
+      ],
+      "radiusMeters": 160000,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: стратегічний військовий плацдарм РФ на Чорному морі. Інфраструктурний контекст: вузол аеродромної, морської та складської інфраструктури. Оціночний радіус покриття: близько 160 км. Назва з джерела: Окупований Крим.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "NAVAL"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000274",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kherson region",
+      "titleUk": "Окупована частина Херсонської області",
+      "category": "occupation",
+      "region": "Kherson",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        46.51719488442417,
+        33.71451184279385
+      ],
+      "bbox": [
+        31.510433999999997,
+        47.427618,
+        35.276552,
+        45.759237
+      ],
+      "radiusMeters": 160000,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: контроль лівобережжя та вогневий вплив на дельту Дніпра. Інфраструктурний контекст: логістика через прибережні траси, переправи та вузли постачання до Криму. Оціночний радіус покриття: близько 160 км. Назва з джерела: Окупована частина Херсонської області.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000275",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Maximum Russian control before Ukrainian counterattacks",
+      "titleUk": "Maximum Russian control before Ukrainian counterattacks",
       "category": "occupation",
       "region": "",
       "layerLabel": "StorMap365 / Russo-Ukrainian war",
       "position": [
-        48.18559338026307,
-        37.38767948259886
+        47.8786928,
+        36.3877466
       ],
       "bbox": [
-        37.375813,
-        48.195493,
-        37.395896,
-        48.177781
+        36.242254,
+        47.968467,
+        36.64716,
+        47.774276
+      ],
+      "radiusMeters": 20814,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 21 км. Назва з джерела: Maximum Russian control before Ukrainian counterattacks.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000277",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2025",
+      "titleUk": "Окупована частина Донецької області (2025)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.38780303631893,
+        37.57049275177162
+      ],
+      "bbox": [
+        37.200308,
+        48.692092,
+        37.954517,
+        48.23009700000001
+      ],
+      "radiusMeters": 42445,
+      "note": "Зона зафіксована у шарі 2025 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 42 км. Назва з джерела: Окупована частина Донецької області (2025).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000278",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.472897590992396,
+        37.73457093671761
+      ],
+      "bbox": [
+        37.56078,
+        48.552885,
+        37.84749,
+        48.398527
+      ],
+      "radiusMeters": 15264,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 15 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000279",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.59309701602793,
+        37.79499264192981
+      ],
+      "bbox": [
+        37.783523,
+        48.597908,
+        37.809605,
+        48.588381
       ],
       "radiusMeters": 4000,
-      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 4 км. Назва з джерела: Mykolaivka.",
-      "importedAt": "2026-07-24T14:24:11.748Z",
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 4 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00027a",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2026",
+      "titleUk": "Окупована частина Донецької області (2026)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        48.78589510399202,
+        37.94011257984151
+      ],
+      "bbox": [
+        37.788064,
+        48.916845,
+        38.066405,
+        48.621100000000006
+      ],
+      "radiusMeters": 21696,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 22 км. Назва з джерела: Окупована частина Донецької області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00027b",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Russian control in the Russian General Staff",
+      "titleUk": "Russian control in the Russian General Staff",
+      "category": "occupation",
+      "region": "",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        47.9156119,
+        36.1166606
+      ],
+      "bbox": [
+        35.278984,
+        48.38806,
+        37.1661229,
+        47.5150818
+      ],
+      "radiusMeters": 95759,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 96 км. Назва з джерела: Russian control in the Russian General Staff.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00027c",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Russian control in the Russian General Staff",
+      "titleUk": "Russian control in the Russian General Staff",
+      "category": "occupation",
+      "region": "",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.122219,
+        37.58492
+      ],
+      "bbox": [
+        37.1069242,
+        50.260707,
+        37.8596207,
+        48.38806
+      ],
+      "radiusMeters": 120679,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 121 км. Назва з джерела: Russian control in the Russian General Staff.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00027d",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Russian control in the Russian General Staff",
+      "titleUk": "Russian control in the Russian General Staff",
+      "category": "occupation",
+      "region": "",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.1874695,
+        36.8617753
+      ],
+      "bbox": [
+        36.765786,
+        50.374143,
+        37.2556732,
+        50.1619547
+      ],
+      "radiusMeters": 23580,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 24 км. Назва з джерела: Russian control in the Russian General Staff.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00027e",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Russian control in the Russian General Staff",
+      "titleUk": "Russian control in the Russian General Staff",
+      "category": "occupation",
+      "region": "",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        51.106786,
+        35.036317
+      ],
+      "bbox": [
+        34.7130324,
+        51.17159300000001,
+        35.306256,
+        50.97205
+      ],
+      "radiusMeters": 26357,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 26 км. Назва з джерела: Russian control in the Russian General Staff.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00027f",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Sumy region in 2026",
+      "titleUk": "Окупована частина Сумської області (2026)",
+      "category": "occupation",
+      "region": "Sumy",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        51.1250993250563,
+        34.9110241042659
+      ],
+      "bbox": [
+        34.809976,
+        51.148338,
+        34.968941,
+        51.1035629
+      ],
+      "radiusMeters": 6817,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: активність у прикордонній зоні з ризиком диверсійного проникнення. Інфраструктурний контекст: тиск на прикордонні траси, пункти накопичення та транспортні вузли. Оціночний радіус покриття: близько 7 км. Назва з джерела: Окупована частина Сумської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000280",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2026",
+      "titleUk": "Окупована частина Харківської області (2026)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        50.33893978623271,
+        37.036684872834826
+      ],
+      "bbox": [
+        36.950022,
+        50.348805,
+        37.050045,
+        50.270972
+      ],
+      "radiusMeters": 6277,
+      "note": "Зона зафіксована у шарі 2026 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 6 км. Назва з джерела: Окупована частина Харківської області (2026).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000281",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Kharkiv region in 2025",
+      "titleUk": "Окупована частина Харківської області (2025)",
+      "category": "occupation",
+      "region": "Kharkiv",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        49.98701158127747,
+        37.75891483099988
+      ],
+      "bbox": [
+        36.273774,
+        50.349049,
+        37.938575,
+        49.387024
+      ],
+      "radiusMeters": 89840,
+      "note": "Зона зафіксована у шарі 2025 року. Воєнний контекст: тиск на прикордонних секторах і спроби розширення плацдармів. Інфраструктурний контекст: вплив на прикордонну логістику, магістралі та підвезення боєприпасів. Оціночний радіус покриття: близько 90 км. Назва з джерела: Окупована частина Харківської області (2025).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000283",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region from 2014",
+      "titleUk": "Окупована частина Донецької області (2014)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        47.828838725236636,
+        38.2069062924348
+      ],
+      "bbox": [
+        37.522375,
+        48.446232,
+        39.091203,
+        47.024258
+      ],
+      "radiusMeters": 110383,
+      "note": "Зона зафіксована у шарі 2014 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 110 км. Назва з джерела: Окупована частина Донецької області (2014).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000284",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region in 2024",
+      "titleUk": "Окупована частина Донецької області (2024)",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        47.99919325997861,
+        37.29389465775036
+      ],
+      "bbox": [
+        36.673973,
+        48.301772,
+        37.81634100000001,
+        47.720449
+      ],
+      "radiusMeters": 59858,
+      "note": "Зона зафіксована у шарі 2024 року. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 60 км. Назва з джерела: Окупована частина Донецької області (2024).",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000285",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Captured part of the Donetsk region",
+      "titleUk": "Окупована частина Донецької області",
+      "category": "occupation",
+      "region": "Donetsk",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        47.40267663000974,
+        37.374241082270366
+      ],
+      "bbox": [
+        36.681022,
+        48.882943,
+        38.399501,
+        46.867512
+      ],
+      "radiusMeters": 144737,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: активні наступальні дії на ключових напрямках східного фронту. Інфраструктурний контекст: контроль дорожніх вузлів, промислових зон та залізничних підходів. Оціночний радіус покриття: близько 145 км. Назва з джерела: Окупована частина Донецької області.",
+      "importedAt": "2026-07-24T20:01:11.469Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000174",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Gray zone, Kherson region",
+      "titleUk": "Gray zone, Kherson region",
+      "category": "occupation",
+      "region": "",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        46.580271768934324,
+        32.53526437443574
+      ],
+      "bbox": [
+        32.398193,
+        46.6004,
+        32.582537,
+        46.504042
+      ],
+      "radiusMeters": 9927,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 10 км. Назва з джерела: Gray zone, Kherson region.",
+      "importedAt": "2026-07-24T20:01:11.472Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000175",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Gray zone, Kherson region",
+      "titleUk": "Gray zone, Kherson region",
+      "category": "occupation",
+      "region": "",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        46.66027272491551,
+        32.80054315330513
+      ],
+      "bbox": [
+        32.719645,
+        46.781825,
+        33.158828,
+        46.627876
+      ],
+      "radiusMeters": 21086,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 21 км. Назва з джерела: Gray zone, Kherson region.",
+      "importedAt": "2026-07-24T20:01:11.472Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000176",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Gray zone, Kherson region",
+      "titleUk": "Gray zone, Kherson region",
+      "category": "occupation",
+      "region": "",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        46.771667589638234,
+        33.267054769544025
+      ],
+      "bbox": [
+        33.156361,
+        46.787741,
+        33.37816600000001,
+        46.754172000000004
+      ],
+      "radiusMeters": 9699,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 10 км. Назва з джерела: Gray zone, Kherson region.",
+      "importedAt": "2026-07-24T20:01:11.472Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c000179",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Gray zone, Kherson region",
+      "titleUk": "Gray zone, Kherson region",
+      "category": "occupation",
+      "region": "",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        46.6041093354823,
+        32.63387205678281
+      ],
+      "bbox": [
+        32.583811,
+        46.63771400000001,
+        32.721002,
+        46.576478
+      ],
+      "radiusMeters": 7007,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 7 км. Назва з джерела: Gray zone, Kherson region.",
+      "importedAt": "2026-07-24T20:01:11.472Z",
+      "tags": [
+        "EXTERNAL_LAYER",
+        "GOOGLE_MY_MAPS",
+        "RUSSIA",
+        "UKRAINE",
+        "OCCUPATION"
+      ]
+    },
+    {
+      "id": "strat-stormap365-russo-ukrainian-war-5da8b3800c00017d",
+      "sourceId": "stormap365-russo-ukrainian-war",
+      "sourceName": "StorMap365 / Russo-Ukrainian war",
+      "sourceUrl": "https://www.google.com/maps/d/u/0/viewer?mid=1eZFpbhLP0dG-D351mWczHJ0-Fg4YbQs&ll",
+      "mapTitle": "World on fire / StorMap365",
+      "title": "Gray zone, Kherson region",
+      "titleUk": "Gray zone, Kherson region",
+      "category": "occupation",
+      "region": "",
+      "layerLabel": "StorMap365 / Russo-Ukrainian war",
+      "position": [
+        46.53648932571559,
+        32.32481794417599
+      ],
+      "bbox": [
+        32.250973,
+        46.554184,
+        32.366744,
+        46.474785
+      ],
+      "radiusMeters": 7012,
+      "note": "Зона зафіксована у зовнішньому стратегічному шарі. Воєнний контекст: район окупаційної присутності та фортифікаційного закріплення. Інфраструктурний контекст: контроль транспортних коридорів, вузлів і тилового забезпечення. Оціночний радіус покриття: близько 7 км. Назва з джерела: Gray zone, Kherson region.",
+      "importedAt": "2026-07-24T20:01:11.472Z",
       "tags": [
         "EXTERNAL_LAYER",
         "GOOGLE_MY_MAPS",
