@@ -1,47 +1,47 @@
 {
-  "generatedAt": "2026-07-26T17:12:32.723Z",
+  "generatedAt": "2026-07-26T19:31:30.909Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-07-26",
-  "latestHour": 20,
-  "collectedAt": "2026-07-26T17:06:00.009Z",
+  "latestHour": 22,
+  "collectedAt": "2026-07-26T19:16:00.011Z",
   "summary": {
-    "personnelKilled": 186,
-    "personnelWounded": 161,
-    "personnelCasualties": 347,
-    "targetsHit": 1255,
-    "targetsDestroyed": 448
+    "personnelKilled": 213,
+    "personnelWounded": 176,
+    "personnelCasualties": 389,
+    "targetsHit": 1414,
+    "targetsDestroyed": 539
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 294,
-      "destroyed": 10
+      "hit": 314,
+      "destroyed": 13
     },
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 109,
-      "destroyed": 105
+      "hit": 137,
+      "destroyed": 133
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 114,
-      "destroyed": 1
+      "hit": 121,
+      "destroyed": 2
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 82,
+      "hit": 88,
       "destroyed": 20
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 40,
-      "destroyed": 9
+      "hit": 46,
+      "destroyed": 15
     },
     {
       "id": 1,
@@ -50,16 +50,16 @@
       "destroyed": 1
     },
     {
+      "id": 3,
+      "label": "Гармати / гаубиці",
+      "hit": 7,
+      "destroyed": 2
+    },
+    {
       "id": 30,
       "label": "Shahed",
       "hit": 5,
       "destroyed": 4
-    },
-    {
-      "id": 3,
-      "label": "Гармати / гаубиці",
-      "hit": 6,
-      "destroyed": 2
     },
     {
       "id": 31,
@@ -70,23 +70,23 @@
     {
       "id": 2,
       "label": "ББМ / БМП / БТР",
-      "hit": 1,
+      "hit": 2,
       "destroyed": 0
     },
     {
       "id": 4,
       "label": "Самохідна артилерія",
-      "hit": 1,
+      "hit": 2,
       "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-07-26",
-      "hour": 20,
-      "targetsHit": 1255,
-      "targetsDestroyed": 448,
-      "personnelCasualties": 347
+      "hour": 22,
+      "targetsHit": 1414,
+      "targetsDestroyed": 539,
+      "personnelCasualties": 389
     },
     {
       "date": "2026-07-25",
@@ -155,9 +155,9 @@
   "monthly": [
     {
       "date": "2026-07-01",
-      "targetsHit": 44577,
-      "targetsDestroyed": 17565,
-      "personnelCasualties": 9496
+      "targetsHit": 44736,
+      "targetsDestroyed": 17656,
+      "personnelCasualties": 9538
     },
     {
       "date": "2026-06-01",
