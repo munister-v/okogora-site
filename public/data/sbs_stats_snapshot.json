@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-07-28T22:14:17.085Z",
+  "generatedAt": "2026-07-29T00:06:56.491Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-07-29",
-  "latestHour": 1,
-  "collectedAt": "2026-07-28T22:06:00.010Z",
+  "latestHour": 2,
+  "collectedAt": "2026-07-28T23:56:00.009Z",
   "summary": {
-    "personnelKilled": 4,
-    "personnelWounded": 0,
-    "personnelCasualties": 4,
-    "targetsHit": 46,
-    "targetsDestroyed": 9
+    "personnelKilled": 14,
+    "personnelWounded": 3,
+    "personnelCasualties": 17,
+    "targetsHit": 115,
+    "targetsDestroyed": 27
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 15,
-      "destroyed": 0
+      "hit": 38,
+      "destroyed": 2
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 14,
+      "hit": 30,
       "destroyed": 0
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 2,
-      "destroyed": 0
+      "hit": 8,
+      "destroyed": 1
     },
     {
       "id": 3,
@@ -41,17 +41,17 @@
   "daily": [
     {
       "date": "2026-07-29",
-      "hour": 1,
-      "targetsHit": 46,
-      "targetsDestroyed": 9,
-      "personnelCasualties": 4
+      "hour": 2,
+      "targetsHit": 115,
+      "targetsDestroyed": 27,
+      "personnelCasualties": 17
     },
     {
       "date": "2026-07-28",
       "hour": 23,
-      "targetsHit": 1490,
-      "targetsDestroyed": 501,
-      "personnelCasualties": 344
+      "targetsHit": 1505,
+      "targetsDestroyed": 507,
+      "personnelCasualties": 345
     },
     {
       "date": "2026-07-27",
@@ -120,9 +120,9 @@
   "monthly": [
     {
       "date": "2026-07-01",
-      "targetsHit": 48302,
-      "targetsDestroyed": 18920,
-      "personnelCasualties": 10335
+      "targetsHit": 48386,
+      "targetsDestroyed": 18944,
+      "personnelCasualties": 10349
     },
     {
       "date": "2026-06-01",
