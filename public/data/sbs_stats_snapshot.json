@@ -1,23 +1,41 @@
 {
-  "generatedAt": "2026-07-30T03:20:39.152Z",
+  "generatedAt": "2026-07-30T06:37:48.245Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-07-30",
-  "latestHour": 6,
-  "collectedAt": "2026-07-30T03:16:00.009Z",
+  "latestHour": 9,
+  "collectedAt": "2026-07-30T06:26:00.006Z",
   "summary": {
-    "personnelKilled": 29,
-    "personnelWounded": 5,
-    "personnelCasualties": 34,
-    "targetsHit": 254,
-    "targetsDestroyed": 109
+    "personnelKilled": 53,
+    "personnelWounded": 36,
+    "personnelCasualties": 89,
+    "targetsHit": 469,
+    "targetsDestroyed": 184
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 57,
-      "destroyed": 3
+      "hit": 99,
+      "destroyed": 4
+    },
+    {
+      "id": 25,
+      "label": "Крила противника",
+      "hit": 26,
+      "destroyed": 26
+    },
+    {
+      "id": 7,
+      "label": "Легка / важка техніка",
+      "hit": 42,
+      "destroyed": 8
+    },
+    {
+      "id": 22,
+      "label": "Бліндажі",
+      "hit": 48,
+      "destroyed": 2
     },
     {
       "id": 30,
@@ -26,55 +44,43 @@
       "destroyed": 25
     },
     {
-      "id": 22,
-      "label": "Бліндажі",
-      "hit": 42,
-      "destroyed": 2
-    },
-    {
-      "id": 25,
-      "label": "Крила противника",
-      "hit": 15,
-      "destroyed": 15
-    },
-    {
-      "id": 7,
-      "label": "Легка / важка техніка",
-      "hit": 17,
-      "destroyed": 4
-    },
-    {
       "id": 31,
       "label": "Gerbera",
       "hit": 8,
       "destroyed": 8
     },
     {
+      "id": 18,
+      "label": "Мотоцикли / багі",
+      "hit": 11,
+      "destroyed": 3
+    },
+    {
       "id": 3,
       "label": "Гармати / гаубиці",
-      "hit": 3,
+      "hit": 4,
       "destroyed": 0
     },
     {
       "id": 1,
       "label": "Танки",
       "hit": 2,
-      "destroyed": 0
+      "destroyed": 1
     },
     {
-      "id": 18,
-      "label": "Мотоцикли / багі",
-      "hit": 1,
-      "destroyed": 0
+      "id": 2,
+      "label": "ББМ / БМП / БТР",
+      "hit": 2,
+      "destroyed": 1
     }
   ],
   "daily": [
     {
       "date": "2026-07-30",
-      "hour": 6,
-      "targetsHit": 254,
-      "targetsDestroyed": 109,
-      "personnelCasualties": 34
+      "hour": 9,
+      "targetsHit": 469,
+      "targetsDestroyed": 184,
+      "personnelCasualties": 89
     },
     {
       "date": "2026-07-29",
@@ -143,9 +149,9 @@
   "monthly": [
     {
       "date": "2026-07-01",
-      "targetsHit": 50348,
-      "targetsDestroyed": 19644,
-      "personnelCasualties": 10787
+      "targetsHit": 50563,
+      "targetsDestroyed": 19719,
+      "personnelCasualties": 10842
     },
     {
       "date": "2026-06-01",
