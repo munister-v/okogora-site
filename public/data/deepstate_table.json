@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-08-04T10:58:13.141Z",
+  "generatedAt": "2026-08-04T14:41:03.735Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "2",
-    "occupiedKm2": 116976.56,
-    "occupiedPercent": 19.376,
-    "diffKm2": -0.98044729899266,
-    "text": "21:36:47 Ворог просунувся поблизу Рясного ."
+    "day": "3",
+    "occupiedKm2": 116979.71,
+    "occupiedPercent": 19.377,
+    "diffKm2": -3.1507332655892,
+    "text": "23:02:08 Ворог просунувся поблизу Устинівки ."
   },
   "rows": [
+    {
+      "day": "3",
+      "occupiedKm2": 116979.71,
+      "occupiedPercent": 19.377,
+      "diffKm2": -3.1507332655892,
+      "text": "23:02:08 Ворог просунувся поблизу Устинівки ."
+    },
     {
       "day": "2",
       "occupiedKm2": 116976.56,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.369,
       "diffKm2": 1.8718022905523,
       "text": "15:27:08 Сили Оборони України відкинули ворога у Плавнях ."
-    },
-    {
-      "day": "1",
-      "occupiedKm2": 116937.501,
-      "occupiedPercent": 19.37,
-      "diffKm2": -2.0296822054224,
-      "text": "23:32:23 Ворог просунувся поблизу Безсалівки та у Граневі ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": -21.01443960862516,
+  "netChangeKm2": -19.49158264367716,
   "maxAbsDiffKm2": 4.7740171309706,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
