@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T15:07:18.890Z",
+  "generatedAt": "2026-08-07T17:05:16.548Z",
   "channel": "pechalbeda200",
   "sourceUrl": "https://t.me/s/pechalbeda200",
   "methodology": {
@@ -7,11 +7,11 @@
     "note": "Counts are based on public posts in Telegram web channel view. totalBySerial uses the numeric index at the start of entry text; fallback totalApproxByMaxPostId uses maximum observed channel post ID. This job should run often because the channel updates many times per day."
   },
   "counters": {
-    "today": 63,
-    "last7Days": 538,
-    "last30Days": 565,
-    "totalBySerial": 221864,
-    "totalApproxByMaxPostId": 390462
+    "today": 64,
+    "last7Days": 539,
+    "last30Days": 566,
+    "totalBySerial": 221866,
+    "totalApproxByMaxPostId": 390467
   },
   "days": [
     {
@@ -44,10 +44,17 @@
     },
     {
       "day": "2026-08-07",
-      "count": 63
+      "count": 64
     }
   ],
   "latestProofs": [
+    {
+      "id": 390467,
+      "datetime": "2026-08-07T14:50:46+00:00",
+      "url": "https://t.me/pechalbeda200/390467",
+      "dayKyiv": "2026-08-07",
+      "serial": 221866
+    },
     {
       "id": 390462,
       "datetime": "2026-08-07T14:44:10+00:00",
@@ -180,13 +187,6 @@
       "url": "https://t.me/pechalbeda200/390352",
       "dayKyiv": "2026-08-07",
       "serial": 221826
-    },
-    {
-      "id": 390350,
-      "datetime": "2026-08-07T04:28:57+00:00",
-      "url": "https://t.me/pechalbeda200/390350",
-      "dayKyiv": "2026-08-07",
-      "serial": 221824
     }
   ]
 }
