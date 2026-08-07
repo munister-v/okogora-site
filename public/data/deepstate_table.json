@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-08-07T11:09:01.804Z",
+  "generatedAt": "2026-08-07T13:41:04.304Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "5",
-    "occupiedKm2": 116990.353,
+    "day": "6",
+    "occupiedKm2": 116993.435,
     "occupiedPercent": 19.379,
-    "diffKm2": -5.5364222004137,
-    "text": "15:47:50 Ворог просунувся поблизу Нового Шахового ."
+    "diffKm2": -3.0810553406918,
+    "text": "23:03:18 Ворог просунувся поблизу Костянтинівки ."
   },
   "rows": [
+    {
+      "day": "6",
+      "occupiedKm2": 116993.435,
+      "occupiedPercent": 19.379,
+      "diffKm2": -3.0810553406918,
+      "text": "23:03:18 Ворог просунувся поблизу Костянтинівки ."
+    },
     {
       "day": "5",
       "occupiedKm2": 116990.353,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.371,
       "diffKm2": -6.0258398220903,
       "text": "23:23:33 Ворог просунувся поблизу Пазено ."
-    },
-    {
-      "day": "4-5",
-      "occupiedKm2": 116938.559,
-      "occupiedPercent": 19.37,
-      "diffKm2": -0.93010781284829,
-      "text": "00:47:28 Ворог просунувся у Родинському ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": -26.362004512004262,
+  "netChangeKm2": -27.06614936834376,
   "maxAbsDiffKm2": 5.5364222004137,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
