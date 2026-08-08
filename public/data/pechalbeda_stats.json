@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T02:19:07.158Z",
+  "generatedAt": "2026-08-08T05:08:45.593Z",
   "channel": "pechalbeda200",
   "sourceUrl": "https://t.me/s/pechalbeda200",
   "methodology": {
@@ -7,20 +7,16 @@
     "note": "Counts are based on public posts in Telegram web channel view. totalBySerial uses the numeric index at the start of entry text; fallback totalApproxByMaxPostId uses maximum observed channel post ID. This job should run often because the channel updates many times per day."
   },
   "counters": {
-    "today": 12,
-    "last7Days": 554,
-    "last30Days": 574,
-    "totalBySerial": 221956,
-    "totalApproxByMaxPostId": 390670
+    "today": 26,
+    "last7Days": 555,
+    "last30Days": 571,
+    "totalBySerial": 221986,
+    "totalApproxByMaxPostId": 390742
   },
   "days": [
     {
-      "day": "2026-07-31",
-      "count": 5
-    },
-    {
       "day": "2026-08-01",
-      "count": 71
+      "count": 59
     },
     {
       "day": "2026-08-02",
@@ -32,7 +28,7 @@
     },
     {
       "day": "2026-08-04",
-      "count": 72
+      "count": 71
     },
     {
       "day": "2026-08-05",
@@ -40,18 +36,116 @@
     },
     {
       "day": "2026-08-06",
-      "count": 59
+      "count": 61
     },
     {
       "day": "2026-08-07",
-      "count": 95
+      "count": 94
     },
     {
       "day": "2026-08-08",
-      "count": 12
+      "count": 26
     }
   ],
   "latestProofs": [
+    {
+      "id": 390742,
+      "datetime": "2026-08-08T04:57:57+00:00",
+      "url": "https://t.me/pechalbeda200/390742",
+      "dayKyiv": "2026-08-08",
+      "serial": 221986
+    },
+    {
+      "id": 390740,
+      "datetime": "2026-08-08T04:53:33+00:00",
+      "url": "https://t.me/pechalbeda200/390740",
+      "dayKyiv": "2026-08-08",
+      "serial": 221984
+    },
+    {
+      "id": 390737,
+      "datetime": "2026-08-08T04:50:12+00:00",
+      "url": "https://t.me/pechalbeda200/390737",
+      "dayKyiv": "2026-08-08",
+      "serial": 221982
+    },
+    {
+      "id": 390734,
+      "datetime": "2026-08-08T04:16:52+00:00",
+      "url": "https://t.me/pechalbeda200/390734",
+      "dayKyiv": "2026-08-08",
+      "serial": 221980
+    },
+    {
+      "id": 390730,
+      "datetime": "2026-08-08T04:14:39+00:00",
+      "url": "https://t.me/pechalbeda200/390730",
+      "dayKyiv": "2026-08-08",
+      "serial": 221978
+    },
+    {
+      "id": 390725,
+      "datetime": "2026-08-08T04:11:36+00:00",
+      "url": "https://t.me/pechalbeda200/390725",
+      "dayKyiv": "2026-08-08",
+      "serial": 221976
+    },
+    {
+      "id": 390716,
+      "datetime": "2026-08-08T04:03:37+00:00",
+      "url": "https://t.me/pechalbeda200/390716",
+      "dayKyiv": "2026-08-08",
+      "serial": 221973
+    },
+    {
+      "id": 390710,
+      "datetime": "2026-08-08T03:58:42+00:00",
+      "url": "https://t.me/pechalbeda200/390710",
+      "dayKyiv": "2026-08-08",
+      "serial": 221971
+    },
+    {
+      "id": 390703,
+      "datetime": "2026-08-08T03:51:31+00:00",
+      "url": "https://t.me/pechalbeda200/390703",
+      "dayKyiv": "2026-08-08",
+      "serial": 221969
+    },
+    {
+      "id": 390697,
+      "datetime": "2026-08-08T03:45:24+00:00",
+      "url": "https://t.me/pechalbeda200/390697",
+      "dayKyiv": "2026-08-08",
+      "serial": 221967
+    },
+    {
+      "id": 390690,
+      "datetime": "2026-08-08T03:40:08+00:00",
+      "url": "https://t.me/pechalbeda200/390690",
+      "dayKyiv": "2026-08-08",
+      "serial": 221965
+    },
+    {
+      "id": 390683,
+      "datetime": "2026-08-08T03:22:43+00:00",
+      "url": "https://t.me/pechalbeda200/390683",
+      "dayKyiv": "2026-08-08",
+      "serial": 221963
+    },
+    {
+      "id": 390676,
+      "datetime": "2026-08-08T03:02:11+00:00",
+      "url": "https://t.me/pechalbeda200/390676",
+      "dayKyiv": "2026-08-08",
+      "serial": 221960
+    },
+    {
+      "id": 390673,
+      "datetime": "2026-08-08T01:26:15+00:00",
+      "url": "https://t.me/pechalbeda200/390673",
+      "dayKyiv": "2026-08-08",
+      "serial": 221958
+    },
     {
       "id": 390670,
       "datetime": "2026-08-08T00:38:44+00:00",
@@ -74,123 +168,25 @@
       "serial": 221952
     },
     {
-      "id": 390659,
-      "datetime": "2026-08-08T00:28:23+00:00",
-      "url": "https://t.me/pechalbeda200/390659",
+      "id": 390657,
+      "datetime": "2026-08-08T00:26:01+00:00",
+      "url": "https://t.me/pechalbeda200/390657",
       "dayKyiv": "2026-08-08",
-      "serial": 221950
+      "serial": 221949
     },
     {
-      "id": 390653,
-      "datetime": "2026-08-08T00:24:20+00:00",
-      "url": "https://t.me/pechalbeda200/390653",
+      "id": 390651,
+      "datetime": "2026-08-08T00:15:36+00:00",
+      "url": "https://t.me/pechalbeda200/390651",
       "dayKyiv": "2026-08-08",
-      "serial": 221948
+      "serial": 221947
     },
     {
-      "id": 390649,
-      "datetime": "2026-08-08T00:13:34+00:00",
-      "url": "https://t.me/pechalbeda200/390649",
+      "id": 390647,
+      "datetime": "2026-08-08T00:06:27+00:00",
+      "url": "https://t.me/pechalbeda200/390647",
       "dayKyiv": "2026-08-08",
-      "serial": 221946
-    },
-    {
-      "id": 390645,
-      "datetime": "2026-08-08T00:04:50+00:00",
-      "url": "https://t.me/pechalbeda200/390645",
-      "dayKyiv": "2026-08-08",
-      "serial": 221944
-    },
-    {
-      "id": 390639,
-      "datetime": "2026-08-07T23:48:58+00:00",
-      "url": "https://t.me/pechalbeda200/390639",
-      "dayKyiv": "2026-08-08",
-      "serial": 221942
-    },
-    {
-      "id": 390632,
-      "datetime": "2026-08-07T23:39:07+00:00",
-      "url": "https://t.me/pechalbeda200/390632",
-      "dayKyiv": "2026-08-08",
-      "serial": 221940
-    },
-    {
-      "id": 390628,
-      "datetime": "2026-08-07T21:37:35+00:00",
-      "url": "https://t.me/pechalbeda200/390628",
-      "dayKyiv": "2026-08-08",
-      "serial": 221937
-    },
-    {
-      "id": 390625,
-      "datetime": "2026-08-07T21:12:48+00:00",
-      "url": "https://t.me/pechalbeda200/390625",
-      "dayKyiv": "2026-08-08",
-      "serial": 221935
-    },
-    {
-      "id": 390621,
-      "datetime": "2026-08-07T21:02:02+00:00",
-      "url": "https://t.me/pechalbeda200/390621",
-      "dayKyiv": "2026-08-08",
-      "serial": 221933
-    },
-    {
-      "id": 390617,
-      "datetime": "2026-08-07T20:51:59+00:00",
-      "url": "https://t.me/pechalbeda200/390617",
-      "dayKyiv": "2026-08-07",
-      "serial": 221931
-    },
-    {
-      "id": 390611,
-      "datetime": "2026-08-07T20:47:35+00:00",
-      "url": "https://t.me/pechalbeda200/390611",
-      "dayKyiv": "2026-08-07",
-      "serial": 221929
-    },
-    {
-      "id": 390607,
-      "datetime": "2026-08-07T20:42:44+00:00",
-      "url": "https://t.me/pechalbeda200/390607",
-      "dayKyiv": "2026-08-07",
-      "serial": 221927
-    },
-    {
-      "id": 390602,
-      "datetime": "2026-08-07T20:37:29+00:00",
-      "url": "https://t.me/pechalbeda200/390602",
-      "dayKyiv": "2026-08-07",
-      "serial": 221925
-    },
-    {
-      "id": 390598,
-      "datetime": "2026-08-07T20:32:19+00:00",
-      "url": "https://t.me/pechalbeda200/390598",
-      "dayKyiv": "2026-08-07",
-      "serial": 221923
-    },
-    {
-      "id": 390594,
-      "datetime": "2026-08-07T20:24:06+00:00",
-      "url": "https://t.me/pechalbeda200/390594",
-      "dayKyiv": "2026-08-07",
-      "serial": 221921
-    },
-    {
-      "id": 390591,
-      "datetime": "2026-08-07T20:21:31+00:00",
-      "url": "https://t.me/pechalbeda200/390591",
-      "dayKyiv": "2026-08-07",
-      "serial": 221919
-    },
-    {
-      "id": 390587,
-      "datetime": "2026-08-07T20:16:19+00:00",
-      "url": "https://t.me/pechalbeda200/390587",
-      "dayKyiv": "2026-08-07",
-      "serial": 221916
+      "serial": 221945
     }
   ]
 }
