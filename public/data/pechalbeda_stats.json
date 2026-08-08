@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T07:12:03.205Z",
+  "generatedAt": "2026-08-08T08:56:54.273Z",
   "channel": "pechalbeda200",
   "sourceUrl": "https://t.me/s/pechalbeda200",
   "methodology": {
@@ -7,16 +7,16 @@
     "note": "Counts are based on public posts in Telegram web channel view. totalBySerial uses the numeric index at the start of entry text; fallback totalApproxByMaxPostId uses maximum observed channel post ID. This job should run often because the channel updates many times per day."
   },
   "counters": {
-    "today": 30,
-    "last7Days": 545,
-    "last30Days": 574,
-    "totalBySerial": 221992,
-    "totalApproxByMaxPostId": 390756
+    "today": 32,
+    "last7Days": 532,
+    "last30Days": 572,
+    "totalBySerial": 221997,
+    "totalApproxByMaxPostId": 390767
   },
   "days": [
     {
       "day": "2026-08-01",
-      "count": 59
+      "count": 55
     },
     {
       "day": "2026-08-02",
@@ -44,37 +44,58 @@
     },
     {
       "day": "2026-08-08",
-      "count": 30
+      "count": 32
     }
   ],
   "latestProofs": [
     {
-      "id": 390756,
-      "datetime": "2026-08-08T05:26:49+00:00",
-      "url": "https://t.me/pechalbeda200/390756",
+      "id": 390767,
+      "datetime": "2026-08-08T08:29:11+00:00",
+      "url": "https://t.me/pechalbeda200/390767",
       "dayKyiv": "2026-08-08",
-      "serial": 221992
+      "serial": 221997
     },
     {
-      "id": 390753,
-      "datetime": "2026-08-08T05:18:08+00:00",
-      "url": "https://t.me/pechalbeda200/390753",
+      "id": 390763,
+      "datetime": "2026-08-08T08:12:23+00:00",
+      "url": "https://t.me/pechalbeda200/390763",
       "dayKyiv": "2026-08-08",
-      "serial": 221990
+      "serial": 221995
     },
     {
-      "id": 390747,
-      "datetime": "2026-08-08T05:11:48+00:00",
-      "url": "https://t.me/pechalbeda200/390747",
+      "id": 390757,
+      "datetime": "2026-08-08T05:30:18+00:00",
+      "url": "https://t.me/pechalbeda200/390757",
       "dayKyiv": "2026-08-08",
-      "serial": 221988
+      "serial": 221993
     },
     {
-      "id": 390742,
-      "datetime": "2026-08-08T04:57:57+00:00",
-      "url": "https://t.me/pechalbeda200/390742",
+      "id": 390754,
+      "datetime": "2026-08-08T05:20:22+00:00",
+      "url": "https://t.me/pechalbeda200/390754",
       "dayKyiv": "2026-08-08",
-      "serial": 221986
+      "serial": 221991
+    },
+    {
+      "id": 390749,
+      "datetime": "2026-08-08T05:16:52+00:00",
+      "url": "https://t.me/pechalbeda200/390749",
+      "dayKyiv": "2026-08-08",
+      "serial": 221989
+    },
+    {
+      "id": 390744,
+      "datetime": "2026-08-08T05:03:53+00:00",
+      "url": "https://t.me/pechalbeda200/390744",
+      "dayKyiv": "2026-08-08",
+      "serial": 221987
+    },
+    {
+      "id": 390741,
+      "datetime": "2026-08-08T04:54:47+00:00",
+      "url": "https://t.me/pechalbeda200/390741",
+      "dayKyiv": "2026-08-08",
+      "serial": 221985
     },
     {
       "id": 390738,
@@ -105,11 +126,11 @@
       "serial": 221977
     },
     {
-      "id": 390721,
-      "datetime": "2026-08-08T04:08:50+00:00",
-      "url": "https://t.me/pechalbeda200/390721",
+      "id": 390718,
+      "datetime": "2026-08-08T04:05:27+00:00",
+      "url": "https://t.me/pechalbeda200/390718",
       "dayKyiv": "2026-08-08",
-      "serial": 221975
+      "serial": 221974
     },
     {
       "id": 390713,
@@ -166,27 +187,6 @@
       "url": "https://t.me/pechalbeda200/390673",
       "dayKyiv": "2026-08-08",
       "serial": 221958
-    },
-    {
-      "id": 390670,
-      "datetime": "2026-08-08T00:38:44+00:00",
-      "url": "https://t.me/pechalbeda200/390670",
-      "dayKyiv": "2026-08-08",
-      "serial": 221956
-    },
-    {
-      "id": 390666,
-      "datetime": "2026-08-08T00:37:09+00:00",
-      "url": "https://t.me/pechalbeda200/390666",
-      "dayKyiv": "2026-08-08",
-      "serial": 221954
-    },
-    {
-      "id": 390663,
-      "datetime": "2026-08-08T00:32:18+00:00",
-      "url": "https://t.me/pechalbeda200/390663",
-      "dayKyiv": "2026-08-08",
-      "serial": 221952
     }
   ]
 }
