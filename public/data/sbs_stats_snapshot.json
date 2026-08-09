@@ -1,46 +1,46 @@
 {
-  "generatedAt": "2026-08-09T16:49:46.590Z",
+  "generatedAt": "2026-08-09T17:43:45.669Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-09",
-  "latestHour": 19,
-  "collectedAt": "2026-08-09T16:47:17.320Z",
+  "latestHour": 20,
+  "collectedAt": "2026-08-09T17:37:17.823Z",
   "summary": {
-    "personnelKilled": 138,
-    "personnelWounded": 156,
-    "personnelCasualties": 294,
-    "targetsHit": 1421,
-    "targetsDestroyed": 533
+    "personnelKilled": 142,
+    "personnelWounded": 164,
+    "personnelCasualties": 306,
+    "targetsHit": 1495,
+    "targetsDestroyed": 557
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 195,
-      "destroyed": 189
+      "hit": 205,
+      "destroyed": 199
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 341,
+      "hit": 357,
       "destroyed": 13
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 124,
+      "hit": 129,
       "destroyed": 1
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 89,
+      "hit": 93,
       "destroyed": 21
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 47,
+      "hit": 49,
       "destroyed": 10
     },
     {
@@ -89,10 +89,10 @@
   "daily": [
     {
       "date": "2026-08-09",
-      "hour": 19,
-      "targetsHit": 1421,
-      "targetsDestroyed": 533,
-      "personnelCasualties": 294
+      "hour": 20,
+      "targetsHit": 1495,
+      "targetsDestroyed": 557,
+      "personnelCasualties": 306
     },
     {
       "date": "2026-08-08",
@@ -161,9 +161,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 15678,
-      "targetsDestroyed": 6200,
-      "personnelCasualties": 2690
+      "targetsHit": 15752,
+      "targetsDestroyed": 6224,
+      "personnelCasualties": 2702
     },
     {
       "date": "2026-07-01",
