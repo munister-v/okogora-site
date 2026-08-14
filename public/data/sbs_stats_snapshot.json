@@ -1,51 +1,51 @@
 {
-  "generatedAt": "2026-08-14T22:35:58.103Z",
+  "generatedAt": "2026-08-14T23:32:15.354Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-15",
-  "latestHour": 1,
-  "collectedAt": "2026-08-14T22:27:16.503Z",
+  "latestHour": 2,
+  "collectedAt": "2026-08-14T23:27:16.418Z",
   "summary": {
-    "personnelKilled": 7,
-    "personnelWounded": 2,
-    "personnelCasualties": 9,
-    "targetsHit": 56,
-    "targetsDestroyed": 20
+    "personnelKilled": 11,
+    "personnelWounded": 7,
+    "personnelCasualties": 18,
+    "targetsHit": 93,
+    "targetsDestroyed": 28
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 16,
+      "hit": 29,
       "destroyed": 3
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 7,
+      "hit": 14,
       "destroyed": 0
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 4,
+      "hit": 5,
       "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-08-15",
-      "hour": 1,
-      "targetsHit": 56,
-      "targetsDestroyed": 20,
-      "personnelCasualties": 9
+      "hour": 2,
+      "targetsHit": 93,
+      "targetsDestroyed": 28,
+      "personnelCasualties": 18
     },
     {
       "date": "2026-08-14",
       "hour": 23,
-      "targetsHit": 2120,
-      "targetsDestroyed": 817,
-      "personnelCasualties": 364
+      "targetsHit": 2135,
+      "targetsDestroyed": 828,
+      "personnelCasualties": 367
     },
     {
       "date": "2026-08-13",
@@ -114,9 +114,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 25973,
-      "targetsDestroyed": 10263,
-      "personnelCasualties": 4589
+      "targetsHit": 26025,
+      "targetsDestroyed": 10282,
+      "personnelCasualties": 4601
     },
     {
       "date": "2026-07-01",
