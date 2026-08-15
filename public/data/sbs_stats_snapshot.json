@@ -1,29 +1,41 @@
 {
-  "generatedAt": "2026-08-15T22:33:57.360Z",
+  "generatedAt": "2026-08-15T23:30:55.612Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-16",
-  "latestHour": 1,
-  "collectedAt": "2026-08-15T22:27:19.492Z",
+  "latestHour": 2,
+  "collectedAt": "2026-08-15T23:27:18.641Z",
   "summary": {
-    "personnelKilled": 8,
-    "personnelWounded": 3,
-    "personnelCasualties": 11,
-    "targetsHit": 52,
-    "targetsDestroyed": 10
+    "personnelKilled": 10,
+    "personnelWounded": 5,
+    "personnelCasualties": 15,
+    "targetsHit": 103,
+    "targetsDestroyed": 20
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 18,
-      "destroyed": 2
+      "hit": 44,
+      "destroyed": 3
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 15,
-      "destroyed": 0
+      "hit": 24,
+      "destroyed": 1
+    },
+    {
+      "id": 30,
+      "label": "Shahed",
+      "hit": 2,
+      "destroyed": 2
+    },
+    {
+      "id": 31,
+      "label": "Gerbera",
+      "hit": 1,
+      "destroyed": 1
     },
     {
       "id": 7,
@@ -35,16 +47,16 @@
   "daily": [
     {
       "date": "2026-08-16",
-      "hour": 1,
-      "targetsHit": 52,
-      "targetsDestroyed": 10,
-      "personnelCasualties": 11
+      "hour": 2,
+      "targetsHit": 103,
+      "targetsDestroyed": 20,
+      "personnelCasualties": 15
     },
     {
       "date": "2026-08-15",
       "hour": 23,
-      "targetsHit": 2173,
-      "targetsDestroyed": 883,
+      "targetsHit": 2183,
+      "targetsDestroyed": 892,
       "personnelCasualties": 418
     },
     {
@@ -114,9 +126,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 28180,
-      "targetsDestroyed": 11151,
-      "personnelCasualties": 5011
+      "targetsHit": 28241,
+      "targetsDestroyed": 11170,
+      "personnelCasualties": 5015
     },
     {
       "date": "2026-07-01",
