@@ -1,40 +1,40 @@
 {
-  "generatedAt": "2026-08-15T06:54:24.555Z",
+  "generatedAt": "2026-08-15T07:38:55.021Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-15",
-  "latestHour": 9,
-  "collectedAt": "2026-08-15T06:47:18.128Z",
+  "latestHour": 10,
+  "collectedAt": "2026-08-15T07:27:20.212Z",
   "summary": {
-    "personnelKilled": 63,
-    "personnelWounded": 50,
-    "personnelCasualties": 113,
-    "targetsHit": 566,
-    "targetsDestroyed": 222
+    "personnelKilled": 72,
+    "personnelWounded": 57,
+    "personnelCasualties": 129,
+    "targetsHit": 630,
+    "targetsDestroyed": 246
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 129,
-      "destroyed": 6
+      "hit": 139,
+      "destroyed": 7
     },
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 56,
-      "destroyed": 54
+      "hit": 60,
+      "destroyed": 58
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 46,
-      "destroyed": 12
+      "hit": 58,
+      "destroyed": 18
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 49,
+      "hit": 54,
       "destroyed": 0
     },
     {
@@ -58,7 +58,7 @@
     {
       "id": 3,
       "label": "Гармати / гаубиці",
-      "hit": 3,
+      "hit": 4,
       "destroyed": 1
     },
     {
@@ -77,10 +77,10 @@
   "daily": [
     {
       "date": "2026-08-15",
-      "hour": 9,
-      "targetsHit": 566,
-      "targetsDestroyed": 222,
-      "personnelCasualties": 113
+      "hour": 10,
+      "targetsHit": 630,
+      "targetsDestroyed": 246,
+      "personnelCasualties": 129
     },
     {
       "date": "2026-08-14",
@@ -149,9 +149,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 26521,
-      "targetsDestroyed": 10480,
-      "personnelCasualties": 4695
+      "targetsHit": 26585,
+      "targetsDestroyed": 10504,
+      "personnelCasualties": 4711
     },
     {
       "date": "2026-07-01",
