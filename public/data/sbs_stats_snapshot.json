@@ -1,41 +1,41 @@
 {
-  "generatedAt": "2026-08-18T05:40:29.935Z",
+  "generatedAt": "2026-08-18T07:00:12.516Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-18",
-  "latestHour": 8,
-  "collectedAt": "2026-08-18T05:37:20.698Z",
+  "latestHour": 9,
+  "collectedAt": "2026-08-18T06:57:19.830Z",
   "summary": {
-    "personnelKilled": 35,
-    "personnelWounded": 51,
-    "personnelCasualties": 86,
-    "targetsHit": 490,
-    "targetsDestroyed": 184
+    "personnelKilled": 43,
+    "personnelWounded": 64,
+    "personnelCasualties": 107,
+    "targetsHit": 605,
+    "targetsDestroyed": 213
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 121,
-      "destroyed": 1
+      "hit": 154,
+      "destroyed": 3
     },
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 60,
-      "destroyed": 60
+      "hit": 68,
+      "destroyed": 67
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 44,
+      "hit": 54,
       "destroyed": 0
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 22,
-      "destroyed": 7
+      "hit": 34,
+      "destroyed": 9
     },
     {
       "id": 30,
@@ -44,31 +44,31 @@
       "destroyed": 11
     },
     {
+      "id": 18,
+      "label": "Мотоцикли / багі",
+      "hit": 15,
+      "destroyed": 2
+    },
+    {
       "id": 31,
       "label": "Gerbera",
       "hit": 7,
       "destroyed": 7
     },
     {
-      "id": 18,
-      "label": "Мотоцикли / багі",
-      "hit": 11,
-      "destroyed": 2
-    },
-    {
       "id": 3,
       "label": "Гармати / гаубиці",
-      "hit": 6,
+      "hit": 7,
       "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-08-18",
-      "hour": 8,
-      "targetsHit": 490,
-      "targetsDestroyed": 184,
-      "personnelCasualties": 86
+      "hour": 9,
+      "targetsHit": 605,
+      "targetsDestroyed": 213,
+      "personnelCasualties": 107
     },
     {
       "date": "2026-08-17",
@@ -137,9 +137,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 32816,
-      "targetsDestroyed": 12979,
-      "personnelCasualties": 5749
+      "targetsHit": 32931,
+      "targetsDestroyed": 13008,
+      "personnelCasualties": 5770
     },
     {
       "date": "2026-07-01",
