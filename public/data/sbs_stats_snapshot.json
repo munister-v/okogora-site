@@ -1,47 +1,47 @@
 {
-  "generatedAt": "2026-08-19T09:45:24.826Z",
+  "generatedAt": "2026-08-19T10:41:29.158Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-19",
-  "latestHour": 12,
-  "collectedAt": "2026-08-19T09:37:24.995Z",
+  "latestHour": 13,
+  "collectedAt": "2026-08-19T10:37:18.392Z",
   "summary": {
-    "personnelKilled": 80,
-    "personnelWounded": 102,
-    "personnelCasualties": 182,
-    "targetsHit": 822,
-    "targetsDestroyed": 292
+    "personnelKilled": 94,
+    "personnelWounded": 111,
+    "personnelCasualties": 205,
+    "targetsHit": 905,
+    "targetsDestroyed": 331
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 226,
-      "destroyed": 7
+      "hit": 245,
+      "destroyed": 9
     },
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 88,
-      "destroyed": 87
+      "hit": 98,
+      "destroyed": 96
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 59,
-      "destroyed": 9
+      "hit": 66,
+      "destroyed": 11
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 53,
+      "hit": 58,
       "destroyed": 2
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 24,
-      "destroyed": 5
+      "hit": 26,
+      "destroyed": 7
     },
     {
       "id": 30,
@@ -71,10 +71,10 @@
   "daily": [
     {
       "date": "2026-08-19",
-      "hour": 12,
-      "targetsHit": 822,
-      "targetsDestroyed": 292,
-      "personnelCasualties": 182
+      "hour": 13,
+      "targetsHit": 905,
+      "targetsDestroyed": 331,
+      "personnelCasualties": 205
     },
     {
       "date": "2026-08-18",
@@ -143,9 +143,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 35019,
-      "targetsDestroyed": 13732,
-      "personnelCasualties": 6151
+      "targetsHit": 35102,
+      "targetsDestroyed": 13771,
+      "personnelCasualties": 6174
     },
     {
       "date": "2026-07-01",
