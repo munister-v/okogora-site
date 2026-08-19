@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-08-19T03:55:17.522Z",
+  "generatedAt": "2026-08-19T04:48:00.972Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-19",
-  "latestHour": 6,
-  "collectedAt": "2026-08-19T03:47:20.938Z",
+  "latestHour": 7,
+  "collectedAt": "2026-08-19T04:37:22.491Z",
   "summary": {
-    "personnelKilled": 29,
-    "personnelWounded": 16,
-    "personnelCasualties": 45,
-    "targetsHit": 314,
-    "targetsDestroyed": 117
+    "personnelKilled": 39,
+    "personnelWounded": 22,
+    "personnelCasualties": 61,
+    "targetsHit": 373,
+    "targetsDestroyed": 137
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 104,
+      "hit": 118,
       "destroyed": 6
     },
     {
@@ -28,14 +28,20 @@
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 30,
+      "hit": 31,
       "destroyed": 1
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 13,
+      "hit": 19,
       "destroyed": 2
+    },
+    {
+      "id": 18,
+      "label": "Мотоцикли / багі",
+      "hit": 3,
+      "destroyed": 1
     },
     {
       "id": 30,
@@ -48,21 +54,15 @@
       "label": "Гармати / гаубиці",
       "hit": 3,
       "destroyed": 0
-    },
-    {
-      "id": 18,
-      "label": "Мотоцикли / багі",
-      "hit": 1,
-      "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-08-19",
-      "hour": 6,
-      "targetsHit": 314,
-      "targetsDestroyed": 117,
-      "personnelCasualties": 45
+      "hour": 7,
+      "targetsHit": 373,
+      "targetsDestroyed": 137,
+      "personnelCasualties": 61
     },
     {
       "date": "2026-08-18",
@@ -131,9 +131,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 34511,
-      "targetsDestroyed": 13557,
-      "personnelCasualties": 6014
+      "targetsHit": 34570,
+      "targetsDestroyed": 13577,
+      "personnelCasualties": 6030
     },
     {
       "date": "2026-07-01",
