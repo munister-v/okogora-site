@@ -1,46 +1,46 @@
 {
-  "generatedAt": "2026-08-20T18:55:48.122Z",
+  "generatedAt": "2026-08-20T19:40:09.681Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-20",
-  "latestHour": 21,
-  "collectedAt": "2026-08-20T18:47:15.498Z",
+  "latestHour": 22,
+  "collectedAt": "2026-08-20T19:37:16.803Z",
   "summary": {
-    "personnelKilled": 154,
-    "personnelWounded": 209,
-    "personnelCasualties": 363,
-    "targetsHit": 1819,
-    "targetsDestroyed": 722
+    "personnelKilled": 158,
+    "personnelWounded": 212,
+    "personnelCasualties": 370,
+    "targetsHit": 1830,
+    "targetsDestroyed": 730
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 249,
-      "destroyed": 243
+      "hit": 253,
+      "destroyed": 245
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 440,
+      "hit": 444,
       "destroyed": 19
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 164,
+      "hit": 167,
       "destroyed": 44
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 122,
+      "hit": 131,
       "destroyed": 3
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 62,
+      "hit": 63,
       "destroyed": 30
     },
     {
@@ -77,10 +77,10 @@
   "daily": [
     {
       "date": "2026-08-20",
-      "hour": 21,
-      "targetsHit": 1819,
-      "targetsDestroyed": 722,
-      "personnelCasualties": 363
+      "hour": 22,
+      "targetsHit": 1830,
+      "targetsDestroyed": 730,
+      "personnelCasualties": 370
     },
     {
       "date": "2026-08-19",
@@ -149,9 +149,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 37997,
-      "targetsDestroyed": 14972,
-      "personnelCasualties": 6736
+      "targetsHit": 38008,
+      "targetsDestroyed": 14980,
+      "personnelCasualties": 6743
     },
     {
       "date": "2026-07-01",
