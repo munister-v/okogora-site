@@ -1,34 +1,34 @@
 {
-  "generatedAt": "2026-08-21T14:49:09.365Z",
+  "generatedAt": "2026-08-21T15:44:53.665Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-21",
-  "latestHour": 17,
-  "collectedAt": "2026-08-21T14:47:18.702Z",
+  "latestHour": 18,
+  "collectedAt": "2026-08-21T15:37:16.407Z",
   "summary": {
-    "personnelKilled": 129,
-    "personnelWounded": 167,
-    "personnelCasualties": 296,
-    "targetsHit": 1364,
-    "targetsDestroyed": 493
+    "personnelKilled": 133,
+    "personnelWounded": 174,
+    "personnelCasualties": 307,
+    "targetsHit": 1423,
+    "targetsDestroyed": 521
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 186,
-      "destroyed": 177
+      "hit": 200,
+      "destroyed": 188
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 354,
-      "destroyed": 2
+      "hit": 371,
+      "destroyed": 4
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 117,
+      "hit": 118,
       "destroyed": 24
     },
     {
@@ -71,10 +71,10 @@
   "daily": [
     {
       "date": "2026-08-21",
-      "hour": 17,
-      "targetsHit": 1364,
-      "targetsDestroyed": 493,
-      "personnelCasualties": 296
+      "hour": 18,
+      "targetsHit": 1423,
+      "targetsDestroyed": 521,
+      "personnelCasualties": 307
     },
     {
       "date": "2026-08-20",
@@ -143,9 +143,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 39549,
-      "targetsDestroyed": 15531,
-      "personnelCasualties": 7069
+      "targetsHit": 39608,
+      "targetsDestroyed": 15559,
+      "personnelCasualties": 7080
     },
     {
       "date": "2026-07-01",
