@@ -1,46 +1,46 @@
 {
-  "generatedAt": "2026-08-23T17:31:13.884Z",
+  "generatedAt": "2026-08-23T18:44:37.004Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-23",
-  "latestHour": 20,
-  "collectedAt": "2026-08-23T17:27:20.101Z",
+  "latestHour": 21,
+  "collectedAt": "2026-08-23T18:37:21.199Z",
   "summary": {
-    "personnelKilled": 148,
-    "personnelWounded": 175,
-    "personnelCasualties": 323,
-    "targetsHit": 1626,
-    "targetsDestroyed": 642
+    "personnelKilled": 157,
+    "personnelWounded": 179,
+    "personnelCasualties": 336,
+    "targetsHit": 1707,
+    "targetsDestroyed": 679
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 217,
-      "destroyed": 214
+      "hit": 237,
+      "destroyed": 234
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 388,
-      "destroyed": 14
+      "hit": 401,
+      "destroyed": 15
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 122,
-      "destroyed": 23
+      "hit": 126,
+      "destroyed": 24
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 136,
+      "hit": 146,
       "destroyed": 3
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 39,
+      "hit": 43,
       "destroyed": 14
     },
     {
@@ -71,10 +71,10 @@
   "daily": [
     {
       "date": "2026-08-23",
-      "hour": 20,
-      "targetsHit": 1626,
-      "targetsDestroyed": 642,
-      "personnelCasualties": 323
+      "hour": 21,
+      "targetsHit": 1707,
+      "targetsDestroyed": 679,
+      "personnelCasualties": 336
     },
     {
       "date": "2026-08-22",
@@ -143,9 +143,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 43481,
-      "targetsDestroyed": 17086,
-      "personnelCasualties": 7802
+      "targetsHit": 43562,
+      "targetsDestroyed": 17123,
+      "personnelCasualties": 7815
     },
     {
       "date": "2026-07-01",
