@@ -1,40 +1,40 @@
 {
-  "generatedAt": "2026-08-23T19:30:46.723Z",
+  "generatedAt": "2026-08-23T20:35:00.062Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-23",
-  "latestHour": 22,
-  "collectedAt": "2026-08-23T19:27:20.694Z",
+  "latestHour": 23,
+  "collectedAt": "2026-08-23T20:27:24.175Z",
   "summary": {
     "personnelKilled": 162,
-    "personnelWounded": 187,
-    "personnelCasualties": 349,
-    "targetsHit": 1764,
-    "targetsDestroyed": 707
+    "personnelWounded": 190,
+    "personnelCasualties": 352,
+    "targetsHit": 1811,
+    "targetsDestroyed": 719
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 248,
-      "destroyed": 245
+      "hit": 256,
+      "destroyed": 253
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 413,
+      "hit": 432,
       "destroyed": 16
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 150,
+      "hit": 156,
       "destroyed": 3
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 127,
+      "hit": 130,
       "destroyed": 24
     },
     {
@@ -46,8 +46,8 @@
     {
       "id": 31,
       "label": "Gerbera",
-      "hit": 17,
-      "destroyed": 17
+      "hit": 18,
+      "destroyed": 18
     },
     {
       "id": 3,
@@ -71,10 +71,10 @@
   "daily": [
     {
       "date": "2026-08-23",
-      "hour": 22,
-      "targetsHit": 1764,
-      "targetsDestroyed": 707,
-      "personnelCasualties": 349
+      "hour": 23,
+      "targetsHit": 1811,
+      "targetsDestroyed": 719,
+      "personnelCasualties": 352
     },
     {
       "date": "2026-08-22",
@@ -143,9 +143,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 43619,
-      "targetsDestroyed": 17151,
-      "personnelCasualties": 7828
+      "targetsHit": 43666,
+      "targetsDestroyed": 17163,
+      "personnelCasualties": 7831
     },
     {
       "date": "2026-07-01",
