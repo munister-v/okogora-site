@@ -1,47 +1,47 @@
 {
-  "generatedAt": "2026-08-26T09:53:22.099Z",
+  "generatedAt": "2026-08-26T10:48:17.456Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-26",
-  "latestHour": 12,
-  "collectedAt": "2026-08-26T09:47:21.574Z",
+  "latestHour": 13,
+  "collectedAt": "2026-08-26T10:37:22.180Z",
   "summary": {
-    "personnelKilled": 95,
-    "personnelWounded": 103,
-    "personnelCasualties": 198,
-    "targetsHit": 800,
-    "targetsDestroyed": 273
+    "personnelKilled": 101,
+    "personnelWounded": 114,
+    "personnelCasualties": 215,
+    "targetsHit": 900,
+    "targetsDestroyed": 312
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 195,
+      "hit": 214,
       "destroyed": 7
     },
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 76,
-      "destroyed": 73
+      "hit": 90,
+      "destroyed": 87
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 66,
-      "destroyed": 12
+      "hit": 75,
+      "destroyed": 14
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 68,
+      "hit": 78,
       "destroyed": 2
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 29,
-      "destroyed": 7
+      "hit": 33,
+      "destroyed": 8
     },
     {
       "id": 30,
@@ -71,10 +71,10 @@
   "daily": [
     {
       "date": "2026-08-26",
-      "hour": 12,
-      "targetsHit": 800,
-      "targetsDestroyed": 273,
-      "personnelCasualties": 198
+      "hour": 13,
+      "targetsHit": 900,
+      "targetsDestroyed": 312,
+      "personnelCasualties": 215
     },
     {
       "date": "2026-08-25",
@@ -143,9 +143,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 48426,
-      "targetsDestroyed": 18822,
-      "personnelCasualties": 8799
+      "targetsHit": 48526,
+      "targetsDestroyed": 18861,
+      "personnelCasualties": 8816
     },
     {
       "date": "2026-07-01",
