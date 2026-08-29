@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-08-29T16:45:29.415Z",
+  "generatedAt": "2026-08-29T20:57:52.983Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "27",
-    "occupiedKm2": 116960.944,
-    "occupiedPercent": 19.374,
-    "diffKm2": -4.895134258084,
-    "text": "14:28:15 Ворог просунувся поблизу Никифорівки ."
+    "day": "28",
+    "occupiedKm2": 116967.504,
+    "occupiedPercent": 19.375,
+    "diffKm2": -6.5602112091728,
+    "text": "15:44:55 Ворог просунувся поблизу Залізничного ."
   },
   "rows": [
+    {
+      "day": "28",
+      "occupiedKm2": 116967.504,
+      "occupiedPercent": 19.375,
+      "diffKm2": -6.5602112091728,
+      "text": "15:44:55 Ворог просунувся поблизу Залізничного ."
+    },
     {
       "day": "27",
       "occupiedKm2": 116960.944,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.375,
       "diffKm2": -2.3769104843523,
       "text": "23:59:20 Ворог просунувся поблизу Калеників ."
-    },
-    {
-      "day": "29",
-      "occupiedKm2": 116963.991,
-      "occupiedPercent": 19.374,
-      "diffKm2": -1.5128562287573,
-      "text": "23:42:28 Ворог просунувся поблизу Новомаркового ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": -25.6526834545221,
+  "netChangeKm2": -26.6497454320779,
   "maxAbsDiffKm2": 6.860030350319,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
