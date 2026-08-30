@@ -1,44 +1,62 @@
 {
-  "generatedAt": "2026-08-29T21:41:30.411Z",
+  "generatedAt": "2026-08-30T00:14:21.726Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-08-30",
-  "latestHour": 0,
-  "collectedAt": "2026-08-29T21:37:23.015Z",
+  "latestHour": 3,
+  "collectedAt": "2026-08-30T00:07:21.125Z",
   "summary": {
-    "personnelKilled": 2,
-    "personnelWounded": 1,
-    "personnelCasualties": 3,
-    "targetsHit": 11,
-    "targetsDestroyed": 3
+    "personnelKilled": 14,
+    "personnelWounded": 6,
+    "personnelCasualties": 20,
+    "targetsHit": 139,
+    "targetsDestroyed": 48
   },
   "categories": [
     {
+      "id": 25,
+      "label": "Крила противника",
+      "hit": 21,
+      "destroyed": 21
+    },
+    {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 4,
-      "destroyed": 0
+      "hit": 37,
+      "destroyed": 1
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 2,
+      "hit": 35,
+      "destroyed": 1
+    },
+    {
+      "id": 31,
+      "label": "Gerbera",
+      "hit": 1,
+      "destroyed": 1
+    },
+    {
+      "id": 7,
+      "label": "Легка / важка техніка",
+      "hit": 1,
       "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-08-30",
-      "hour": 0,
-      "targetsHit": 11,
-      "targetsDestroyed": 3,
-      "personnelCasualties": 3
+      "hour": 3,
+      "targetsHit": 139,
+      "targetsDestroyed": 48,
+      "personnelCasualties": 20
     },
     {
       "date": "2026-08-29",
       "hour": 23,
-      "targetsHit": 1766,
-      "targetsDestroyed": 645,
+      "targetsHit": 1781,
+      "targetsDestroyed": 658,
       "personnelCasualties": 365
     },
     {
@@ -108,9 +126,9 @@
   "monthly": [
     {
       "date": "2026-08-01",
-      "targetsHit": 54570,
-      "targetsDestroyed": 20943,
-      "personnelCasualties": 10212
+      "targetsHit": 54713,
+      "targetsDestroyed": 21001,
+      "personnelCasualties": 10229
     },
     {
       "date": "2026-07-01",
