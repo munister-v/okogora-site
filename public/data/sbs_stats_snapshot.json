@@ -1,25 +1,68 @@
 {
-  "generatedAt": "2026-09-05T08:59:39.963Z",
+  "generatedAt": "2026-09-05T12:38:06.260Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-09-05",
-  "latestHour": 2,
-  "collectedAt": "2026-09-04T23:18:34.380Z",
+  "latestHour": 15,
+  "collectedAt": "2026-09-05T12:27:29.868Z",
   "summary": {
-    "personnelKilled": 0,
-    "personnelWounded": 0,
-    "personnelCasualties": 0,
-    "targetsHit": 0,
-    "targetsDestroyed": 0
+    "personnelKilled": 43,
+    "personnelWounded": 58,
+    "personnelCasualties": 101,
+    "targetsHit": 405,
+    "targetsDestroyed": 108
   },
-  "categories": [],
+  "categories": [
+    {
+      "id": 21,
+      "label": "Укриття",
+      "hit": 131,
+      "destroyed": 8
+    },
+    {
+      "id": 25,
+      "label": "Крила противника",
+      "hit": 30,
+      "destroyed": 29
+    },
+    {
+      "id": 22,
+      "label": "Бліндажі",
+      "hit": 36,
+      "destroyed": 2
+    },
+    {
+      "id": 7,
+      "label": "Легка / важка техніка",
+      "hit": 31,
+      "destroyed": 2
+    },
+    {
+      "id": 18,
+      "label": "Мотоцикли / багі",
+      "hit": 15,
+      "destroyed": 4
+    },
+    {
+      "id": 3,
+      "label": "Гармати / гаубиці",
+      "hit": 2,
+      "destroyed": 0
+    },
+    {
+      "id": 1,
+      "label": "Танки",
+      "hit": 1,
+      "destroyed": 0
+    }
+  ],
   "daily": [
     {
       "date": "2026-09-05",
-      "hour": 2,
-      "targetsHit": 0,
-      "targetsDestroyed": 0,
-      "personnelCasualties": 0
+      "hour": 15,
+      "targetsHit": 405,
+      "targetsDestroyed": 108,
+      "personnelCasualties": 101
     },
     {
       "date": "2026-09-04",
@@ -83,13 +126,6 @@
       "targetsHit": 1857,
       "targetsDestroyed": 670,
       "personnelCasualties": 468
-    },
-    {
-      "date": "2026-08-26",
-      "hour": 23,
-      "targetsHit": 1931,
-      "targetsDestroyed": 681,
-      "personnelCasualties": 403
     }
   ],
   "monthly": [
