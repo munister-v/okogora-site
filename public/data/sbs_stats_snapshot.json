@@ -1,35 +1,53 @@
 {
-  "generatedAt": "2026-09-06T23:49:27.957Z",
+  "generatedAt": "2026-09-07T04:28:58.808Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-09-07",
-  "latestHour": 2,
-  "collectedAt": "2026-09-06T23:47:24.649Z",
+  "latestHour": 7,
+  "collectedAt": "2026-09-07T04:17:24.254Z",
   "summary": {
-    "personnelKilled": 11,
-    "personnelWounded": 2,
-    "personnelCasualties": 13,
-    "targetsHit": 90,
-    "targetsDestroyed": 27
+    "personnelKilled": 43,
+    "personnelWounded": 39,
+    "personnelCasualties": 82,
+    "targetsHit": 311,
+    "targetsDestroyed": 104
   },
   "categories": [
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 33,
-      "destroyed": 2
+      "hit": 84,
+      "destroyed": 5
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 20,
-      "destroyed": 0
+      "hit": 44,
+      "destroyed": 2
     },
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 2,
-      "destroyed": 2
+      "hit": 19,
+      "destroyed": 19
+    },
+    {
+      "id": 7,
+      "label": "Легка / важка техніка",
+      "hit": 13,
+      "destroyed": 0
+    },
+    {
+      "id": 31,
+      "label": "Gerbera",
+      "hit": 3,
+      "destroyed": 3
+    },
+    {
+      "id": 18,
+      "label": "Мотоцикли / багі",
+      "hit": 4,
+      "destroyed": 1
     },
     {
       "id": 30,
@@ -47,17 +65,17 @@
   "daily": [
     {
       "date": "2026-09-07",
-      "hour": 2,
-      "targetsHit": 90,
-      "targetsDestroyed": 27,
-      "personnelCasualties": 13
+      "hour": 7,
+      "targetsHit": 311,
+      "targetsDestroyed": 104,
+      "personnelCasualties": 82
     },
     {
       "date": "2026-09-06",
       "hour": 23,
-      "targetsHit": 2016,
-      "targetsDestroyed": 751,
-      "personnelCasualties": 423
+      "targetsHit": 2045,
+      "targetsDestroyed": 756,
+      "personnelCasualties": 422
     },
     {
       "date": "2026-09-05",
