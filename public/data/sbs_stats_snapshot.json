@@ -1,57 +1,63 @@
 {
-  "generatedAt": "2026-09-14T04:48:59.396Z",
+  "generatedAt": "2026-09-14T10:33:10.218Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-09-14",
-  "latestHour": 7,
-  "collectedAt": "2026-09-14T04:37:20.831Z",
+  "latestHour": 13,
+  "collectedAt": "2026-09-14T10:27:22.826Z",
   "summary": {
-    "personnelKilled": 39,
-    "personnelWounded": 26,
-    "personnelCasualties": 65,
-    "targetsHit": 420,
-    "targetsDestroyed": 167
+    "personnelKilled": 103,
+    "personnelWounded": 104,
+    "personnelCasualties": 207,
+    "targetsHit": 958,
+    "targetsDestroyed": 383
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 68,
-      "destroyed": 67
+      "hit": 120,
+      "destroyed": 118
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 118,
-      "destroyed": 3
+      "hit": 218,
+      "destroyed": 5
     },
     {
       "id": 22,
       "label": "Бліндажі",
-      "hit": 51,
-      "destroyed": 2
+      "hit": 93,
+      "destroyed": 4
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 12,
-      "destroyed": 0
+      "hit": 55,
+      "destroyed": 8
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 3,
-      "destroyed": 1
-    },
-    {
-      "id": 5,
-      "label": "РСЗВ",
-      "hit": 2,
-      "destroyed": 0
+      "hit": 26,
+      "destroyed": 7
     },
     {
       "id": 30,
       "label": "Shahed",
+      "hit": 2,
+      "destroyed": 2
+    },
+    {
+      "id": 3,
+      "label": "Гармати / гаубиці",
+      "hit": 2,
+      "destroyed": 0
+    },
+    {
+      "id": 31,
+      "label": "Gerbera",
       "hit": 1,
       "destroyed": 1
     },
@@ -60,27 +66,15 @@
       "label": "ББМ / БМП / БТР",
       "hit": 1,
       "destroyed": 0
-    },
-    {
-      "id": 3,
-      "label": "Гармати / гаубиці",
-      "hit": 1,
-      "destroyed": 0
-    },
-    {
-      "id": 31,
-      "label": "Gerbera",
-      "hit": 1,
-      "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-09-14",
-      "hour": 7,
-      "targetsHit": 420,
-      "targetsDestroyed": 167,
-      "personnelCasualties": 65
+      "hour": 13,
+      "targetsHit": 958,
+      "targetsDestroyed": 383,
+      "personnelCasualties": 207
     },
     {
       "date": "2026-09-13",
@@ -144,21 +138,14 @@
       "targetsHit": 1643,
       "targetsDestroyed": 536,
       "personnelCasualties": 344
-    },
-    {
-      "date": "2026-09-04",
-      "hour": 23,
-      "targetsHit": 2066,
-      "targetsDestroyed": 802,
-      "personnelCasualties": 421
     }
   ],
   "monthly": [
     {
       "date": "2026-09-01",
-      "targetsHit": 28119,
-      "targetsDestroyed": 10917,
-      "personnelCasualties": 5516
+      "targetsHit": 28657,
+      "targetsDestroyed": 11133,
+      "personnelCasualties": 5658
     },
     {
       "date": "2026-08-01",
