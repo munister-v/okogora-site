@@ -1,98 +1,45 @@
 {
-  "generatedAt": "2026-09-18T18:22:32.609Z",
+  "generatedAt": "2026-09-18T21:37:15.690Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
-  "latestDate": "2026-09-18",
-  "latestHour": 21,
-  "collectedAt": "2026-09-18T18:17:25.235Z",
+  "latestDate": "2026-09-19",
+  "latestHour": 0,
+  "collectedAt": "2026-09-18T21:27:22.124Z",
   "summary": {
-    "personnelKilled": 171,
-    "personnelWounded": 225,
-    "personnelCasualties": 396,
-    "targetsHit": 2020,
-    "targetsDestroyed": 853
+    "personnelKilled": 2,
+    "personnelWounded": 2,
+    "personnelCasualties": 4,
+    "targetsHit": 13,
+    "targetsDestroyed": 3
   },
   "categories": [
     {
-      "id": 25,
-      "label": "Крила противника",
-      "hit": 365,
-      "destroyed": 345
+      "id": 22,
+      "label": "Бліндажі",
+      "hit": 4,
+      "destroyed": 0
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 414,
-      "destroyed": 9
-    },
-    {
-      "id": 22,
-      "label": "Бліндажі",
-      "hit": 175,
-      "destroyed": 3
-    },
-    {
-      "id": 7,
-      "label": "Легка / важка техніка",
-      "hit": 126,
-      "destroyed": 20
-    },
-    {
-      "id": 18,
-      "label": "Мотоцикли / багі",
-      "hit": 52,
-      "destroyed": 16
-    },
-    {
-      "id": 31,
-      "label": "Gerbera",
-      "hit": 18,
-      "destroyed": 18
-    },
-    {
-      "id": 3,
-      "label": "Гармати / гаубиці",
-      "hit": 11,
-      "destroyed": 3
-    },
-    {
-      "id": 30,
-      "label": "Shahed",
-      "hit": 2,
-      "destroyed": 2
-    },
-    {
-      "id": 32,
-      "label": "ЗРК / ППО",
-      "hit": 3,
-      "destroyed": 1
-    },
-    {
-      "id": 2,
-      "label": "ББМ / БМП / БТР",
       "hit": 3,
       "destroyed": 0
-    },
-    {
-      "id": 4,
-      "label": "Самохідна артилерія",
-      "hit": 2,
-      "destroyed": 0
-    },
-    {
-      "id": 5,
-      "label": "РСЗВ",
-      "hit": 1,
-      "destroyed": 1
     }
   ],
   "daily": [
     {
+      "date": "2026-09-19",
+      "hour": 0,
+      "targetsHit": 13,
+      "targetsDestroyed": 3,
+      "personnelCasualties": 4
+    },
+    {
       "date": "2026-09-18",
-      "hour": 21,
-      "targetsHit": 2020,
-      "targetsDestroyed": 853,
-      "personnelCasualties": 396
+      "hour": 23,
+      "targetsHit": 2225,
+      "targetsDestroyed": 950,
+      "personnelCasualties": 418
     },
     {
       "date": "2026-09-17",
@@ -161,9 +108,9 @@
   "monthly": [
     {
       "date": "2026-09-01",
-      "targetsHit": 37378,
-      "targetsDestroyed": 14730,
-      "personnelCasualties": 7702
+      "targetsHit": 37596,
+      "targetsDestroyed": 14830,
+      "personnelCasualties": 7728
     },
     {
       "date": "2026-08-01",
