@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-09-25T00:34:45.083Z",
+  "generatedAt": "2026-09-25T07:54:08.532Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "23",
-    "occupiedKm2": 117048.962,
-    "occupiedPercent": 19.388,
-    "diffKm2": 0,
-    "text": "<span class=time>10:38:35</span><br>Сили Оборони України здійснили зачистку поблизу <a href=\"https://deepstatemap.live/#14/48.5258176/37.3679363\">Торецького</a>."
+    "day": "24",
+    "occupiedKm2": 117054.836,
+    "occupiedPercent": 19.389,
+    "diffKm2": -5.8737288124539,
+    "text": "<span class=time>17:24:47</span><br>Ворог окупував <a href=\"https://deepstatemap.live/#dl!city!dsm:l:6185\">Новоолександрівку</a>, а також просунувся поблизу <a href=\"https://deepstatemap.live/#15/48.7751193/37.8235672\">Юрківки</a> та <a href=\"https://deepstatemap.live/#14/48.3558604/37.0473585\">Василівки</a>."
   },
   "rows": [
+    {
+      "day": "24",
+      "occupiedKm2": 117054.836,
+      "occupiedPercent": 19.389,
+      "diffKm2": -5.8737288124539,
+      "text": "<span class=time>17:24:47</span><br>Ворог окупував <a href=\"https://deepstatemap.live/#dl!city!dsm:l:6185\">Новоолександрівку</a>, а також просунувся поблизу <a href=\"https://deepstatemap.live/#15/48.7751193/37.8235672\">Юрківки</a> та <a href=\"https://deepstatemap.live/#14/48.3558604/37.0473585\">Василівки</a>."
+    },
     {
       "day": "23",
       "occupiedKm2": 117048.962,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.372,
       "diffKm2": 6.2742651825683,
       "text": "<span class=time>15:50:01</span><br>Сили Оборони України відновили контроль поблизу <a href=\"https://deepstatemap.live/#14/49.8436906/37.6359016\">Западного</a>."
-    },
-    {
-      "day": "24",
-      "occupiedKm2": 116958.85,
-      "occupiedPercent": 19.373,
-      "diffKm2": -6.4114367376169,
-      "text": "<span class=time>23:50:18</span><br>Ворог просунувся поблизу <a href=\"https://deepstatemap.live/#14/48.4351558/37.2304382\">Дорожнього</a> та <a href=\"https://deepstatemap.live/#14/48.4890865/37.4081140\">Софіївки</a>."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": 16.114066403432098,
+  "netChangeKm2": 14.280882213148502,
   "maxAbsDiffKm2": 25.528910505993,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
