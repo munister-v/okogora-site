@@ -1,53 +1,65 @@
 {
-  "generatedAt": "2026-09-26T07:35:14.518Z",
+  "generatedAt": "2026-09-26T13:00:49.950Z",
   "sourceUrl": "https://foosint.github.io/sbs-stats/",
   "dbUrl": "https://raw.githubusercontent.com/foosint/sbs-stats/main/data/sbs.db",
   "latestDate": "2026-09-26",
-  "latestHour": 10,
-  "collectedAt": "2026-09-26T07:27:25.285Z",
+  "latestHour": 15,
+  "collectedAt": "2026-09-26T12:57:25.367Z",
   "summary": {
-    "personnelKilled": 73,
-    "personnelWounded": 86,
-    "personnelCasualties": 159,
-    "targetsHit": 707,
-    "targetsDestroyed": 310
+    "personnelKilled": 130,
+    "personnelWounded": 190,
+    "personnelCasualties": 320,
+    "targetsHit": 1403,
+    "targetsDestroyed": 569
   },
   "categories": [
     {
       "id": 25,
       "label": "Крила противника",
-      "hit": 146,
-      "destroyed": 144
+      "hit": 230,
+      "destroyed": 223
     },
     {
       "id": 21,
       "label": "Укриття",
-      "hit": 146,
-      "destroyed": 2
-    },
-    {
-      "id": 22,
-      "label": "Бліндажі",
-      "hit": 61,
-      "destroyed": 0
+      "hit": 272,
+      "destroyed": 4
     },
     {
       "id": 7,
       "label": "Легка / важка техніка",
-      "hit": 49,
-      "destroyed": 11
+      "hit": 101,
+      "destroyed": 14
+    },
+    {
+      "id": 22,
+      "label": "Бліндажі",
+      "hit": 113,
+      "destroyed": 1
     },
     {
       "id": 18,
       "label": "Мотоцикли / багі",
-      "hit": 12,
-      "destroyed": 4
+      "hit": 43,
+      "destroyed": 20
     },
     {
       "id": 31,
       "label": "Gerbera",
+      "hit": 6,
+      "destroyed": 5
+    },
+    {
+      "id": 3,
+      "label": "Гармати / гаубиці",
+      "hit": 6,
+      "destroyed": 0
+    },
+    {
+      "id": 1,
+      "label": "Танки",
       "hit": 2,
-      "destroyed": 1
+      "destroyed": 0
     },
     {
       "id": 30,
@@ -60,21 +72,15 @@
       "label": "ББМ / БМП / БТР",
       "hit": 1,
       "destroyed": 0
-    },
-    {
-      "id": 3,
-      "label": "Гармати / гаубиці",
-      "hit": 1,
-      "destroyed": 0
     }
   ],
   "daily": [
     {
       "date": "2026-09-26",
-      "hour": 10,
-      "targetsHit": 707,
-      "targetsDestroyed": 310,
-      "personnelCasualties": 159
+      "hour": 15,
+      "targetsHit": 1403,
+      "targetsDestroyed": 569,
+      "personnelCasualties": 320
     },
     {
       "date": "2026-09-25",
@@ -143,9 +149,9 @@
   "monthly": [
     {
       "date": "2026-09-01",
-      "targetsHit": 51672,
-      "targetsDestroyed": 20608,
-      "personnelCasualties": 10795
+      "targetsHit": 52368,
+      "targetsDestroyed": 20867,
+      "personnelCasualties": 10956
     },
     {
       "date": "2026-08-01",
