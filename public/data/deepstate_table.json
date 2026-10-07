@@ -1,14 +1,21 @@
 {
-  "generatedAt": "2026-10-07T17:26:41.205Z",
+  "generatedAt": "2026-10-07T23:08:34.432Z",
   "sourceUrl": "https://deepstat.xyz/table",
   "latest": {
-    "day": "5",
-    "occupiedKm2": 117060.26,
-    "occupiedPercent": 19.39,
-    "diffKm2": 0.2749786022614,
-    "text": "23:58:19 Ворог просунувся поблизу Білицького . Уточнено поблизу Котлине ."
+    "day": "6",
+    "occupiedKm2": 117063.779,
+    "occupiedPercent": 19.391,
+    "diffKm2": -3.5187332187779,
+    "text": "23:54:09 Ворог просунувся поблизу Цвіткового ."
   },
   "rows": [
+    {
+      "day": "6",
+      "occupiedKm2": 117063.779,
+      "occupiedPercent": 19.391,
+      "diffKm2": -3.5187332187779,
+      "text": "23:54:09 Ворог просунувся поблизу Цвіткового ."
+    },
     {
       "day": "5",
       "occupiedKm2": 117060.26,
@@ -211,18 +218,11 @@
       "occupiedPercent": 19.385,
       "diffKm2": -6.5507901205419,
       "text": "23:23:31 Ворог просунувся поблизу Шевченко ."
-    },
-    {
-      "day": "5",
-      "occupiedKm2": 117020.264,
-      "occupiedPercent": 19.383,
-      "diffKm2": -3.406573182292,
-      "text": "22:55:15 Ворог просунувся поблизу Костянтинівки ."
     }
   ],
   "areas": [],
   "recentWindowDays": 7,
-  "netChangeKm2": -29.644124819882503,
+  "netChangeKm2": -30.3311689374968,
   "maxAbsDiffKm2": 8.6390983727615,
   "methodology": [
     "Парситься публічна таблиця deepstat.xyz/table.",
